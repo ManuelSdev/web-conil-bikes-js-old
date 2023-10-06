@@ -1,0 +1,62 @@
+// @ts-nocheck
+/* eslint-disable */
+
+////////////////////////////////////////////////////
+// This is a complete test application, which shows
+// how to use the following options:
+//
+// a) override the default promise library;
+// b) use pg-monitor to output all the query events;
+// c) change the default theme for pg-monitor;
+// d) add log handler to pg-monitor, to log events into a file or elsewhere.
+//
+// Packages used: pg-promise, pg-monitor, bluebird.
+////////////////////////////////////////////////////
+/*
+import promise from 'bluebird' // or any other Promise/A+ compatible library;
+
+const initOptions = {
+   promiseLib: promise, // overriding the default (ES6 Promise);
+}
+*/
+const pgp = require('pg-promise')(/* initOptions */)
+
+//import pgp from 'pg-promise'
+// See all options: http://vitaly-t.github.io/pg-promise/module-pg-promise.html
+
+import { attach, setTheme, setLog } from 'pg-monitor'
+
+//attach(initOptions) // attach to all query events;
+// See API: https://github.com/vitaly-t/pg-monitor#attachoptions-events-override
+
+setTheme('matrix') // change the default theme;
+// Other themes: https://github.com/vitaly-t/pg-monitor/wiki/Color-Themes
+
+setLog((msg, info) => {
+   // save the screen messages into your own log file;
+})
+// See API: https://github.com/vitaly-t/pg-monitor#log
+
+// Database connection details;
+const connection = {
+   user: 'postgres',
+   password: process.env.PGSQL_PASSWORD,
+   host: process.env.PGSQL_HOST,
+   port: process.env.PGSQL_PORT,
+   database: process.env.PGSQL_DATABASE,
+
+   // to auto-exit on idle, without having to shut-down the pool;
+   // see https://github.com/vitaly-t/pg-promise#library-de-initialization
+   allowExitOnIdle: true,
+}
+
+export const db = pgp(connection) // database instance;
+/*
+db.any('select * from users where active = $1', [true])
+   .then((data) => {
+      console.log('DATA:', data)
+   })
+   .catch((error) => {
+      console.log('ERROR:', error)
+   })
+*/
