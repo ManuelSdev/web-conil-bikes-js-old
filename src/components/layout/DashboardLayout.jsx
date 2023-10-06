@@ -2,9 +2,10 @@
 
 import { useState } from 'react'
 
-import StaticSidebar from '@/components/StaticSidebar'
-import AppBar from '@/components/AppBar'
-import ModalSidebar from '@/components/ModalSidebar'
+import AppBar from './AppBar'
+import ModalSidebar from './ModalSidebar'
+import StaticSidebar from './StaticSidebar'
+import React from 'react'
 
 export default function DashboardLayout({ children }) {
    const [sidebarOpen, setSidebarOpen] = useState(false)
