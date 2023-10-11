@@ -26,7 +26,7 @@ export default class BookingsRepository {
       // set-up all ColumnSet objects, if needed:
       // createColumnsets(pgp);
    }
-
+   /*
    // Creates the table;
    async create() {
       return this.db.none(bookings.create)
@@ -80,7 +80,7 @@ export default class BookingsRepository {
    async total() {
       return this.db.one('SELECT count(*) FROM bookings', [], (a) => +a.count)
    }
-
+*/
    // Returns all booking records;
    /**
     *

@@ -4,8 +4,8 @@ import { useState } from 'react'
 import { DayPicker } from 'react-day-picker'
 //import 'react-day-picker/dist/style.css'
 import { es } from 'date-fns/locale'
-import { mergeClasses } from '@/lib/utils'
 import clsx from 'clsx'
+import { mergeClasses } from '@/utils/commonFns'
 
 /**
  *
@@ -48,6 +48,12 @@ export default function Calendar({
       shadcnClassNames,
       ariaClassNames,
    ])
+   const disabledDays = [
+      new Date(2023, 5, 10),
+      new Date(2023, 5, 12),
+      new Date(2023, 5, 20),
+      { from: new Date(2023, 4, 18), to: new Date(2023, 4, 29) },
+   ]
 
    const bookedDays = [new Date()]
    const bookedStyle = { border: '2px solid currentColor' }
@@ -56,6 +62,7 @@ export default function Calendar({
          //      showOutsideDays={showOutsideDays}
          // selected={selected}
          classNames={mergedClassNames}
+         //  disabledDays={disabledDays}
          /*
          modifiersClassNames={{
             selected: 'bg-red-700',
@@ -85,9 +92,9 @@ const allClassNames = {
    caption_start: 'caption_start', // La leyenda cuando está al principio de una serie de meses.
    cell: 'cell', // La celda de la tabla que contiene el elemento del día.
    day: 'day', // El elemento del día: es un span cuando no es interactivo, un botón en caso contrario.
-   day_disabled: 'day_disabled', // El día cuando está deshabilitado.
+   day_disabled: 'day_disabled ', // El día cuando está deshabilitado.
    day_hidden: 'day_hidden', // El día cuando está oculto.
-   day_outside: 'day_outside', // El día cuando está fuera del mes.
+   day_outside: 'day_outside ', // El día cuando está fuera del mes.
    day_range_end: 'day_range_end', // El día cuando está al final de un rango seleccionado.
    day_range_middle: 'day_range_middle', // El día en el medio de un rango seleccionado: no incluye los días "desde" y "hasta".
    day_range_start: 'day_range_start', // El día cuando está al principio de un rango seleccionado.
@@ -136,7 +143,7 @@ const shadcnClassNames = {
    //day_selected:'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground',
    // day_today: 'bg-accent text-accent-foreground ',
    day_outside: 'text-muted-foreground opacity-50',
-   day_disabled: 'text-muted-foreground opacity-50',
+   day_disabled: 'text-muted-foreground opacity-50 bg-red-600',
    day_range_middle:
       'aria-selected:bg-accent aria-selected:text-accent-foreground',
    day_hidden: 'invisible',
@@ -151,14 +158,14 @@ const className = clsx(
    'top-1 m-[0.2rem] bg-black text-left',
    'bg-blue-700 text-gray-100'
 )
-console.log(className)
+//console.log(className)
 const ariaClassNames = {
    caption_label: 'text-xl font-bold',
    head_cell: 'm-[0.2rem]',
-   cell: 'text-center text-sm p-0 relative ring-1  rounded-full focus-within:relative focus-within:z-20 m-[0.2rem]',
+   cell: 'text-center text-sm p-0 relative ring-0  rounded-full focus-within:relative focus-within:z-20 m-[0.2rem]',
 
    day: clsx(
-      'h-9 w-9 p-0 font-normal hover:bg-stone-100 aria-selected:opacity-100 ',
+      'h-9 w-9 p-0 font-normal hover:bg-stone-100 aria-selected:opacity-100',
       'aria-selected:bg-blue-600  aria-selected:text-white aria-selected:hover:bg-blue-800'
    ),
    day_today: 'ring-2 ring-amber-400',
