@@ -21,6 +21,7 @@ import {
 import { mergeClasses } from '@/utils/commonFns'
 import BookingDays from './BookingDays'
 import { useDayRender } from 'react-day-picker'
+import createDateRangeString from '@/utils/datesFns/createDateRangeString'
 
 const customDayRender = (day, month, year) => {
    // Comprobar si el día es sábado o domingo
@@ -30,33 +31,51 @@ const customDayRender = (day, month, year) => {
    // Devolver el elemento JSX del día con el estilo aplicado
    return <div style={style}>{day.getDate()}</div>
 }
+const urlParams = (obj) => new URLSearchParams(obj)
 
-export default function CalendarHandler({ bookingDates }) {
+export default function CalendarHandler({ bookingDates: initialBookingDates }) {
+   console.log(
+      'initialBookingDates en CalendarHandler -> ',
+      initialBookingDates
+   )
    const handleMonthChange = (firstDisplayedDay) => {}
-   const [date, setDate] = React.useState(new Date())
-   //console.log('bookingDates ->', bookingDates)
-   //   const [from, setFrom] = React.useState(false)
-   const { from, to } = bookingDates
-   /*
-   const today = new Date()
-   const firsMonthDay = startOfMonth(today)
-   const lastMonthDay = endOfMonth(today)
-   const monthRange = { from: firsMonthDay, to: lastMonthDay }
-   //console.log('CalendarHandler -> monthRange', monthRange)
-   const disabledDays = [monthRange]
-   */
-   const a = (e) => console.log('CalendarHandler ->', e)
+   const [bookingDates, setBookingDates] = React.useState(initialBookingDates)
+   console.log('bookingDates en CalendarHandler -> ', bookingDates)
+   const monthChangeHandler = async (displayMonth) => {
+      const dateRange = createDateRangeString({
+         fromDate: displayMonth,
+         outsideDates: true,
+      })
+      console.log('monthChangeHandler dateRange ---------------> ', dateRange)
+      try {
+         //    console.log('== LANZA FETCH ==')
+         //TODO: cambiar URL para producción
+         //TODO: revisa eso de method: 'GET'
+         const res = await fetch(
+            //  process.env.URL + `/api?${urlParams(dateRange)}, {method: 'GET'}`
+            `../api?${urlParams({ dateRange })}`
+         )
+         const { bookingDates } = await res.json()
+         console.log(
+            'bookingDatesOnRange en monthChangeHandler ---------------> ',
+            bookingDates
+         )
+         setBookingDates(bookingDates)
+      } catch (error) {
+         console.log('monthChangeHandler error -> ', error)
+      }
+   }
 
    return (
       // @ts-ignore
       <Calendar
          locale={es}
          mode="single"
-         selected={date}
-         onSelect={setDate}
+         // selected={date}
+         //  onSelect={setDate}
          showOutsideDays={true}
          className="rounded-md border"
-         //   onMonthChange={(o) => console.log(o)}
+         onMonthChange={monthChangeHandler}
          //disabled={disabledDays}
          // useDayRender={customDayRender}
          components={{ Day: BookingDays }}
@@ -68,7 +87,7 @@ export default function CalendarHandler({ bookingDates }) {
       />
    )
 }
-
+/*
 const today = set(new Date(), {
    hours: 0,
    minutes: 0,
@@ -111,3 +130,4 @@ console.log('lastDayInLastWeek ->', lastDayInLastWeek)
 console.log('lastDayInLastWeekEs ->', lastDayInLastWeekEs)
 console.log('lastDayInLastWeekISO ->', lastDayInLastWeekISO)
 console.log('lastDayInLastWeek toISOString ->', lastDayInLastWeek.toISOString())
+*/

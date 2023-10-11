@@ -32,6 +32,7 @@ export default function BookingDays({ date, displayMonth, ...props }) {
    const buttonRef = React.useRef(null)
    const dayRender = useDayRender(date, displayMonth, buttonRef)
    // @ts-ignore
+   //Contiene todas las props que recibe el componente DayPicker
    const picker = useDayPicker()
    const { bookingDates } = picker
    if (dayRender.isHidden) {
@@ -40,22 +41,9 @@ export default function BookingDays({ date, displayMonth, ...props }) {
    if (!dayRender.isButton) {
       return <div {...dayRender.divProps} />
    }
-   //console.log('bookingDates in BookingDays->', date)
-   /*
-   console.log('dayRender buttonProps ->', dayRender.buttonProps)
-   console.log('date ->', date)
-   console.log('displayMonth ->', displayMonth)
-   /*
-   const handleClick = (e) => {
-      if (
-         !dayRender.selectedDays ||
-         dayRender.activeModifiers.selected ||
-         e.shiftKey
-      ) {
-         dayRender.buttonProps?.onClick?.(e)
-      }
-   }
-*/
+   //console.log('bookingDates -> ', bookingDates)
+   // console.log('date -> ', date)
+
    const isSameMonth = isSameMonthFns(date, displayMonth)
    //Si la primera fecha es anterior a la segunda, devuelve -1. Si son iguales, devuelve 0. Si la primera fecha es posterior a la segunda, devuelve 1.
    const isPast = compareAsc(date, new Date()) === -1
@@ -133,7 +121,6 @@ function calendarCellClass({ date, bookingDatesOnMonth }) {
          commonClasses
       ),
    */
-   const s = ['startDay', 'endDay', 'startEndDay']
    const keyNames = ['startDates', 'endDates', 'startEndDates']
 
    //Si la date a renderizar coincide con alguna de las fechas de una de las listas de fechas de reserva que contiene
@@ -160,15 +147,6 @@ function calendarCellClass({ date, bookingDatesOnMonth }) {
       return className
    }
    const className = getClassName()
-   //Si es el mes actual, pinta el número del los días isDisabled de negro
-   const currentMonth = () =>
-      isThisMonth(date) && {
-         '&.MuiPickersDay-root.Mui-isDisabled': {
-            color: 'black',
-         },
-      }
-   //Si es una fecha pasada, pon color más claro
-   const pastDate = () => isPast(date) && { opacity: 0.6 }
 
    return className
 }

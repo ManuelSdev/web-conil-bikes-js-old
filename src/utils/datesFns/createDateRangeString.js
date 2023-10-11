@@ -70,7 +70,7 @@ export default function createDateRangeString({
    const dateRangeString = createDateRangeString(fromDate)
    return dateRangeString
 }
-
+/*
 const today = set(new Date(), {
    hours: 0,
    minutes: 0,
@@ -115,3 +115,4 @@ console.log('lastDayInLastWeek ->', lastDayInLastWeek)
 console.log('lastDayInLastWeekEs ->', lastDayInLastWeekEs)
 console.log('lastDayInLastWeekISO ->', lastDayInLastWeekISO)
 console.log('lastDayInLastWeek toISOString ->', lastDayInLastWeek.toISOString())
+*/

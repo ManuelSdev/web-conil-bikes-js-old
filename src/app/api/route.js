@@ -13,7 +13,7 @@ export async function GET(req) {
    const dateRange = searchParams.get('dateRange')
 
    //  '[2023-10-04T22:00:00.000Z,2023-10-31T22:59:59.999Z]'
-   const res = await getBookingDatesInRange(dateRange)
+   return await getBookingDatesInRange(dateRange)
 }
 
 //          \$[\d]+|\$\[([\d\w]+)\]
