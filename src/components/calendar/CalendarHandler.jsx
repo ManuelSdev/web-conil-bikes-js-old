@@ -8,6 +8,8 @@ import Calendar from './Calendar'
 import BookingDays from './BookingDays'
 import createDateRangeString from '@/utils/datesFns/createDateRangeString'
 import { useGetBookingDatesInRange } from '@/utils/react-query/useQuery'
+import CustomCaptionLabel from './CustomCaptionLabel'
+import CustomRow from './CustomRow'
 
 export default function CalendarHandler({ bookingDates: initialBookingDates }) {
    console.log(
@@ -53,8 +55,13 @@ export default function CalendarHandler({ bookingDates: initialBookingDates }) {
          onMonthChange={handleMonthChange}
          //disabled={disabledDays}
          // useDayRender={customDayRender}
-         components={{ Day: BookingDays }}
+         components={{
+            Day: BookingDays,
+            // CaptionLabel: CustomCaptionLabel
+            // Row: CustomRow,
+         }}
          bookingDates={bookingDates}
+         isLoading={isFetching}
          //  toDate={(o) => console.log(o}
 
          //modifiers={{ booked: bookedDays }}

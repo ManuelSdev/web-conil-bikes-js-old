@@ -1,8 +1,8 @@
-import DashboardLayout from '@/components/layout/DashboardLayout'
 import './globals.css'
 import { Inter } from 'next/font/google'
 import React from 'react'
 import Providers from '@/utils/react-query/providers'
+import AdminDashboardLayout from '@/components/layout/AdminDashboardLayout'
 
 export async function generateStaticParams() {
    return [{ lang: 'es-ES' }]
@@ -20,7 +20,7 @@ export default function RootLayout({ children, params }) {
       <html lang="es-ES" dir="ltr" className="h-full bg-red-500">
          <body className="h-full">
             <Providers>
-               <DashboardLayout>{children}</DashboardLayout>
+               <AdminDashboardLayout>{children}</AdminDashboardLayout>
             </Providers>
          </body>
       </html>

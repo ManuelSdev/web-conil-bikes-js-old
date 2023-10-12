@@ -1,7 +1,8 @@
 'use client'
 
 import React from 'react'
-
+import { mergeClasses } from '@/utils/commonFns'
+import clsx from 'clsx'
 import {
    compareAsc,
    endOfMonth,
@@ -9,16 +10,16 @@ import {
    isSameMonth as isSameMonthFns,
    startOfMonth,
 } from 'date-fns'
+
 import {
    Button,
-   DateRange,
+   // DateRange,
    DayPicker,
    // DayProps,
    useDayPicker,
    useDayRender,
 } from 'react-day-picker'
-import { mergeClasses } from '@/utils/commonFns'
-import clsx from 'clsx'
+
 /**
  * @description Componente para renderizar un día en el calendario.
  * El componente DayPicker renderiza un componente Day por cada día del mes que se está mostrando.
@@ -28,13 +29,15 @@ import clsx from 'clsx'
  * @param {Date} props.displayMonth - Fecha del primer día del mes que se está mostrando en el calendario
  * @returns {JSX.Element}
  */
+
 export default function BookingDays({ date, displayMonth, ...props }) {
    const buttonRef = React.useRef(null)
    const dayRender = useDayRender(date, displayMonth, buttonRef)
    // @ts-ignore
    //Contiene todas las props que recibe el componente DayPicker
-   const picker = useDayPicker()
-   const { bookingDates } = picker
+   const dayPicker = useDayPicker()
+   // @ts-ignore
+   const { bookingDates, isLoading } = dayPicker
    if (dayRender.isHidden) {
       return <></>
    }
@@ -78,6 +81,7 @@ export default function BookingDays({ date, displayMonth, ...props }) {
          // @ts-ignore
          //'bg-sky-400'
          [bookedClassName]: true,
+         'text-inherit animate-pulse bg-slate-200': isLoading,
          //    'hover:bg-red-500': true,
       }),
    }

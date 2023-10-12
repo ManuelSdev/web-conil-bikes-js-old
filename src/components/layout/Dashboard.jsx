@@ -7,17 +7,18 @@ import ModalSidebar from './ModalSidebar'
 import StaticSidebar from './StaticSidebar'
 import React from 'react'
 
-export default function DashboardLayout({ children }) {
+export default function Dashboard({ children, sidebarContent }) {
    const [sidebarOpen, setSidebarOpen] = useState(false)
    return (
       <div>
          <ModalSidebar
             sidebarOpen={sidebarOpen}
             setSidebarOpen={setSidebarOpen}
+            sidebarContent={sidebarContent}
          />
 
          {/* Static sidebar for desktop */}
-         <StaticSidebar />
+         <StaticSidebar sidebarContent={sidebarContent} />
 
          <div className="lg:pl-72">
             <AppBar setSidebarOpen={setSidebarOpen} />

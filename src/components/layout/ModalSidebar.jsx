@@ -8,7 +8,11 @@ function classNames(...classes) {
    return classes.filter(Boolean).join(' ')
 }
 
-export default function ModalSidebar({ sidebarOpen, setSidebarOpen }) {
+export default function ModalSidebar({
+   sidebarOpen,
+   setSidebarOpen,
+   sidebarContent,
+}) {
    return (
       <Transition.Root show={sidebarOpen} as={Fragment}>
          <Dialog
@@ -63,7 +67,7 @@ export default function ModalSidebar({ sidebarOpen, setSidebarOpen }) {
                         </div>
                      </Transition.Child>
                      {/* Sidebar component, swap this element with another sidebar if you like */}
-                     <Sidebar />
+                     <Sidebar sidebarContent={sidebarContent} />
                   </Dialog.Panel>
                </Transition.Child>
             </div>

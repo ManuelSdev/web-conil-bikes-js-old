@@ -9,10 +9,19 @@ De esta forma, obtendrás sugerencias de Tailwind CSS cuando escribas el valor d
 
 https://github.com/tailwindlabs/tailwindcss/discussions/7554
 
-
 # trucos
+
 aplica el bg sobre si mismo cuando su hijo tiene hover
-    [&:has(:hover)]:bg-blue-600
-    ...absurdo, si su hijo tiene hover el padre también lo tiene
+[&:has(:hover)]:bg-blue-600
+...absurdo, si su hijo tiene hover el padre también lo tiene
 aplica bg-accent si el hijo tiene ese aria
-    [&:has([aria-selected])]:bg-accent 
+[&:has([aria-selected])]:bg-accent
+
+# CONFIGURACIÓN Y THEME
+
+-  global.css
+   Metes las variables y los valores generales en el global.css
+-  tailwind.config.css
+   Aquí configuras el tema en con la key theme
+-  CLAVE: https://tailwindcss.com/docs/functions-and-directives#config
+   Si defines algúna propiedad en tailwind.config.css

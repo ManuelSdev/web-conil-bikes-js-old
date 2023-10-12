@@ -1,12 +1,12 @@
 import React from 'react'
 import { Cog6ToothIcon } from '@heroicons/react/24/outline'
-import { primary, secondary } from '@/custom/sidebarContent'
 
 function classNames(...classes) {
    return classes.filter(Boolean).join(' ')
 }
 
-export default function Sidebar() {
+export default function Sidebar({ sidebarContent }) {
+   const { primary, secondary } = sidebarContent
    return (
       <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-600 px-6 pb-4">
          <div className="flex h-16 shrink-0 items-center">
