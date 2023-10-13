@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { mergeClasses } from '@/utils/commonFns'
+import { cn } from '@/utils/commonFns'
 import clsx from 'clsx'
 import {
    compareAsc,
@@ -59,7 +59,7 @@ export default function BookingDays({ date, displayMonth, ...props }) {
    const createCustomProps = (classNamesObj) => ({
       ...dayRender.buttonProps,
       // isDisabled: true,
-      className: mergeClasses(dayRender.buttonProps.className, {
+      className: cn(dayRender.buttonProps.className, {
          ...classNamesObj,
       }),
    })
@@ -71,7 +71,7 @@ export default function BookingDays({ date, displayMonth, ...props }) {
    const customProps = {
       ...dayRender.buttonProps,
       //   isDisabled: true,
-      className: mergeClasses(dayRender.buttonProps.className, {
+      className: cn(dayRender.buttonProps.className, {
          //   'bg-red-100': isDisabled,
          //    'text-red-500': isSameMonthPast,
          'text-gray-400': !isSameMonth,

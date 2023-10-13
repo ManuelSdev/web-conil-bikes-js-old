@@ -5,7 +5,7 @@ import { DayPicker } from 'react-day-picker'
 //import 'react-day-picker/dist/style.css'
 import { es } from 'date-fns/locale'
 import clsx from 'clsx'
-import { mergeClasses } from '@/utils/commonFns'
+import { cn } from '@/utils/commonFns'
 
 /**
  *
