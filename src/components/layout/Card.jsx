@@ -6,12 +6,12 @@ export default function Card({ children, ...props }) {
    return (
       <div
          className={cn(
-            'block max-w-sm rounded-xl  border border-gray-200 bg-white p-6 shadow ',
+            'block max-w-fit  rounded-xl border border-gray-200 bg-white p-6 shadow ',
             props.className
          )}
       >
          <CardHeader {...props} />
-         <div>{children}</div>
+         <div className="max-w-fit">{children}</div>
       </div>
    )
 }

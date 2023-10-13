@@ -2,87 +2,50 @@
 import React from 'react'
 import { useState } from 'react'
 import { DayPicker } from 'react-day-picker'
-//import 'react-day-picker/dist/style.css'
+import 'react-day-picker/dist/style.css'
 import { es } from 'date-fns/locale'
 import clsx from 'clsx'
 import { cn } from '@/utils/commonFns'
 
-/**
- *
- * @param {Array.<Object.<string, string>>} arr - Array de objetos cuyas propiedades son lo elementos estilizables de react-day-picker y cuyos valores son las clases que le asignas a cada elemento
- *  Este param equivale al typescript: arr: Array<{ [key: string]: string }> -> array de objetos cuyas propiedades son strings y cuyos valores son strings
- * @returns {Object.<string, string>} - un objeto que combina y concatena las propiedades de los objetos de entrada
- */
-function mergeAndConcatClassNamesObjects(arr) {
-   const result = {} // Inicializa un objeto vacío que se utilizará para almacenar las propiedades combinadas de los objetos de entrada.
+export default function Calendar({ ...props }) {
+   const classNames = {
+      root: 'flex max-w-xl flex-col items-stretch',
+      //root: 'max-w-fit',
+      month: 'space-y-4',
+      caption: 'flex justify-between pt-1 relative items-center px-2',
+      caption_label: 'text-xl font-medium',
+      nav: 'flex space-x-2',
+      head_row: 'flex pb-4',
+      head_cell: 'rounded-md w-9 font-normal m-[0.15rem]',
+      row: 'flex w-full ',
+      cell: 'text-center text-sm p-0 relative ring-0  rounded-full focus-within:relative focus-within:z-20 m-[0.15rem]',
 
-   for (const obj of arr) {
-      // Itera sobre cada objeto en el array `arr`.
-      for (const key in obj) {
-         // Itera sobre cada propiedad del objeto actual.
-         if (obj.hasOwnProperty(key)) {
-            // Comprueba si la propiedad es propia del objeto (y no heredada).
-            if (result.hasOwnProperty(key)) {
-               // Comprueba si la propiedad ya existe en el objeto `result`.
-               result[key] += ' ' + obj[key] // Concatena el valor de la propiedad del objeto actual al valor de la propiedad correspondiente en el objeto `result`, con un espacio en blanco entre ellos.
-            } else {
-               result[key] = obj[key] // Si la propiedad no existe en el objeto `result`, copia la propiedad en el objeto `result`.
-            }
-         }
-      }
+      day: clsx(
+         'h-9 w-9 p-0 font-normal hover:bg-stone-100 aria-selected:opacity-100',
+         'aria-selected:bg-blue-600  aria-selected:text-white aria-selected:hover:bg-blue-800'
+      ),
+      day_today: 'ring-2 ring-amber-400',
+      button_reset: 'button_reset', //sin esto no cambia botones
+      button: 'rounded-full',
    }
-
-   return result // Devuelve el objeto `result` que contiene las propiedades combinadas de los objetos de entrada.
-}
-
-export default function Calendar({
-   className,
-   classNames,
-
-   ...props
-}) {
-   const [selected, setSelected] = useState({})
-
-   const mergedClassNames = mergeAndConcatClassNamesObjects([
-      allClassNames,
-      shadcnClassNames,
-      ariaClassNames,
-   ])
-   const disabledDays = [
-      new Date(2023, 5, 10),
-      new Date(2023, 5, 12),
-      new Date(2023, 5, 20),
-      { from: new Date(2023, 4, 18), to: new Date(2023, 4, 29) },
-   ]
-
-   const bookedDays = [new Date()]
-   const bookedStyle = { border: '2px solid currentColor' }
    return (
       <DayPicker
-         //      showOutsideDays={showOutsideDays}
-         // selected={selected}
-         classNames={mergedClassNames}
-         //  disabledDays={disabledDays}
+         className="max-w-fit"
+         classNames={classNames}
          /*
          modifiersClassNames={{
-            selected: 'bg-red-700',
-            today: '"bg-green-700"',
+            selected: 'my-selected',
+            day: 'ring-2 ring-amber-400',
          }}
          */
-         //Añade un modificador/identificador a un día/fecha -> {nombreModificador:fecha}
-         //Añade una clase a una fecha con identificador -> {nombreModificador: nombreDeClaseQueLeAñadesAlElemento con ese modificador}
-
-         //modifiers={{ booked: bookedDays }}
-         //modifiersClassNames={{booked: 'bg-red-700', selected: 'bg-green-700',}}
-
-         // onSelect={setSelected}
          {...props}
       />
    )
 }
+
 const allClassNames = {
    //Agunos elementos comparten clases, como es div principal: class="month caption_start caption_end"
-   button: 'button', // Los botones.
+   // button: 'button', // Los botones.
    button_reset: 'button_reset', // El estilo para restablecer los botones.   ???
    caption: 'caption', // La leyenda (muestra el encabezado del calendario y la navegación).
    caption_between: 'caption_between', // La leyenda cuando está entre dos meses (cuando multipleMonths > 2).
@@ -125,28 +88,27 @@ const allClassNames = {
    with_weeknumber: 'with_weeknumber', // El elemento raíz cuando showWeekNumber={true}.
 }
 const shadcnClassNames = {
-   root: 'flex max-w-xl flex-col items-center',
-   months: 'flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0',
+   //root: 'flex max-w-xl flex-col items-center',
+   //months: 'flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0',
    month: 'space-y-4',
-   caption: 'flex justify-center pt-1 relative items-center',
-   // caption_label: 'text-sm font-medium',
-   nav: 'space-x-1 flex items-center',
-   nav_button: 'h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100',
-   nav_button_previous: 'absolute left-1',
-   nav_button_next: 'absolute right-1',
-   table: 'w-full border-collapse space-y-1',
-   head_row: 'flex',
-   head_cell: 'text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]',
-   row: 'flex w-full mt-2',
+   //caption: 'flex justify-center pt-1 relative items-center',
+   //caption_label: 'text-sm font-medium',
+   //nav: 'space-x-1 flex items-center',
+   //nav_button: 'h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100',
+   //  nav_button_previous: 'absolute left-1',
+   // nav_button_next: 'absolute right-1',
+   //table: 'w-full border-collapse space-y-1',
+   // head_row: 'flex pb-4',
+   // head_cell: 'text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]',
+   // row: 'flex w-full mt-2',
    //  cell: 'text-center text-sm p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20',
-   day: 'h-9 w-9 p-0 font-normal aria-selected:opacity-100',
+   //day: 'h-9 w-9 p-0 font-normal aria-selected:opacity-100',
    //day_selected:'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground',
    // day_today: 'bg-accent text-accent-foreground ',
-   day_outside: 'text-muted-foreground opacity-50',
-   day_disabled: 'text-muted-foreground opacity-50 bg-red-600',
-   day_range_middle:
-      'aria-selected:bg-accent aria-selected:text-accent-foreground',
-   day_hidden: 'invisible',
+   // day_outside: 'text-muted-foreground opacity-50',
+   //day_disabled: 'text-muted-foreground opacity-50 bg-red-600',
+   //day_range_middle:      'aria-selected:bg-accent aria-selected:text-accent-foreground',
+   //day_hidden: 'invisible',
    button: 'rounded-full',
 }
 // aria gridCell / button / gridContent
@@ -160,21 +122,61 @@ const className = clsx(
 )
 //console.log(className)
 const ariaClassNames = {
-   caption_label: 'text-xl font-bold',
-   head_cell: 'm-[0.2rem]',
-   cell: 'text-center text-sm p-0 relative ring-0  rounded-full focus-within:relative focus-within:z-20 m-[0.2rem]',
+   root: 'flex max-w-xl flex-col items-center',
+   month: 'space-y-4',
+   caption: 'flex justify-between pt-1 relative items-center px-2',
+   caption_label: 'text-xl font-medium',
+   nav: 'flex space-x-2',
+   head_row: 'flex pb-4',
+   head_cell: 'rounded-md w-9 font-normal m-[0.15rem]',
+   row: 'flex w-full ',
+   cell: 'text-center text-sm p-0 relative ring-0  rounded-full focus-within:relative focus-within:z-20 m-[0.15rem]',
 
    day: clsx(
       'h-9 w-9 p-0 font-normal hover:bg-stone-100 aria-selected:opacity-100',
       'aria-selected:bg-blue-600  aria-selected:text-white aria-selected:hover:bg-blue-800'
    ),
    day_today: 'ring-2 ring-amber-400',
-   day_selected: 'hola',
+   button_reset: 'button_reset',
+   button: 'rounded-full',
 }
 const aStyles = clsx(
    'h-9 w-9 bg-blue-600 p-0 font-normal text-white hover:bg-blue-800 hover:bg-stone-100 aria-selected:opacity-100'
 )
 
+/**
+ *
+ * @param {Array.<Object.<string, string>>} arr - Array de objetos cuyas propiedades son lo elementos estilizables de react-day-picker y cuyos valores son las clases que le asignas a cada elemento
+ *  Este param equivale al typescript: arr: Array<{ [key: string]: string }> -> array de objetos cuyas propiedades son strings y cuyos valores son strings
+ * @returns {Object.<string, string>} - un objeto que combina y concatena las propiedades de los objetos de entrada
+ */
+function mergeAndConcatClassNamesObjects(arr) {
+   const result = {} // Inicializa un objeto vacío que se utilizará para almacenar las propiedades combinadas de los objetos de entrada.
+
+   for (const obj of arr) {
+      // Itera sobre cada objeto en el array `arr`.
+      for (const key in obj) {
+         // Itera sobre cada propiedad del objeto actual.
+         if (obj.hasOwnProperty(key)) {
+            // Comprueba si la propiedad es propia del objeto (y no heredada).
+            if (result.hasOwnProperty(key)) {
+               // Comprueba si la propiedad ya existe en el objeto `result`.
+               result[key] += ' ' + obj[key] // Concatena el valor de la propiedad del objeto actual al valor de la propiedad correspondiente en el objeto `result`, con un espacio en blanco entre ellos.
+            } else {
+               result[key] = obj[key] // Si la propiedad no existe en el objeto `result`, copia la propiedad en el objeto `result`.
+            }
+         }
+      }
+   }
+
+   return result // Devuelve el objeto `result` que contiene las propiedades combinadas de los objetos de entrada.
+}
+
+const mergedClassNames = mergeAndConcatClassNamesObjects([
+   // allClassNames,
+   // shadcnClassNames,
+   ariaClassNames,
+])
 /**
  * ////////////////////////////////////// FUNCIONAMIENTO //////////////////////////////////////
  * Es lo mismo aplicar aria-selected a day que tocar directamente sobre day_today

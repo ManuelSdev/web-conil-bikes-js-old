@@ -30,7 +30,7 @@ import {
  * @returns {JSX.Element}
  */
 
-export default function BookingDays({ date, displayMonth, ...props }) {
+export default function CustomDay({ date, displayMonth, ...props }) {
    const buttonRef = React.useRef(null)
    const dayRender = useDayRender(date, displayMonth, buttonRef)
    // @ts-ignore

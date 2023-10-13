@@ -5,11 +5,11 @@ import { es, tr } from 'date-fns/locale'
 
 import Calendar from './Calendar'
 
-import BookingDays from './BookingDays'
 import createDateRangeString from '@/utils/datesFns/createDateRangeString'
 import { useGetBookingDatesInRange } from '@/utils/react-query/useQuery'
 import CustomCaptionLabel from './CustomCaptionLabel'
 import CustomRow from './CustomRow'
+import CustomDay from './CustomDay'
 
 export default function CalendarHandler({ bookingDates: initialBookingDates }) {
    console.log(
@@ -51,12 +51,12 @@ export default function CalendarHandler({ bookingDates: initialBookingDates }) {
          // selected={date}
          //  onSelect={setDate}
          showOutsideDays={true}
-         className="rounded-md border"
+         //   className="rounded-md border"
          onMonthChange={handleMonthChange}
          //disabled={disabledDays}
          // useDayRender={customDayRender}
          components={{
-            Day: BookingDays,
+            Day: CustomDay,
             // CaptionLabel: CustomCaptionLabel
             // Row: CustomRow,
          }}

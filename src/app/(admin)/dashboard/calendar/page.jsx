@@ -13,7 +13,7 @@ export default async function page() {
    const { bookingDates } = await res.json()
    console.log('RES in componente -> ', bookingDates)
    const cardProps = {
-      className: 'max-w-[334px]',
+      //  className: 'max-w-[334px]',
       cardTitle: 'Calendario de reservas',
       // cardDescription: 'Hin reverse chronological order.',
    }
@@ -23,3 +23,9 @@ export default async function page() {
       </Card>
    )
 }
+
+/*
+ <Card {...cardProps}>
+         <CalendarHandler bookingDates={bookingDates} />
+      </Card>
+      */
