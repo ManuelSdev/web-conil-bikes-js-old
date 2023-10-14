@@ -10,8 +10,9 @@ import {
    startOfMonth,
    startOfWeek,
 } from 'date-fns'
-import { pipe } from '../commonFns'
+
 import { es } from 'date-fns/locale'
+import { pipe } from '../app/functions'
 
 /**
  * @description Función que crea un string con un rango de fechas en formato ISO: '[from,to]'

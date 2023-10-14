@@ -28,6 +28,10 @@ export const bookings = {
    //b: console.log(      'COÑOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO'   ),
    findBookingDatesOnRange: () =>
       sql('/src/lib/pg-promise/sql/bookings/findBookingDatesOnRange.sql'),
+   findBookingOnDate: () =>
+      sql('/src/lib/pg-promise/sql/bookings/findBookingOnDate.sql'),
+   findBookingById: () =>
+      sql('/src/lib/pg-promise/sql/bookings/findBookingById.sql'),
 }
 ///////////////////////////////////////////////
 // Helper for linking to external query files;

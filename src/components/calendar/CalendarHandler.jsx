@@ -10,18 +10,26 @@ import { useGetBookingDatesInRange } from '@/utils/react-query/useQuery'
 import CustomCaptionLabel from './CustomCaptionLabel'
 import CustomRow from './CustomRow'
 import CustomDay from './CustomDay'
+import { useRouter } from 'next/navigation'
+
+const urlParams = (obj) => new URLSearchParams(obj)
 
 export default function CalendarHandler({ bookingDates: initialBookingDates }) {
    console.log(
       'initialBookingDates en CalendarHandler -> ',
       initialBookingDates
    )
+   const router = useRouter()
    const [bookingDates, setBookingDates] = React.useState(initialBookingDates)
 
    const [dateRange, setDateRange] = useState('')
 
+   const handleSelect = (date) => {
+      router.push(`/dashboard/bookings/list/${date.toISOString()}`)
+   }
    const handeDateRange = (displayMonth) => {
       const dateRange = createDateRangeString({
+         // @ts-ignore
          fromDate: displayMonth,
          outsideDates: true,
       })
@@ -49,7 +57,7 @@ export default function CalendarHandler({ bookingDates: initialBookingDates }) {
          locale={es}
          mode="single"
          // selected={date}
-         //  onSelect={setDate}
+         onSelect={handleSelect}
          showOutsideDays={true}
          //   className="rounded-md border"
          onMonthChange={handleMonthChange}

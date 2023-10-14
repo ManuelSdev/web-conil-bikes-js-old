@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { cn } from '@/utils/commonFns'
+
 import clsx from 'clsx'
 import {
    compareAsc,
@@ -19,6 +19,7 @@ import {
    useDayPicker,
    useDayRender,
 } from 'react-day-picker'
+import { cn } from '@/utils/app/functions'
 
 /**
  * @description Componente para renderizar un día en el calendario.

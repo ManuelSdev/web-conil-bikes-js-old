@@ -1,4 +1,4 @@
-import { cn } from '@/utils/commonFns'
+import { cn } from '@/utils/app/functions'
 import React from 'react'
 
 export default function Card({ children, ...props }) {

@@ -38,3 +38,60 @@ export async function getBookingDatesInRange(dateRange) {
       console.log('### ERROR CRUD api/getBookingDatesInRange -> ', error)
    }
 }
+
+export async function getBookingOnDate(date) {
+   try {
+      const db = client()
+      console.log(
+         '///////////////////********************** TRYddd *****************//////////////////'
+      )
+
+      const bookings = await db.bookings.findBookingOnDate(date)
+      /*
+      const bookingDatesObj = await db.one(bookings.findBookingDatesOnRange(), {
+         user_id: 2,
+      })
+      */
+      console.log('res en SERVER **************** bookings   -> ', bookings)
+      console.log(
+         '@@@ CRUD api/getBookingDatesInRange RES bookingDatesObj -> ',
+         bookings
+      )
+
+      //const data = await res.json()
+      //  console.log('data en SERVER ****************-> ', data)
+      // console.log('date -> ', data)
+      // return Response.status(201).json({ bookingDatesObj })
+      return NextResponse.json({ bookings }, { status: 201 })
+   } catch (error) {
+      console.log('### ERROR db.bookings.findBookingOnDate(date) -> ', error)
+   }
+}
+
+export async function getBookingById(id) {
+   try {
+      const db = client()
+      console.log(
+         '///////////////////********************** TRYddd *****************//////////////////'
+      )
+
+      const bookings = await db.bookings.findBookingById(id)
+      /*
+      const bookingDatesObj = await db.one(bookings.findBookingDatesOnRange(), {
+         user_id: 2,
+      })
+      */
+      console.log(
+         'res en SERVER **************** getBookingById   -> ',
+         bookings
+      )
+
+      //const data = await res.json()
+      //  console.log('data en SERVER ****************-> ', data)
+      // console.log('date -> ', data)
+      // return Response.status(201).json({ bookingDatesObj })
+      return NextResponse.json({ bookings }, { status: 201 })
+   } catch (error) {
+      console.log('### ERROR db.bookings.getBookingById(id) -> ', error)
+   }
+}

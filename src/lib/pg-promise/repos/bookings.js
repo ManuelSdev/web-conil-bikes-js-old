@@ -26,61 +26,7 @@ export default class BookingsRepository {
       // set-up all ColumnSet objects, if needed:
       // createColumnsets(pgp);
    }
-   /*
-   // Creates the table;
-   async create() {
-      return this.db.none(bookings.create)
-   }
 
-   // Initializes the table with some user records, and return their id-s;
-   async init() {
-      return this.db.map(bookings.init, [], (row) => row.id)
-   }
-
-   // Drops the table;
-   async drop() {
-      return this.db.none(bookings.drop)
-   }
-
-   // Removes all records from the table;
-   async empty() {
-      return this.db.none(bookings.empty)
-   }
-
-   // Adds a new booking, and returns the new object;
-   async add(values) {
-      return this.db.one(bookings.add, values)
-   }
-
-   // Tries to delete a booking by id, and returns the number of records deleted;
-   async remove(id) {
-      return this.db.result(
-         'DELETE FROM bookings WHERE id = $1',
-         +id,
-         (r) => r.rowCount
-      )
-   }
-
-   // Tries to find a booking from id;
-   async findById(id) {
-      return this.db.oneOrNone('SELECT * FROM bookings WHERE id = $1', +id)
-   }
-
-   // Tries to find a booking from user id;
-   async findByUserId(id) {
-      return this.db.oneOrNone('SELECT * FROM bookings WHERE user_id = $1', +id)
-   }
-
-   // Returns all booking records;
-   async all() {
-      return this.db.any('SELECT * FROM bookings')
-   }
-
-   // Returns the total number of bookings;
-   async total() {
-      return this.db.one('SELECT count(*) FROM bookings', [], (a) => +a.count)
-   }
-*/
    // Returns all booking records;
    /**
     *
@@ -95,6 +41,25 @@ export default class BookingsRepository {
       //console.log('BookingsRepository.#bookingQueryFiles -> ',this.#bookingQueryFiles)
       return this.db.one(this.#bookingQueryFiles.findBookingDatesOnRange, {
          dateRange,
+      })
+   }
+
+   async findBookingOnDate(date) {
+      //console.log('query -----------> ',this.pgp.as.format(bookings.findBookingDatesOnRange, { dateRange }))
+      //TODO: revisar si esto de abajo debe llevar await
+      //https://github.com/vitaly-t/pg-promise#named-parameters
+      //console.log('BookingsRepository.#bookingQueryFiles -> ',this.#bookingQueryFiles)
+      return this.db.any(this.#bookingQueryFiles.findBookingOnDate, {
+         date,
+      })
+   }
+   async findBookingById(id) {
+      //console.log('query -----------> ',this.pgp.as.format(bookings.findBookingDatesOnRange, { dateRange }))
+      //TODO: revisar si esto de abajo debe llevar await
+      //https://github.com/vitaly-t/pg-promise#named-parameters
+      //console.log('BookingsRepository.#bookingQueryFiles -> ',this.#bookingQueryFiles)
+      return this.db.one(this.#bookingQueryFiles.findBookingById, {
+         id,
       })
    }
 }
@@ -170,4 +135,60 @@ mapObject va a recorrer el objeto bookings y va a devolver otro objeto con las m
 la funciones, sino la ejecuión de las mismas. Así, this.#bookingQueryFiles va a almacenar en cada key el objeto QueryFile
 y a éllos se accede con this.#bookingQueryFiles.findBookingDatesOnRange, evitando así crear un nuevo objeto QueryFile cada vez
 que se llama a un método de BookingsRepository. OLE!
+*/
+
+/*
+   // Creates the table;
+   async create() {
+      return this.db.none(bookings.create)
+   }
+
+   // Initializes the table with some user records, and return their id-s;
+   async init() {
+      return this.db.map(bookings.init, [], (row) => row.id)
+   }
+
+   // Drops the table;
+   async drop() {
+      return this.db.none(bookings.drop)
+   }
+
+   // Removes all records from the table;
+   async empty() {
+      return this.db.none(bookings.empty)
+   }
+
+   // Adds a new booking, and returns the new object;
+   async add(values) {
+      return this.db.one(bookings.add, values)
+   }
+
+   // Tries to delete a booking by id, and returns the number of records deleted;
+   async remove(id) {
+      return this.db.result(
+         'DELETE FROM bookings WHERE id = $1',
+         +id,
+         (r) => r.rowCount
+      )
+   }
+
+   // Tries to find a booking from id;
+   async findById(id) {
+      return this.db.oneOrNone('SELECT * FROM bookings WHERE id = $1', +id)
+   }
+
+   // Tries to find a booking from user id;
+   async findByUserId(id) {
+      return this.db.oneOrNone('SELECT * FROM bookings WHERE user_id = $1', +id)
+   }
+
+   // Returns all booking records;
+   async all() {
+      return this.db.any('SELECT * FROM bookings')
+   }
+
+   // Returns the total number of bookings;
+   async total() {
+      return this.db.one('SELECT count(*) FROM bookings', [], (a) => +a.count)
+   }
 */

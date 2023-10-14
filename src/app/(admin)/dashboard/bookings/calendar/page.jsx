@@ -8,6 +8,7 @@ import React from 'react'
 export default async function page() {
    // @ts-ignore
    console.log('############### PAGE ###############')
+   // @ts-ignore
    const dateRange = createDateRangeString({ outsideDates: true })
    const res = await getBookingDatesInRange(dateRange)
    const { bookingDates } = await res.json()

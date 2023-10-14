@@ -5,7 +5,6 @@ import { DayPicker } from 'react-day-picker'
 import 'react-day-picker/dist/style.css'
 import { es } from 'date-fns/locale'
 import clsx from 'clsx'
-import { cn } from '@/utils/commonFns'
 
 export default function Calendar({ ...props }) {
    const classNames = {
@@ -169,6 +168,7 @@ function mergeAndConcatClassNamesObjects(arr) {
       }
    }
 
+   // @ts-ignore
    return result // Devuelve el objeto `result` que contiene las propiedades combinadas de los objetos de entrada.
 }
 
