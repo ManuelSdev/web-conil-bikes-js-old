@@ -75,7 +75,8 @@ export async function getBookingById(id) {
          '///////////////////********************** TRYddd *****************//////////////////'
       )
 
-      const bookings = await db.bookings.findBookingById(id)
+      const booking = await db.bookings.findBookingById(id)
+      booking.dateRange = JSON.parse(booking.dateRange)
       /*
       const bookingDatesObj = await db.one(bookings.findBookingDatesOnRange(), {
          user_id: 2,
@@ -83,14 +84,14 @@ export async function getBookingById(id) {
       */
       console.log(
          'res en SERVER **************** getBookingById   -> ',
-         bookings
+         booking
       )
 
       //const data = await res.json()
       //  console.log('data en SERVER ****************-> ', data)
       // console.log('date -> ', data)
       // return Response.status(201).json({ bookingDatesObj })
-      return NextResponse.json({ bookings }, { status: 201 })
+      return NextResponse.json(booking, { status: 201 })
    } catch (error) {
       console.log('### ERROR db.bookings.getBookingById(id) -> ', error)
    }

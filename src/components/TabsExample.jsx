@@ -31,7 +31,7 @@ function classNames(...classes) {
    return classes.filter(Boolean).join(' ')
 }
 
-export default function Tabs() {
+export default function TabsExample() {
    return (
       <div>
          <div className="sm:hidden">
