@@ -32,6 +32,8 @@ export const bookings = {
       sql('/src/lib/pg-promise/sql/bookings/findBookingOnDate.sql'),
    findBookingById: () =>
       sql('/src/lib/pg-promise/sql/bookings/findBookingById.sql'),
+   findBookingBikesById: () =>
+      sql('/src/lib/pg-promise/sql/bookings/findBookingBikesById.sql'),
 }
 ///////////////////////////////////////////////
 // Helper for linking to external query files;

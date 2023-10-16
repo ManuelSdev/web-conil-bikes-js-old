@@ -1,7 +1,7 @@
 import Calendar from '@/components/calendar/Calendar'
 import CalendarHandler from '@/components/calendar/CalendarHandler'
 import Card from '@/components/layout/Card'
-import { getBookingDatesInRange } from '@/utils/crudApiFns/dates'
+import { getBookingDatesInRange } from '@/utils/crudApiFns/bookings'
 import createDateRangeString from '@/utils/datesFns/createDateRangeString'
 import React from 'react'
 

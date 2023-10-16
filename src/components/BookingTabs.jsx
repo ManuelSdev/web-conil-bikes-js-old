@@ -11,6 +11,7 @@ import Data from './Data'
 import DualColumnData from './Data'
 import { mappedBookingState } from '@/utils/app/functions'
 import { format } from 'date-fns'
+import BookingBikesTab from './BookingBikesTab'
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/decodeURIComponent
 
 const tabs = [
@@ -18,7 +19,7 @@ const tabs = [
    { name: 'Bicicletas', icon: BuildingOfficeIcon },
 ]
 
-export default function BookingTabs({ bookingData }) {
+export default function BookingTabs({ bookingData, bikes }) {
    const {
       email,
       price,
@@ -33,7 +34,7 @@ export default function BookingTabs({ bookingData }) {
 
       phone,
    } = bookingData
-   //console.log(JSON.parse(bookingData.dateRange))
+   //console.log('----------------> '))
    const [from, to] = dateRange
    const dataList = [
       ['Nombre', name],
@@ -64,7 +65,7 @@ export default function BookingTabs({ bookingData }) {
          <TabPanels
             panels={[
                <Data dataList={dataList} listHeader={listHeader} />,
-               'ADIOS',
+               <BookingBikesTab bikes={bikes} />,
             ]}
          />
       </TabGroup>

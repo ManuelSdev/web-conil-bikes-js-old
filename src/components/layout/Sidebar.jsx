@@ -1,14 +1,22 @@
 import React from 'react'
 import { Cog6ToothIcon } from '@heroicons/react/24/outline'
+import { ChevronLeftIcon } from '@heroicons/react/20/solid'
 
 function classNames(...classes) {
    return classes.filter(Boolean).join(' ')
 }
-
+const Mod = () => (
+   <div className="fixed left-[calc(18rem-12px)] top-[calc(2rem-12px)]">
+      <span className="inline-block h-6 w-6 overflow-hidden rounded-full bg-gray-100">
+         <ChevronLeftIcon />
+      </span>
+   </div>
+)
 export default function Sidebar({ sidebarContent }) {
    const { primary, secondary } = sidebarContent
    return (
       <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-600 px-6 pb-4">
+         <Mod />
          <div className="flex h-16 shrink-0 items-center">
             <img
                className="h-8 w-auto"

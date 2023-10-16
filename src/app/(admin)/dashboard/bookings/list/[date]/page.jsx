@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { getBookingOnDate } from '@/utils/crudApiFns/dates'
+import { getBookingOnDate } from '@/utils/crudApiFns/bookings'
 import React from 'react'
 
 import {
@@ -34,6 +34,7 @@ export default async function BookingListPage({ params }) {
          else return 'En tienda'
       }
    }
+
    return (
       <div className="px-4 sm:px-6 lg:px-8">
          <TablePanel

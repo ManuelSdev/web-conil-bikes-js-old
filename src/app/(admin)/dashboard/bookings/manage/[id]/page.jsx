@@ -1,5 +1,9 @@
 // @ts-nocheck
-import { getBookingById, getBookingOnDate } from '@/utils/crudApiFns/dates'
+import {
+   getBookingById,
+   getBookingOnDate,
+   getBookingWithBikesById,
+} from '@/utils/crudApiFns/bookings'
 import React from 'react'
 
 import { PENDING } from '@/utils/app/appValues'
@@ -10,14 +14,15 @@ import TabsExample from '@/components/TabsExample'
 
 export default async function BookingListPage({ params }) {
    const { id } = params
-   const res = await getBookingById(id)
-   const booking = await res.json()
+   //const res = await getBookingById(id)
+   const res = await getBookingWithBikesById(id)
+   const { booking, bikes } = await res.json()
 
-   console.log('BookingListPage  bookings-> ', booking)
+   console.log('BookingListPage  bookings-> ', bikes)
 
    return (
       <div>
-         <BookingTabs bookingData={booking} />
+         <BookingTabs bookingData={booking} bikes={bikes} />
       </div>
    )
 }

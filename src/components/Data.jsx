@@ -13,12 +13,16 @@ export default function DualColumnData({ dataList, listHeader }) {
                {listHeader?.info}
             </p>
          </div>
+
          <div className="mt-6">
             <dl className="grid grid-cols-1 sm:grid-cols-2">
                {dataList.map((pair, idx) => {
                   const [title, info] = pair
                   return (
-                     <div className="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
+                     <div
+                        key={idx}
+                        className="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0"
+                     >
                         <dt className="text-sm font-medium leading-6 text-gray-900">
                            {title}
                         </dt>

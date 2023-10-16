@@ -16,7 +16,7 @@ const initOptions = {
       // Do not use 'require()' here, because this event occurs for every task and transaction being executed,
       // which should be as fast as possible.
       obj.bookings =
-         // console.log('############### LLAMADA A NEW BOOKING ###############') ||
+         // console.log('1 ### Crea instancia new Bookings db.js') ||
          new Bookings(obj, pgp)
       //obj.users = new Users(obj, pgp);
    },

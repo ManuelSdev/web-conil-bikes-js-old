@@ -68,14 +68,14 @@ export async function getBookingOnDate(date) {
    }
 }
 
-export async function getBookingById(id) {
+export async function getBookingById(bookingId) {
    try {
       const db = client()
       console.log(
          '///////////////////********************** TRYddd *****************//////////////////'
       )
 
-      const booking = await db.bookings.findBookingById(id)
+      const booking = await db.bookings.findBookingById(bookingId)
       booking.dateRange = JSON.parse(booking.dateRange)
       /*
       const bookingDatesObj = await db.one(bookings.findBookingDatesOnRange(), {
@@ -93,6 +93,43 @@ export async function getBookingById(id) {
       // return Response.status(201).json({ bookingDatesObj })
       return NextResponse.json(booking, { status: 201 })
    } catch (error) {
-      console.log('### ERROR db.bookings.getBookingById(id) -> ', error)
+      console.log('### ERROR db.bookings.getBookingById(bookingId) -> ', error)
+   }
+}
+export async function getBookingBikes(bookingId) {
+   try {
+      const db = client()
+      console.log('/////////********** TRYddd **********////////')
+
+      const booking = await db.bookings.findBookingBikesById(bookingId)
+      booking.dateRange = JSON.parse(booking.dateRange)
+
+      console.log('res en SERVER  getBookingBikes   -> ', booking)
+
+      return NextResponse.json(booking, { status: 201 })
+   } catch (error) {
+      console.log('### ERROR db.bookings.getBookingBikes(bookingId) -> ', error)
+   }
+}
+export async function getBookingWithBikesById(bookingId) {
+   try {
+      //  console.log('== CREA CLIENTE EN getBookingWithBikesById')
+      const db = client()
+      //console.log('== CLIENTE CREADO EN  getBookingWithBikesById --> AWAIT findBookingWithBikesById')
+      const { booking, bikes } =
+         await db.bookings.findBookingWithBikesById(bookingId)
+      booking.dateRange = JSON.parse(booking.dateRange)
+
+      console.log(
+         '################# res en SERVER  getBookingBikes   -> ',
+         booking
+      )
+
+      return NextResponse.json({ booking, bikes }, { status: 201 })
+   } catch (error) {
+      console.log(
+         '### ERROR db.bookings.getBookingWithBikesById(bookingId) -> ',
+         error
+      )
    }
 }

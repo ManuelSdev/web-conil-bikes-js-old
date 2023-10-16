@@ -1,7 +1,6 @@
 const columnSet = {} // Reusable ColumnSet objects.
 
 import { bookings } from '../sql'
-//import BookingsBase from './BookingsBase'
 /**
  * @class BookingsRepository
  * @description Bookings repository.
@@ -16,48 +15,14 @@ import { bookings } from '../sql'
  * bookingsRepository.create()
  * bookingsRepository.init()
  */
-//const bookingQueryFiles = mapFnToQueryFile(bookings)
 export default class BookingsRepository {
    // @ts-ignore
-   //Los estaticos se llaman con  BookingsRepository.bookingQueryFiles
-   //static mbookingQueryFiles = mapFnToQueryFile(bookings)
-   // #bookingQueryFiless = mapFnToQueryFile(bookings, 'INIT')
-   /*
-   static #mapFnToQueryFile(obj = bookings, quien) {
-      const bookingQueryFiles = Object.fromEntries(
-         Object.entries(obj).map(([k, v], i) => [k, v()])
-      )
-      console.log(
-         quien,
-         '    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -> '
-         //,      bookingQueryFiles
-      )
-      return bookingQueryFiles
-   }
-*/
+   #bookingQueryFiles = mapFnToQueryFile(bookings, 'INIT')
 
-   //Los privados se llaman con this.#bookingQueryFiles
-   static mapFnToQueryFile(obj) {
-      const bookingQueryFiles = Object.fromEntries(
-         Object.entries(obj).map(([k, v], i) => [k, v()])
-      )
-      console.log(
-         ' 2 ### ejecuta mapFnToQueryFile en clase BookingsRepository '
-         //,      bookingQueryFiles
-      )
-      return bookingQueryFiles
-   }
-   // static #bookings = { ...bookings }
-
-   static bookingQueryFiles =
-      //  console.log(' 2 ### ejecuta OBJECT ENTRIES BookingsRepository ') ||
-      Object.fromEntries(Object.entries(bookings).map(([k, v], i) => [k, v()]))
    constructor(db, pgp) {
-      //  console.log('Constructor &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
-      //  super()
       this.db = db
       this.pgp = pgp
-      // console.log('*** Instancia BookingsRepository creada')
+
       // set-up all ColumnSet objects, if needed:
       // createColumnsets(pgp);
    }
@@ -73,60 +38,48 @@ export default class BookingsRepository {
       //console.log('query -----------> ',this.pgp.as.format(bookings.findBookingDatesOnRange, { dateRange }))
       //TODO: revisar si esto de abajo debe llevar await
       //https://github.com/vitaly-t/pg-promise#named-parameters
-      //console.log('BookingsRepository.#bookingQueryFiles -> ',BookingsRepository.bookingQueryFiles)
-      return this.db.one(
-         BookingsRepository.bookingQueryFiles.findBookingDatesOnRange,
-         {
-            dateRange,
-         }
-      )
+      //console.log('BookingsRepository.#bookingQueryFiles -> ',this.#bookingQueryFiles)
+      return this.db.one(this.#bookingQueryFiles.findBookingDatesOnRange, {
+         dateRange,
+      })
    }
 
    async findBookingOnDate(date) {
       //console.log('query -----------> ',this.pgp.as.format(bookings.findBookingDatesOnRange, { dateRange }))
       //TODO: revisar si esto de abajo debe llevar await
       //https://github.com/vitaly-t/pg-promise#named-parameters
-      //console.log('BookingsRepository.#bookingQueryFiles -> ',BookingsRepository.bookingQueryFiles)
-      return this.db.any(
-         BookingsRepository.bookingQueryFiles.findBookingOnDate,
-         {
-            date,
-         }
-      )
+      //console.log('BookingsRepository.#bookingQueryFiles -> ',this.#bookingQueryFiles)
+      return this.db.any(this.#bookingQueryFiles.findBookingOnDate, {
+         date,
+      })
    }
    async findBookingById(bookingId) {
       //console.log('query -----------> ',this.pgp.as.format(bookings.findBookingDatesOnRange, { dateRange }))
       //TODO: revisar si esto de abajo debe llevar await
       //https://github.com/vitaly-t/pg-promise#named-parameters
-      //console.log('BookingsRepository.#bookingQueryFiles -> ',BookingsRepository.bookingQueryFiles)
-      // console.log('findBookingById ---> this.db.one')
-      return await this.db.one(
-         BookingsRepository.bookingQueryFiles.findBookingById,
-         {
-            id: bookingId,
-         }
+      //console.log('BookingsRepository.#bookingQueryFiles -> ',this.#bookingQueryFiles)
+      console.log(
+         '######################################################################################'
       )
+      return this.db.one(this.#bookingQueryFiles.findBookingById, {
+         id: bookingId,
+      })
    }
    async findBookingBikesById(bookingId) {
-      // console.log('findBookingBikesById ---> this.db.many')
-      return await this.db.many(
-         BookingsRepository.bookingQueryFiles.findBookingBikesById,
-         {
-            id: bookingId,
-         }
-      )
+      return this.db.many(this.#bookingQueryFiles.findBookingBikesById, {
+         id: bookingId,
+      })
    }
    async findBookingWithBikesById(bookingId) {
-      //console.log('findBookingWithBikesById llamada por ----> ', quien)
       const task = async () => {
-         //  console.log(' findBookingWithBikesById ---> this.db.task')
          const booking = await this.findBookingById(bookingId)
-         const bikes = await this.findBookingBikesById(bookingId)
-         const res = { booking, bikes }
-         //const res = booking
+         //console.log('===================== AWAIT findBookingBikesById')
+         //const bikes = await this.findBookingBikesById(bookingId)
+         // const res = { booking, bikes }
+         const res = booking
          return res
       }
-      return await this.db.task('task-booking-bikes', task)
+      return this.db.task('task-booking-bikes', task)
    }
 }
 
@@ -148,7 +101,6 @@ function mapObject(obj, func) {
  * @param {*} obj - objeto cuyas keys son los nombres de las querys y los valores son las funciones sql que generan los QueryFile
  * @returns {Object} - objeto cuyas keys son los nombres de las querys y los valores son los QueryFile
  */
-/*
 function mapFnToQueryFile(obj, quien) {
    const bookingQueryFiles = Object.fromEntries(
       Object.entries(obj).map(([k, v], i) => [k, v()])
@@ -160,7 +112,7 @@ function mapFnToQueryFile(obj, quien) {
    )
    return bookingQueryFiles
 }
-*/
+
 //////////////////////////////////////////////////////////
 // Example of statically initializing ColumnSet objects:
 //TODO: revisar
@@ -205,10 +157,10 @@ Entonces, cambio la función que puse al principio del comentario por esto:
       sql('/src/lib/pg-promise/sql/bookings/findBookingDatesOnRange.sql'),
    }  
 y en el constructor de BookingsRepository hago esto:
-   BookingsRepository.bookingQueryFiles = mapObject(bookings)
+   this.#bookingQueryFiles = mapObject(bookings)
 mapObject va a recorrer el objeto bookings y va a devolver otro objeto con las mismas keys pero los valores, ahora, no son
-la funciones, sino la ejecuión de las mismas. Así, BookingsRepository.bookingQueryFiles va a almacenar en cada key el objeto QueryFile
-y a éllos se accede con BookingsRepository.bookingQueryFiles.findBookingDatesOnRange, evitando así crear un nuevo objeto QueryFile cada vez
+la funciones, sino la ejecuión de las mismas. Así, this.#bookingQueryFiles va a almacenar en cada key el objeto QueryFile
+y a éllos se accede con this.#bookingQueryFiles.findBookingDatesOnRange, evitando así crear un nuevo objeto QueryFile cada vez
 que se llama a un método de BookingsRepository. OLE!
 */
 
