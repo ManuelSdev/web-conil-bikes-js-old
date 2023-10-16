@@ -1,4 +1,5 @@
 // @ts-nocheck
+
 import { getBookingOnDate } from '@/utils/crudApiFns/bookings'
 import React from 'react'
 
@@ -17,12 +18,14 @@ import { mappedBookingState } from '@/utils/app/functions'
 import Link from 'next/link'
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/decodeURIComponent
 
-export default async function BookingListPage({ params }) {
+export default async function BookingList({ bookings }) {
+   /*
    const { date: encodedDate } = params
    const date = decodeURIComponent(encodedDate)
    const res = await getBookingOnDate(date)
    const { bookings } = await res.json()
-   // console.log('BookingListPage  bookings-> ', bookings)
+   */
+   //console.log('BookingListPage  bookings-> ', bookings)
 
    const setType = (booking) => {
       if (booking.state === PENDING) {

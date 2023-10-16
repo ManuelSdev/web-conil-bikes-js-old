@@ -14,15 +14,19 @@ import { useRouter } from 'next/navigation'
 
 const urlParams = (obj) => new URLSearchParams(obj)
 
-export default function CalendarHandler({ bookingDates: initialBookingDates }) {
-   //console.log('initialBookingDates en CalendarHandler -> ',      initialBookingDates   )
+export default function CalendarHandlerUrl({
+   bookingDates: initialBookingDates,
+}) {
+   //console.log('CalendarHandlerUrl *************************')
+   //console.log('initialBookingDates en CalendarHandler -> ', initialBookingDates  )
    const router = useRouter()
    const [bookingDates, setBookingDates] = React.useState(initialBookingDates)
 
    const [dateRange, setDateRange] = useState('')
 
    const handleSelect = (date) => {
-      router.push(`/dashboard/bookings/list/${date.toISOString()}`)
+      const params = urlParams({ date: date.toISOString() })
+      router.push(`/dashboard/bookings?${params}`)
    }
    const handeDateRange = (displayMonth) => {
       const dateRange = createDateRangeString({

@@ -74,12 +74,26 @@ export default class BookingsRepository {
       //TODO: revisar si esto de abajo debe llevar await
       //https://github.com/vitaly-t/pg-promise#named-parameters
       //console.log('BookingsRepository.#bookingQueryFiles -> ',BookingsRepository.bookingQueryFiles)
-      return this.db.one(
+      const dates = await this.db.one(
          BookingsRepository.bookingQueryFiles.findBookingDatesOnRange,
          {
             dateRange,
          }
       )
+      console.log(
+         'res en BookingsRepository.findBookingDatesOnRange -> ',
+         dates
+      )
+      dates.startdates ??= []
+      dates.enddates ??= []
+      dates.startenddates ??= []
+      const {
+         startdates: startDates,
+         enddates: endDates,
+         startenddates: startEndDates,
+      } = dates
+      const bookingDates = { startDates, endDates, startEndDates }
+      return bookingDates
    }
 
    async findBookingOnDate(date) {
@@ -94,6 +108,7 @@ export default class BookingsRepository {
          }
       )
    }
+
    async findBookingById(bookingId) {
       //console.log('query -----------> ',this.pgp.as.format(bookings.findBookingDatesOnRange, { dateRange }))
       //TODO: revisar si esto de abajo debe llevar await
@@ -127,6 +142,18 @@ export default class BookingsRepository {
          return res
       }
       return await this.db.task('task-booking-bikes', task)
+   }
+   async findBookingPageData({ dateRange, date }) {
+      //console.log('findBookingWithBikesById llamada por ----> ', quien)
+      const task = async () => {
+         //  console.log(' findBookingWithBikesById ---> this.db.task')
+         const bookingDates = await this.findBookingDatesOnRange(dateRange)
+         const bookings = await this.findBookingOnDate(date)
+         const res = { bookingDates, bookings }
+         //const res = booking
+         return res
+      }
+      return await this.db.task('task-booking-page', task)
    }
 }
 

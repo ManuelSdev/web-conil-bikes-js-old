@@ -9,17 +9,15 @@ export async function getBookingDatesInRange(dateRange) {
       console.log(
          '///////////////////********************** TRYddd *****************//////////////////'
       )
-      const dates = await db.bookings.findBookingDatesOnRange(dateRange)
+      const bookingDates = await db.bookings.findBookingDatesOnRange(dateRange)
       /*
       const bookingDatesObj = await db.one(bookings.findBookingDatesOnRange(), {
          user_id: 2,
       })
       */
-      console.log('res en SERVER ****************-> ', dates)
-      console.log(
-         '@@@ CRUD api/getBookingDatesInRange RES bookingDatesObj -> ',
-         dates
-      )
+      console.log('res en SERVER ****************-> ', bookingDates)
+      //console.log('@@@ CRUD api/getBookingDatesInRange RES bookingDatesObj -> ', dates)
+      /*
       dates.startdates ??= []
       dates.enddates ??= []
       dates.startenddates ??= []
@@ -29,6 +27,7 @@ export async function getBookingDatesInRange(dateRange) {
          startenddates: startEndDates,
       } = dates
       const bookingDates = { startDates, endDates, startEndDates }
+      */
       //const data = await res.json()
       //  console.log('data en SERVER ****************-> ', data)
       // console.log('date -> ', data)
@@ -42,9 +41,7 @@ export async function getBookingDatesInRange(dateRange) {
 export async function getBookingOnDate(date) {
    try {
       const db = client()
-      console.log(
-         '///////////////////********************** TRYddd *****************//////////////////'
-      )
+      // console.log('///***** TRYddd ****///')
 
       const bookings = await db.bookings.findBookingOnDate(date)
       /*
@@ -52,11 +49,8 @@ export async function getBookingOnDate(date) {
          user_id: 2,
       })
       */
-      console.log('res en SERVER **************** bookings   -> ', bookings)
-      console.log(
-         '@@@ CRUD api/getBookingDatesInRange RES bookingDatesObj -> ',
-         bookings
-      )
+      // console.log('res en SERVER **************** bookings   -> ', bookings)
+      //console.log('api/getBookingDatesInRange RES -> ', bookings)
 
       //const data = await res.json()
       //  console.log('data en SERVER ****************-> ', data)
@@ -126,6 +120,31 @@ export async function getBookingWithBikesById(bookingId) {
       )
 
       return NextResponse.json({ booking, bikes }, { status: 201 })
+   } catch (error) {
+      console.log(
+         '### ERROR db.bookings.getBookingWithBikesById(bookingId) -> ',
+         error
+      )
+   }
+}
+
+export async function getBookingPageData({ dateRange, date }) {
+   try {
+      //  console.log('== CREA CLIENTE EN getBookingWithBikesById')
+      const db = client()
+      //console.log('== CLIENTE CREADO EN  getBookingWithBikesById --> AWAIT findBookingWithBikesById')
+      const { bookingDates, bookings } = await db.bookings.findBookingPageData({
+         dateRange,
+         date,
+      })
+      //   booking.dateRange = JSON.parse(booking.dateRange)
+
+      console.log(
+         '################# res en SERVER  getBookingBikes   -> ',
+         bookingDates
+      )
+
+      return NextResponse.json({ bookingDates, bookings }, { status: 201 })
    } catch (error) {
       console.log(
          '### ERROR db.bookings.getBookingWithBikesById(bookingId) -> ',

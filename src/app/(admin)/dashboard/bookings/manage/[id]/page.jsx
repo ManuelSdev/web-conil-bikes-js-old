@@ -18,7 +18,7 @@ export default async function BookingListPage({ params }) {
    const res = await getBookingWithBikesById(id)
    const { booking, bikes } = await res.json()
 
-   console.log('BookingListPage  bookings-> ', bikes)
+   //console.log('BookingListPage  bookings-> ', bikes)
 
    return (
       <div>
