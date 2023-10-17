@@ -80,10 +80,7 @@ export default class BookingsRepository {
             dateRange,
          }
       )
-      console.log(
-         'res en BookingsRepository.findBookingDatesOnRange -> ',
-         dates
-      )
+      //console.log('BookingsRepository.findBookingDatesOnRange -> ', dates)
       dates.startdates ??= []
       dates.enddates ??= []
       dates.startenddates ??= []
@@ -153,7 +150,33 @@ export default class BookingsRepository {
          //const res = booking
          return res
       }
+      const task1 = async () => {
+         //  console.log(' findBookingWithBikesById ---> this.db.task')
+         const bookingDates = await this.findBookingDatesOnRange(dateRange)
+
+         const res = { bookingDates }
+         //const res = booking
+         return res
+      }
+      const task2 = async () => {
+         //  console.log(' findBookingWithBikesById ---> this.db.task')
+
+         const bookings = await this.findBookingOnDate(date)
+         const res = { bookings }
+         //const res = booking
+         return res
+      }
+
       return await this.db.task('task-booking-page', task)
+      const cnd = (c) => {
+         console.log('@@@@@@@@@@@@@@@@@@@@@@@@@ task context ----> ', c.ctx)
+         // c.ctx - task/tx context (not available on the top level)
+         // default condition: return !c.ctx;
+         return true
+      }
+      return await this.db.taskIf({ cnd }, (t1) => {
+         const bookingDates = this.findBookingDatesOnRange(dateRange)
+      })
    }
 }
 

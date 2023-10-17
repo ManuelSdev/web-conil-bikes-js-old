@@ -82,7 +82,8 @@ export default function CustomDay({ date, displayMonth, ...props }) {
          // @ts-ignore
          //'bg-sky-400'
          [bookedClassName]: true,
-         'text-inherit animate-pulse bg-slate-200': isLoading,
+         //TODO: descomenta para animar
+         // 'text-inherit animate-pulse bg-slate-200': isLoading,
          //    'hover:bg-red-500': true,
       }),
    }
@@ -140,8 +141,10 @@ function calendarCellClass({ date, bookingDatesOnMonth }) {
       }, '')
 
    const getClassName = () => {
-      // lista de 3 elementos: un className válido y dos strings vacios ''
-      const classNameList = keyNames.map((key) =>
+      const keysArray = Object.keys(bookingDatesOnMonth)
+      // keysArray = ['startDates', 'endDates', 'startEndDates']
+      // devuelve lista de 3 elementos: un className válido y dos strings vacios ''
+      const classNameList = keysArray.map((key) =>
          assignClassNamesIfMatch({
             bookingDateList: bookingDatesOnMonth[key],
             className: classNames[key],

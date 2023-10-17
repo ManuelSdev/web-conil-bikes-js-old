@@ -98,7 +98,7 @@ export async function getBookingBikes(bookingId) {
       const booking = await db.bookings.findBookingBikesById(bookingId)
       booking.dateRange = JSON.parse(booking.dateRange)
 
-      console.log('res en SERVER  getBookingBikes   -> ', booking)
+      //console.log('res en SERVER  getBookingBikes   -> ', booking)
 
       return NextResponse.json(booking, { status: 201 })
    } catch (error) {
@@ -114,10 +114,7 @@ export async function getBookingWithBikesById(bookingId) {
          await db.bookings.findBookingWithBikesById(bookingId)
       booking.dateRange = JSON.parse(booking.dateRange)
 
-      console.log(
-         '################# res en SERVER  getBookingBikes   -> ',
-         booking
-      )
+      //  console.log(' res en SERVER  getBookingBikes   -> ', booking)
 
       return NextResponse.json({ booking, bikes }, { status: 201 })
    } catch (error) {
@@ -139,10 +136,7 @@ export async function getBookingPageData({ dateRange, date }) {
       })
       //   booking.dateRange = JSON.parse(booking.dateRange)
 
-      console.log(
-         '################# res en SERVER  getBookingBikes   -> ',
-         bookingDates
-      )
+      //   console.log(' res en SERVER  getBookingBikes   -> ', bookingDates)
 
       return NextResponse.json({ bookingDates, bookings }, { status: 201 })
    } catch (error) {

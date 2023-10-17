@@ -18,7 +18,7 @@ import { mappedBookingState } from '@/utils/app/functions'
 import Link from 'next/link'
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/decodeURIComponent
 
-export default async function BookingList({ bookings }) {
+export default async function BookingList({ bookings, date }) {
    /*
    const { date: encodedDate } = params
    const date = decodeURIComponent(encodedDate)
@@ -79,10 +79,11 @@ export default async function BookingList({ bookings }) {
                            }
                         >
                            <Link
-                              href={`/dashboard/bookings/manage/${booking.id}`}
+                              //href={`/dashboard/bookings/manage/${booking.id}`}
+                              href={`/dashboard/bookings/${date}/${booking.id}`}
                               className="text-indigo-600 hover:text-indigo-900"
                            >
-                              Ver
+                              Vers
                               <span className="sr-only">, {booking.id}</span>
                            </Link>
                         </TableCell>

@@ -25,8 +25,9 @@ export default function CalendarHandlerUrl({
    const [dateRange, setDateRange] = useState('')
 
    const handleSelect = (date) => {
-      const params = urlParams({ date: date.toISOString() })
-      router.push(`/dashboard/bookings?${params}`)
+      router.push(`/dashboard/bookings/${date.toISOString()}`)
+      // const params = urlParams({ date: date.toISOString() })
+      //  router.push(`/dashboard/bookings?${params}`)
    }
    const handeDateRange = (displayMonth) => {
       const dateRange = createDateRangeString({
