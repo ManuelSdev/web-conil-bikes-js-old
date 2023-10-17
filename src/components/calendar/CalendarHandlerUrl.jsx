@@ -21,7 +21,7 @@ export default function CalendarHandlerUrl({
    //console.log('initialBookingDates en CalendarHandler -> ', initialBookingDates  )
    const router = useRouter()
    const [bookingDates, setBookingDates] = React.useState(initialBookingDates)
-
+   const [number, setNumber] = useState(0)
    const [dateRange, setDateRange] = useState('')
 
    const handleSelect = (date) => {
@@ -35,6 +35,7 @@ export default function CalendarHandlerUrl({
          fromDate: displayMonth,
          outsideDates: true,
       })
+      setNumber(number + 1)
       setDateRange(dateRange)
       // refetch()
    }
@@ -55,28 +56,31 @@ export default function CalendarHandlerUrl({
    const handleMonthChange = (displayMonth) => handeDateRange(displayMonth)
    return (
       // @ts-ignore
-      <Calendar
-         locale={es}
-         mode="single"
-         // selected={date}
-         onSelect={handleSelect}
-         showOutsideDays={true}
-         //   className="rounded-md border"
-         onMonthChange={handleMonthChange}
-         //disabled={disabledDays}
-         // useDayRender={customDayRender}
-         components={{
-            Day: CustomDay,
-            // CaptionLabel: CustomCaptionLabel
-            // Row: CustomRow,
-         }}
-         bookingDates={bookingDates}
-         isLoading={isFetching}
-         //  toDate={(o) => console.log(o}
+      <div>
+         <Calendar
+            locale={es}
+            mode="single"
+            // selected={date}
+            onSelect={handleSelect}
+            showOutsideDays={true}
+            //   className="rounded-md border"
+            onMonthChange={handleMonthChange}
+            //disabled={disabledDays}
+            // useDayRender={customDayRender}
+            components={{
+               Day: CustomDay,
+               // CaptionLabel: CustomCaptionLabel
+               // Row: CustomRow,
+            }}
+            bookingDates={bookingDates}
+            isLoading={isFetching}
+            //  toDate={(o) => console.log(o}
 
-         //modifiers={{ booked: bookedDays }}
-         //modifiersClassNames={{booked: 'bg-red-700', selected: 'bg-green-700',}}
-      />
+            //modifiers={{ booked: bookedDays }}
+            //modifiersClassNames={{booked: 'bg-red-700', selected: 'bg-green-700',}}
+         />
+         <div>NUMBER: {number}</div>
+      </div>
    )
 }
 

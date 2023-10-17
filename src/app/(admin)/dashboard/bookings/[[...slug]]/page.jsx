@@ -17,7 +17,8 @@ export default async function page({ params }) {
 
    params.slug ??= [`${todayString}`]
    const { slug } = params
-   const [date, bookingId] = slug
+   const [encodedDate, bookingId] = slug
+   const date = decodeURIComponent(encodedDate)
    // @ts-ignore
 
    console.log('CalendarHandlerUrl day  -> ', date)
@@ -39,13 +40,7 @@ export default async function page({ params }) {
    }
    console.log('Bookings Page *************************')
    return (
-      <div className="flex">
-         <div className="flex-none">
-            {' '}
-            <Card {...cardProps}>
-               <CalendarHandlerUrl bookingDates={bookingDates} />
-            </Card>
-         </div>
+      <div className="flex flex-initial ">
          <div className="flex-initial ">
             {' '}
             <BookingList bookings={bookings} />
