@@ -1,4 +1,4 @@
-import BookingTabs from '@/components/BookingTabs'
+import BookingTabs from '@/components/tabs/BookingTabs'
 import { getBookingWithBikesById } from '@/utils/crudApiFns/bookings'
 import React from 'react'
 

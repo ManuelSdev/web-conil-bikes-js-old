@@ -1,4 +1,4 @@
-import BookingList from '@/components/bookings/BookingList'
+import BookingList from '@/components/table/BookingList'
 import { getBookingOnDate } from '@/utils/crudApiFns/bookings'
 import React from 'react'
 

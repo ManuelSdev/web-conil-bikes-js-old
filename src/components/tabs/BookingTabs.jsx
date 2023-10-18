@@ -1,17 +1,18 @@
 'use client'
 import React from 'react'
-import { TabGroup, TabList, TabPanels } from '@/components/tabs'
+
 import {
    BuildingOfficeIcon,
    CreditCardIcon,
    UserIcon,
    IdentificationIcon,
 } from '@heroicons/react/20/solid'
-import Data from './Data'
-import DualColumnData from './Data'
+import Data from './DualColumnData'
+import DualColumnData from './DualColumnData'
 import { mappedBookingState } from '@/utils/app/functions'
 import { format } from 'date-fns'
 import BookingBikesTab from './BookingBikesTab'
+import { TabGroup, TabList, TabPanels } from './tabs'
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/decodeURIComponent
 
 const tabs = [
