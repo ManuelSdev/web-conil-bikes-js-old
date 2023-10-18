@@ -15,7 +15,7 @@ export async function getBookingDatesInRange(dateRange) {
          user_id: 2,
       })
       */
-      console.log('res en SERVER ****************-> ', bookingDates)
+      // console.log('res en SERVER ****************-> ', bookingDates)
       //console.log('@@@ CRUD api/getBookingDatesInRange RES bookingDatesObj -> ', dates)
       /*
       dates.startdates ??= []

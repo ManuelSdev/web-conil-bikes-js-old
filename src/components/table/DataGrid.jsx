@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react'
 import {
    Table,
@@ -28,6 +27,7 @@ export default function DataGrid({ tablePanel, headLabels, tableRows }) {
                         const lastIdx = headLabels.length - 1
                         return (
                            <TableHead
+                              key={idx}
                               className={clsx({
                                  'pl-4 pr-3 sm:pl-6': idx === 0,
                                  'relative py-3.5 pl-3 pr-4 sm:pr-6':

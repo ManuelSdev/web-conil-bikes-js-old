@@ -65,8 +65,8 @@ export default function BookingTabs({ bookingData, bikes }) {
          <TabList tabs={tabs} />
          <TabPanels
             panels={[
-               <Data dataList={dataList} listHeader={listHeader} />,
-               <BookingBikesTab bikes={bikes} />,
+               <Data key={0} dataList={dataList} listHeader={listHeader} />,
+               <BookingBikesTab key={1} bikes={bikes} />,
             ]}
          />
       </TabGroup>
