@@ -132,9 +132,9 @@ export default class BookingsRepository {
       //console.log('findBookingWithBikesById llamada por ----> ', quien)
       const task = async () => {
          //  console.log(' findBookingWithBikesById ---> this.db.task')
-         const booking = await this.findBookingById(bookingId)
+         const bookingData = await this.findBookingById(bookingId)
          const bikes = await this.findBookingBikesById(bookingId)
-         const res = { booking, bikes }
+         const res = { bookingData, bikes }
          //const res = booking
          return res
       }

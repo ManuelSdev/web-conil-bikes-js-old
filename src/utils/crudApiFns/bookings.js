@@ -110,13 +110,13 @@ export async function getBookingWithBikesById(bookingId) {
       //  console.log('== CREA CLIENTE EN getBookingWithBikesById')
       const db = client()
       //console.log('== CLIENTE CREADO EN  getBookingWithBikesById --> AWAIT findBookingWithBikesById')
-      const { booking, bikes } =
+      const { bookingData, bikes } =
          await db.bookings.findBookingWithBikesById(bookingId)
-      booking.dateRange = JSON.parse(booking.dateRange)
+      bookingData.dateRange = JSON.parse(bookingData.dateRange)
 
       //  console.log(' res en SERVER  getBookingBikes   -> ', booking)
 
-      return NextResponse.json({ booking, bikes }, { status: 201 })
+      return NextResponse.json({ bookingData, bikes }, { status: 201 })
    } catch (error) {
       console.log(
          '### ERROR db.bookings.getBookingWithBikesById(bookingId) -> ',

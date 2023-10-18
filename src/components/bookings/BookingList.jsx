@@ -18,7 +18,9 @@ import { mappedBookingState } from '@/utils/app/functions'
 import Link from 'next/link'
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/decodeURIComponent
 
-export default async function BookingList({ bookings, date }) {
+const urlParams = (obj) => new URLSearchParams(obj)
+
+export default async function BookingList({ bookings, urlDate }) {
    /*
    const { date: encodedDate } = params
    const date = decodeURIComponent(encodedDate)
@@ -38,7 +40,7 @@ export default async function BookingList({ bookings, date }) {
       }
    }
 
-   return (
+   return bookings ? (
       <div className="px-4 sm:px-6 lg:px-8">
          <TablePanel
             title={'Users'}
@@ -80,7 +82,10 @@ export default async function BookingList({ bookings, date }) {
                         >
                            <Link
                               //href={`/dashboard/bookings/manage/${booking.id}`}
-                              href={`/dashboard/bookings/${date}/${booking.id}`}
+                              href={`/dashboard/bookings?${urlParams({
+                                 date: urlDate,
+                                 bookingId: booking.id,
+                              })}`}
                               className="text-indigo-600 hover:text-indigo-900"
                            >
                               Vers
@@ -93,5 +98,7 @@ export default async function BookingList({ bookings, date }) {
             </Table>
          </TableWrapper>
       </div>
+   ) : (
+      <div>no hay bookings</div>
    )
 }

@@ -24,10 +24,11 @@ export default function CalendarHandlerUrl({
    const [number, setNumber] = useState(0)
    const [dateRange, setDateRange] = useState('')
 
-   const handleSelect = (date) => {
-      router.push(`/dashboard/bookings/${date.toISOString()}`)
-      // const params = urlParams({ date: date.toISOString() })
-      //  router.push(`/dashboard/bookings?${params}`)
+   const handleSelect = (selectedDay) => {
+      const date = selectedDay.toISOString()
+      // router.push(`/dashboard/bookings/${date.toISOString()}`)
+      const params = urlParams({ date })
+      router.push(`/dashboard/bookings?${params}`)
    }
    const handeDateRange = (displayMonth) => {
       const dateRange = createDateRangeString({
