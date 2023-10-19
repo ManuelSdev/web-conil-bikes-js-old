@@ -5,7 +5,7 @@ import Image from 'next/image'
 export default function ImageCard({ src, label, title, text }) {
    return (
       <div className="w-full rounded-lg border border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-gray-800">
-         <div className="relative h-[200px] w-full overflow-hidden min-[450px]:h-[300px]  min-[900px]:h-[200px]">
+         <div className="relative h-[200px] w-full overflow-hidden min-[450px]:h-[300px]  lg:h-[200px]">
             <Image
                src={src}
                alt=""

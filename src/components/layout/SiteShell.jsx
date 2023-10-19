@@ -42,6 +42,7 @@ export default function SiteShell({ children, sidebarContent }) {
                </div>
                <Container> {children}</Container>
             </main>
+            <footer></footer>
          </div>
       </div>
    )
@@ -49,5 +50,10 @@ export default function SiteShell({ children, sidebarContent }) {
 //<LogoName className={'fill-[#D5FF40] stroke-white'} />
 
 function Container(props) {
-   return <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8" {...props} />
+   return (
+      <div
+         className="Container mx-auto max-w-7xl py-6 sm:px-6 lg:px-8"
+         {...props}
+      />
+   )
 }
