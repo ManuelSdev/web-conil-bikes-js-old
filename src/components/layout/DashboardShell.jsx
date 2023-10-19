@@ -7,7 +7,7 @@ import ModalSidebar from './ModalSidebar'
 import StaticSidebar from './StaticSidebar'
 import React from 'react'
 
-export default function Dashboard({ children, sidebarContent }) {
+export default function DashboardShell({ children, sidebarContent }) {
    const [sidebarOpen, setSidebarOpen] = useState(false)
    return (
       <div>
