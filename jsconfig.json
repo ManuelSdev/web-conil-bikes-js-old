@@ -2,9 +2,11 @@
    "compilerOptions": {
       //https://nextjs.org/docs/app/building-your-application/configuring/absolute-imports-and-module-aliases
       "paths": {
-         "baseUrl": ["."],
-         "@/*": ["./*"]
-         //   "@/*": ["./src/*"]
+         //"baseUrl": ".",
+         //"@/*": ["./*"]
+
+         "@/*": ["./src/*"]
+         //"@/public": ["./public/*"]
       },
       //  "checkJs": true,
       "jsx": "react"

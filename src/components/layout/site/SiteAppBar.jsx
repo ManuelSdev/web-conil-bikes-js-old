@@ -28,7 +28,7 @@ function classNames(...classes) {
 
 export default function SiteAppBar() {
    return (
-      <div className="bg-indigo-600">
+      <div className="fixed z-50 w-full bg-indigo-600">
          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
                <div className="flex items-center">

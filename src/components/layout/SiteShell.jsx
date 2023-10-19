@@ -30,22 +30,24 @@ export default function SiteShell({ children, sidebarContent }) {
             <SiteAppBar setSidebarOpen={setSidebarOpen} />
 
             <main>
-               <div className="min-h-[calc(100vh-64px)] w-full bg-home-main bg-cover bg-fixed bg-[70%] bg-no-repeat min-[900px]:bg-center">
-                  <div className="flex h-full justify-center backdrop-brightness-75">
+               <div className="min-h-[calc(100vh-64px)] w-full bg-home-main bg-cover bg-fixed bg-[70%] bg-no-repeat pt-[64px] min-[900px]:bg-center">
+                  <div className=" flex h-full items-center	 justify-center backdrop-brightness-75">
                      <IconCorpName
                         className={
-                           'h-screen w-full max-w-[1000px] fill-[#D5FF40] stroke-white'
+                           'h-[calc(100vh-64px)]  w-full max-w-[1000px] fill-[#D5FF40] stroke-white '
                         }
                         viewBox={'0 0 654 97'}
                      />
                   </div>
                </div>
-               <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-                  {children}
-               </div>
+               <Container> {children}</Container>
             </main>
          </div>
       </div>
    )
 }
 //<LogoName className={'fill-[#D5FF40] stroke-white'} />
+
+function Container(props) {
+   return <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8" {...props} />
+}

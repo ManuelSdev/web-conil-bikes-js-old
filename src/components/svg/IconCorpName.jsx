@@ -1,6 +1,6 @@
-import LogoCorp from '@/public/corpName.svg'
-import { cn } from '@/src/utils/app/functions'
-
+import LogoCorp from '../../../public/corpName.svg'
+import { cn } from '@/utils/app/functions'
+//https://stackoverflow.com/questions/76301842/how-do-i-import-an-animated-svg-file-in-next-js-13-while-maintaining-transparenc
 const IconCorpName = ({ className, ...props }) => (
    <svg
       width="650"
