@@ -11,7 +11,7 @@ const IconCorpLogo = ({ className, ...props }) => (
       fill="none"
       height="1024pt"
       className={cn(
-         'border-greenCorp fill-greenCorp  mx-auto h-6 w-6 rounded-[25%_10%] border-4 border-solid bg-black ',
+         'mx-auto h-6  w-6 rounded-[25%_10%] border-4 border-solid border-greenCorp bg-black fill-greenCorp ',
          className
       )}
       {...props}
@@ -21,7 +21,7 @@ const IconCorpLogo = ({ className, ...props }) => (
             <rect width="1365.333" height="1024" />
          </clipPath>
       </defs>
-      <g clip-path="url(#_clipPath_e7qLN8q95Pzejz9WSAMf1sDyo1y5kCoM)">
+      <g clipPath="url(#_clipPath_e7qLN8q95Pzejz9WSAMf1sDyo1y5kCoM)">
          <g>
             <clipPath id="_clipPath_Eobv1T5QIsY449vxXXeoSpKDT59wepxn">
                <path
