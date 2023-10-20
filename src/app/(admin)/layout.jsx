@@ -2,7 +2,7 @@ import './admin.css'
 import { Inter } from 'next/font/google'
 import React from 'react'
 import Providers from '@/utils/react-query/providers'
-import AdminDashboardShell from '@/components/layout/admin/AdminDashboardShell'
+import AdminDashboardShell from '@/components/layouts/admin/AdminDashboardShell'
 
 export async function generateStaticParams() {
    return [{ lang: 'es-ES' }]

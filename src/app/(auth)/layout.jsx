@@ -1,8 +1,8 @@
-import '../../globals.css'
+import '@/app/globals.css'
 import { Inter } from 'next/font/google'
 import React from 'react'
 import Providers from '@/utils/react-query/providers'
-import LoginShell from '@/components/login/LoginShell'
+import AuthShell from '@/components/layouts/auth/AuthShell'
 
 export async function generateStaticParams() {
    return [{ lang: 'es-ES' }]
@@ -20,7 +20,7 @@ export default function LoginLayout(props) {
       <html lang="es-ES" dir="ltr" className="h-full bg-red-500">
          <body className="h-full">
             <Providers>
-               <LoginShell {...props} />
+               <AuthShell {...props} />
             </Providers>
          </body>
       </html>

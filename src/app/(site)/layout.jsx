@@ -2,7 +2,7 @@ import '@/app/globals.css'
 import { Inter } from 'next/font/google'
 import React from 'react'
 import Providers from '@/utils/react-query/providers'
-import SiteShell from '@/components/layout/site/SiteShell'
+import SiteShell from '@/components/layouts/site/SiteShell'
 
 export async function generateStaticParams() {
    return [{ lang: 'es-ES' }]

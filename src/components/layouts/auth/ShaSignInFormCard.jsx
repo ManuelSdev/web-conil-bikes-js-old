@@ -1,11 +1,14 @@
 import React from 'react'
-import { Button } from '../ui/button'
-import GoogleIcon from '../svg/GoogleIcon'
+import { Button } from '../../ui/button'
+import GoogleIcon from '../../svg/GoogleIcon'
 import Image from 'next/image'
 //import main from '@/public/main.jpg'
-export default function LoginFormCard({ isAdmin }) {
+export default function SignInFormCard({ isAdmin, label }) {
    return (
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
+         <h2 className="mb-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+            {label}
+         </h2>
          <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
             <form className="space-y-6" action="#" method="POST">
                <div>
