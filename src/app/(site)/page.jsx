@@ -46,8 +46,8 @@ export default function HomePage() {
    return (
       <div className="HomePage  px-8 lg:px-8">
          <div className="mt-16 grid  auto-rows-fr grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-            {cards.map((card) => (
-               <ImageCard {...card} />
+            {cards.map((card, idx) => (
+               <ImageCard key={idx} {...card} />
             ))}
          </div>
       </div>
