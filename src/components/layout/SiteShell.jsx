@@ -9,6 +9,7 @@ import React from 'react'
 import SiteAppBar from './site/SiteAppBar'
 import Image from 'next/image'
 import IconCorpName from '../svg/IconCorpName'
+import SiteHeader from './site/SiteHeader'
 //import IconCorpName from '../svg/IconCorpName'
 //import LogoName from '../svg/LogoName'
 

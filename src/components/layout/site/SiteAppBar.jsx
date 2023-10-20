@@ -21,25 +21,28 @@ const userNavigation = [
    { name: 'Settings', href: '#' },
    { name: 'Sign out', href: '#' },
 ]
-
+LA
 function classNames(...classes) {
    return classes.filter(Boolean).join(' ')
 }
 
 export default function SiteAppBar() {
    return (
-      <div className="fixed z-50 w-full bg-indigo-600">
-         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="flex h-16 items-center justify-between">
-               <div className="flex items-center">
-                  <div className="flex-shrink-0">
+      <header className="HEADER-1 fixed z-50 w-full bg-black">
+         <nav className="NAV mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="HEADER-3 h-header flex items-center justify-between gap-8">
+               {/**LOGO Y BOTONERA +MD */}
+               <div className="HEADER-4 flex w-full items-center justify-between">
+                  {/* LOGO */}
+                  <div className="LOGO flex-shrink-0">
                      <img
                         className="h-8 w-8"
                         src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
                         alt="Your Company"
                      />
                   </div>
-                  <div className="hidden md:block">
+                  {/**BOTONERA +md */}
+                  <div className="BUTTONS hidden md:block">
                      <div className="ml-10 flex items-baseline space-x-4">
                         {navigation.map((item) => (
                            <a
@@ -47,8 +50,8 @@ export default function SiteAppBar() {
                               href={item.href}
                               className={classNames(
                                  item.current
-                                    ? 'bg-indigo-700 text-white'
-                                    : 'text-white hover:bg-indigo-500 hover:bg-opacity-75',
+                                    ? 'text-greenCorp bg-indigo-700 '
+                                    : 'text-greenCorp  hover:bg-indigo-500 hover:bg-opacity-75',
                                  'rounded-md px-3 py-2 text-sm font-medium'
                               )}
                               aria-current={item.current ? 'page' : undefined}
@@ -59,6 +62,7 @@ export default function SiteAppBar() {
                      </div>
                   </div>
                </div>
+               {/* BOTONERA/Profile +md*/}
                <div className="hidden md:block">
                   <div className="ml-4 flex items-center md:ml-6">
                      <button
@@ -72,7 +76,7 @@ export default function SiteAppBar() {
                   </div>
                </div>
             </div>
-         </div>
-      </div>
+         </nav>
+      </header>
    )
 }
