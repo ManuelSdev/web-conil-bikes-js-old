@@ -2,12 +2,13 @@
 
 import { useState } from 'react'
 
-import AppBar from './AppBar'
-import ModalSidebar from './ModalSidebar'
-import StaticSidebar from './StaticSidebar'
+import ModalSidebar from '../ModalSidebar'
+import StaticSidebar from '../StaticSidebar'
 import React from 'react'
+import { sidebarContent } from '@/custom/sidebarContent'
+import AdminAppBar from './AdminAppBar'
 
-export default function DashboardShell({ children, sidebarContent }) {
+export default function AdminDashboardShell({ children }) {
    const [sidebarOpen, setSidebarOpen] = useState(false)
    return (
       <div>
@@ -21,7 +22,7 @@ export default function DashboardShell({ children, sidebarContent }) {
          <StaticSidebar sidebarContent={sidebarContent} />
 
          <div className="lg:pl-72">
-            <AppBar setSidebarOpen={setSidebarOpen} />
+            <AdminAppBar setSidebarOpen={setSidebarOpen} />
             <main className="py-10">
                <div className="px-4 sm:px-6 lg:px-8">{children}</div>
             </main>

@@ -1,7 +1,8 @@
 import React from 'react'
 import { Button } from '../ui/button'
 import GoogleIcon from '../svg/GoogleIcon'
-
+import Image from 'next/image'
+//import main from '@/public/main.jpg'
 export default function LoginFormCard({ isAdmin }) {
    return (
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">

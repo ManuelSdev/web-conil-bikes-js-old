@@ -1,8 +1,8 @@
 import HomeArticleCard from '@/components/HomeArticleCard'
 import React from 'react'
-import RentImage from '../../../public/images/home/rent.webp'
-import ShopImage from '../../../public/images/home/shop.jpg'
-import RepairImage from '../../../public/images/home/repair.jpg'
+import RentImage from '@/public/images/home/rent.webp'
+import ShopImage from '@/public/images/home/shop.jpg'
+import RepairImage from '@/public/images/home/repair.jpg'
 import ImageCard from '@/components/ImageCard'
 const cards = [
    {

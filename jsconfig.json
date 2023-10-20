@@ -2,9 +2,9 @@
    "compilerOptions": {
       //https://nextjs.org/docs/app/building-your-application/configuring/absolute-imports-and-module-aliases
       "paths": {
-         //"baseUrl": ".",
+         //  "baseUrl": ["."],
          //"@/*": ["./*"]
-
+         "@/public/*": ["./public/*"],
          "@/*": ["./src/*"]
          //"@/public": ["./public/*"]
       },

@@ -2,7 +2,6 @@ import '../../globals.css'
 import { Inter } from 'next/font/google'
 import React from 'react'
 import Providers from '@/utils/react-query/providers'
-import AdminDashboardLayout from '@/components/layout/AdminDashboardLayout'
 import LoginShell from '@/components/login/LoginShell'
 
 export async function generateStaticParams() {

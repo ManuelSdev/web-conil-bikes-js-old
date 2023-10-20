@@ -1,19 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-//import LogoCorp from '@/public/corpName.svg'
-import AppBar from './AppBar'
-import ModalSidebar from './ModalSidebar'
-import StaticSidebar from './StaticSidebar'
+import ModalSidebar from '../ModalSidebar'
 import React from 'react'
-import SiteAppBar from './site/SiteAppBar'
-import Image from 'next/image'
-import IconCorpName from '../svg/IconCorpName'
-import SiteHeader from './site/SiteHeader'
-//import IconCorpName from '../svg/IconCorpName'
-//import LogoName from '../svg/LogoName'
+import SiteAppBar from './SiteAppBar'
+import IconCorpName from '../../svg/IconCorpName'
+import { sidebarContent } from '@/custom/sidebarContent'
 
-export default function SiteShell({ children, sidebarContent }) {
+export default function SiteShell({ children }) {
    const [sidebarOpen, setSidebarOpen] = useState(false)
    return (
       <div>
