@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import React from 'react'
 import Providers from '@/utils/react-query/providers'
 import AuthShell from '@/components/layouts/auth/AuthShell'
+import { Toaster } from '@/components/ui/toaster'
 
 export async function generateStaticParams() {
    return [{ lang: 'es-ES' }]
@@ -21,6 +22,7 @@ export default function LoginLayout(props) {
          <body className="h-full">
             <Providers>
                <AuthShell {...props} />
+               <Toaster />
             </Providers>
          </body>
       </html>

@@ -1,16 +1,18 @@
-import React from 'react'
-import { Button } from '../../ui/button'
-import GoogleIcon from '../../svg/GoogleIcon'
+import React, { Children } from 'react'
 import Image from 'next/image'
+import { Button } from '@/components/ui/button'
+import GoogleIcon from '@/components/svg/GoogleIcon'
 //import main from '@/public/main.jpg'
-export default function SignInFormCard({ isAdmin, label }) {
+export default function SignInFormCard({ isAdmin, label, children }) {
    return (
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
          <h2 className="mb-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             {label}
          </h2>
+
          <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
-            <form className="space-y-6" action="#" method="POST">
+            {children}
+            <form className="mt-11 space-y-6" action="#" method="POST">
                <div>
                   <label
                      htmlFor="email"
@@ -72,28 +74,28 @@ export default function SignInFormCard({ isAdmin, label }) {
                      Sign in
                   </button>
                </div>
-               <div className="flex items-center justify-between">
+            </form>
+            <div className="mt-4 flex items-center justify-between">
+               <div className="text-sm leading-6">
+                  <a
+                     href="#"
+                     className="font-semibold text-indigo-600 hover:text-indigo-500"
+                  >
+                     ¿Olvidaste la contraseña?
+                  </a>
+               </div>
+
+               {isAdmin || (
                   <div className="text-sm leading-6">
                      <a
                         href="#"
                         className="font-semibold text-indigo-600 hover:text-indigo-500"
                      >
-                        ¿Olvidaste la contraseña?
+                        Crear cuenta
                      </a>
                   </div>
-
-                  {isAdmin || (
-                     <div className="text-sm leading-6">
-                        <a
-                           href="#"
-                           className="font-semibold text-indigo-600 hover:text-indigo-500"
-                        >
-                           Crear cuenta
-                        </a>
-                     </div>
-                  )}
-               </div>
-            </form>
+               )}
+            </div>
             {isAdmin || (
                <div>
                   <div className="relative mt-10">
