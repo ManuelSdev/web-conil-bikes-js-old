@@ -6,6 +6,7 @@ import { getBookingDatesInRange } from '@/utils/crudApiFns/bookings'
 import { todayString } from '@/utils/datesFns/today'
 import { redirect } from 'next/navigation'
 const urlParams = (obj) => new URLSearchParams(obj)
+
 export default async function CalendarPage({ params, searchParams }) {
    const { date: encodedDate } = searchParams
    const dateRange = createDateRangeString({ outsideDates: true })

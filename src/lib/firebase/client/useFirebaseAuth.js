@@ -1,13 +1,53 @@
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { app } from './firebaseClient'
 
-import React from 'react'
+import { useState } from 'react'
+import { useCreateSessionCookieMutation } from '@/lib/react-query/apiServices/authApi'
+import { useRouter } from 'next/navigation'
 
 export default function useFirebaseAuth() {
    const auth = getAuth(app)
+   const [loading, setLoading] = useState(false)
+   const router = useRouter()
+   /**
+    * CLAVE: el mutate/createSessionCookie es como si fuera síncrono y solo retorna a las propiedades
+    * que extraigo del hook useCreateSessionCookieMutation. Si lo uso en doCreateSessionCookie, no importa
+    * que asigne el await mutateAsync(accessToken) a una variable: la variable siempre es undefined porque
+    * se lanza el trigger y se sigue ejecutando la función. Tienes que usar la propiedad data
+    * extraida del hook, que es la que registra los cambios de forma asíncrona. Es como que ese await no sirve pa na
+    * EN CAMBIO, el resultado mutateAsync si contiene la data y se puede asignar a una variable.
+    * Además, en mutateAsync el await si hace el efecto de "esperar" a que se resuelva la promesa
+    * CLAVE: básicamente, mutateAsync es una promesa y mutate, aunque asíncrona, no es una promesa
+    * CLAVE: una forma equivalente es usar el mutate pasándole  funciones addicionasles onSucces etc
+    * Es decir, que aparte de las funciones onSuccess etc que puedas definir al llamar al useMutation
+    * en useHookBuilder, tambien puedes pasar otras funciones del mismo tipo al llamar al mutate y
+    * https://tanstack.com/query/latest/docs/react/guides/mutations#mutation-side-effects
+    */
+   const { createSessionCookie, createSessionCookieAsync } =
+      useCreateSessionCookieMutation('diossss')
+   // console.log('isSuccess -> ', isSuccess)
+   // console.log('data -> ', data)
+   // const datas = '==================================='
+   const doCreateSessionCookie = async (accessToken) => {
+      try {
+         const { success, resolvedUrl } =
+            await createSessionCookieAsync(accessToken)
+
+         //si crea la cookie session correctamente, borro (deslogo) el estado de auth
+         //en el cliente
+         success && signOut(auth)
+         success && router.push(resolvedUrl)
+      } catch (error) {
+         signOut(auth)
+         console.log('errorrr en doCreateSessionCookie -> ', error)
+         throw error
+      }
+
+      //Y luego mando a la resolvedUrl que me diga el server
+   }
 
    const doSignInWithEmailAndPassword = async ({ email, password }) => {
-      console.log('sssssssssssssssssssssssssssssssss    ', email, password)
+      //  console.log('doSignInWithEmailAndPassword    ', email, password)
       /**
        * Como voy a gestionar la autenticación con cookies de sesión desde el server,
        * no necesito mantener el estado de sesión en el cliente
@@ -24,7 +64,7 @@ export default function useFirebaseAuth() {
        * sacar ese accessToken del usuario, por eso necesito que, por un espacio de tiempo, el estado de auth
        * exista en el cliente para obtener el accessToken con desde onAuthStateChanged
        */
-      // setLoading(true)
+      setLoading(true)
 
       try {
          const userCredential = await signInWithEmailAndPassword(
@@ -34,7 +74,7 @@ export default function useFirebaseAuth() {
          )
          const { user } = userCredential
          const { accessToken, emailVerified } = user
-         console.log('ACCESS TOKEN INICIAL -> ', user)
+         //   console.log('ACCESS TOKEN INICIAL -> ', user)
 
          /**
           * CLAVE: si el email aun no se ha verificado, no se crea la session cookie.
@@ -47,17 +87,18 @@ export default function useFirebaseAuth() {
           * y es necesario recargar un nuevo token que contenga los nuevos custom claims
           */
          //CLAVE https://stackoverflow.com/questions/70073367/js-multiple-nested-try-catch-blocks
-         /*
-         if (emailVerified || email === 'admin@test.com') {
-            const { modified } = await checkCustomClaims(accessToken).unwrap()
 
+         if (emailVerified || email === 'admin@test.com') {
+            //   const { modified } = await checkCustomClaims(accessToken).unwrap()
+            const modified = false
             if (modified) {
                const reloadedToken = await user.getIdToken(true)
-               console.log('ACCESS TOKEN ***RELOADED*** -> ', reloadedToken)
+               //  console.log('ACCESS TOKEN ***RELOADED*** -> ', reloadedToken)
                await doCreateSessionCookie(reloadedToken)
                //return { emailVerified, accessToken: reloadedToken }
             } else {
                await doCreateSessionCookie(accessToken)
+               //       console.log('PUTA DATAAAAAAAAAAAAAAAA -> ', data)
             }
             //Si no hay modificaciones en custom claims, se devuelve el token inicial
 
@@ -68,12 +109,12 @@ export default function useFirebaseAuth() {
             setLoading(false)
             throw error
          }
-*/
+
          //return { emailVerified }
       } catch (err) {
          //    signOut(auth)
          //todo mira que esto retorne ok por si dejas mensaje en ui
-         console.log('PUTO ERROR -> ', err)
+         // console.log('doSignInWithEmailAndPassword ERROR -> ', err)
          const { code } = err
          //  const error = errorHandlerSignMailAndPass(code)
          //  setLoading(false)
@@ -82,5 +123,5 @@ export default function useFirebaseAuth() {
       }
    }
 
-   return { doSignInWithEmailAndPassword }
+   return { loading, doSignInWithEmailAndPassword }
 }

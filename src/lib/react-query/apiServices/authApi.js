@@ -14,6 +14,7 @@ const authAPi = mutationHookBuilder({
                email,
                password,
             }),
+            errotTxt: 'Error on createAccount',
          }),
       },
 
@@ -26,21 +27,24 @@ const authAPi = mutationHookBuilder({
                Authorization: `Bearer ${token}`,
             },
             body: { action: 'checkCustomClaims' },
+            errotTxt: 'Error on checkCustomClaims',
          }),
       },
       createSessionCookie: {
          query: (token) =>
-            console.log(
-               'TOKEN RECIBIDO EN authApi para el header de createSessionCookie -> ',
-               token
-            ) || {
-               url: '/api/auth',
+            //  console.log('TOKEN authApi createSessionCookie -> ', token) ||
+            ({
+               url: '/api/auth/createSessionCookie',
                method: 'POST',
                headers: {
                   Authorization: `Bearer ${token}`,
                },
-               body: { action: 'createSessionCookie' },
-            },
+               //  body: { action: 'createSessionCookie' },
+               body: JSON.stringify({
+                  action: 'createSessionCookie',
+               }),
+               errotTxt: 'Error on createSessionCookie',
+            }),
       },
       userSignOut: {
          query: (role) => ({
@@ -53,6 +57,7 @@ const authAPi = mutationHookBuilder({
       body: 'arrayOfIds',
       */
             body: { cookieName: 'userSession' },
+            errotTxt: 'Error on userSignOut',
          }),
       },
       adminSignOut: {
@@ -60,6 +65,7 @@ const authAPi = mutationHookBuilder({
             url: '/api/auth/sessionLogout',
             method: 'POST',
             body: { cookieName: 'adminSession' },
+            errotTxt: 'Error on adminSignOut',
          }),
       },
    },

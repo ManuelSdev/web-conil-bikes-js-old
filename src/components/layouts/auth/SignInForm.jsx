@@ -19,7 +19,10 @@ import { toast } from '@/components/ui/use-toast'
 import React from 'react'
 import { Checkbox } from '@/components/ui/checkbox'
 import useFirebaseAuth from '@/lib/firebase/client/useFirebaseAuth'
-import { useCreateAccountMutation } from '@/lib/react-query/apiServices/authApi'
+import {
+   useCreateAccountMutation,
+   useCreateSessionCookieMutation,
+} from '@/lib/react-query/apiServices/authApi'
 import { useMutation } from '@tanstack/react-query'
 
 const FormSchema = z.object({
@@ -58,6 +61,8 @@ export function SignInForm() {
    }
 */
    const { createAccount } = useCreateAccountMutation()
+
+   const { createSessionCookie } = useCreateSessionCookieMutation()
    const mutation = useMutation({
       mutationFn: ({ name, phone, email, password }) => {
          return fetch('/api/auth', {
@@ -70,10 +75,13 @@ export function SignInForm() {
    //  console.log('createAccounts ->', createAccount)
    const as = () => {
       console.log('mutation ->', mutation)
-      createAccount({ name: 'a', phone: 0, email: 'b', password: 'c' })
+      //createAccount({ name: 'a', phone: 0, email: 'b', password: 'c' })
+      createSessionCookie(9999)
    }
-   async function onSubmit(data) {
-      console.log('data ->', data)
+   async function onSubmit(data, event) {
+      //console.log('data ->', data)
+      // console.log('ev ->', ev)
+      event.preventDefault()
       const { email, password } = data
       try {
          await doSignInWithEmailAndPassword({ email, password })

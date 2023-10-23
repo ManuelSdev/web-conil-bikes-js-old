@@ -6,7 +6,7 @@ const createHookName = (strEndpointKey) => {
    const restOfLetters = strEndpointKey.slice(1)
    return `use${firstLetter}${restOfLetters}Mutation`
 }
-const createMutationFn = async ({ url, method, headers, body, error }) => {
+const createMutationFn = async ({ url, method, headers, body, errorTxt }) => {
    const response = await fetch(url, {
       method,
       headers,
@@ -14,7 +14,7 @@ const createMutationFn = async ({ url, method, headers, body, error }) => {
    })
 
    if (!response.ok) {
-      throw new ResponseError(error, response)
+      throw new ResponseError(errorTxt, response)
    }
    return await response.json()
 }
@@ -33,7 +33,9 @@ export const useHookBuilder = () => {
 
       const hooksObject = keys.reduce((acc, key) => {
          const hookName = createHookName(key)
-         //         const hook = createHook(key)
+         //OnFnObject es un objeto con las funciones que se ejecutan en el hook
+         //onSuccess, onError, etc
+         //Esto entra cuando llamas al hook ej: useCreateSessionCookieMutation({onSuccess: () => {...}})
          const useHook = () => useCreateHook(endpoints[key], key)
 
          return { ...acc, [hookName]: useHook }
@@ -48,15 +50,34 @@ export const useHookBuilder = () => {
 function useCreateHook(endpoint, endpointName) {
    //  console.log('ENDPOINT -> ', { [endpoint]: 0 })
    const mutation = useMutation({
+      /**
+       * mutationFn se devuelve como mutate. Por eso, los parametros que le pasas a mutate,
+       * que es el trigger de la mutación, se pasan a mutationFn
+       */
       mutationFn: (queryParams) =>
          // console.log('QUERY PARAMS -> ', endpoint.query(queryParams)) ||
          createMutationFn(endpoint.query(queryParams)),
+      /*
+      onError: (error, variables, context) => {
+         // An error happened!
+         console.log(`rolling back optimistic update with id ${context.id}`)
+      },
+      onSuccess: (data, variables, context) => {
+         console.log('MUTATION SUCCESS -> ', data)
+      },
+      onSettled: (data, error, variables, context) => {
+         // Error or success... doesn't matter!
+      },
+      */
    })
    // console.log('MUTATION -> ', mutation)
-   const { mutate } = mutation
-   const useHook = { ...mutation, aaaa: mutate }
+   const { mutate, mutateAsync } = mutation
 
-   return { ...mutation, [endpointName]: mutate }
+   return {
+      ...mutation,
+      [endpointName]: mutate,
+      [endpointName + 'Async']: mutateAsync,
+   }
 }
 
 /**
