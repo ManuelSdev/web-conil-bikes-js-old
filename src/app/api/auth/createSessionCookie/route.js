@@ -61,11 +61,13 @@ async function setCookies(isAdmin, accessToken) {
 }
 
 async function getRedirectUrl(isAdmin, req) {
-   if (isAdmin) return '/dashboard/bookings/calendar'
-   else if (req.headers.has('resolvedUrl')) {
-      const { resolvedUrl } = req.headers.get('resolvedUrl')
+   console.log('***************** req -> ', req.cookies.has('resolvedUrl'))
+   if (isAdmin) return '/dashboard/bookings'
+   else if (req.cookies.has('resolvedUrl')) {
+      const resolvedUrl = req.cookies.get('resolvedUrl')
+      console.log('resolvedUrl -> ', resolvedUrl)
       //borra la cookie
       // res.setHeader('Set-Cookie', `resolvedUrl=0; Max-Age=0`)
-      return resolvedUrl
+      return resolvedUrl.value
    } else return '/'
 }

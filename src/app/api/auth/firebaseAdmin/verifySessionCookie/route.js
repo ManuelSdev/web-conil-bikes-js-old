@@ -7,38 +7,39 @@ export async function GET(req) {
    const searchParams = req.nextUrl.searchParams
    const role = searchParams.get('role')
    const cookieStore = cookies()
-   console.log('cookieStore @@@ ------->', cookieStore)
    const sessionCookie =
       role === 'admin'
          ? cookieStore.get('adminSession')
          : cookieStore.get('userSession')
    console.log(
-      '######################################################### sessionCookie -> ',
+      'ROUTE HANDLER: /api/auth/firebaseAdmin/verifySessionCookie sessionCookie ->',
       sessionCookie
    )
    try {
-      const decodeClaims = await verifySessionCookie(sessionCookie)
+      const decodeClaims = await verifySessionCookie(sessionCookie.value)
 
       const { admin, email } = decodeClaims
-      const res = {}
+      console.log(
+         'ROUTE HANDLER: /api/auth/firebaseAdmin/verifySessionCookie ADMIN ->',
+         admin
+      )
       if (role === 'admin') {
-         if (admin) res.verified = true
+         if (admin) return Response.json({ verified: true })
          if (!admin) {
             const error = {
                code: 'custom',
                message: 'No admin custom claim',
             }
-            res.verified = false
-            res.error = error
+            return Response.json({ verified: false, error })
          }
       }
       if (role === 'user') {
-         res.verified = true
+         return Response.json({ verified: true })
       }
-      return Response.json({ res: 'a' })
+      return Response.json({ verified: true })
    } catch (error) {
       console.log(
-         'ERROR en withGuard: isDashboardPage && adminSession, but...  ->',
+         'ROUTE HANDLER ERROR: /api/auth/firebaseAdmin/verifySessionCookie  ->',
          error
       )
       //return redirectToUnauthorized()

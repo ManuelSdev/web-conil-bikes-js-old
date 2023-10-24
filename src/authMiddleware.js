@@ -1,31 +1,45 @@
-export default async function adminAuthMiddleware(
+import { is } from 'date-fns/locale'
+
+export async function authMiddleware({
+   isAdmin,
    request,
    NextResponse,
-   resolvedUrl
-) {
-   const urlToRedirect = new URL('/auth', request.url)
-   const adminSession = request.cookies.has('adminSession')
-      ? request.cookies.get('adminSession')
+   resolvedUrl,
+}) {
+   const urlToRedirect = isAdmin
+      ? new URL('/auth', request.url)
+      : new URL('/auth/sign-in', request.url)
+
+   const sessionCookie = isAdmin
+      ? request.cookies.has('adminSession')
+         ? request.cookies.get('adminSession')
+         : null
+      : request.cookies.has('userSession')
+      ? request.cookies.get('userSession')
       : null
 
-   if (!adminSession) {
+   if (!sessionCookie) {
       return redirectToLogin(NextResponse, resolvedUrl, urlToRedirect)
    }
    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -> ', request.url)
-   if (adminSession) {
-      const res = await fetch(
-         process.env.URL +
-            '/api/auth/firebaseAdmin/verifySessionCookie?role=admin',
-         {
-            headers: {
-               cookie: `adminSession=${adminSession}`,
-            },
-         }
-      )
-      const { verified, error } = await res.json()
-      if (!verified)
-         return redirectToLogin(NextResponse, resolvedUrl, urlToRedirect)
-   }
+
+   const res = await fetch(
+      process.env.URL +
+         `/api/auth/firebaseAdmin/verifySessionCookie?role=${
+            isAdmin ? 'admin' : 'user'
+         }`,
+      {
+         headers: {
+            cookie: isAdmin
+               ? `adminSession=${sessionCookie.value}`
+               : `userSession=${sessionCookie.value}`,
+         },
+      }
+   )
+   //TODO: termina cuando el mail no está verificado
+   const { verified, error } = await res.json()
+   if (!verified)
+      return redirectToLogin(NextResponse, resolvedUrl, urlToRedirect)
 }
 
 function redirectToLogin(NextResponse, resolvedUrlCookieValue, urlToRedirect) {

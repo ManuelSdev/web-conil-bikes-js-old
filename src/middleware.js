@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
-import adminAuthMiddleware from './adminAuthMiddleware'
-import userAuthMiddleware from './userAuthMiddleware'
+
+import { authMiddleware } from './authMiddleware'
 
 // This function can be marked `async` if using `await` inside
 /**
@@ -18,11 +18,21 @@ export function middleware(request) {
 
    //console.log('middleware -> ', request.nextUrl.pathname)
    if (resolvedUrl.startsWith('/dashboard'))
-      return adminAuthMiddleware(request, NextResponse, resolvedUrl)
+      return authMiddleware({
+         isAdmin: true,
+         request,
+         NextResponse,
+         resolvedUrl,
+      })
    // return NextResponse.redirect(new URL('/about-2', request.url))
 
    if (resolvedUrl.startsWith('/user'))
-      return userAuthMiddleware(request, NextResponse, resolvedUrl)
+      return authMiddleware({
+         isAdmin: false,
+         request,
+         NextResponse,
+         resolvedUrl,
+      })
    // return NextResponse.redirect(new URL('/about-2', request.url))
 
    //return NextResponse.next()
