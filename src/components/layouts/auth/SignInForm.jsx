@@ -24,6 +24,7 @@ import {
    useCreateSessionCookieMutation,
 } from '@/lib/react-query/apiServices/authApi'
 import { useMutation } from '@tanstack/react-query'
+import GoogleIcon from '@/components/svg/GoogleIcon'
 
 const FormSchema = z.object({
    username: z.string().min(2, {
@@ -32,7 +33,8 @@ const FormSchema = z.object({
 })
 
 export function SignInForm() {
-   const { doSignInWithEmailAndPassword } = useFirebaseAuth()
+   const { doSignInWithEmailAndPassword, doSignInWithRedirect } =
+      useFirebaseAuth()
    /*
    const form = useForm<z.infer<typeof FormSchema>>({
       resolver: zodResolver(FormSchema),
@@ -146,6 +148,10 @@ export function SignInForm() {
             />
             <Button className="w-full" type="submit">
                Iniciar sesión
+            </Button>
+            <Button onClick={doSignInWithRedirect} className={'w-full'}>
+               <GoogleIcon className="mr-2 h-6 w-6" />
+               INICIAR SESIÓN CON GOOGLE
             </Button>
          </form>
       </Form>

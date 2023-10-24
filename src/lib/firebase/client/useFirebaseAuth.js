@@ -1,9 +1,17 @@
-import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import {
+   getAuth,
+   signInWithEmailAndPassword,
+   signInWithRedirect,
+   signOut,
+   GoogleAuthProvider,
+} from 'firebase/auth'
 import { app } from './firebaseClient'
 
 import { useState } from 'react'
 import { useCreateSessionCookieMutation } from '@/lib/react-query/apiServices/authApi'
 import { useRouter } from 'next/navigation'
+
+const provider = new GoogleAuthProvider()
 
 export default function useFirebaseAuth() {
    const auth = getAuth(app)
@@ -122,6 +130,17 @@ export default function useFirebaseAuth() {
          // return { error }
       }
    }
+   const doSignInWithRedirect = async (ev) => {
+      //CLAVE evitar bucles con onAuthStateChanged
+      //https://firebase.google.com/docs/auth/web/manage-users?hl=es-419
+      //uso opción 3
+      //https://firebase.google.com/docs/auth/web/redirect-best-practices?hl=es-419#proxy-requests
+      //Solución proxy inverso en next: rewrite en next.config.js
+      //https://stackoverflow.com/questions/75349917/confirmation-of-why-cross-origin-problems-occur-when-using-signinwithredirect-ar
+      //https://community.fly.io/t/reverse-proxy-to-firebase-authentication-for-simple-nextjs-app/12013/2
 
-   return { loading, doSignInWithEmailAndPassword }
+      await signInWithRedirect(auth, provider)
+   }
+
+   return { loading, doSignInWithEmailAndPassword, doSignInWithRedirect }
 }
