@@ -14,7 +14,7 @@ export default async function userAuthMiddleware(
 
    if (userSession) {
       const res = await fetch(
-         '/api/auth/firebaseAdmin/verifySessionCookie/verifySessionCookie?role=user'
+         '/api/auth/firebaseAdmin/verifySessionCookie/?role=user'
       )
       const { verified, error } = await res.json()
       if (!verified)

@@ -4,6 +4,7 @@ import RentImage from '@/public/images/home/rent.webp'
 import ShopImage from '@/public/images/home/shop.jpg'
 import RepairImage from '@/public/images/home/repair.jpg'
 import ImageCard from '@/components/ImageCard'
+import { cookies } from 'next/headers'
 const cards = [
    {
       src: RentImage,
@@ -42,6 +43,8 @@ const cards = [
    },
 ]
 export default function HomePage() {
+   const cookieStore = cookies()
+   console.log('cookieStore ------->', cookieStore)
    //TODO: ajusta responsive
    return (
       <div className="HomePage  px-8 lg:px-8">
