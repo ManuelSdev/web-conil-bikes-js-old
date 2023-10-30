@@ -52,6 +52,7 @@ export default class BookingsRepository {
    static bookingQueryFiles =
       //  console.log(' 2 ### ejecuta OBJECT ENTRIES BookingsRepository ') ||
       Object.fromEntries(Object.entries(bookings).map(([k, v], i) => [k, v()]))
+
    constructor(db, pgp) {
       //  console.log('Constructor &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
       //  super()

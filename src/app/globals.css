@@ -37,7 +37,8 @@
       /* PROPIOS */
       --green-corp: 73, 100%, 63%;
 
-      --header-height: 7rem;
+      --topAppBar-height: 6rem;
+      --bottomAppBar-height: 4rem;
    }
 
    .dark {

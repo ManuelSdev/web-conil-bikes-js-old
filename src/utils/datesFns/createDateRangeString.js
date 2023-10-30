@@ -22,56 +22,72 @@ import { pipe } from '../app/functions'
  */
 //La fecha de entrada es el primer día del mes o null
 //TODO: mira la opcion metiendo locale cuando pruebes otros idiomas
-export default function createDateRangeString({
+export function createDateRangeString({
    fromDate = null,
+   toDate = null,
    outsideDates = false,
 }) {
-   const today = set(new Date(), {
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
-      milliseconds: 0,
-   })
-
-   const fromDateToDateRangeObj = (from) => {
-      // console.log('FROM QUE ENTRA EN fromDateToDateRangeObj -> ', from)
-      const startMonth = from ? startOfMonth(from) : startOfMonth(today)
-      const endMonth = from ? endOfMonth(from) : endOfMonth(today)
-
-      if (!outsideDates) {
-         const dateRanges = from
-            ? { from: from, to: addMonths(from, 1) }
-            : { from: today, to: endOfMonth(today) }
-         const dateRange = { from: startMonth, to: endMonth }
-         // console.log(' setDateRange -> ', dateRange)
-         // console.log(' setDateRangesssssssssss -> ', dateRanges.to.toISOString())
-         return dateRange
-      }
-      if (outsideDates) {
-         const monthStartWeek = startOfWeek(startMonth)
-         const monthEndWeek = endOfISOWeek(endMonth)
-         const dateRange = { from: monthStartWeek, to: monthEndWeek }
-
-         return dateRange
-      }
-   }
-
-   const dateRangeObjToISOStringObj = ({ from, to }) => ({
-      from: from.toISOString(),
-      to: to.toISOString(),
-   })
-
-   const dateRangeISOStringObjToString = ({ from, to }) => `[${from},${to}]`
-
    const createDateRangeString = (fromDate) =>
       pipe(
          fromDateToDateRangeObj,
          dateRangeObjToISOStringObj,
          dateRangeISOStringObjToString
       )(fromDate)
-   const dateRangeString = createDateRangeString(fromDate)
+
+   const convertDateRangeToString = ({ from, to }) =>
+      console.log('=========== pipe from > ', from) ||
+      pipe(
+         dateRangeObjToISOStringObj,
+         dateRangeISOStringObjToString
+      )({ from, to })
+
+   const dateRangeString =
+      fromDate && toDate
+         ? convertDateRangeToString({ from: fromDate, to: toDate })
+         : createDateRangeString(fromDate)
+
    return dateRangeString
 }
+
+function fromDateToDateRangeObj(from) {
+   const today = set(new Date(), {
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+      milliseconds: 0,
+   })
+   // console.log('FROM QUE ENTRA EN fromDateToDateRangeObj -> ', from)
+   const startMonth = from ? startOfMonth(from) : startOfMonth(today)
+   const endMonth = from ? endOfMonth(from) : endOfMonth(today)
+
+   if (!outsideDates) {
+      const dateRanges = from
+         ? { from: from, to: addMonths(from, 1) }
+         : { from: today, to: endOfMonth(today) }
+      const dateRange = { from: startMonth, to: endMonth }
+      // console.log(' setDateRange -> ', dateRange)
+      // console.log(' setDateRangesssssssssss -> ', dateRanges.to.toISOString())
+      return dateRange
+   }
+   if (outsideDates) {
+      const monthStartWeek = startOfWeek(startMonth)
+      const monthEndWeek = endOfISOWeek(endMonth)
+      const dateRange = { from: monthStartWeek, to: monthEndWeek }
+
+      return dateRange
+   }
+}
+
+export function dateRangeObjToISOStringObj({ from, to }) {
+   return {
+      from: from ? from.toISOString() : '',
+      to: to ? to.toISOString() : '',
+   }
+}
+export function dateRangeISOStringObjToString({ from, to }) {
+   return `[${from},${to}]`
+}
+
 /*
 const today = set(new Date(), {
    hours: 0,

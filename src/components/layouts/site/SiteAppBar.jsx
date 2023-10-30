@@ -27,9 +27,9 @@ function classNames(...classes) {
 
 export default function SiteAppBar() {
    return (
-      <header className="HEADER-1 fixed z-50 w-full bg-black">
+      <header className="HEADER-1 fixed z-50  w-full bg-black">
          <nav className="NAV mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="HEADER-3 h-header flex items-center justify-between gap-8">
+            <div className="HEADER-3 flex h-slimTopAppBar items-center justify-between gap-8 md:h-fatTopAppBar">
                {/**LOGO Y BOTONERA +MD */}
                <div className="HEADER-4 flex w-full items-center justify-between">
                   {/* LOGO */}
@@ -49,7 +49,7 @@ export default function SiteAppBar() {
                               href={item.href}
                               className={classNames(
                                  item.current
-                                    ? 'text-greenCorp bg-indigo-700 '
+                                    ? 'bg-indigo-700 text-greenCorp '
                                     : 'text-greenCorp  hover:bg-indigo-500 hover:bg-opacity-75',
                                  'rounded-md px-3 py-2 text-sm font-medium'
                               )}

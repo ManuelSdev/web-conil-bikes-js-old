@@ -35,6 +35,11 @@ export const bookings = {
    findBookingBikesById: () =>
       sql('/src/lib/pg-promise/sql/bookings/findBookingBikesById.sql'),
 }
+export const bikes = {
+   //b: console.log(      'COÑOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO'   ),
+   findAvaiableBikeSizesOnRange: () =>
+      sql('/src/lib/pg-promise/sql/bikes/findAvaiableBikeSizesOnRange.sql'),
+}
 ///////////////////////////////////////////////
 // Helper for linking to external query files;
 function sql(file) {

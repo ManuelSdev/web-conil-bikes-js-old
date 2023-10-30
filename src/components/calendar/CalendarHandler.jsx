@@ -5,7 +5,7 @@ import { es, tr } from 'date-fns/locale'
 
 import Calendar from './Calendar'
 
-import createDateRangeString from '@/utils/datesFns/createDateRangeString'
+import { createDateRangeString } from '@/utils/datesFns/createDateRangeString'
 import { useGetBookingDatesInRange } from '@/utils/react-query/useQuery'
 import CustomCaptionLabel from './CustomCaptionLabel'
 import CustomRow from './CustomRow'

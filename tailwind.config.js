@@ -61,8 +61,24 @@ module.exports = {
             md: 'calc(var(--radius) - 2px)',
             sm: 'calc(var(--radius) - 4px)',
          },
+         headerHeight: {
+            lg: 'var(--header-height)',
+            md: 'calc(var(--header-heights) - 2rem)',
+         },
+
          height: {
-            header: 'var(--header-height)',
+            fatTopAppBar: 'var(--topAppBar-height)',
+            slimTopAppBar: 'calc(var(--topAppBar-height) - 2rem)',
+            fatBarScreen: 'calc(100vh - var(--topAppBar-height))',
+            slimBarScreen: 'calc(100vh - calc(var(--topAppBar-height) - 2rem))',
+         },
+         padding: {
+            fatTopAppBar: 'var(--topAppBar-height)',
+            slimTopAppBar: 'calc(var(--topAppBar-height) - 2rem)',
+         },
+         margin: {
+            fatTopAppBar: 'var(--topAppBar-height)',
+            slimTopAppBar: 'calc(var(--topAppBar-height) - 2rem)',
          },
          keyframes: {
             'accordion-down': {

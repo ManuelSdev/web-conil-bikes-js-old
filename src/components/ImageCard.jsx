@@ -26,7 +26,7 @@ export default function ImageCard({ src, label, title, text }) {
             <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                {text}
             </p>
-            <Link href="/user/bookings"> Ver más</Link>
+            <Link href="/booking?step=0">Ver más</Link>
          </div>
       </div>
    )

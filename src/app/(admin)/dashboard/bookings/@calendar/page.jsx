@@ -1,7 +1,7 @@
 import React from 'react'
 import CalendarHandlerUrl from '@/components/calendar/CalendarHandlerUrl'
 import Card from '@/components/layouts/Card'
-import createDateRangeString from '@/utils/datesFns/createDateRangeString'
+import { createDateRangeString } from '@/utils/datesFns/createDateRangeString'
 import { getBookingDatesInRange } from '@/utils/crudApiFns/bookings'
 import { todayString } from '@/utils/datesFns/today'
 import { redirect } from 'next/navigation'

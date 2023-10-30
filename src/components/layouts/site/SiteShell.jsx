@@ -24,31 +24,9 @@ export default function SiteShell({ children }) {
          <div className="min-h-full">
             <SiteAppBar setSidebarOpen={setSidebarOpen} />
 
-            <main>
-               <div className="min-h-[calc(100vh-64px)] w-full bg-home-main bg-cover bg-fixed bg-[70%] bg-no-repeat pt-[64px] min-[900px]:bg-center">
-                  <div className=" flex h-full items-center	 justify-center backdrop-brightness-75">
-                     <IconCorpName
-                        className={
-                           'h-[calc(100vh-64px)]  w-full max-w-[1000px] fill-[#D5FF40] stroke-white '
-                        }
-                        viewBox={'0 0 654 97'}
-                     />
-                  </div>
-               </div>
-               <Container> {children}</Container>
-            </main>
+            <main>{children}</main>
             <footer></footer>
          </div>
       </div>
-   )
-}
-//<LogoName className={'fill-[#D5FF40] stroke-white'} />
-
-function Container(props) {
-   return (
-      <div
-         className="Container mx-auto max-w-7xl py-6 sm:px-6 lg:px-8"
-         {...props}
-      />
    )
 }
