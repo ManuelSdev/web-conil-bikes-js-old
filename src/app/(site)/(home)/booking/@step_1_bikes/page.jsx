@@ -1,4 +1,5 @@
-import StepOne from '@/components/stepper/StepOne'
+//@ts-nocheck
+import SelectBikesStep from '@/components/stepper/step_1/SelectBikesStep'
 import { getAvaiableBikeSizesOnRange } from '@/utils/crudApiFns/bikes'
 import {
    createDateRangeString,
@@ -22,5 +23,10 @@ export default async function StepOneBookingPage({ searchParams }) {
    const res = await getAvaiableBikeSizesOnRange(dateRange)
    const { avaiableBikeSizes } = await res.json()
    console.log('dateRange ->', avaiableBikeSizes)
-   return <StepOne dateRange={dateRange} />
+   return (
+      <SelectBikesStep
+         dateRange={dateRange}
+         avaiableBikeSizes={avaiableBikeSizes}
+      />
+   )
 }
