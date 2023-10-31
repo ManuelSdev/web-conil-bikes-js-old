@@ -1,5 +1,5 @@
 import BookingTabs from '@/components/tabs/BookingTabs'
-import { getBookingWithBikesById } from '@/utils/crudApiFns/bookings'
+import { getBookingWithBikesById } from '@/lib/pg-promise/crud/bookings'
 import React from 'react'
 
 export default async function BookingInfoPage({ params, searchParams }) {

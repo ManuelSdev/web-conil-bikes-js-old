@@ -2,9 +2,12 @@ import React from 'react'
 import CalendarHandlerUrl from '@/components/calendar/CalendarHandlerUrl'
 import Card from '@/components/layouts/Card'
 import { createDateRangeString } from '@/utils/datesFns/createDateRangeString'
-import { getBookingDatesInRange } from '@/utils/crudApiFns/bookings'
+
 import { todayString } from '@/utils/datesFns/today'
 import { redirect } from 'next/navigation'
+import { getBookingDatesInRange } from '@/lib/pg-promise/crud/bookings'
+import ReduxProviderWrapper from '@/lib/redux/ReduxProviderWrapper'
+
 const urlParams = (obj) => new URLSearchParams(obj)
 
 export default async function CalendarPage({ params, searchParams }) {

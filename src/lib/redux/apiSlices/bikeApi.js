@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { baseApi } from './baseApi'
 import {
    AVY_RESERVED_BIKES,

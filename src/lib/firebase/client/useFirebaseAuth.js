@@ -8,8 +8,8 @@ import {
 import { app } from './firebaseClient'
 
 import { useState } from 'react'
-import { useCreateSessionCookieMutation } from '@/lib/react-query/apiServices/authApi'
 import { useRouter } from 'next/navigation'
+import { useCreateSessionCookieMutation } from '@/lib/redux/apiSlices/authApi'
 
 const provider = new GoogleAuthProvider()
 
@@ -17,29 +17,15 @@ export default function useFirebaseAuth() {
    const auth = getAuth(app)
    const [loading, setLoading] = useState(false)
    const router = useRouter()
-   /**
-    * CLAVE: el mutate/createSessionCookie es como si fuera síncrono y solo retorna a las propiedades
-    * que extraigo del hook useCreateSessionCookieMutation. Si lo uso en doCreateSessionCookie, no importa
-    * que asigne el await mutateAsync(accessToken) a una variable: la variable siempre es undefined porque
-    * se lanza el trigger y se sigue ejecutando la función. Tienes que usar la propiedad data
-    * extraida del hook, que es la que registra los cambios de forma asíncrona. Es como que ese await no sirve pa na
-    * EN CAMBIO, el resultado mutateAsync si contiene la data y se puede asignar a una variable.
-    * Además, en mutateAsync el await si hace el efecto de "esperar" a que se resuelva la promesa
-    * CLAVE: básicamente, mutateAsync es una promesa y mutate, aunque asíncrona, no es una promesa
-    * CLAVE: una forma equivalente es usar el mutate pasándole  funciones addicionasles onSucces etc
-    * Es decir, que aparte de las funciones onSuccess etc que puedas definir al llamar al useMutation
-    * en useHookBuilder, tambien puedes pasar otras funciones del mismo tipo al llamar al mutate y
-    * https://tanstack.com/query/latest/docs/react/guides/mutations#mutation-side-effects
-    */
-   const { createSessionCookie, createSessionCookieAsync } =
-      useCreateSessionCookieMutation('diossss')
+   const [createSessionCookie] = useCreateSessionCookieMutation()
+
    // console.log('isSuccess -> ', isSuccess)
    // console.log('data -> ', data)
    // const datas = '==================================='
    const doCreateSessionCookie = async (accessToken) => {
       try {
          const { success, resolvedUrl } =
-            await createSessionCookieAsync(accessToken)
+            await createSessionCookie(accessToken).unwrap()
 
          //si crea la cookie session correctamente, borro (deslogo) el estado de auth
          //en el cliente

@@ -1,5 +1,5 @@
 import BookingList from '@/components/table/BookingList'
-import { getBookingOnDate } from '@/utils/crudApiFns/bookings'
+import { getBookingOnDate } from '@/lib/pg-promise/crud/bookings'
 import React from 'react'
 
 export default async function BookingListPage({ params, searchParams }) {

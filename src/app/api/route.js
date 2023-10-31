@@ -1,6 +1,6 @@
+import { getBookingDatesInRange } from '@/lib/pg-promise/crud/bookings'
 import { client } from '@/lib/pg-promise/db'
 import { bookings } from '@/lib/pg-promise/sql'
-import { getBookingDatesInRange } from '@/utils/crudApiFns/bookings'
 import { NextResponse } from 'next/server'
 
 export async function GET(req) {

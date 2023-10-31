@@ -1,7 +1,6 @@
 import '@/app/globals.css'
 import { Inter } from 'next/font/google'
 import React from 'react'
-import Providers from '@/utils/react-query/providers'
 import AuthShell from '@/components/layouts/auth/AuthShell'
 import { Toaster } from '@/components/ui/toaster'
 
@@ -20,10 +19,8 @@ export default function LoginLayout(props) {
    return (
       <html lang="es-ES" dir="ltr" className="h-full bg-red-500">
          <body className="h-full">
-            <Providers>
-               <AuthShell {...props} />
-               <Toaster />
-            </Providers>
+            <AuthShell {...props} />
+            <Toaster />
          </body>
       </html>
    )

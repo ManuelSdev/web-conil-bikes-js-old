@@ -1,6 +1,7 @@
 //@ts-nocheck
 import SelectBikesStep from '@/components/stepper/step_1/SelectBikesStep'
-import { getAvaiableBikeSizesOnRange } from '@/utils/crudApiFns/bikes'
+import { getAvaiableBikeSizesOnRange } from '@/lib/pg-promise/crud/bikes'
+
 import {
    createDateRangeString,
    dateRangeISOStringObjToString,

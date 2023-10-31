@@ -29,7 +29,7 @@ export function createDateRangeString({
 }) {
    const createDateRangeString = (fromDate) =>
       pipe(
-         fromDateToDateRangeObj,
+         fromDateToDateRangeObj(outsideDates),
          dateRangeObjToISOStringObj,
          dateRangeISOStringObjToString
       )(fromDate)
@@ -49,32 +49,34 @@ export function createDateRangeString({
    return dateRangeString
 }
 
-function fromDateToDateRangeObj(from) {
-   const today = set(new Date(), {
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
-      milliseconds: 0,
-   })
-   // console.log('FROM QUE ENTRA EN fromDateToDateRangeObj -> ', from)
-   const startMonth = from ? startOfMonth(from) : startOfMonth(today)
-   const endMonth = from ? endOfMonth(from) : endOfMonth(today)
+function fromDateToDateRangeObj(outsideDates) {
+   return (from) => {
+      const today = set(new Date(), {
+         hours: 0,
+         minutes: 0,
+         seconds: 0,
+         milliseconds: 0,
+      })
+      // console.log('FROM QUE ENTRA EN fromDateToDateRangeObj -> ', from)
+      const startMonth = from ? startOfMonth(from) : startOfMonth(today)
+      const endMonth = from ? endOfMonth(from) : endOfMonth(today)
 
-   if (!outsideDates) {
-      const dateRanges = from
-         ? { from: from, to: addMonths(from, 1) }
-         : { from: today, to: endOfMonth(today) }
-      const dateRange = { from: startMonth, to: endMonth }
-      // console.log(' setDateRange -> ', dateRange)
-      // console.log(' setDateRangesssssssssss -> ', dateRanges.to.toISOString())
-      return dateRange
-   }
-   if (outsideDates) {
-      const monthStartWeek = startOfWeek(startMonth)
-      const monthEndWeek = endOfISOWeek(endMonth)
-      const dateRange = { from: monthStartWeek, to: monthEndWeek }
+      if (!outsideDates) {
+         const dateRanges = from
+            ? { from: from, to: addMonths(from, 1) }
+            : { from: today, to: endOfMonth(today) }
+         const dateRange = { from: startMonth, to: endMonth }
+         // console.log(' setDateRange -> ', dateRange)
+         // console.log(' setDateRangesssssssssss -> ', dateRanges.to.toISOString())
+         return dateRange
+      }
+      if (outsideDates) {
+         const monthStartWeek = startOfWeek(startMonth)
+         const monthEndWeek = endOfISOWeek(endMonth)
+         const dateRange = { from: monthStartWeek, to: monthEndWeek }
 
-      return dateRange
+         return dateRange
+      }
    }
 }
 

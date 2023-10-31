@@ -1,7 +1,6 @@
 import '@/app/globals.css'
 import { Inter } from 'next/font/google'
 import React from 'react'
-import Providers from '@/utils/react-query/providers'
 import SiteShell from '@/components/layouts/site/SiteShell'
 
 export async function generateStaticParams() {
@@ -18,9 +17,7 @@ export default function SiteLayout(props) {
    return (
       <html lang="es-ES" dir="ltr" className="h-full bg-red-500">
          <body className="h-full">
-            <Providers>
-               <SiteShell {...props} />
-            </Providers>
+            <SiteShell {...props} />
          </body>
       </html>
    )

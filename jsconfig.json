@@ -8,7 +8,7 @@
          "@/*": ["./src/*"]
          //"@/public": ["./public/*"]
       },
-      "checkJs": true,
+      // "checkJs": true,
       "jsx": "react"
    }
 }

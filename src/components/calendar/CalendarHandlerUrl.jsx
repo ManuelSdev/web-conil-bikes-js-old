@@ -6,11 +6,11 @@ import { es, tr } from 'date-fns/locale'
 import Calendar from './Calendar'
 
 import { createDateRangeString } from '@/utils/datesFns/createDateRangeString'
-import { useGetBookingDatesInRange } from '@/utils/react-query/useQuery'
 import CustomCaptionLabel from './CustomCaptionLabel'
 import CustomRow from './CustomRow'
 import CustomDay from './CustomDay'
 import { useRouter } from 'next/navigation'
+import { useGetBookingDatesOnRangeQuery } from '@/lib/redux/apiSlices/bookingApi'
 
 const urlParams = (obj) => new URLSearchParams(obj)
 
@@ -44,15 +44,24 @@ export default function CalendarHandlerUrl({
    //console.log('dateRange en CalendarHandler -> ', dateRange)
    //console.log('bookingDates en CalendarHandler -> ', bookingDates)
 
-   const { isInitialLoading, isError, data, error, refetch, isFetching } =
-      useGetBookingDatesInRange(dateRange)
+   const {
+      data: bookingDatesOnMonth,
+      isLoading,
+      isSuccess,
+      refetch,
+      isFetching,
+      originalArgs,
+   } = useGetBookingDatesOnRangeQuery(dateRange, {
+      skip: true,
+      // refetchOnMountOrArgChange: true
+   })
 
-   console.log('data -> ', data)
+   console.log('bookingDatesOnMonth -> ', bookingDatesOnMonth)
 
    useEffect(() => {
       dateRange && refetch()
-      data && setBookingDates(data)
-   }, [dateRange, data])
+      bookingDatesOnMonth && setBookingDates(bookingDatesOnMonth)
+   }, [dateRange, bookingDatesOnMonth])
 
    const handleMonthChange = (displayMonth) => handeDateRange(displayMonth)
    return (
