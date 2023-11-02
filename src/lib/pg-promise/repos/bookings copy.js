@@ -44,7 +44,7 @@ export default class BookingsRepository {
 */
 
    //Los privados se llaman con this.#bookingQueryFiles
-   /*
+
    static mapFnToQueryFile(obj) {
       const bookingQueryFiles = Object.fromEntries(
          Object.entries(obj).map(([k, v], i) => [k, v()])
@@ -60,20 +60,20 @@ export default class BookingsRepository {
    static bookingQueryFiles =
       console.log('2 ### ejecuta OBJECT ENTRIES BookingsRepository ') ||
       Object.fromEntries(Object.entries(bookings).map(([k, v], i) => [k, v()]))
-*/
+
    constructor(db, pgp) {
       //  console.log('Constructor &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
       //  super()
       this.db = db
       this.pgp = pgp
       console.log('*** Instancia BookingsRepository creada')
-
+      /*
       this.bookingQueryFiles =
          console.log('2 ### ejecuta OBJECT ENTRIES BookingsRepository ') ||
          Object.fromEntries(
             Object.entries(bookings).map(([k, v], i) => [k, v()])
          )
-
+         */
       // set-up all ColumnSet objects, if needed:
       // createColumnsets(pgp);
    }
@@ -91,8 +91,8 @@ export default class BookingsRepository {
       //https://github.com/vitaly-t/pg-promise#named-parameters
       //console.log('BookingsRepository.#bookingQueryFiles -> ',BookingsRepository.bookingQueryFiles)
       const dates = await this.db.one(
-         // BookingsRepository.bookingQueryFiles.findBookingDatesInRange,
-         this.bookingQueryFiles.findBookingDatesInRange,
+         BookingsRepository.bookingQueryFiles.findBookingDatesInRange,
+         //  this.bookingQueryFiles.findBookingDatesInRange,
 
          {
             dateRange,
@@ -117,8 +117,8 @@ export default class BookingsRepository {
       //https://github.com/vitaly-t/pg-promise#named-parameters
       //console.log('BookingsRepository.#bookingQueryFiles -> ',BookingsRepository.bookingQueryFiles)
       return this.db.any(
-         // BookingsRepository.bookingQueryFiles.findBookingOnDate,
-         this.bookingQueryFiles.findBookingOnDate,
+         BookingsRepository.bookingQueryFiles.findBookingOnDate,
+         //  this.bookingQueryFiles.findBookingOnDate,
          {
             date,
          }
@@ -132,8 +132,8 @@ export default class BookingsRepository {
       //console.log('BookingsRepository.#bookingQueryFiles -> ',BookingsRepository.bookingQueryFiles)
       // console.log('findBookingById ---> this.db.one')
       return await this.db.one(
-         // BookingsRepository.bookingQueryFiles.findBookingById,
-         this.bookingQueryFiles.findBookingById,
+         BookingsRepository.bookingQueryFiles.findBookingById,
+         //  this.bookingQueryFiles.findBookingById,
          {
             id: bookingId,
          }
@@ -142,8 +142,8 @@ export default class BookingsRepository {
    async findBookingBikesById(bookingId) {
       // console.log('findBookingBikesById ---> this.db.many')
       return await this.db.many(
-         //BookingsRepository.bookingQueryFiles.findBookingBikesById,
-         this.bookingQueryFiles.findBookingBikesById,
+         BookingsRepository.bookingQueryFiles.findBookingBikesById,
+         //this.bookingQueryFiles.findBookingBikesById,
          {
             id: bookingId,
          }
@@ -166,16 +166,16 @@ export default class BookingsRepository {
       const task = async (t) => {
          console.log('*** PRIMERA TASK')
          const bookingData = await t.one(
-            //  BookingsRepository.bookingQueryFiles.findBookingById,
-            this.bookingQueryFiles.findBookingById,
+            BookingsRepository.bookingQueryFiles.findBookingById,
+            //   this.bookingQueryFiles.findBookingById,
             {
                id: bookingId,
             }
          )
          console.log('*** SEGUNDA TASK')
          const bikes = await t.many(
-            //  BookingsRepository.bookingQueryFiles.findBookingBikesById,
-            this.bookingQueryFiles.findBookingBikesById,
+            BookingsRepository.bookingQueryFiles.findBookingBikesById,
+            //this.bookingQueryFiles.findBookingBikesById,
             {
                id: bookingId,
             }

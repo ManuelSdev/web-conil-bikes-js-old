@@ -1,5 +1,6 @@
 import BookingStepper from '@/components/layouts/site/BookingStepper'
 import MobileBottomAppBar from '@/components/layouts/site/MobileBottomAppBar'
+import ReduxProviderWrapper from '@/lib/redux/ReduxProviderWrapper'
 import { CheckIcon } from '@heroicons/react/24/solid'
 
 const steps = [
@@ -16,11 +17,13 @@ export default function Example({
    ...props
 }) {
    return (
-      <div className="pt-slimTopAppBar">
-         {step_0_dates}
-         {step_1_bikes}
-         {step_2_data}
-         {step_3_resume}
-      </div>
+      <ReduxProviderWrapper>
+         <div className="pt-slimTopAppBar">
+            {step_0_dates}
+            {step_1_bikes}
+            {step_2_data}
+            {step_3_resume}
+         </div>
+      </ReduxProviderWrapper>
    )
 }

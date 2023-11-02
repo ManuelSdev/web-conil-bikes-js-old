@@ -1,10 +1,11 @@
 // @ts-nocheck
 
 import pgPromise from 'pg-promise' // pg-promise core library
+import * as pgLib from 'pg-promise'
 //import { Diagnostics } from './diagnostics'; // optional diagnostics
 
 import { dbConfig } from './db-config.js'
-import Bookings from './repos/bookings'
+import Bookings from './repos/bookings.js'
 import Bikes from './repos/bikes'
 //console.log('=================== dbConfig ===================', dbConfig)
 // pg-promise initialization options:
@@ -12,27 +13,32 @@ const initOptions = {
    // Extending the database protocol with our custom repositories;
    // API: http://vitaly-t.github.io/pg-promise/global.html#event:extend
    extend(obj, dc) {
+      console.log('$ dc -> ', dc)
+      dc = 'probando'
       // Database Context (dc) is mainly useful when extending multiple databases with different access API-s.
-
+      console.log('$ initial obj -> ', obj)
       // Do not use 'require()' here, because this event occurs for every task and transaction being executed,
       // which should be as fast as possible.
 
       obj.bookings =
-         console.log('PUTO OBJECT -> ', obj) ||
-         // console.log('1 ### Crea instancia new Bookings db.js') ||
+         //    console.log('PUTO OBJECT  obj.bookings-> ', obj) ||
+         console.log('1 ### Llamada new Bookings db.js') ||
          new Bookings(obj, pgp)
-      obj.bikes = new Bikes(obj, pgp)
+      obj.bikes =
+         //    console.log('PUTO OBJECT  obj.bikes-> ', obj) ||
+         console.log('1 ### Llamada new Bikes db.js') || new Bikes(obj, pgp)
       //obj.users = new Users(obj, pgp);
+      console.log('$ then calls obj -> ', obj)
    },
 
    //imprimir query usando event en lugar de pg monitor
    //https://vitaly-t.github.io/pg-promise/global.html#event:query
    query(ev) {
-      console.log('QUERY ------>', ev.query)
+      //console.log('QUERY ------>', ev.query)
    },
 }
 // Initializing the library:
-const pgp = pgPromise(initOptions)
+const pgp = pgLib(initOptions)
 
 //https://stackoverflow.com/questions/34382796/where-should-i-initialize-pg-promise
 
@@ -50,14 +56,29 @@ const pgp = pgPromise(initOptions)
 const createSingleton = (name, create) => {
    const s = Symbol.for(name)
    let scope = global[s]
+   console.log('scope @@@@@@@@@@@@@@@@@-> ', scope)
    if (!scope) {
       scope = { ...create() }
       global[s] = scope
    }
    return scope
 }
-
-export const client = () => createSingleton('db-space', () => pgp(dbConfig))
+/*
+export const client = () =>
+   console.log('############# LLAMADA client() ############') ||
+   createSingleton('db-space', () => pgp(dbConfig))
+   */
+export function getDB() {
+   return createSingleton('my-app-db-space', () => {
+      return {
+         db: pgp(dbConfig),
+         pgp,
+      }
+   })
+}
+const { db, pgp: a } = getDB()
+//const a = getDB()
+export default db
 
 /**
  * //////////////////////////////// Symbol ////////////////////////////////////////

@@ -10,7 +10,7 @@ import pool from '@/src/lib/pg/db'
  * OBTIENE TODAS LAS BICICLETAS EXCEPTO LAS INCLUIDAS EN RESERVAS ACTIVAS
  * -Busco los size que no son *matchedBikeSn en la tabla bike
  * -Eliminio duplicados
- * -Devuelvo as *avaiableSizes
+ * -Devuelvo as *availableSizes
  *
  */
 
@@ -21,7 +21,7 @@ import pool from '@/src/lib/pg/db'
  */
 
 const text = (dateRange) => `
-WITH AvaiableBikes AS (
+WITH AvailableBikes AS (
   SELECT
     bikeSn,
     bikeSize,
@@ -31,7 +31,7 @@ WITH AvaiableBikes AS (
   WHERE
     bikeSn IN (
       SELECT
-        bikeSn avaiableBikeSn
+        bikeSn availableBikeSn
       FROM
         bike
       WHERE
@@ -60,8 +60,8 @@ WITH AvaiableBikes AS (
     SELECT distinct
       bikeSize
     FROM
-      AvaiableBikes
-      INNER JOIN BikeModel ON AvaiableBikes.bikeModelName = BikeModel.bikeModelName
+      AvailableBikes
+      INNER JOIN BikeModel ON AvailableBikes.bikeModelName = BikeModel.bikeModelName
       ORDER BY
       bikeSize ASC
 `
@@ -72,7 +72,7 @@ const query = (dateRange) => ({
 })
 
 export async function getSizes(filters) {
-   return 'avaiableBikesSizes'
+   return 'availableBikesSizes'
 }
 
 export default async function handler(req, res) {

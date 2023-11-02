@@ -31,7 +31,7 @@ export const bookingApi = baseApi.injectEndpoints({
          query: ({ date }) => BOOKINGS_ON_DATE + `?${urlParams({ date })}`,
          providesTags: ['Booking'],
       }),
-      getBookingDatesOnRange: builder.query({
+      getBookingDatesInRange: builder.query({
          query: ({ from, to }) => `/bookings?${urlParams({ from, to })}`,
          // providesTags: ['User'],
       }),
@@ -71,8 +71,8 @@ export const bookingApi = baseApi.injectEndpoints({
 export const {
    useGetBookingQuery,
    useLazyGetBookingQuery,
-   useGetBookingDatesOnRangeQuery,
-   useLazyGetBookingDatesOnRangeQuery,
+   useGetBookingDatesInRangeQuery,
+   useLazyGetBookingDatesInRangeQuery,
    useGetBookingsOnDateQuery,
    useLazyGetBookingsOnDateQuery,
    useAddBookingMutation,

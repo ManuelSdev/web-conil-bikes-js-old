@@ -1,12 +1,11 @@
 import 'server-only'
 
 import { NextResponse } from 'next/server'
-import db from '@/lib/pg-promise/db'
-//const { db, pgp } = getDB()
+import { client } from '@/lib/pg-promise/db'
 //import { bookings } from '@/lib/pg-promise/sql'
 export async function getBookingDatesInRange(dateRange) {
    try {
-      //   const db = client()
+      const db = client()
       console.log('@@ CRUD FN getBookingDatesInRange @@')
       const bookingDates = await db.bookings.findBookingDatesInRange(dateRange)
       /*
@@ -39,7 +38,7 @@ export async function getBookingDatesInRange(dateRange) {
 
 export async function getBookingOnDate(date) {
    try {
-      //   const db = client()
+      const db = client()
       // console.log('///***** TRYddd ****///')
 
       const bookings = await db.bookings.findBookingOnDate(date)
@@ -63,7 +62,7 @@ export async function getBookingOnDate(date) {
 
 export async function getBookingById(bookingId) {
    try {
-      //    const db = client()
+      const db = client()
       console.log('@@ CRUD FN getBookingById @@')
 
       const booking = await db.bookings.findBookingById(bookingId)
@@ -85,7 +84,7 @@ export async function getBookingById(bookingId) {
 }
 export async function getBookingBikes(bookingId) {
    try {
-      //  const db = client()
+      const db = client()
       console.log('@@ CRUD FN getBookingBikes @@')
 
       const booking = await db.bookings.findBookingBikesById(bookingId)
@@ -101,7 +100,7 @@ export async function getBookingBikes(bookingId) {
 export async function getBookingWithBikesById(bookingId) {
    try {
       //  console.log('== CREA CLIENTE EN getBookingWithBikesById')
-      //  const db = client()
+      const db = client()
       console.log('@@ CRUD FN getBookingWithBikesById @@')
 
       //console.log('== CLIENTE CREADO EN  getBookingWithBikesById --> AWAIT findBookingWithBikesById')
@@ -123,7 +122,7 @@ export async function getBookingWithBikesById(bookingId) {
 export async function getBookingPageData({ dateRange, date }) {
    try {
       //  console.log('== CREA CLIENTE EN getBookingWithBikesById')
-      //  const db = client()
+      const db = client()
       //console.log('== CLIENTE CREADO EN  getBookingWithBikesById --> AWAIT findBookingWithBikesById')
       const { bookingDates, bookings } = await db.bookings.findBookingPageData({
          dateRange,

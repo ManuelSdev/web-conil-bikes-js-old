@@ -36,8 +36,8 @@ export default async function handler(req, res) {
    try {
       const { rows } = await query(text, 'array')
       // console.log('test----------------', rows)
-      const avaiableSizes = rows.flatMap((r) => r)
-      res.status(201).json(avaiableSizes)
+      const availableSizes = rows.flatMap((r) => r)
+      res.status(201).json(availableSizes)
    } catch (err) {
       console.log('ERROR API AVAIABLE SIZES', err.message)
       res.status(500)

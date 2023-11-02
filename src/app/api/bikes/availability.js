@@ -1,7 +1,7 @@
 import { query } from '@/src/lib/pg/db'
 
 const setTexto = (dateRange, size, range, type) => `
-WITH AvaiableBikes AS (
+WITH AvailableBikes AS (
   SELECT DISTINCT
     bike_sn,
     bike_size,
@@ -11,7 +11,7 @@ WITH AvaiableBikes AS (
   WHERE
     bike_sn IN (
       SELECT
-        bike_sn avaiableBikeSn
+        bike_sn availableBikeSn
       FROM
         bike
       WHERE
@@ -58,7 +58,7 @@ SELECT
     model_description AS "modelDesc",
     model_images AS "modelImages"
 FROM
-  AvaiableBikes
+  AvailableBikes
   INNER JOIN SelectedBikeModels USING (model_id)
 GROUP BY
     "modelId",

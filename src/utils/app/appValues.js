@@ -72,7 +72,7 @@ export const BOOKING_OPS_MAP = {
 export const BIKE_STATES_MAP = {
    inUse: 'en uso',
    inRepair: 'en reparación',
-   avaiable: 'disponible',
+   available: 'disponible',
 }
 
 export const EVENTS_MAP = {

@@ -11,18 +11,12 @@ export async function GET(req) {
       role === 'admin'
          ? cookieStore.get('adminSession')
          : cookieStore.get('userSession')
-   console.log(
-      'ROUTE HANDLER: /api/auth/firebaseAdmin/verifySessionCookie sessionCookie ->',
-      sessionCookie
-   )
+   //console.log('HANDLER:verifySessionCookie sessionCookie ->', sessionCookie)
    try {
       const decodeClaims = await verifySessionCookie(sessionCookie.value)
 
       const { admin, email } = decodeClaims
-      console.log(
-         'ROUTE HANDLER: /api/auth/firebaseAdmin/verifySessionCookie ADMIN ->',
-         admin
-      )
+      // console.log('HANDLER: verifySessionCookie ADMIN ->', admin)
       if (role === 'admin') {
          if (admin) return Response.json({ verified: true })
          if (!admin) {

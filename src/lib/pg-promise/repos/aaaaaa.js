@@ -34,18 +34,18 @@ export default class BookingsRepository {
     * - format '[2023-10-04T22:00:00.000Z,2023-10-31T22:59:59.999Z]'
     *
     */
-   async findBookingDatesOnRange(dateRange) {
-      //console.log('query -----------> ',this.pgp.as.format(bookings.findBookingDatesOnRange, { dateRange }))
+   async findBookingDatesInRange(dateRange) {
+      //console.log('query -----------> ',this.pgp.as.format(bookings.findBookingDatesInRange, { dateRange }))
       //TODO: revisar si esto de abajo debe llevar await
       //https://github.com/vitaly-t/pg-promise#named-parameters
       //console.log('BookingsRepository.#bookingQueryFiles -> ',this.#bookingQueryFiles)
-      return this.db.one(this.#bookingQueryFiles.findBookingDatesOnRange, {
+      return this.db.one(this.#bookingQueryFiles.findBookingDatesInRange, {
          dateRange,
       })
    }
 
    async findBookingOnDate(date) {
-      //console.log('query -----------> ',this.pgp.as.format(bookings.findBookingDatesOnRange, { dateRange }))
+      //console.log('query -----------> ',this.pgp.as.format(bookings.findBookingDatesInRange, { dateRange }))
       //TODO: revisar si esto de abajo debe llevar await
       //https://github.com/vitaly-t/pg-promise#named-parameters
       //console.log('BookingsRepository.#bookingQueryFiles -> ',this.#bookingQueryFiles)
@@ -54,12 +54,12 @@ export default class BookingsRepository {
       })
    }
    async findBookingById(bookingId) {
-      //console.log('query -----------> ',this.pgp.as.format(bookings.findBookingDatesOnRange, { dateRange }))
+      //console.log('query -----------> ',this.pgp.as.format(bookings.findBookingDatesInRange, { dateRange }))
       //TODO: revisar si esto de abajo debe llevar await
       //https://github.com/vitaly-t/pg-promise#named-parameters
       //console.log('BookingsRepository.#bookingQueryFiles -> ',this.#bookingQueryFiles)
       console.log(
-         '######################################################################################'
+         '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##############################'
       )
       return this.db.one(this.#bookingQueryFiles.findBookingById, {
          id: bookingId,
@@ -136,31 +136,31 @@ function createColumnsets(pgp) {
 //////////////////////////////// CLAVE GORDA ////////////////////////////////////////
 Si gigo el ejemplo de la demo de pg promise, debería tener esto en /sql/index.js:
    export const bookings = {
-   findBookingDatesOnRange: sql(
-      '/src/lib/pg-promise/sql/bookings/findBookingDatesOnRange.sql'
+   findBookingDatesInRange: sql(
+      '/src/lib/pg-promise/sql/bookings/findBookingDatesInRange.sql'
    ),
    }
 Este mismo archivo con la clase BookingsRepository está importando bookings de /sql/index.js
 Entonces, cada vez que llamas a un método de BookingsRepository, se está ejecutando el código de /sql/index.js
-y se está creando un nuevo objeto bookings con el método findBookingDatesOnRange.
+y se está creando un nuevo objeto bookings con el método findBookingDatesInRange.
 Esto genera el problema de pg promise sobre crear más de una vez un objeto QueryFile para el mismo archivo.
 La solución es crear un campo privado en BookingsRepository que sea un objeto con todos los QueryFile. Si lo pones
 como campo de clase (si #) o en el constructor, en principio no debería haber problema.
 
-Una vez puesto el campo privado, hay que cambiar el método findBookingDatesOnRange para que no ejecute la función
-sql, sino que devuelva la propia funcion sql. Esto es porque el método findBookingDatesOnRange se ejecuta cada vez
+Una vez puesto el campo privado, hay que cambiar el método findBookingDatesInRange para que no ejecute la función
+sql, sino que devuelva la propia funcion sql. Esto es porque el método findBookingDatesInRange se ejecuta cada vez
 que se llama a un método de BookingsRepository, y si ejecuta la función sql, se crea un nuevo objeto QueryFile cada vez.
 
 Entonces, cambio la función que puse al principio del comentario por esto:
    const bookings = {
-   findBookingDatesOnRange: () =>
-      sql('/src/lib/pg-promise/sql/bookings/findBookingDatesOnRange.sql'),
+   findBookingDatesInRange: () =>
+      sql('/src/lib/pg-promise/sql/bookings/findBookingDatesInRange.sql'),
    }  
 y en el constructor de BookingsRepository hago esto:
    this.#bookingQueryFiles = mapObject(bookings)
 mapObject va a recorrer el objeto bookings y va a devolver otro objeto con las mismas keys pero los valores, ahora, no son
 la funciones, sino la ejecuión de las mismas. Así, this.#bookingQueryFiles va a almacenar en cada key el objeto QueryFile
-y a éllos se accede con this.#bookingQueryFiles.findBookingDatesOnRange, evitando así crear un nuevo objeto QueryFile cada vez
+y a éllos se accede con this.#bookingQueryFiles.findBookingDatesInRange, evitando así crear un nuevo objeto QueryFile cada vez
 que se llama a un método de BookingsRepository. OLE!
 */
 

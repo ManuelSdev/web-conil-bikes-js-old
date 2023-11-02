@@ -21,7 +21,7 @@ export async function authMiddleware({
    if (!sessionCookie) {
       return redirectToLogin(NextResponse, resolvedUrl, urlToRedirect)
    }
-   console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -> ', request.url)
+   console.log('@@ auth reques.url -> ', request.url)
 
    const res = await fetch(
       process.env.URL +

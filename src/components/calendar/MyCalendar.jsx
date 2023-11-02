@@ -85,7 +85,7 @@ const colors_Calendar = {
    textDisabled: 'gray',
    textInvalid: 'gray',
    pressed: 'gray-200',
-   unavaiable: 'red-600',
+   unavailable: 'red-600',
    invalid: 'red-600',
    defaultBackground: 'gray-100',
    selected: '#highlighForeground',

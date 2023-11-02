@@ -24,19 +24,19 @@ import {
    SelectValue,
 } from '@/components/ui/select'
 import React from 'react'
-import { sizesList } from '@/utils/app/appValues'
+import { sizesList, typesList } from '@/utils/app/appValues'
+import { capitalizeFirst } from '@/utils/app/functions'
 
-export default function SizeSelect({ form, availableBikeSizes, handleChange }) {
+export default function TypeSelect({ form, avaiableTypes, selectedSize }) {
    return (
       <FormField
          control={form.control}
-         name="size"
+         name="type"
          render={({ field }) => (
-            //   console.log('field -> ', field) ||
             <FormItem>
                <FormLabel>Email</FormLabel>
                <Select
-                  onValueChange={handleChange(field)}
+                  onValueChange={field.onChange}
                   defaultValue={field.value}
                >
                   <FormControl>
@@ -45,19 +45,19 @@ export default function SizeSelect({ form, availableBikeSizes, handleChange }) {
                      </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                     {sizesList.map((elem) => {
-                        const [size, [min, max]] = elem
+                     {typesList.map((type) => {
+                        const [engType, spaType] = type
                         return (
                            <SelectItem
                               disabled={
-                                 availableBikeSizes
-                                    ? !availableBikeSizes.includes(size)
+                                 avaiableTypes
+                                    ? !avaiableTypes.includes(engType)
                                     : true
                               }
-                              key={size}
-                              value={size}
+                              key={engType}
+                              value={engType}
                            >
-                              {`${size.toUpperCase()} - si mides entre ${min} y ${max} cm `}
+                              {capitalizeFirst(spaType)}
                            </SelectItem>
                         )
                      })}

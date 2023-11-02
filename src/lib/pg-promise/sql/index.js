@@ -26,8 +26,8 @@ export const users = {
 */
 export const bookings = {
    //b: console.log(      'COÑOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO'   ),
-   findBookingDatesOnRange: () =>
-      sql('/src/lib/pg-promise/sql/bookings/findBookingDatesOnRange.sql'),
+   findBookingDatesInRange: () =>
+      sql('/src/lib/pg-promise/sql/bookings/findBookingDatesInRange.sql'),
    findBookingOnDate: () =>
       sql('/src/lib/pg-promise/sql/bookings/findBookingOnDate.sql'),
    findBookingById: () =>
@@ -37,8 +37,10 @@ export const bookings = {
 }
 export const bikes = {
    //b: console.log(      'COÑOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO'   ),
-   findAvaiableBikeSizesOnRange: () =>
-      sql('/src/lib/pg-promise/sql/bikes/findAvaiableBikeSizesOnRange.sql'),
+   findAvailableBikeSizesInRange: () =>
+      sql('/src/lib/pg-promise/sql/bikes/findAvailableBikeSizesInRange.sql'),
+   findAvailableBikeTypes: () =>
+      sql('/src/lib/pg-promise/sql/bikes/findAvailableBikeTypes.sql'),
 }
 ///////////////////////////////////////////////
 // Helper for linking to external query files;

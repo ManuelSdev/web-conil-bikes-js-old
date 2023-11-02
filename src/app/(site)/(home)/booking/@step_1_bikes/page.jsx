@@ -1,6 +1,6 @@
 //@ts-nocheck
 import SelectBikesStep from '@/components/stepper/step_1/SelectBikesStep'
-import { getAvaiableBikeSizesOnRange } from '@/lib/pg-promise/crud/bikes'
+import { getAvailableBikeSizesInRange } from '@/lib/pg-promise/crud/bikes'
 
 import {
    createDateRangeString,
@@ -8,8 +8,13 @@ import {
    dateRangeObjToISOStringObj,
 } from '@/utils/datesFns/createDateRangeString'
 import React from 'react'
+import getConfig from 'next/config'
 
 export default async function StepOneBookingPage({ searchParams }) {
+   console.log(
+      '############################################################################### '
+         .getConfig
+   )
    const { from: encodedFromDate, to: encodedToDate, step } = searchParams
 
    if (step !== '1') return null
@@ -21,13 +26,15 @@ export default async function StepOneBookingPage({ searchParams }) {
       from: fromDate,
       to: toDate,
    })
-   const res = await getAvaiableBikeSizesOnRange(dateRange)
-   const { avaiableBikeSizes } = await res.json()
-   console.log('dateRange ->', avaiableBikeSizes)
+   console.log('## CALL getAvailableBikeSizesInRange FROM STEP 1 ##')
+   const res = await getAvailableBikeSizesInRange(dateRange)
+   const { availableBikeSizes } = await res.json()
+   console.log('availableBikeSizes IN PAGE STEP 1 @-> ', availableBikeSizes)
+   //console.log('dateRange ->', availableBikeSizes)
    return (
       <SelectBikesStep
          dateRange={dateRange}
-         avaiableBikeSizes={avaiableBikeSizes}
+         availableBikeSizes={availableBikeSizes}
       />
    )
 }

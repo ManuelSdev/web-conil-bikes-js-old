@@ -1,13 +1,4 @@
 import { baseApi } from './baseApi'
-import {
-   AVY_RESERVED_BIKES,
-   AV_BIKES,
-   AV_RANGES,
-   AV_SIZES,
-   AV_STOCK,
-   AV_TYPES,
-   BIKES,
-} from '../common/constants/routes'
 
 const urlParams = (obj) => new URLSearchParams(obj)
 
@@ -26,31 +17,23 @@ export const bikeApi = baseApi.injectEndpoints({
          }),
       }),
 
-      getAvaiableSizes: builder.query({
-         query: ({ from, to }) =>
-            console.log('sizeeeeeeeeeee') ||
-            AV_SIZES + `?${urlParams({ from, to })}`,
+      getAvailableSizes: builder.query({
+         query: ({ dateRange }) => `bikes/available/${dateRange}`,
       }),
-      getAvaiableStock: builder.query({
+
+      getAvailableTypes: builder.query({
+         query: ({ dateRange, size }) => `bikes/available/${dateRange}/${size}`,
+      }),
+      getAvailableRanges: builder.query({
+         query: ({ dateRange, size, type }) =>
+            `bikes/available/${dateRange}/${size}/${type}`,
+      }),
+      getAvailableStock: builder.query({
          query: ({ from, to }) => AV_STOCK + `?${urlParams({ from, to })}`,
       }),
-      getAvaiableTypes: builder.query({
-         query: ({ from, to, size }) =>
-            AV_TYPES + `?${urlParams({ from, to, size })}`,
-      }),
-      getAvaiableRanges: builder.query({
-         query: ({ from, to, size, type }) =>
-            AV_RANGES +
-            `?${urlParams({
-               from,
-               to,
-               size,
-               type,
-            })}`,
-      }),
-      getAvaiableBikes: builder.query({
+      getAvailableBikes: builder.query({
          query: ({ from, to, size, type, range }) =>
-            console.log('========> RTK query getAvaiableBikes') ||
+            console.log('========> RTK query getAvailableBikes') ||
             AV_BIKES + `?${urlParams({ from, to, size, type, range })}`,
          transformResponse: (response, meta, arg) => {
             const res = response
@@ -62,13 +45,13 @@ export const bikeApi = baseApi.injectEndpoints({
          },
       }),
 
-      getReservedBikeAvailabilityOnRange___: builder.query({
+      getReservedBikeAvailabilityInRange___: builder.query({
          query: ({ from, to, reservedBikes, bookingId }) =>
             AVY_RESERVED_BIKES +
             `?${urlParams({ from, to, reservedBikes, bookingId })}`,
       }),
 
-      getReservedBikeAvailabilityOnRange: builder.query({
+      getReservedBikeAvailabilityInRange: builder.query({
          query: ({ from, to, reservedBikes, bookingId }) => ({
             url: AVY_RESERVED_BIKES,
             method: 'POST',
@@ -80,20 +63,20 @@ export const bikeApi = baseApi.injectEndpoints({
 })
 //const [trigger, result, lastPromiseInfo] = baseApi.endpoints.getSizes.useLazyQuery()
 
-export const useGetAvaiableBikesQueryState =
-   bikeApi.endpoints.getAvaiableBikes.useQueryState
+export const useGetAvailableBikesQueryState =
+   bikeApi.endpoints.getAvailableBikes.useQueryState
 
 export const {
    useGetBikesQuery,
    useGetBikesByIdQuery,
-   useGetAvaiableStockQuery,
-   useGetAvaiableSizesQuery,
-   useGetAvaiableTypesQuery,
-   useLazyGetAvaiableTypesQuery,
-   useLazyGetAvaiableRangesQuery,
-   useGetAvaiableRangesQuery,
-   useGetAvaiableBikesQuery,
-   useLazyGetAvaiableBikesQuery,
-   useGetReservedBikeAvailabilityOnRangeQuery,
-   useLazyGetReservedBikeAvailabilityOnRangeQuery,
+   useGetAvailableStockQuery,
+   useGetAvailableSizesQuery,
+   useGetAvailableTypesQuery,
+   useLazyGetAvailableTypesQuery,
+   useLazyGetAvailableRangesQuery,
+   useGetAvailableRangesQuery,
+   useGetAvailableBikesQuery,
+   useLazyGetAvailableBikesQuery,
+   useGetReservedBikeAvailabilityInRangeQuery,
+   useLazyGetReservedBikeAvailabilityInRangeQuery,
 } = bikeApi

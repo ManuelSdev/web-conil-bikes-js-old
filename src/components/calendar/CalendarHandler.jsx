@@ -8,7 +8,7 @@ import CustomCaptionLabel from './CustomCaptionLabel'
 import CustomRow from './CustomRow'
 import CustomDay from './CustomDay'
 import { useRouter } from 'next/navigation'
-import { useGetBookingDatesOnRangeQuery } from '@/lib/redux/apiSlices/bookingApi'
+import { useGetBookingDatesInRangeQuery } from '@/lib/redux/apiSlices/bookingApi'
 
 const urlParams = (obj) => new URLSearchParams(obj)
 
@@ -42,7 +42,7 @@ export default function CalendarHandler({ bookingDates: initialBookingDates }) {
       refetch,
       isFetching,
       originalArgs,
-   } = useGetBookingDatesOnRangeQuery(dateRange, {
+   } = useGetBookingDatesInRangeQuery(dateRange, {
       skip,
       // refetchOnMountOrArgChange: true
    })
@@ -143,7 +143,7 @@ console.log('lastDayInLastWeek toISOString ->', lastDayInLastWeek.toISOString())
          )
          const { bookingDates } = await res.json()
          console.log(
-            'bookingDatesOnRange en monthChangeHandler ---------------> ',
+            'bookingDatesInRange en monthChangeHandler ---------------> ',
             bookingDates
          )
          setBookingDates(bookingDates)

@@ -17,19 +17,19 @@ import { bikes } from '../sql'
  * bookingsRepository.init()
  */
 export default class BikesRepository {
-   /*
    static bookingQueryFiles =
       console.log('2 ### ejecuta OBJECT ENTRIES BikesRepository ') ||
       Object.fromEntries(Object.entries(bikes).map(([k, v], i) => [k, v()]))
-      */
    constructor(db, pgp) {
       this.db = db
       this.pgp = pgp
       console.log('*** Instancia BikesRepository creada')
 
+      /*
       this.bikesQueryFiles = Object.fromEntries(
          Object.entries(bikes).map(([k, v], i) => [k, v()])
       )
+      */
    }
    /**
     *
@@ -42,8 +42,8 @@ export default class BikesRepository {
       //https://github.com/vitaly-t/pg-promise#named-parameters
       //console.log('BookingsRepository.#bookingQueryFiles -> ',BookingsRepository.bookingQueryFiles)
       const sizes = await this.db.map(
-         //   BikesRepository.bookingQueryFiles.findAvailableBikeSizesInRange,
-         this.bikesQueryFiles.findAvailableBikeSizesInRange,
+         BikesRepository.bookingQueryFiles.findAvailableBikeSizesInRange,
+         //    this.bikesQueryFiles.findAvailableBikeSizesInRange,
          {
             dateRange,
          },
@@ -58,8 +58,8 @@ export default class BikesRepository {
       //https://github.com/vitaly-t/pg-promise#named-parameters
       //console.log('BookingsRepository.#bookingQueryFiles -> ',BookingsRepository.bookingQueryFiles)
       const sizes = await this.db.any(
-         // BikesRepository.bookingQueryFiles.findAvailableBikeTypes,
-         this.bikesQueryFiles.findAvailableBikeTypes,
+         BikesRepository.bookingQueryFiles.findAvailableBikeTypes,
+         //    this.bikesQueryFiles.findAvailableBikeTypes,
          {
             dateRange,
             size,
