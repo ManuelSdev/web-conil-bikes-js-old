@@ -28,7 +28,7 @@ export default async function StepOneBookingPage({ searchParams }) {
    })
    console.log('## CALL getAvailableBikeSizesInRange FROM STEP 1 ##')
    const res = await getAvailableBikeSizesInRange(dateRange)
-   const { availableBikeSizes } = await res.json()
+   const availableBikeSizes = await res.json()
    console.log('availableBikeSizes IN PAGE STEP 1 @-> ', availableBikeSizes)
    //console.log('dateRange ->', availableBikeSizes)
    return (

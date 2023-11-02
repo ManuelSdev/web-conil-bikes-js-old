@@ -27,7 +27,9 @@ import React from 'react'
 import { sizesList, typesList } from '@/utils/app/appValues'
 import { capitalizeFirst } from '@/utils/app/functions'
 
-export default function TypeSelect({ form, avaiableTypes, selectedSize }) {
+export default function TypeSelect({ form, availableBikeTypes, selectedSize }) {
+   console.log('availableBikeTypes IN TypeSelect @->', availableBikeTypes)
+
    return (
       <FormField
          control={form.control}
@@ -50,8 +52,8 @@ export default function TypeSelect({ form, avaiableTypes, selectedSize }) {
                         return (
                            <SelectItem
                               disabled={
-                                 avaiableTypes
-                                    ? !avaiableTypes.includes(engType)
+                                 availableBikeTypes
+                                    ? !availableBikeTypes.includes(engType)
                                     : true
                               }
                               key={engType}

@@ -15,7 +15,7 @@ export async function getAvailableBikeSizesInRange(dateRange) {
       const availableBikeSizes =
          await db.bikes.findAvailableBikeSizesInRange(dateRange)
 
-      return NextResponse.json({ availableBikeSizes }, { status: 201 })
+      return NextResponse.json(availableBikeSizes, { status: 201 })
    } catch (error) {
       console.log('### ERROR CRUD api/getAvailableBikeSizesInRange -> ', error)
    }
@@ -29,8 +29,11 @@ export async function getAvailableBikeTypes({ dateRange, size }) {
          dateRange,
          size,
       })
-
-      return NextResponse.json({ availableBikeTypes }, { status: 201 })
+      console.log(
+         'availableBikeTypes en getAvailableBikeTypes-> ',
+         availableBikeTypes
+      )
+      return NextResponse.json(availableBikeTypes, { status: 201 })
    } catch (error) {
       console.log('### ERROR CRUD api/getAvailableBikeTypes -> ', error)
    }

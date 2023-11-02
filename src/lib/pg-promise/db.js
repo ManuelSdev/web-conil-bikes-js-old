@@ -13,22 +13,20 @@ const initOptions = {
    // Extending the database protocol with our custom repositories;
    // API: http://vitaly-t.github.io/pg-promise/global.html#event:extend
    extend(obj, dc) {
-      console.log('$ dc -> ', dc)
+      //   console.log('$ dc -> ', dc)
       dc = 'probando'
       // Database Context (dc) is mainly useful when extending multiple databases with different access API-s.
-      console.log('$ initial obj -> ', obj)
+      //   console.log('$ initial obj -> ', obj)
       // Do not use 'require()' here, because this event occurs for every task and transaction being executed,
       // which should be as fast as possible.
 
       obj.bookings =
-         //    console.log('PUTO OBJECT  obj.bookings-> ', obj) ||
-         console.log('1 ### Llamada new Bookings db.js') ||
+         //      console.log('1 ### Llamada new Bookings db.js') ||
          new Bookings(obj, pgp)
       obj.bikes =
-         //    console.log('PUTO OBJECT  obj.bikes-> ', obj) ||
-         console.log('1 ### Llamada new Bikes db.js') || new Bikes(obj, pgp)
-      //obj.users = new Users(obj, pgp);
-      console.log('$ then calls obj -> ', obj)
+         //         console.log('1 ### Llamada new Bikes db.js') ||
+         new Bikes(obj, pgp)
+      //  console.log('$ then calls obj -> ', obj)
    },
 
    //imprimir query usando event en lugar de pg monitor
@@ -56,7 +54,7 @@ const pgp = pgLib(initOptions)
 const createSingleton = (name, create) => {
    const s = Symbol.for(name)
    let scope = global[s]
-   console.log('scope @@@@@@@@@@@@@@@@@-> ', scope)
+   //  console.log('scope @@@@@@@@@@@@@@@@@-> ', scope)
    if (!scope) {
       scope = { ...create() }
       global[s] = scope
