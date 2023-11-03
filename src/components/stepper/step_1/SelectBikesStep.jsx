@@ -1,13 +1,18 @@
 //@ts-nocheck
 'use client'
 import React, { useContext } from 'react'
-import SelectBikesStepForm from './BikeFilters'
+import BikeFilters from './BikeFilters'
 
-export default function SelectBikesStep({ dateRange, availableBikeSizes }) {
+export default function SelectBikesStep({
+   dateRange,
+   availableSizes,
+   appBikesConfig,
+}) {
    return (
-      <SelectBikesStepForm
+      <BikeFilters
          dateRange={dateRange}
-         availableBikeSizes={availableBikeSizes}
+         availableSizes={availableSizes}
+         appBikesConfig={appBikesConfig}
       />
    )
 }

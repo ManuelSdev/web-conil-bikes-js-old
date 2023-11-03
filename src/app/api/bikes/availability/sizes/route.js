@@ -1,4 +1,4 @@
-import { getAvailableBikeSizesInRange } from '@/lib/pg-promise/crud/bikes'
+import { getAvailableSizesInRange } from '@/lib/pg-promise/crud/bikes'
 import { getBookingDatesInRange } from '@/lib/pg-promise/crud/bookings'
 import { client } from '@/lib/pg-promise/db'
 import { bookings } from '@/lib/pg-promise/sql'
@@ -15,7 +15,7 @@ export async function GET(req) {
 
    //  '[2023-10-04T22:00:00.000Z,2023-10-31T22:59:59.999Z]'
 
-   return await getAvailableBikeSizesInRange(dateRange)
+   return await getAvailableSizesInRange(dateRange)
 }
 
 //          \$[\d]+|\$\[([\d\w]+)\]

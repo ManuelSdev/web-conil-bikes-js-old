@@ -15,6 +15,7 @@ import {
 } from '@/lib/redux/apiSlices/bikeApi'
 import { da } from 'date-fns/locale'
 import TypeSelect from './TypeSelect'
+import RangeSelect from './RangeSelect'
 
 const FormSchema = z.object({
    email: z
@@ -24,14 +25,18 @@ const FormSchema = z.object({
       .email(),
 })
 
-export default function BikeFilters({ dateRange, availableBikeSizes }) {
+export default function BikeFilters({
+   dateRange,
+   availableSizes,
+   appBikesConfig,
+}) {
    const form = useForm<z.infer<typeof FormSchema>>({
       resolver: zodResolver(FormSchema),
    })
    const { size, type, range } = form.getValues()
    // console.log('============', form.getValues())
    // console.log('dateRange @->', a)
-
+   /*
    const {
       data: availableSizes,
       isLoading: isLoadingSizes,
@@ -39,11 +44,11 @@ export default function BikeFilters({ dateRange, availableBikeSizes }) {
       refetch,
       isFetching,
    } = useGetAvailableSizesQuery({ dateRange }, { skip: true })
-
+*/
    const [
       triggerType,
       {
-         data: availableBikeTypes,
+         data: availableTypes,
          isLoading: isLoadingTypes,
          isSuccess: isSuccessTypes,
          unsubscribe: unsubscribeTypes,
@@ -51,7 +56,7 @@ export default function BikeFilters({ dateRange, availableBikeSizes }) {
       lastPromiseInfoTypes,
    ] = useLazyGetAvailableTypesQuery()
 
-   console.log('availableBikeTypes IN BikeFilters @->', availableBikeTypes)
+   console.log('availableTypes IN BikeFilters @->', availableTypes)
 
    const [
       triggerRange,
@@ -63,23 +68,23 @@ export default function BikeFilters({ dateRange, availableBikeSizes }) {
       setStep(1)
       //resetBikeForm()
    }
-   const handleSizeChange = (field) => (value) => {
-      field.onChange(value)
+   const handleSizeChange = (field) => (selectedSizeValue) => {
+      field.onChange(selectedSizeValue)
       // setBikeForm({ ...form, size: lastSelectedSize })
-      console.log('## CALL getAvailableBikeSizesInRange FROM BikeFilters ##')
+      console.log('## CALL getAvailableSizesInRange FROM BikeFilters ##')
 
-      triggerType({ dateRange, size: value })
+      triggerType({ dateRange, size: selectedSizeValue })
    }
 
-   const handleType = (event) => {
-      const lastSelectedType = event.target.value
-      updateBikeForm({ type: lastSelectedType })
-      triggerRange({ ...strDateRange, size, type: lastSelectedType })
+   const handleType = (field) => (selectedTypeValue) => {
+      field.onChange(selectedTypeValue)
+      //  updateBikeForm({ type: selectedTypeValue })
+      triggerRange({ dateRange, size, type: selectedTypeValue })
    }
 
-   const handleRange = (event) => {
-      const lastSelectedRange = event.target.value
-      updateBikeForm({ range: lastSelectedRange })
+   const handleRange = (field) => (selectedRangeValue) => {
+      field.onChange(selectedRangeValue)
+      //updateBikeForm({ range: selectedRangeValue })
       //  setBikeForm({ ...form, range: lastSelectedRange })
       // triggerBike({...strDateRange,size,type,range:lastSelectedRange})
    }
@@ -95,9 +100,9 @@ export default function BikeFilters({ dateRange, availableBikeSizes }) {
                form={form}
                selectedSize={size}
                handleChange={handleSizeChange}
-               isLoading={isLoadingSizes}
+               // isLoading={isLoadingSizes}
                //     LoadingLabel={LoadingLabel}
-               availableBikeSizes={availableBikeSizes}
+               availableSizes={availableSizes}
             />
             <TypeSelect
                form={form}
@@ -106,7 +111,17 @@ export default function BikeFilters({ dateRange, availableBikeSizes }) {
                handleChange={handleType}
                isLoading={isLoadingTypes}
                //   LoadingLabel={LoadingLabel}
-               availableBikeTypes={availableBikeTypes}
+               availableTypes={availableTypes}
+            />
+            <RangeSelect
+               appBikesConfig={appBikesConfig}
+               form={form}
+               selectedType={type}
+               selectedRange={range}
+               handleChange={handleRange}
+               isLoading={isLoadingRange}
+               //  LoadingLabel={LoadingLabel}
+               availableRanges={availableRanges}
             />
             {/*<Button type="submit">Submit</Button> */}
          </form>

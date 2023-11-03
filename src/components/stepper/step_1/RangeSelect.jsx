@@ -24,22 +24,36 @@ import {
    SelectValue,
 } from '@/components/ui/select'
 import React from 'react'
-import { sizesList, typesList } from '@/utils/app/appValues'
+import { BIKE_RANGES_MAP, rangesList, sizesList } from '@/utils/app/appValues'
 import { capitalizeFirst } from '@/utils/app/functions'
 
-export default function TypeSelect({
+export default function RangeSelect({
    form,
-   availableTypes,
-   selectedSize,
+   availableRanges,
    handleChange,
+   appBikesConfig,
+   selectedType,
 }) {
-   console.log('availableTypes IN TypeSelect @->', availableTypes)
+   /*
+   const segmentList = useSelector(selectDatabaseInfoSegmentList)
+*/
+   console.log(appBikesConfig)
+   const { segmentList } = appBikesConfig
+   const rangeInfo = (range) => {
+      let price
+      segmentList.forEach((segment) => {
+         if (selectedType == segment.modelType && range == segment.modelRange)
+            price = segment.segmentPrice
+      })
+      return price ? `${price} €/día` : 'Gama no disponible'
+   }
 
    return (
       <FormField
          control={form.control}
-         name="type"
+         name="range"
          render={({ field }) => (
+            //   console.log('field -> ', field) ||
             <FormItem>
                <FormLabel>Email</FormLabel>
                <Select
@@ -52,19 +66,21 @@ export default function TypeSelect({
                      </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                     {typesList.map((type) => {
-                        const [engType, spaType] = type
+                     {rangesList.map((range) => {
+                        const [engRange, spaRange] = range
                         return (
                            <SelectItem
                               disabled={
-                                 availableTypes
-                                    ? !availableTypes.includes(engType)
+                                 availableRanges
+                                    ? !availableRanges.includes(engRange)
                                     : true
                               }
-                              key={engType}
-                              value={engType}
+                              key={engRange}
+                              value={engRange}
                            >
-                              {capitalizeFirst(spaType)}
+                              {`${capitalizeFirst(spaRange)} - ${rangeInfo(
+                                 engRange
+                              )}`}
                            </SelectItem>
                         )
                      })}

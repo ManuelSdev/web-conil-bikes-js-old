@@ -7,6 +7,7 @@ import ImageCard from '@/components/ImageCard'
 import IconCorpName from '@/components/svg/IconCorpName'
 import PageContainer from '@/components/layouts/site/PageContainer'
 import { headers } from 'next/headers'
+import { getAppBikesConfig } from '@/lib/pg-promise/crud/bikes'
 
 const cards = [
    {
@@ -45,13 +46,15 @@ const cards = [
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed condimentum vitae ipsum eget tempus. Phasellus interdum id massa non bibendum. Curabitur auctor cursus dignissim.',
    },
 ]
-export default function HomePage() {
+export default async function HomePage() {
    //TODO: ajusta responsive
    //TODO: que es esto de referer?
    const headersList = headers()
    const referer = headersList.get('referer')
    console.log('referer ->', referer)
-
+   const res = await getAppBikesConfig()
+   const params = await res.json()
+   console.log('params IN HOME PAGE@-> ', params)
    return (
       <>
          <div className="min-h-slimBarScreen md:min-h-fatBarScreen  w-full bg-home-main bg-cover bg-fixed bg-[70%] bg-no-repeat pt-slimTopAppBar md:pt-fatTopAppBar min-[900px]:bg-center">

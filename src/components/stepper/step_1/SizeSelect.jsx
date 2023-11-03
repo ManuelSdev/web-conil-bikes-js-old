@@ -26,7 +26,7 @@ import {
 import React from 'react'
 import { sizesList } from '@/utils/app/appValues'
 
-export default function SizeSelect({ form, availableBikeSizes, handleChange }) {
+export default function SizeSelect({ form, availableSizes, handleChange }) {
    return (
       <FormField
          control={form.control}
@@ -50,8 +50,8 @@ export default function SizeSelect({ form, availableBikeSizes, handleChange }) {
                         return (
                            <SelectItem
                               disabled={
-                                 availableBikeSizes
-                                    ? !availableBikeSizes.includes(size)
+                                 availableSizes
+                                    ? !availableSizes.includes(size)
                                     : true
                               }
                               key={size}

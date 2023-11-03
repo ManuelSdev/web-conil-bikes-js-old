@@ -36,14 +36,14 @@ export default class BikesRepository {
     * @param {string} dateRange - format '[2023-10-04T22:00:00.000Z,2023-10-31T22:59:59.999Z]'
     * @returns {Promise<Array>} - Array of available bike sizes - format ['S','M','L'] pero en minusculas
     */
-   async findAvailableBikeSizesInRange(dateRange) {
+   async findAvailableSizesInRange(dateRange) {
       //console.log('query -----------> ',this.pgp.as.format(bookings.findBookingDatesInRange, { dateRange }))
       //TODO: revisar si esto de abajo debe llevar await
       //https://github.com/vitaly-t/pg-promise#named-parameters
       //console.log('BookingsRepository.#bookingQueryFiles -> ',BookingsRepository.bookingQueryFiles)
       const sizes = await this.db.map(
-         BikesRepository.bookingQueryFiles.findAvailableBikeSizesInRange,
-         //    this.bikesQueryFiles.findAvailableBikeSizesInRange,
+         BikesRepository.bookingQueryFiles.findAvailableSizesInRange,
+         //    this.bikesQueryFiles.findAvailableSizesInRange,
          {
             dateRange,
          },
@@ -52,14 +52,14 @@ export default class BikesRepository {
       // console.log('sizes ------------------------------>', sizes)
       return sizes
    }
-   async findAvailableBikeTypes({ dateRange, size }) {
+   async findAvailableTypes({ dateRange, size }) {
       //console.log('query -----------> ',this.pgp.as.format(bookings.findBookingDatesInRange, { dateRange }))
       //TODO: revisar si esto de abajo debe llevar await
       //https://github.com/vitaly-t/pg-promise#named-parameters
       //console.log('BookingsRepository.#bookingQueryFiles -> ',BookingsRepository.bookingQueryFiles)
       const sizes = await this.db.any(
-         BikesRepository.bookingQueryFiles.findAvailableBikeTypes,
-         //    this.bikesQueryFiles.findAvailableBikeTypes,
+         BikesRepository.bookingQueryFiles.findAvailableTypes,
+         //    this.bikesQueryFiles.findAvailableTypes,
          {
             dateRange,
             size,

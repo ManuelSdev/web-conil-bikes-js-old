@@ -1,5 +1,6 @@
 const columnSet = {} // Reusable ColumnSet objects.
 
+import { ro } from 'date-fns/locale'
 import { bikes } from '../sql'
 //import BookingsBase from './BookingsBase'
 /**
@@ -36,14 +37,14 @@ export default class BikesRepository {
     * @param {string} dateRange - format '[2023-10-04T22:00:00.000Z,2023-10-31T22:59:59.999Z]'
     * @returns {Promise<Array>} - Array of available bike sizes - format ['S','M','L'] pero en minusculas
     */
-   async findAvailableBikeSizesInRange(dateRange) {
+   async findAvailableSizesInRange(dateRange) {
       //console.log('query -----------> ',this.pgp.as.format(bookings.findBookingDatesInRange, { dateRange }))
       //TODO: revisar si esto de abajo debe llevar await
       //https://github.com/vitaly-t/pg-promise#named-parameters
       //console.log('BookingsRepository.#bookingQueryFiles -> ',BookingsRepository.bookingQueryFiles)
       const sizes = await this.db.map(
-         //   BikesRepository.bookingQueryFiles.findAvailableBikeSizesInRange,
-         this.bikesQueryFiles.findAvailableBikeSizesInRange,
+         //   BikesRepository.bookingQueryFiles.findAvailableSizesInRange,
+         this.bikesQueryFiles.findAvailableSizesInRange,
          {
             dateRange,
          },
@@ -52,11 +53,10 @@ export default class BikesRepository {
       // console.log('sizes ------------------------------>', sizes)
       return sizes
    }
-   async findAvailableBikeTypes({ dateRange, size }) {
-      console.log('00000000000000000000')
+   async findAvailableTypes({ dateRange, size }) {
       const types = await this.db.map(
-         // BikesRepository.bookingQueryFiles.findAvailableBikeTypes,
-         this.bikesQueryFiles.findAvailableBikeTypes,
+         // BikesRepository.bookingQueryFiles.findAvailableTypes,
+         this.bikesQueryFiles.findAvailableTypes,
          {
             dateRange,
             size,
@@ -65,5 +65,49 @@ export default class BikesRepository {
       )
       console.log('types ------------------------------>', types)
       return types
+   }
+   async findAvailableRanges({ dateRange, size, type }) {
+      const ranges = await this.db.map(
+         // BikesRepository.bookingQueryFiles.findAvailableTypes,
+         this.bikesQueryFiles.findAvailableRanges,
+         {
+            dateRange,
+            size,
+            type,
+         },
+         (row) => row.model_range
+      )
+      console.log('ranges ------------------------------>', ranges)
+      return ranges
+   }
+   async findAppBikesConfig() {
+      const task = async (t) => {
+         const sizeList = await t.map(
+            'SELECT * FROM bike_size',
+            null,
+            (row) => [row.bike_size, row.min_height, row.max_height]
+         )
+         const typeList = await t.map(
+            'SELECT * FROM model_type',
+            null,
+            (row) => row.model_type
+         )
+         const rangeList = await t.map(
+            'SELECT * FROM model_range',
+            null,
+            (row) => row.model_range
+         )
+         const segmentList = await t.many(
+            `SELECT
+               model_type as "modelType",
+               model_range as "modelRange",
+               segment_price as "segmentPrice"
+            FROM
+               Segment`
+         )
+         const res = { sizeList, typeList, rangeList, segmentList }
+         return res
+      }
+      return await this.db.task('findAppBikesConfig', task)
    }
 }
