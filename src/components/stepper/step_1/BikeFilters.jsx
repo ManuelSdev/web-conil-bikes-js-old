@@ -16,6 +16,9 @@ import {
 import { da } from 'date-fns/locale'
 import TypeSelect from './TypeSelect'
 import RangeSelect from './RangeSelect'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+import { urlParams } from '@/utils/app/functions'
 
 const FormSchema = z.object({
    email: z
@@ -29,11 +32,9 @@ export default function BikeFilters({
    dateRange,
    availableSizes,
    appBikesConfig,
+   //form,
+   // setStep,
 }) {
-   const form = useForm<z.infer<typeof FormSchema>>({
-      resolver: zodResolver(FormSchema),
-   })
-   const { size, type, range } = form.getValues()
    // console.log('============', form.getValues())
    // console.log('dateRange @->', a)
    /*
@@ -45,6 +46,16 @@ export default function BikeFilters({
       isFetching,
    } = useGetAvailableSizesQuery({ dateRange }, { skip: true })
 */
+   const FormSchema = z.object({
+      email: z
+         .string({
+            required_error: 'Please select an email to display.',
+         })
+         .email(),
+   })
+
+   const form = useForm({ resolver: zodResolver(FormSchema) })
+   const { size, type, range } = form.getValues()
    const [
       triggerType,
       {
@@ -89,7 +100,10 @@ export default function BikeFilters({
       // triggerBike({...strDateRange,size,type,range:lastSelectedRange})
    }
 
-   const onSubmit = (data) => console.log(data)
+   const onSubmit = (data, event) => {
+      event.preventDefault()
+      // setStep(1)
+   }
    return (
       <Form {...form}>
          <form
@@ -123,7 +137,21 @@ export default function BikeFilters({
                //  LoadingLabel={LoadingLabel}
                availableRanges={availableRanges}
             />
-            {/*<Button type="submit">Submit</Button> */}
+            <Link
+               href={`/booking?step=1b&${urlParams({
+                  date: dateRange,
+                  size,
+                  type,
+                  range,
+               })}`}
+            >
+               <Button
+                  disabled={!range}
+                  //type="submit"
+               >
+                  MOSTRAR BICICLETAS
+               </Button>
+            </Link>
          </form>
       </Form>
    )

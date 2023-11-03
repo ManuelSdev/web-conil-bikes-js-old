@@ -10,7 +10,8 @@ export default function MobileBottomAppBar({ step, dateRange }) {
    const prevStep = step > 0 ? step-- : false
 
    const urlHandler = {
-      nextUrl: `/booking?step=1&${urlParams(isoStringRange)}`,
+      // nextUrl: `/booking?step=1&${urlParams(isoStringRange)}`,
+      nextUrl: `/booking?step=1&date=${dateRange}`,
       prevUrl: `/`,
    }
    const { nextUrl, prevUrl } = urlHandler

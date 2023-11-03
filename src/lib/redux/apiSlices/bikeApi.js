@@ -32,9 +32,9 @@ export const bikeApi = baseApi.injectEndpoints({
          query: ({ from, to }) => AV_STOCK + `?${urlParams({ from, to })}`,
       }),
       getAvailableBikes: builder.query({
-         query: ({ from, to, size, type, range }) =>
-            console.log('========> RTK query getAvailableBikes') ||
-            AV_BIKES + `?${urlParams({ from, to, size, type, range })}`,
+         query: ({ dateRange, size, type, range }) =>
+            `bikes/available/${dateRange}/${size}/${type}/${range}`,
+
          transformResponse: (response, meta, arg) => {
             const res = response
             const { status } = meta.response

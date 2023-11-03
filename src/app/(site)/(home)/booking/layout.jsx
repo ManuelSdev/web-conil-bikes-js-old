@@ -11,7 +11,9 @@ const steps = [
 
 export default function Example({
    step_0_dates,
-   step_1_bikes,
+   step_1a_bikes,
+   step_1b_bikes,
+
    step_2_data,
    step_3_resume,
    ...props
@@ -20,7 +22,8 @@ export default function Example({
       <ReduxProviderWrapper>
          <div className="pt-slimTopAppBar">
             {step_0_dates}
-            {step_1_bikes}
+            {step_1a_bikes}
+            {step_1b_bikes}
             {step_2_data}
             {step_3_resume}
          </div>

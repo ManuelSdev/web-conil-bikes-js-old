@@ -80,6 +80,21 @@ export default class BikesRepository {
       console.log('ranges ------------------------------>', ranges)
       return ranges
    }
+   async findAvailableBikes({ dateRange, size, type, range }) {
+      const bikes = await this.db.any(
+         // BikesRepository.bookingQueryFiles.findAvailableTypes,
+         this.bikesQueryFiles.findAvailableBikes,
+         {
+            dateRange,
+            size,
+            type,
+            range,
+         }
+         //(row) => row.model_range
+      )
+      console.log('bikes ------------------------------>', bikes)
+      return bikes
+   }
    async findAppBikesConfig() {
       const task = async (t) => {
          const sizeList = await t.map(

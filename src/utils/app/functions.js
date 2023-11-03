@@ -38,3 +38,5 @@ export const simpleFormatFromToDate = (from, to) => {
 export function cn(...inputs) {
    return twMerge(clsx(inputs))
 }
+
+export const urlParams = (obj) => new URLSearchParams(obj)

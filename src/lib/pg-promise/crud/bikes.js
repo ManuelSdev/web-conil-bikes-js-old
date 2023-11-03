@@ -51,6 +51,22 @@ export async function getAvailableRanges({ dateRange, size, type }) {
    }
 }
 
+export async function getAvailableBikes({ dateRange, size, type, range }) {
+   try {
+      //   const db = client()
+      console.log('@@ CRUD FN getAvailableBikes @@')
+      const availableBikes = await db.bikes.findAvailableBikes({
+         dateRange,
+         size,
+         type,
+         range,
+      })
+      console.log('availableTypes en getAvailableBikes-> ', availableBikes)
+      return NextResponse.json(availableBikes, { status: 201 })
+   } catch (error) {
+      console.log('### ERROR CRUD api/getAvailableBikes -> ', error)
+   }
+}
 export async function getAppBikesConfig() {
    try {
       //   const db = client()

@@ -43,6 +43,9 @@ export const bikes = {
       sql('/src/lib/pg-promise/sql/bikes/findAvailableTypes.sql'),
    findAvailableRanges: () =>
       sql('/src/lib/pg-promise/sql/bikes/findAvailableRanges.sql'),
+
+   findAvailableBikes: () =>
+      sql('/src/lib/pg-promise/sql/bikes/findAvailableBikes.sql'),
    /*
    findAppBikesConfig: () =>
       sql('/src/lib/pg-promise/sql/bikes/findAppBikesConfig.sql'),
