@@ -1,4 +1,5 @@
 'use client'
+import MobileBottomAppBar from '@/components/layouts/site/MobileBottomAppBar'
 import { Button } from '@/components/ui/button'
 import { bikeSelected } from '@/lib/redux/slices/bookingFormSlice'
 import Image from 'next/image'
@@ -27,6 +28,9 @@ const AvailableBikesList = ({
       //resetBikeForm()
    }
 
+   const handlePrev = () => {
+      router.push(`/booking?step=1&date=${dateRange}`)
+   }
    return (
       <div>
          {availableBikes.map((bike, idx) => {
@@ -62,6 +66,7 @@ const AvailableBikesList = ({
                </div>
             )
          })}
+         <MobileBottomAppBar disabled={true} handlePrev={handlePrev} />
       </div>
    )
 }

@@ -6,31 +6,50 @@ import DatePicker from '../datepicker/DatePicker'
 import {
    dateRangeISOStringObjToString,
    dateRangeObjToISOStringObj,
+   stringDateRangeToDateRangeObj,
 } from '@/utils/datesFns/createDateRangeString'
+import { useRouter } from 'next/navigation'
 
 const FROM = 'from'
 const TO = 'to'
 const urlParams = (obj) => new URLSearchParams(obj)
 
-export default function StepZero({ step }) {
+export default function StepZero({ step, dateRange: urlStrDateRange }) {
+   const router = useRouter()
    const [open, setopen] = useState(false)
-   const [dateRange, setDateRange] = useState({ from: '', to: '' })
+   const initialDetaRangeObj = urlStrDateRange
+      ? stringDateRangeToDateRangeObj(urlStrDateRange)
+      : { from: '', to: '' }
+   const [dateRange, setDateRange] = useState(initialDetaRangeObj)
    const { from, to } = dateRange
+   console.log('dateRange @->', dateRange)
+   const isoStringRangeObj = dateRangeObjToISOStringObj(dateRange)
+   console.log('isoStringRangeObj ->', isoStringRangeObj)
+   const strDateRange = dateRangeISOStringObjToString(isoStringRangeObj)
+   console.log('strDateRange ->', strDateRange)
+
+   const handleNext = () => {
+      router.push(`/booking?step=1&date=${strDateRange}`)
+   }
+   const handlePrev = () => {
+      router.push(`/`)
+   }
 
    const handleSelect = (picker) => (selectedDate) => {
       setDateRange({ ...dateRange, [picker]: selectedDate })
    }
-   const isoStringRangeObj = dateRangeObjToISOStringObj(dateRange)
 
-   const strDateRange = dateRangeISOStringObjToString(isoStringRangeObj)
-   console.log('StepOne *********** strDateRange -> ', strDateRange)
    return (
       <div>
          <div>
             <DatePicker date={from} handleSelect={handleSelect(FROM)} />
             <DatePicker date={to} handleSelect={handleSelect(TO)} />
          </div>
-         <MobileBottomAppBar step={step} dateRange={strDateRange} />
+         <MobileBottomAppBar
+            disabled={!from || !to}
+            handleNext={handleNext}
+            handlePrev={handlePrev}
+         />
       </div>
    )
 }

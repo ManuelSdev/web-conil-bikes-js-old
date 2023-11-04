@@ -80,16 +80,30 @@ function fromDateToDateRangeObj(outsideDates) {
    }
 }
 
-export function dateRangeObjToISOStringObj({ from, to }) {
+export function dateRangeObjToISOStringObj(dateRangeObj) {
+   console.log('dateRangeObjToISOStringObj -> ', dateRangeObj)
+   const { from, to } = dateRangeObj
+   console.log('from @-> ', from)
+   console.log('to @-> ', to)
    return {
-      from: from ? from.toISOString() : '',
+      from: from ? console.log('hoddddddddddddddd') || from.toISOString() : '',
       to: to ? to.toISOString() : '',
    }
 }
 export function dateRangeISOStringObjToString({ from, to }) {
    return `[${from},${to}]`
 }
-
+/**
+ *
+ * @param {string} strDateRange - format  '[2023-11-06T23:00:00.000Z,2023-11-16T23:00:00.000Z]'
+ * @returns {object} - { from: Date, to: Date
+ */
+export const stringDateRangeToDateRangeObj = (strDateRange) => {
+   const dates = strDateRange.replace(/[\[\]']+/g, '').split(',')
+   const from = new Date(dates[0])
+   const to = new Date(dates[1])
+   return { from, to }
+}
 /*
 const today = set(new Date(), {
    hours: 0,

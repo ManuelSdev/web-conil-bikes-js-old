@@ -5,15 +5,11 @@ import {
    getAvailableSizesInRange,
 } from '@/lib/pg-promise/crud/bikes'
 
-import {
-   createDateRangeString,
-   dateRangeISOStringObjToString,
-   dateRangeObjToISOStringObj,
-} from '@/utils/datesFns/createDateRangeString'
 import React from 'react'
 import getConfig from 'next/config'
 import BikeFilters from '@/components/stepper/step_1/BikeFilters'
 import AvaiableBikesList from '@/components/stepper/step_1/AvailableBikeList'
+import { Button } from '@/components/ui/button'
 
 export default async function StepOneBookingPage({ searchParams }) {
    console.log(
@@ -34,9 +30,12 @@ export default async function StepOneBookingPage({ searchParams }) {
    console.log('availableBikes ->', availableBikes)
    //console.log('dateRange ->', availableSizes)
    return (
-      <AvaiableBikesList
-         availableBikes={availableBikes}
-         dateRange={dateRange}
-      />
+      <div>
+         <Button>Atrás</Button>
+         <AvaiableBikesList
+            availableBikes={availableBikes}
+            dateRange={dateRange}
+         />
+      </div>
    )
 }

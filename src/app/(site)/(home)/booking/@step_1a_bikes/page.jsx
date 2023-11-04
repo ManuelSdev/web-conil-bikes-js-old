@@ -4,15 +4,11 @@ import {
    getAvailableSizesInRange,
 } from '@/lib/pg-promise/crud/bikes'
 
-import {
-   createDateRangeString,
-   dateRangeISOStringObjToString,
-   dateRangeObjToISOStringObj,
-} from '@/utils/datesFns/createDateRangeString'
 import React from 'react'
 import getConfig from 'next/config'
 import BikeFilters from '@/components/stepper/step_1/BikeFilters'
 import BikesStep from '@/components/stepper/step_1/BikesStep'
+import MobileBottomAppBar from '@/components/layouts/site/MobileBottomAppBar'
 
 export default async function StepOneBookingPage({ searchParams }) {
    console.log(

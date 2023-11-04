@@ -1,27 +1,27 @@
 import { dateRangeObjToISOStringObj } from '@/utils/datesFns/createDateRangeString'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
-const urlParams = (obj) => new URLSearchParams(obj)
-export default function MobileBottomAppBar({ step, dateRange }) {
-   const isoStringRange = dateRangeObjToISOStringObj(dateRange)
-   console.log('dateRange -> ', dateRange)
-   const nextStep = step < 3 ? step++ : false
-   const prevStep = step > 0 ? step-- : false
-
-   const urlHandler = {
-      // nextUrl: `/booking?step=1&${urlParams(isoStringRange)}`,
-      nextUrl: `/booking?step=1&date=${dateRange}`,
-      prevUrl: `/`,
-   }
-   const { nextUrl, prevUrl } = urlHandler
+export default function MobileBottomAppBar({
+   handlePrev,
+   handleNext,
+   disabled,
+}) {
    return (
       <nav className="absolute bottom-0  flex h-slimTopAppBar  w-full items-center bg-black md:hidden">
          <div className="BUTTONS flex w-full items-center justify-between">
-            <button className="text-greenCorp">atrás</button>
-            <Link href={nextUrl}>
-               <button className="text-greenCorp">continuar</button>
-            </Link>
+            <button onClick={handlePrev} className="text-greenCorp">
+               atrás
+            </button>
+
+            <button
+               disabled={disabled}
+               onClick={handleNext}
+               className="text-greenCorp"
+            >
+               continuar
+            </button>
          </div>
       </nav>
    )

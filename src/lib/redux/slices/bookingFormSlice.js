@@ -1,6 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSelector, createSlice } from '@reduxjs/toolkit'
 
-const initialState = { bikes: [] }
+const initialState = {
+   bikes: [],
+   address: 'aaaa',
+   delivery: false,
+   pickup: false,
+}
 
 const bookingFormSlice = createSlice({
    name: 'bookingForm',
@@ -17,6 +22,15 @@ export const { bikeSelected } = bookingFormSlice.actions
 export default bookingFormSlice.reducer
 
 export const selectBookingBikes = (state) => state.bookingForm.bikes
+
+const selectBookingAddress = (state) => state.bookingForm.address
+const selectBookingDelivery = (state) => state.bookingForm.delivery
+const selectBookingPickup = (state) => state.bookingForm.pickup
+
+export const selectBookingManagement = createSelector(
+   [selectBookingAddress, selectBookingDelivery, selectBookingPickup],
+   (address, delivery, pickup) => ({ address, delivery, pickup })
+)
 
 function addBike(state, action) {
    //No desctructure count propertie and add quantity property
