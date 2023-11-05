@@ -48,7 +48,8 @@ async function setCookies(isAdmin, accessToken) {
       const cookieName = isAdmin ? 'adminSession' : 'userSession'
       const cookieOptions = { maxAge: expiresIn, httpOnly: true, secure: true }
       cookies().set(cookieName, sessionCookie, cookieOptions)
-      cookies().delete('resolvedUrl')
+      cookies().set('cookieName', 'sessionCookie', cookieOptions)
+      // cookies().delete('resolvedUrl')
       return { result: { success: true }, status: { status: 200 } }
    } catch (err) {
       console.log('ERROR createSessionCookie  ', err)

@@ -53,8 +53,8 @@ export default async function HomePage() {
    const referer = headersList.get('referer')
    console.log('referer ->', referer)
    const res = await getAppBikesConfig()
-   const params = await res.json()
-   console.log('params IN HOME PAGE@-> ', params)
+   const appBikesConfig = await res.json()
+   // console.log('params IN HOME PAGE@-> ', appBikesConfig)
    return (
       <>
          <div className="min-h-slimBarScreen md:min-h-fatBarScreen  w-full bg-home-main bg-cover bg-fixed bg-[70%] bg-no-repeat pt-slimTopAppBar md:pt-fatTopAppBar min-[900px]:bg-center">

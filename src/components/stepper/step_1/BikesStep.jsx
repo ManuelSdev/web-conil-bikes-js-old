@@ -1,6 +1,6 @@
 'use client'
 
-import BikeFilters from './BikeFilters'
+import BikeFilters from './bikeFilters/BikeFilters'
 import { useSelector } from 'react-redux'
 import { selectBookingBikes } from '@/lib/redux/slices/bookingFormSlice'
 import SelectedBikeList from './SelectedBikeList'
@@ -11,9 +11,10 @@ export default function BikesStep(props) {
    const router = useRouter()
    const { dateRange } = props
    const selectedBikes = useSelector(selectBookingBikes)
-   console.log('selectedBikes ->', selectedBikes.length)
+   //console.log('selectedBikes ->', selectedBikes.length)
+   console.log('typeof dateRange ->', typeof dateRange)
    const [subStep, setSubStep] = useState(selectedBikes.length ? 0 : 1)
-
+   console.log('dateRange en Bikestep ->', dateRange)
    const handleNext = () => {
       router.push(`/booking?step=2&date=${dateRange}`)
    }

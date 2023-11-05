@@ -1,26 +1,22 @@
-//@ts-nocheck
-import { getAvailableBikes } from '@/lib/pg-promise/crud/bikes'
-
 import React from 'react'
 
 import { Button } from '@/components/ui/button'
 import { cookies, headers } from 'next/headers'
 import { verifySessionCookie } from '@/lib/firebase/admin/verifySessionCookie'
-import AvailableBikesList from '@/components/stepper/step_1b/AvailableBikeList'
+import AvailableBikesList from './AvailableBikeList'
+import { getAvailableBikes } from '@/lib/pg-promise/crud/bikes'
 
-export default async function PublicStepOneBookingPage({ searchParams }) {
-   console.log('searchParams ->', searchParams)
+export default async function StepOneBPage({ searchParams }) {
    const { step, date: dateRange, size, type, range } = searchParams
-
    if (step !== '1b') return null
 
    const sessionCookie = cookies().get('userSession')
    const decodeClaims = sessionCookie
       ? await verifySessionCookie(sessionCookie.value)
       : null
-   const logged = decodeClaims ? true : false
-   console.log('logged ->', logged)
-   //   if (!logged) await setResolvedUrlCookie()
+   const isLogged = decodeClaims ? true : false
+   console.log('isLogged ->', isLogged)
+   //   if (!isLogged) await setResolvedUrlCookie()
 
    console.log('## CALL getAvailableSizesInRange FROM STEP 1b ##')
    const res = await getAvailableBikes({ dateRange, size, type, range })
@@ -31,9 +27,8 @@ export default async function PublicStepOneBookingPage({ searchParams }) {
       <div>
          <Button>Atrás</Button>
          <AvailableBikesList
-            logged={logged}
+            isLogged={isLogged}
             availableBikes={availableBikes}
-            dateRange={dateRange}
             searchParams={searchParams}
          />
       </div>

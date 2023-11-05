@@ -5,18 +5,22 @@ import { bikeSelected } from '@/lib/redux/slices/bookingFormSlice'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
+import { AlertDialogButton } from './AlertDialogButton'
 
 const AvailableBikesList = ({
-   dateRange,
+   isLogged,
    bikeForm,
    setStep,
    resetBikeForm,
    availableBikes,
+   searchParams,
 }) => {
+   const { step, date: dateRange, size, type, range } = searchParams
+
    //TODO:listener a este dispatch
    const dispatch = useDispatch()
    const router = useRouter()
-   //console.log(bikeForm)
+   console.log('process.env.URL ->', process.env.URL)
 
    const handleNewSearch = () => {
       setForm({ ...initialForm })
@@ -24,12 +28,21 @@ const AvailableBikesList = ({
 
    const handleClick = (bike) => (ev) => {
       dispatch(bikeSelected(bike))
-      router.push(`/booking?step=1&date=${dateRange}`)
+      router.push(`/user/booking?step=1&date=${dateRange}`)
       //resetBikeForm()
    }
 
    const handlePrev = () => {
-      router.push(`/booking?step=1&date=${dateRange}`)
+      router.push(
+         isLogged
+            ? `/user/booking?step=1&date=${dateRange}`
+            : `/booking?step=1&date=${dateRange}`
+      )
+   }
+   const handleAction = () => {
+      router.push(
+         `/user/booking?step=1b&date=${dateRange}&size=${size}&type=${type}&range=${range}`
+      )
    }
    return (
       <div>
@@ -60,8 +73,20 @@ const AvailableBikesList = ({
                      <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                         {modelDesc}
                      </p>
-
-                     <Button onClick={handleClick(bike)}>Seleccionar</Button>
+                     {isLogged ? (
+                        <Button onClick={handleClick(bike)}>Seleccionar</Button>
+                     ) : (
+                        <AlertDialogButton
+                           title={'Inicia sesión para reservar'}
+                           description={
+                              'Para gestionar una reserva, primero debes iniciar sesión. Pulsa el botón para acceder a la página de inicio de sesión, donde podrás acceder con tu cuenta o crear una nueva si aún no lo has hecho.'
+                           }
+                           actionText={'Iniciar sesión'}
+                           cancelText={'Cancelar'}
+                           triggerButtonText={'Seleccionar'}
+                           handleAction={handleAction}
+                        />
+                     )}
                   </div>
                </div>
             )

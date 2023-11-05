@@ -107,7 +107,7 @@ function mapFnToQueryFile(obj, quien) {
    )
    console.log(
       quien,
-      '    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -> '
+      '    quien -> '
       //,      bookingQueryFiles
    )
    return bookingQueryFiles

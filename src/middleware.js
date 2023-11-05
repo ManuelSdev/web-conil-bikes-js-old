@@ -14,10 +14,19 @@ import { authMiddleware } from './authMiddleware'
  */
 export function middleware(request) {
    const path = (path) => request.nextUrl.pathname.startsWith(path)
-   const resolvedUrl = request.nextUrl.pathname
+   const pathName = request.nextUrl.pathname
+   const searchPath = request.nextUrl.search
 
-   //console.log('middleware -> ', request.nextUrl.pathname)
-   if (resolvedUrl.startsWith('/dashboard'))
+   const resolvedUrl = pathName + searchPath
+   /*
+   console.log('middleware request.nextUrl -> ', request.nextUrl)
+   console.log(
+      'middleware request.nextUrl.pathname -> ',
+      request.nextUrl.pathname
+   )
+   console.log('middleware request.url  ', request.url)
+   */
+   if (pathName.startsWith('/dashboard'))
       return authMiddleware({
          isAdmin: true,
          request,
@@ -26,7 +35,7 @@ export function middleware(request) {
       })
    // return NextResponse.redirect(new URL('/about-2', request.url))
 
-   if (resolvedUrl.startsWith('/user'))
+   if (pathName.startsWith('/user'))
       return authMiddleware({
          isAdmin: false,
          request,

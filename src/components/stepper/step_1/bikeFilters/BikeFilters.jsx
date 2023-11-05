@@ -138,12 +138,7 @@ export default function BikeFilters({
                availableRanges={availableRanges}
             />
             <Link
-               href={`/booking?step=1b&${urlParams({
-                  date: dateRange,
-                  size,
-                  type,
-                  range,
-               })}`}
+               href={`/booking?step=1b&date=${dateRange}&size=${size}&type=${type}&range=${range}`}
             >
                <Button
                   disabled={!range}

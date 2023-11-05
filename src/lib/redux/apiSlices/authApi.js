@@ -30,7 +30,7 @@ export const authApi = baseApi.injectEndpoints({
                'TOKEN RECIBIDO EN authApi para el header de createSessionCookie -> ',
                token
             ) || {
-               url: 'auth',
+               url: 'auth/createSessionCookie',
                method: 'POST',
                headers: {
                   Authorization: `Bearer ${token}`,

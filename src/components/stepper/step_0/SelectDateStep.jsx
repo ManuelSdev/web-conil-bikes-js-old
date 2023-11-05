@@ -1,8 +1,8 @@
 'use client'
 import React, { useState } from 'react'
-import RangeDatePicker from '../layouts/site/RangeDatePicker'
-import MobileBottomAppBar from '../layouts/site/MobileBottomAppBar'
-import DatePicker from '../datepicker/DatePicker'
+import RangeDatePicker from '../../layouts/site/RangeDatePicker'
+import MobileBottomAppBar from '../../layouts/site/MobileBottomAppBar'
+import DatePicker from '../../datepicker/DatePicker'
 import {
    dateRangeISOStringObjToString,
    dateRangeObjToISOStringObj,
@@ -14,19 +14,16 @@ const FROM = 'from'
 const TO = 'to'
 const urlParams = (obj) => new URLSearchParams(obj)
 
-export default function StepZero({ step, dateRange: urlStrDateRange }) {
+export default function SelectDateStep({ dateRange: urlStrDateRange }) {
    const router = useRouter()
-   const [open, setopen] = useState(false)
+
    const initialDetaRangeObj = urlStrDateRange
       ? stringDateRangeToDateRangeObj(urlStrDateRange)
       : { from: '', to: '' }
    const [dateRange, setDateRange] = useState(initialDetaRangeObj)
    const { from, to } = dateRange
-   console.log('dateRange @->', dateRange)
-   const isoStringRangeObj = dateRangeObjToISOStringObj(dateRange)
-   console.log('isoStringRangeObj ->', isoStringRangeObj)
-   const strDateRange = dateRangeISOStringObjToString(isoStringRangeObj)
-   console.log('strDateRange ->', strDateRange)
+
+   const strDateRange = dateRangeToISOString(dateRange)
 
    const handleNext = () => {
       router.push(`/booking?step=1&date=${strDateRange}`)
@@ -52,4 +49,13 @@ export default function StepZero({ step, dateRange: urlStrDateRange }) {
          />
       </div>
    )
+}
+
+function dateRangeToISOString(dateRange) {
+   console.log('dateRange @->', dateRange)
+   const isoStringRangeObj = dateRangeObjToISOStringObj(dateRange)
+   console.log('isoStringRangeObj ->', isoStringRangeObj)
+   const strDateRange = dateRangeISOStringObjToString(isoStringRangeObj)
+   console.log('strDateRange ->', strDateRange)
+   return strDateRange
 }

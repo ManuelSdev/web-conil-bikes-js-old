@@ -6,6 +6,8 @@ export async function authMiddleware({
    NextResponse,
    resolvedUrl,
 }) {
+   console.log('############################################################')
+
    const urlToRedirect = isAdmin
       ? new URL('/auth', request.url)
       : new URL('/auth/sign-in', request.url)

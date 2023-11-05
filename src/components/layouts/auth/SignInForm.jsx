@@ -88,7 +88,6 @@ export function SignInForm() {
       })
    return (
       <Form {...form}>
-         <button onClick={as}>as</button>
          <form onSubmit={form.handleSubmit(onSubmit)} className="w-f space-y-6">
             <FormField
                control={form.control}

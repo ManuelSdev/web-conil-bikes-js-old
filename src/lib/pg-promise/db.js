@@ -32,7 +32,7 @@ const initOptions = {
    //imprimir query usando event en lugar de pg monitor
    //https://vitaly-t.github.io/pg-promise/global.html#event:query
    query(ev) {
-      console.log('QUERY ------>', ev.query)
+      //console.log('QUERY ------>', ev.query)
    },
 }
 // Initializing the library:

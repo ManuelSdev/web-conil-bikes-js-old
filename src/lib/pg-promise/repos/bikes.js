@@ -92,7 +92,7 @@ export default class BikesRepository {
          }
          //(row) => row.model_range
       )
-      console.log('bikes ------------------------------>', bikes)
+      //console.log('bikes ------------------------------>', bikes)
       return bikes
    }
    async findAppBikesConfig() {

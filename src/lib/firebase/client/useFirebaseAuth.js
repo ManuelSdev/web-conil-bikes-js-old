@@ -29,6 +29,7 @@ export default function useFirebaseAuth() {
 
          //si crea la cookie session correctamente, borro (deslogo) el estado de auth
          //en el cliente
+         console.log('resolvedUrl -> ', resolvedUrl)
          success && signOut(auth)
          success && router.push(resolvedUrl)
       } catch (error) {
