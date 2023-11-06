@@ -1,6 +1,7 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
+   dateRange: '',
    bikes: [],
    address: 'aaaa',
    delivery: false,
@@ -11,15 +12,20 @@ const bookingFormSlice = createSlice({
    name: 'bookingForm',
    initialState,
    reducers: {
+      dateRangeSelected: (state, action) => {
+         state.dateRange = action.payload
+      },
       bikeSelected: (state, action) => {
          addBike(state, action)
       },
    },
 })
 
-export const { bikeSelected } = bookingFormSlice.actions
+export const { dateRangeSelected, bikeSelected } = bookingFormSlice.actions
 
 export default bookingFormSlice.reducer
+
+export const selectBookingDateRange = (state) => state.bookingForm.dateRange
 
 export const selectBookingBikes = (state) => state.bookingForm.bikes
 

@@ -9,12 +9,13 @@ import {
    stringDateRangeToDateRangeObj,
 } from '@/utils/datesFns/createDateRangeString'
 import { useRouter } from 'next/navigation'
+import DateStep from './DateStep'
 
 const FROM = 'from'
 const TO = 'to'
 const urlParams = (obj) => new URLSearchParams(obj)
 
-export default function SelectDateStep({ dateRange: urlStrDateRange }) {
+export default function DateStepPageHandler({ dateRange: urlStrDateRange }) {
    const router = useRouter()
 
    const initialDetaRangeObj = urlStrDateRange
@@ -22,11 +23,12 @@ export default function SelectDateStep({ dateRange: urlStrDateRange }) {
       : { from: '', to: '' }
    const [dateRange, setDateRange] = useState(initialDetaRangeObj)
    const { from, to } = dateRange
-
+   // const isoStringRangeObj = dateRangeObjToISOStringObj(dateRange)
    const strDateRange = dateRangeToISOString(dateRange)
 
    const handleNext = () => {
       router.push(`/booking?step=1&date=${strDateRange}`)
+      // router.push(`/booking?${urlParams({ step: 1, ...isoStringRangeObj })}`)
    }
    const handlePrev = () => {
       router.push(`/`)
@@ -37,17 +39,13 @@ export default function SelectDateStep({ dateRange: urlStrDateRange }) {
    }
 
    return (
-      <div>
-         <div>
-            <DatePicker date={from} handleSelect={handleSelect(FROM)} />
-            <DatePicker date={to} handleSelect={handleSelect(TO)} />
-         </div>
-         <MobileBottomAppBar
-            disabled={!from || !to}
-            handleNext={handleNext}
-            handlePrev={handlePrev}
-         />
-      </div>
+      <DateStep
+         from={from}
+         to={to}
+         handleNext={handleNext}
+         handlePrev={handlePrev}
+         handleSelect={handleSelect}
+      />
    )
 }
 

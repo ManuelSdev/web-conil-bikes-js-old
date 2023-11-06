@@ -10,6 +10,7 @@ import Bikes from './repos/bikes'
 //console.log('=================== dbConfig ===================', dbConfig)
 // pg-promise initialization options:
 const initOptions = {
+   noWarnings: true,
    // Extending the database protocol with our custom repositories;
    // API: http://vitaly-t.github.io/pg-promise/global.html#event:extend
    extend(obj, dc) {

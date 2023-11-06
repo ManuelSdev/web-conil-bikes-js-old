@@ -6,6 +6,10 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
 import { AlertDialogButton } from './AlertDialogButton'
+import {
+   useCreateCookieQuery,
+   useLazyCreateCookieQuery,
+} from '@/lib/redux/apiSlices/cookieApi'
 
 const AvailableBikesList = ({
    isLogged,
@@ -16,7 +20,7 @@ const AvailableBikesList = ({
    searchParams,
 }) => {
    const { step, date: dateRange, size, type, range } = searchParams
-
+   // const dateRange = decodeURIComponent(dateRanges)
    //TODO:listener a este dispatch
    const dispatch = useDispatch()
    const router = useRouter()
@@ -25,9 +29,11 @@ const AvailableBikesList = ({
    const handleNewSearch = () => {
       setForm({ ...initialForm })
    }
-
+   const [triggerCookie] = useLazyCreateCookieQuery()
    const handleClick = (bike) => (ev) => {
+      console.log('bike ->', bike)
       dispatch(bikeSelected(bike))
+
       router.push(`/user/booking?step=1&date=${dateRange}`)
       //resetBikeForm()
    }
@@ -40,8 +46,12 @@ const AvailableBikesList = ({
       )
    }
    const handleAction = () => {
+      const stepperData = { dateRange, size, type, range, step }
+      const cookieValue = JSON.stringify(stepperData)
+      triggerCookie({ name: 'stepperData', value: cookieValue })
       router.push(
-         `/user/booking?step=1b&date=${dateRange}&size=${size}&type=${type}&range=${range}`
+         //`/user/booking?step=1b&date=${dateRange}&size=${size}&type=${type}&range=${range}`
+         '/user/booking'
       )
    }
    return (

@@ -9,7 +9,7 @@ import { getAvailableBikes } from '@/lib/pg-promise/crud/bikes'
 export default async function StepOneBPage({ searchParams }) {
    const { step, date: dateRange, size, type, range } = searchParams
    if (step !== '1b') return null
-
+   //const dateRange = decodeURIComponent(dateRanger)
    const sessionCookie = cookies().get('userSession')
    const decodeClaims = sessionCookie
       ? await verifySessionCookie(sessionCookie.value)
