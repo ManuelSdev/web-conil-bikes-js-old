@@ -5,10 +5,15 @@ export async function GET(req) {
    const searchParams = req.nextUrl.searchParams
    const name = searchParams.get('name')
    const value = searchParams.get('value')
+   const maxAge = searchParams.get('maxAge')
 
    const expiresIn = 60 * 60 * 24 * 5 * 1000
    try {
-      const cookieOptions = { maxAge: expiresIn, httpOnly: true, secure: true }
+      const cookieOptions = {
+         maxAge: maxAge ? maxAge : expiresIn,
+         httpOnly: true,
+         secure: true,
+      }
       cookies().set(name, value, cookieOptions)
       // cookies().delete('resolvedUrl')
       //  return { result: { success: true }, status: { status: 200 } }

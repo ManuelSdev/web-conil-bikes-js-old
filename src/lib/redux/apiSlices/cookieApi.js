@@ -8,7 +8,17 @@ export const cookieApi = baseApi.injectEndpoints({
             url: `/cookies?name=${name}&value=${value}`,
          }),
       }),
+      deleteCookie: builder.query({
+         query: (name) => ({
+            url: `/cookies?name=${name}&value=${''}&maxAge=0`,
+         }),
+      }),
    }),
 })
 
-export const { useCreateCookieQuery, useLazyCreateCookieQuery } = cookieApi
+export const {
+   useCreateCookieQuery,
+   useLazyCreateCookieQuery,
+   useDeleteCookieQuery,
+   useLazyDeleteCookieQuery,
+} = cookieApi

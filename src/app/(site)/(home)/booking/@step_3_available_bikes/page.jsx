@@ -3,16 +3,15 @@ import { getAvailableBikes } from '@/lib/pg-promise/crud/bikes'
 
 import React from 'react'
 
-import { Button } from '@/components/ui/button'
 import { cookies, headers } from 'next/headers'
 import { verifySessionCookie } from '@/lib/firebase/admin/verifySessionCookie'
-import AvailableBikesList from '@/components/stepper/step_1b/AvailableBikeList'
+import PublicStepThreePageHandler from '@/components/stepper/step_3/PublicStepThreePageHandler'
 
-export default async function PublicStepOneBookingPage({ searchParams }) {
+export default async function PublicStepThreeBookingPage({ searchParams }) {
    console.log('searchParams ->', searchParams)
    const { step, date: dateRange, size, type, range } = searchParams
 
-   if (step !== '1b') return null
+   if (step !== '3') return null
 
    const sessionCookie = cookies().get('userSession')
    const decodeClaims = sessionCookie
@@ -28,15 +27,12 @@ export default async function PublicStepOneBookingPage({ searchParams }) {
    const availableBikes = await res.json()
 
    return (
-      <div>
-         <Button>Atrás</Button>
-         <AvailableBikesList
-            logged={logged}
-            availableBikes={availableBikes}
-            dateRange={dateRange}
-            searchParams={searchParams}
-         />
-      </div>
+      <PublicStepThreePageHandler
+         logged={logged}
+         availableBikes={availableBikes}
+         dateRange={dateRange}
+         searchParams={searchParams}
+      />
    )
 }
 

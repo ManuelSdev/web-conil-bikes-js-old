@@ -4,18 +4,21 @@ import { set } from 'date-fns'
 import { useSelector } from 'react-redux'
 import { selectBookingDateRange } from '@/lib/redux/slices/bookingFormSlice'
 
-export default function DateStepHandler({ setStep }) {
-   const { bookingDateRange } = useSelector(selectBookingDateRange)
+export default function DateStepHandler({ setStep, cookieDateRange }) {
+   const storedDateRange = useSelector(selectBookingDateRange)
 
-   const initialDetaRangeObj = bookingDateRange
-      ? stringDateRangeToDateRangeObj(bookingDateRange)
+   const initialDetaRangeObj = cookieDateRange
+      ? stringDateRangeToDateRangeObj(cookieDateRange)
+      : storedDateRange
+      ? stringDateRangeToDateRangeObj(storedDateRange)
       : { from: '', to: '' }
 
    const [dateRange, setDateRange] = useState(initialDetaRangeObj)
 
    const { from, to } = dateRange
+   console.log('dateRange ->', dateRange)
    // const isoStringRangeObj = dateRangeObjToISOStringObj(dateRange)
-   const strDateRange = dateRangeToISOString(dateRange)
+   // const strDateRange = dateRangeToISOString(dateRange)
 
    const handleNext = () => {
       setStep(1)

@@ -28,7 +28,7 @@ const FormSchema = z.object({
       .email(),
 })
 
-export default function BikeFilters({
+export default function BikeFiltersForm({
    dateRange,
    availableSizes,
    appBikesConfig,
@@ -138,7 +138,7 @@ export default function BikeFilters({
                availableRanges={availableRanges}
             />
             <Link
-               href={`/booking?step=1b&date=${dateRange}&size=${size}&type=${type}&range=${range}`}
+               href={`/booking?step=3&date=${dateRange}&size=${size}&type=${type}&range=${range}`}
             >
                <Button
                   disabled={!range}

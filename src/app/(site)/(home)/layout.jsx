@@ -2,6 +2,7 @@ import '@/app/globals.css'
 import { Inter } from 'next/font/google'
 import React from 'react'
 import SiteShell from '@/components/layouts/site/SiteShell'
+import ReduxProviderWrapper from '@/lib/redux/ReduxProviderWrapper'
 
 export async function generateStaticParams() {
    return [{ lang: 'es-ES' }]
@@ -17,7 +18,9 @@ export default function SiteLayout(props) {
    return (
       <html lang="es-ES" dir="ltr" className="h-full bg-red-500">
          <body className="h-full">
-            <SiteShell {...props} />
+            <ReduxProviderWrapper>
+               <SiteShell {...props} />
+            </ReduxProviderWrapper>
          </body>
       </html>
    )

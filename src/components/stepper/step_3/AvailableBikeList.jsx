@@ -1,7 +1,10 @@
 'use client'
 import MobileBottomAppBar from '@/components/layouts/site/MobileBottomAppBar'
 import { Button } from '@/components/ui/button'
-import { bikeSelected } from '@/lib/redux/slices/bookingFormSlice'
+import {
+   bikeSelected,
+   selectBookingDateRange,
+} from '@/lib/redux/slices/bookingFormSlice'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,23 +16,21 @@ import {
 
 const AvailableBikesList = ({
    isLogged,
-   bikeForm,
-   setStep,
-   resetBikeForm,
+
    availableBikes,
-   searchParams,
+   handleDialogAction,
 }) => {
-   const { step, date: dateRange, size, type, range } = searchParams
    // const dateRange = decodeURIComponent(dateRanges)
    //TODO:listener a este dispatch
+   //const a = useSelector(selectBookingDateRange)
+   //console.log('a ->', a)
+   /*
    const dispatch = useDispatch()
    const router = useRouter()
-   console.log('process.env.URL ->', process.env.URL)
 
    const handleNewSearch = () => {
       setForm({ ...initialForm })
    }
-   const [triggerCookie] = useLazyCreateCookieQuery()
    const handleClick = (bike) => (ev) => {
       console.log('bike ->', bike)
       dispatch(bikeSelected(bike))
@@ -37,23 +38,8 @@ const AvailableBikesList = ({
       router.push(`/user/booking?step=1&date=${dateRange}`)
       //resetBikeForm()
    }
+*/
 
-   const handlePrev = () => {
-      router.push(
-         isLogged
-            ? `/user/booking?step=1&date=${dateRange}`
-            : `/booking?step=1&date=${dateRange}`
-      )
-   }
-   const handleAction = () => {
-      const stepperData = { dateRange, size, type, range, step }
-      const cookieValue = JSON.stringify(stepperData)
-      triggerCookie({ name: 'stepperData', value: cookieValue })
-      router.push(
-         //`/user/booking?step=1b&date=${dateRange}&size=${size}&type=${type}&range=${range}`
-         '/user/booking'
-      )
-   }
    return (
       <div>
          {availableBikes.map((bike, idx) => {
@@ -94,14 +80,13 @@ const AvailableBikesList = ({
                            actionText={'Iniciar sesión'}
                            cancelText={'Cancelar'}
                            triggerButtonText={'Seleccionar'}
-                           handleAction={handleAction}
+                           handleAction={handleDialogAction}
                         />
                      )}
                   </div>
                </div>
             )
          })}
-         <MobileBottomAppBar disabled={true} handlePrev={handlePrev} />
       </div>
    )
 }

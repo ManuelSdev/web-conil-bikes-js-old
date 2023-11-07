@@ -11,22 +11,27 @@ const steps = [
 
 export default function Example({
    step_0_dates,
-   step_1a_bikes,
-   step_1b_bikes,
+   step_1_selected_bikes,
+   step_2_bike_filters,
 
-   step_2_data,
-   step_3_resume,
+   step_3_available_bikes,
+   step_4_booking_management,
+   step_5_resume,
    ...props
 }) {
    return (
-      <ReduxProviderWrapper>
-         <div className="pt-slimTopAppBar">
-            {step_0_dates}
-            {step_1a_bikes}
-            {step_1b_bikes}
-            {step_2_data}
-            {step_3_resume}
-         </div>
-      </ReduxProviderWrapper>
+      <>
+         {step_0_dates}
+         {step_1_selected_bikes}
+         {step_2_bike_filters}
+         {step_3_available_bikes}
+      </>
    )
 }
+/*
+   {step_1_selected_bikes}
+         {step_2_bike_filters}
+         {step_3_available_bikes}
+         {step_4_booking_management}
+         {step_5_resume}
+         */
