@@ -1,7 +1,7 @@
 'use client'
 
 import { useSelector } from 'react-redux'
-import { selectBookingBikes } from '@/lib/redux/slices/bookingFormSlice'
+import { selectBikes } from '@/lib/redux/slices/bookingFormSlice'
 import SelectedBikeList from './SelectedBikeList'
 import { useState } from 'react'
 import MobileBottomAppBar from '@/components/layouts/site/MobileBottomAppBar'
@@ -10,7 +10,7 @@ export default function BikesStep(props) {
    return <div>BikesStep</div>
    const router = useRouter()
    const { dateRange } = props
-   const selectedBikes = useSelector(selectBookingBikes)
+   const selectedBikes = useSelector(selectBikes)
    //console.log('selectedBikes ->', selectedBikes.length)
    console.log('typeof dateRange ->', typeof dateRange)
    const [subStep, setSubStep] = useState(selectedBikes.length ? 0 : 1)

@@ -6,8 +6,12 @@ import AvailableBikesList from './AvailableBikeList'
 import MobileBottomAppBar from '@/components/layouts/site/MobileBottomAppBar'
 import { useLazyCreateCookieQuery } from '@/lib/redux/apiSlices/cookieApi'
 import { useRouter } from 'next/navigation'
+import { AlertDialogButton } from './AlertDialogButton'
 
-export default function PublicStepThreePageHandler({ searchParams, ...props }) {
+export default function AvailableBikeListPublicHandler({
+   searchParams,
+   ...props
+}) {
    const { step, date: dateRange, size, type, range } = searchParams
    const router = useRouter()
    const [triggerCookie] = useLazyCreateCookieQuery()
@@ -30,10 +34,23 @@ export default function PublicStepThreePageHandler({ searchParams, ...props }) {
          '/user/booking'
       )
    }
+
    return (
       <div>
          <AvailableBikesList
             handleDialogAction={handleDialogAction}
+            renderSelectBikeButton={(bike) => (
+               <AlertDialogButton
+                  title={'Inicia sesión para reservar'}
+                  description={
+                     'Para gestionar una reserva, primero debes iniciar sesión. Pulsa el botón para acceder a la página de inicio de sesión, donde podrás acceder con tu cuenta o crear una nueva si aún no lo has hecho.'
+                  }
+                  actionText={'Iniciar sesión'}
+                  cancelText={'Cancelar'}
+                  triggerButtonText={'Seleccionar'}
+                  handleAction={handleDialogAction}
+               />
+            )}
             {...props}
          />
          <MobileBottomAppBar disabled={true} handlePrev={handlePrev} />

@@ -4,6 +4,9 @@ const urlParams = (obj) => new URLSearchParams(obj)
 
 export const bikeApi = baseApi.injectEndpoints({
    endpoints: (builder) => ({
+      getAppBikesConfig: builder.query({
+         query: () => 'bikes/appConfig',
+      }),
       getBikes: builder.query({
          query: (filters) => BIKES + `?${filters}`,
       }),
@@ -67,6 +70,7 @@ export const useGetAvailableBikesQueryState =
    bikeApi.endpoints.getAvailableBikes.useQueryState
 
 export const {
+   useGetAppBikesConfigQuery,
    useGetBikesQuery,
    useGetBikesByIdQuery,
    useGetAvailableStockQuery,

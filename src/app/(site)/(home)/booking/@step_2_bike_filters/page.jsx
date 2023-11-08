@@ -1,5 +1,5 @@
 import BikeFiltersStep from '@/components/stepper/step_2/BikeFiltersStep'
-import PublicStepTwoPageHandler from '@/components/stepper/step_2/PublicStepTwoPageHandler'
+import BikeFiltersStepPublicHandler from '@/components/stepper/step_2/BikeFiltersStepPublicHandler'
 import {
    getAppBikesConfig,
    getAvailableSizesInRange,
@@ -12,7 +12,7 @@ export default async function PublicStepTwoBookingPage({ searchParams }) {
    const { availableSizes, appBikesConfig } = await getPageData(dateRange)
 
    return (
-      <PublicStepTwoPageHandler
+      <BikeFiltersStepPublicHandler
          availableSizes={availableSizes}
          appBikesConfig={appBikesConfig}
          dateRange={dateRange}

@@ -3,6 +3,7 @@ import React from 'react'
 import BikeFiltersForm from './BikeFiltersForm'
 
 export default function BikeFiltersStep({
+   isLoadingSizes,
    handleNext,
    handlePrev,
    disabled,
@@ -13,6 +14,7 @@ export default function BikeFiltersStep({
    return (
       <div>
          <BikeFiltersForm
+            isLoadingSizes={isLoadingSizes}
             availableSizes={availableSizes}
             appBikesConfig={appBikesConfig}
             dateRange={dateRange}

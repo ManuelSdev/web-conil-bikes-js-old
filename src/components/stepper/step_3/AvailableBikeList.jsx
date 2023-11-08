@@ -1,28 +1,10 @@
 'use client'
-import MobileBottomAppBar from '@/components/layouts/site/MobileBottomAppBar'
-import { Button } from '@/components/ui/button'
-import {
-   bikeSelected,
-   selectBookingDateRange,
-} from '@/lib/redux/slices/bookingFormSlice'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
-import { useDispatch, useSelector } from 'react-redux'
-import { AlertDialogButton } from './AlertDialogButton'
-import {
-   useCreateCookieQuery,
-   useLazyCreateCookieQuery,
-} from '@/lib/redux/apiSlices/cookieApi'
 
-const AvailableBikesList = ({
-   isLogged,
-
-   availableBikes,
-   handleDialogAction,
-}) => {
+const AvailableBikesList = ({ availableBikes, renderSelectBikeButton }) => {
    // const dateRange = decodeURIComponent(dateRanges)
    //TODO:listener a este dispatch
-   //const a = useSelector(selectBookingDateRange)
+   //const a = useSelector(selectDateRange)
    //console.log('a ->', a)
    /*
    const dispatch = useDispatch()
@@ -69,20 +51,7 @@ const AvailableBikesList = ({
                      <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                         {modelDesc}
                      </p>
-                     {isLogged ? (
-                        <Button onClick={handleClick(bike)}>Seleccionar</Button>
-                     ) : (
-                        <AlertDialogButton
-                           title={'Inicia sesión para reservar'}
-                           description={
-                              'Para gestionar una reserva, primero debes iniciar sesión. Pulsa el botón para acceder a la página de inicio de sesión, donde podrás acceder con tu cuenta o crear una nueva si aún no lo has hecho.'
-                           }
-                           actionText={'Iniciar sesión'}
-                           cancelText={'Cancelar'}
-                           triggerButtonText={'Seleccionar'}
-                           handleAction={handleDialogAction}
-                        />
-                     )}
+                     {renderSelectBikeButton(bike)}
                   </div>
                </div>
             )

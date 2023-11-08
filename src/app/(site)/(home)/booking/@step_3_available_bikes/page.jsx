@@ -5,7 +5,7 @@ import React from 'react'
 
 import { cookies, headers } from 'next/headers'
 import { verifySessionCookie } from '@/lib/firebase/admin/verifySessionCookie'
-import PublicStepThreePageHandler from '@/components/stepper/step_3/PublicStepThreePageHandler'
+import AvailableBikeListPublicHandler from '@/components/stepper/step_3/AvailableBikeListPublicHandler'
 
 export default async function PublicStepThreeBookingPage({ searchParams }) {
    console.log('searchParams ->', searchParams)
@@ -27,7 +27,7 @@ export default async function PublicStepThreeBookingPage({ searchParams }) {
    const availableBikes = await res.json()
 
    return (
-      <PublicStepThreePageHandler
+      <AvailableBikeListPublicHandler
          logged={logged}
          availableBikes={availableBikes}
          dateRange={dateRange}

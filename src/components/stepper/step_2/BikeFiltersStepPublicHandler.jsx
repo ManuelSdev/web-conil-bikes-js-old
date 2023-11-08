@@ -2,7 +2,7 @@
 import React from 'react'
 import BikeFiltersStep from './BikeFiltersStep'
 
-export default function PublicStepTwoPageHandler({
+export default function BikeFiltersStepPublicHandler({
    appBikesConfig,
    availableSizes,
    dateRange,

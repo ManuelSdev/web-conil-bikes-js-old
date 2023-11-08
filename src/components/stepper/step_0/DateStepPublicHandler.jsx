@@ -15,9 +15,7 @@ const FROM = 'from'
 const TO = 'to'
 const urlParams = (obj) => new URLSearchParams(obj)
 
-export default function PublicDateStepPageHandler({
-   dateRange: urlStrDateRange,
-}) {
+export default function DateStepPublicHandler({ dateRange: urlStrDateRange }) {
    const router = useRouter()
 
    const initialDetaRangeObj = urlStrDateRange

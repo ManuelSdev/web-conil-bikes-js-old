@@ -3,14 +3,14 @@ import React from 'react'
 import SelectedBikeList from './SelectedBikeList'
 import MobileBottomAppBar from '@/components/layouts/site/MobileBottomAppBar'
 import { useSelector } from 'react-redux'
-import { selectBookingBikes } from '@/lib/redux/slices/bookingFormSlice'
+import { selectBikes } from '@/lib/redux/slices/bookingFormSlice'
 import { useRouter } from 'next/navigation'
 
-export default function SelectedBikesStepPageHandler({
+export default function SelectedBikesStepPublicHandler({
    dateRange,
    setSubStep,
 }) {
-   const selectedBikes = useSelector(selectBookingBikes)
+   const selectedBikes = useSelector(selectBikes)
 
    const router = useRouter()
 

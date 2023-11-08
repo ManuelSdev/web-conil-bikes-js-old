@@ -90,6 +90,14 @@ export function dateRangeObjToISOStringObj(dateRangeObj) {
       to: to ? to.toISOString() : '',
    }
 }
+
+export function dateRangeISOStrObjToDateRangeObjs({ from, to }) {
+   console.log('dateRangeISOStrObjToDateRangeObjs -> ', { from, to })
+   return {
+      from: from ? new Date(from) : '',
+      to: to ? new Date(to) : '',
+   }
+}
 export function dateRangeISOStringObjToString({ from, to }) {
    return `[${from},${to}]`
 }
@@ -102,6 +110,13 @@ export const stringDateRangeToDateRangeObj = (strDateRange) => {
    const dates = strDateRange.replace(/[\[\]']+/g, '').split(',')
    const from = new Date(dates[0])
    const to = new Date(dates[1])
+   return { from, to }
+}
+
+export const stringDateRangeToISOStringObj = (strDateRange) => {
+   const dates = strDateRange.replace(/[\[\]']+/g, '').split(',')
+   const from = dates[0]
+   const to = dates[1]
    return { from, to }
 }
 /*

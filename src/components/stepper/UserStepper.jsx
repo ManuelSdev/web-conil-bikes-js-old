@@ -1,32 +1,68 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import DateStepHandler from './step_0/DateStepHandler'
+import DateStepUserHandler from './step_0/DateStepUserHandler'
 import { useLazyDeleteCookieQuery } from '@/lib/redux/apiSlices/cookieApi'
 import { useDispatch } from 'react-redux'
-import { dateRangeSelected } from '@/lib/redux/slices/bookingFormSlice'
+import {
+   bikeSearchParamsSelected,
+   dateRangeSelected,
+} from '@/lib/redux/slices/bookingFormSlice'
+import AvailableBikeListUserHandler from './step_3/AvailableBikeListUserHandler'
+import SelectedBikeListStep from './step_1/SelectedBikeListStep'
+import SelectedBikesStepUserHandler from './step_1/SelectedBikesStepUserHandler'
+import BikeFiltersStepUserHandler from './step_2/BikeFiltersStepUserHandler'
+import { stringDateRangeToISOStringObj } from '@/utils/datesFns/createDateRangeString'
 
-export default function UserStepper({ isStepperCookiee, stepperData }) {
+export default function UserStepper({ stepperDataCookie }) {
    const dispatch = useDispatch()
    const [deleteCookieTrigger] = useLazyDeleteCookieQuery()
-   const { step: initialStep, dateRange } = stepperData
+
+   const initialStepperData = createInitialStepperData(stepperDataCookie)
+
+   const { step: initialStep, dateRange } = initialStepperData
+   const [step, setStep] = useState(0)
+
    //dispatch(dateRangeSelected(dateRange))
+
    useEffect(() => {
-      if (isStepperCookiee) deleteCookieTrigger('stepperData')
+      if (stepperDataCookie) {
+         deleteCookieTrigger('stepperData')
+         setReduxStore(initialStepperData, dispatch)
+      }
+      console.log('useEffect stepperDataCookie ->', stepperDataCookie)
+
+      setStep(initialStep)
    }, [])
 
-   //  console.log('cookieStepperData -> ', cookieStepperData)
-   const [step, setStep] = useState(initialStep === '1b' ? 2 : initialStep)
-   console.log('step ********************-> ', step)
+   console.log('UserStepper @@@->')
    return (
       <div>
-         {step === 0 && (
-            <DateStepHandler setStep={setStep} cookieDateRange={dateRange} />
+         {step === 0 && <DateStepUserHandler setStep={setStep} />}
+         {step === 1 && <SelectedBikesStepUserHandler setStep={setStep} />}
+         {step === 2 && <BikeFiltersStepUserHandler setStep={setStep} />}
+         {step === 3 && (
+            <AvailableBikeListUserHandler
+               initialStepperData={initialStepperData}
+               setStep={setStep}
+            />
          )}
-         {step === 1 && <div>Step 1 selected bikes</div>}
-         {step === 2 && <div>Step 2 bikes filters</div>}
-         {step === 3 && <div>Step 3 available bike list</div>}
          {step === 4 && <div>Step 4 management booking form</div>}
          {step === 5 && <div>Step 5 resume</div>}
       </div>
    )
+}
+
+function createInitialStepperData(stepperDataCookie) {
+   if (stepperDataCookie) {
+      const stepperData = JSON.parse(stepperDataCookie.value)
+      stepperData.step = parseInt(stepperData.step)
+      return stepperData
+   } else return { step: 0, dateRange: '' }
+}
+
+function setReduxStore(initialStepperData, dispatch) {
+   const { dateRange, size, type, range } = initialStepperData
+   const dateRangeISOStringObj = stringDateRangeToISOStringObj(dateRange)
+   dispatch(dateRangeSelected(dateRange))
+   dispatch(bikeSearchParamsSelected({ size, type, range }))
 }
