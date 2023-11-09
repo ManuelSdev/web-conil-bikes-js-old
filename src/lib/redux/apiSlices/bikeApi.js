@@ -21,7 +21,9 @@ export const bikeApi = baseApi.injectEndpoints({
       }),
 
       getAvailableSizes: builder.query({
-         query: ({ dateRange }) => `bikes/available/${dateRange}`,
+         query: ({ dateRange }) =>
+            console.log('dateRange QUERY --> ', dateRange) ||
+            `bikes/available/${dateRange}`,
       }),
 
       getAvailableTypes: builder.query({

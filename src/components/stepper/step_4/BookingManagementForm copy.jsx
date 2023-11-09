@@ -30,7 +30,7 @@ const FormSchema = z.object({
    pickup: z.boolean(),
 })
 
-export function ManagementForm({ step, dateRange }) {
+export function BookingManagementForm({ step, dateRange }) {
    const router = useRouter()
    const bookingManagement = useSelector(selectBookingManagement)
 

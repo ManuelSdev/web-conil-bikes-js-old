@@ -1,20 +1,25 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import DateStepUserHandler from './step_0/DateStepUserHandler'
 import { useLazyDeleteCookieQuery } from '@/lib/redux/apiSlices/cookieApi'
 import { useDispatch } from 'react-redux'
 import {
    bikeSearchParamsSelected,
    dateRangeSelected,
 } from '@/lib/redux/slices/bookingFormSlice'
-import AvailableBikeListUserHandler from './step_3/AvailableBikeListUserHandler'
-import SelectedBikeListStep from './step_1/SelectedBikeListStep'
-import SelectedBikesStepUserHandler from './step_1/SelectedBikesStepUserHandler'
-import BikeFiltersStepUserHandler from './step_2/BikeFiltersStepUserHandler'
 import { stringDateRangeToISOStringObj } from '@/utils/datesFns/createDateRangeString'
 
-export default function UserStepper({ stepperDataCookie }) {
+import DateStepUserHandler from './step_0/DateStepUserHandler'
+import SelectedBikesStepUserHandler from './step_1/SelectedBikesStepUserHandler'
+import BikeFiltersStepUserHandler from './step_2/BikeFiltersStepUserHandler'
+import AvailableBikeListUserHandler from './step_3/AvailableBikeListUserHandler'
+import BookingManagementUserHandler from './step_4/BookingManagementUserHandler'
+import BookingResumeUserHandler from './step_5/BookingResumeUserHandler'
+import { appBikesConfigLoaded } from '@/lib/redux/slices/appConfigSlice'
+
+export default function UserStepper({ stepperDataCookie, appBikesConfig }) {
    const dispatch = useDispatch()
+   console.log('UserStepper appBikesConfig ->', appBikesConfig)
+   dispatch(appBikesConfigLoaded(appBikesConfig))
    const [deleteCookieTrigger] = useLazyDeleteCookieQuery()
 
    const initialStepperData = createInitialStepperData(stepperDataCookie)
@@ -46,8 +51,8 @@ export default function UserStepper({ stepperDataCookie }) {
                setStep={setStep}
             />
          )}
-         {step === 4 && <div>Step 4 management booking form</div>}
-         {step === 5 && <div>Step 5 resume</div>}
+         {step === 4 && <BookingManagementUserHandler setStep={setStep} />}
+         {step === 5 && <BookingResumeUserHandler setStep={setStep} />}
       </div>
    )
 }

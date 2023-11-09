@@ -1,10 +1,12 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
+import { selectAppBikesConfig } from './appConfigSlice'
+import { differenceInDays } from 'date-fns'
 
 const initialState = {
-   dateRange: '',
-   // dateRange: { from: '', to: '' },
+   //dateRange: '',
+   dateRange: { from: '', to: '' },
    bikes: [],
-   address: 'aaaa',
+   address: '',
    delivery: false,
    pickup: false,
    bikeSearchParams: {
@@ -22,9 +24,46 @@ const bookingFormSlice = createSlice({
          console.log('dateRangeSelected action.payload _> ', action.payload)
          state.dateRange = action.payload
       },
+      bookingManagementSelected: (state, action) => {
+         console.log('bookingManagementSelected action.payload _> ', action)
+         const { address, delivery, pickup } = action.payload
+         state.address = address
+         state.delivery = delivery
+         state.pickup = pickup
+      },
       bikeSelected: (state, action) => {
          addBike(state, action)
       },
+
+      //El usuario elimina una bicicleta
+      bikeRemoved: (state, action) => {
+         // console.log(action.payload)
+         const bike = action.payload
+         const { modelId, bikeSize } = bike
+         //Comprueba si solo hay una unidad/quantity===1
+         const onlyOne = state.bikes.some(
+            (bike) =>
+               bike.bikeSize === bikeSize &&
+               bike.modelId === modelId &&
+               bike.quantity === 1
+         )
+         //    console.log('only one', onlyOne)
+         if (onlyOne) {
+            console.log('only one------------')
+            state.bikes = state.bikes.filter(
+               (bike) =>
+                  !(bike.bikeSize === bikeSize && bike.modelId === modelId)
+            )
+         } else {
+            console.log('MAS DE UNA***********')
+            state.bikes = state.bikes.map((bike) => {
+               if (bike.bikeSize === bikeSize && bike.modelId === modelId) {
+                  return { ...bike, quantity: bike.quantity - 1 }
+               } else return bike
+            })
+         }
+      },
+
       bikeSearchParamsSelected: (state, action) => {
          console.log(
             'bikeSearchParamsSelected action.payload _> ',
@@ -35,8 +74,13 @@ const bookingFormSlice = createSlice({
    },
 })
 
-export const { dateRangeSelected, bikeSelected, bikeSearchParamsSelected } =
-   bookingFormSlice.actions
+export const {
+   dateRangeSelected,
+   bookingManagementSelected,
+   bikeSelected,
+   bikeRemoved,
+   bikeSearchParamsSelected,
+} = bookingFormSlice.actions
 
 export default bookingFormSlice.reducer
 
@@ -80,6 +124,34 @@ export const selectBikesByUnits = createSelector([selectBikes], (bikes) => {
    return bikesInUnits.flat()
 })
 
+export const selectBookingDayPrice = createSelector(
+   [selectAppBikesConfig, selectBikesByUnits],
+   (bikesConfig, bikesInUnits) => {
+      const dayPrice = bikesInUnits.reduce((acc, bike) => {
+         const { modelType, modelRange } = bike
+         //  console.log('????????????????????????????????', modelType)
+         //  console.log('????????????????????????????????', modelRange)
+         const [{ segmentPrice }] = bikesConfig.segmentList.filter(
+            (segment) =>
+               segment.modelType === modelType &&
+               segment.modelRange === modelRange
+         )
+
+         return acc + segmentPrice
+      }, 0)
+
+      return dayPrice
+   }
+)
+
+export const selectBookingDuration = createSelector(
+   [selectDateRange],
+   (dateRange) => {
+      const { from, to } = dateRange
+      const duration = differenceInDays(to, from)
+      return duration
+   }
+)
 function addBike(state, action) {
    //No desctructure count propertie and add quantity property
    const {

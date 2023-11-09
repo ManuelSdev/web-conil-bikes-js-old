@@ -11,17 +11,21 @@ import {
    dateRangeObjToISOStringObj,
    stringDateRangeToDateRangeObj,
 } from '@/utils/datesFns/createDateRangeString'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 export default function DateStepUserHandler({ setStep, cookieDateRange }) {
    const dispatch = useDispatch()
    const storedDateRange = useSelector(selectDateRange)
-   //const dateRangeObj = dateRangeISOStrObjToDateRangeObjs(storedDateRange)
-   //  const { from, to } = dateRangeObj
-
+   const dateRangeObj = dateRangeISOStrObjToDateRangeObjs(storedDateRange)
+   const { from, to } = dateRangeObj
+   /*
    const dateRange = storedDateRange
       ? stringDateRangeToDateRangeObj(storedDateRange)
       : { from: '', to: '' }
+   console.log('dateRange ->', dateRange)
    const { from, to } = dateRange
+   */
    /*
    const initialDetaRangeObj = cookieDateRange
       ? stringDateRangeToDateRangeObj(cookieDateRange)
@@ -44,19 +48,25 @@ export default function DateStepUserHandler({ setStep, cookieDateRange }) {
 
    const handleSelect = (picker) => (selectedDate) => {
       //   setDateRange({ ...dateRange, [picker]: selectedDate })
-      const newDateRangeObj = { ...dateRange, [picker]: selectedDate }
+      const newDateRangeObj = { ...dateRangeObj, [picker]: selectedDate }
       const isoStringRangeObj = dateRangeObjToISOStringObj(newDateRangeObj)
       const strDateRange = dateRangeObjToISOString(newDateRangeObj)
-      dispatch(dateRangeSelected(strDateRange))
+      dispatch(dateRangeSelected(isoStringRangeObj))
    }
-   /*
-   useEffect(() => {
-      return () => {
-        
-      }
-   }, [])
-*/
-   console.log('DateStepUserHandler @@@@@@@->')
+   const renderNextButton = () => (
+      <Button
+         disabled={!from || !to}
+         onClick={() => setStep(1)}
+         className="text-greenCorp"
+      >
+         continuar
+      </Button>
+   )
+   const renderPrevButton = () => (
+      <Link href={`/`}>
+         <Button className="text-greenCorp">atrás</Button>
+      </Link>
+   )
    return (
       <DateStep
          from={from}
@@ -64,6 +74,8 @@ export default function DateStepUserHandler({ setStep, cookieDateRange }) {
          handleNext={handleNext}
          handlePrev={handlePrev}
          handleSelect={handleSelect}
+         renderNextButton={renderNextButton}
+         renderPrevButton={renderPrevButton}
       />
    )
 }

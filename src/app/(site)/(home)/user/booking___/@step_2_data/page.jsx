@@ -1,5 +1,5 @@
 import MobileBottomAppBar from '@/components/layouts/site/MobileBottomAppBar'
-import { ManagementForm } from '@/components/stepper/step_4/ManagementForm'
+import { BookingManagementForm } from '@/components/stepper/step_4/BookingManagementForm'
 import React from 'react'
 
 export default function StepTwoBookingPage({ searchParams }) {
@@ -7,7 +7,7 @@ export default function StepTwoBookingPage({ searchParams }) {
    if (step !== '2') return null
    return (
       <div>
-         <ManagementForm step={step} dateRange={dateRange} />
+         <BookingManagementForm step={step} dateRange={dateRange} />
       </div>
    )
 }

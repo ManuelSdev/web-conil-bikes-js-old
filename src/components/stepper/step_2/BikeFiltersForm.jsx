@@ -32,6 +32,7 @@ export default function BikeFiltersForm({
    dateRange,
    availableSizes,
    appBikesConfig,
+   renderShowBikesButton,
    //form,
    // setStep,
 }) {
@@ -137,16 +138,7 @@ export default function BikeFiltersForm({
                //  LoadingLabel={LoadingLabel}
                availableRanges={availableRanges}
             />
-            <Link
-               href={`/booking?step=3&date=${dateRange}&size=${size}&type=${type}&range=${range}`}
-            >
-               <Button
-                  disabled={!range}
-                  //type="submit"
-               >
-                  MOSTRAR BICICLETAS
-               </Button>
-            </Link>
+            {renderShowBikesButton({ dateRange, size, type, range })}
          </form>
       </Form>
    )

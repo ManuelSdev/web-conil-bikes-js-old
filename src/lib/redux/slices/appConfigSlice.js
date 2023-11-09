@@ -23,8 +23,9 @@ export const appConfigSlice = createSlice({
          */
          action.payload,
 
-      appBikesConfigLoaded: (state, action) =>
-         (state.bikesConfig = action.payload),
+      appBikesConfigLoaded: (state, action) => {
+         state.bikesConfig = action.payload
+      },
    },
 })
 
@@ -33,7 +34,13 @@ export const { appConfigLoaded, appBikesConfigLoaded } = appConfigSlice.actions
 export default appConfigSlice.reducer
 
 const selectAppConfig = (state) => state.appConfig
-const selectAppBikesConfig = (state) => state.appConfig.bikesConfig
+
+export const selectAppBikesConfig = createSelector(
+   [selectAppConfig],
+   (appConfig) =>
+      //console.log('---------', databaseInfo.segmentList) ||
+      appConfig.bikesConfig
+)
 /*
 export const selectDatabaseInfoSegmentList = createSelector(
    [selectDatabaseInfo],

@@ -10,9 +10,11 @@ import {
 } from '@/lib/redux/slices/bookingFormSlice'
 import { Button } from '@/components/ui/button'
 import AvailableBikeListStep from './AvailableBikeListStep'
+import { dateRangeISOStringObjToString } from '@/utils/datesFns/createDateRangeString'
 
 export default function AvailableBikeListUserHandler({ setStep }) {
-   const dateRange = useSelector(selectDateRange)
+   const storedDateRange = useSelector(selectDateRange)
+   const dateRange = dateRangeISOStringObjToString(storedDateRange)
    const bikeSearchParams = useSelector(selectBikesearchParams)
    const {
       data: availableBikes,
@@ -21,7 +23,7 @@ export default function AvailableBikeListUserHandler({ setStep }) {
       refetch,
       isFetching,
    } = useGetAvailableBikesQuery({ dateRange, ...bikeSearchParams })
-
+   console.log('availableBikes ->', availableBikes)
    const dispatch = useDispatch()
 
    const handleSelect = (bike) => (ev) => {
@@ -29,12 +31,11 @@ export default function AvailableBikeListUserHandler({ setStep }) {
       dispatch(bikeSelected(bike))
       setStep(1)
    }
-   const handleNext = () => {
-      // setStep(1)
-   }
-   const handlePrev = () => {
-      // router.push(`/booking?step=1`)
-   }
+   const renderPrevButton = () => (
+      <Button onClick={() => setStep(2)} className="text-greenCorp">
+         atrás
+      </Button>
+   )
    return isLoading ? (
       <div>LOADINGFGGG</div>
    ) : (
@@ -44,9 +45,7 @@ export default function AvailableBikeListUserHandler({ setStep }) {
          renderSelectBikeButton={(bike) => (
             <Button onClick={handleSelect(bike)}>Seleccionar</Button>
          )}
-         handleNext={handleNext}
-         handlePrev={handlePrev}
-         disabled={true}
+         renderPrevButton={renderPrevButton}
       />
    )
 }

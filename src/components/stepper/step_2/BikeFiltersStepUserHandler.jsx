@@ -5,15 +5,27 @@ import {
    useGetAppBikesConfigQuery,
    useGetAvailableSizesQuery,
 } from '@/lib/redux/apiSlices/bikeApi'
-import { useSelector } from 'react-redux'
-import { selectDateRange } from '@/lib/redux/slices/bookingFormSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+   bikeSearchParamsSelected,
+   selectBikesByUnits,
+   selectDateRange,
+} from '@/lib/redux/slices/bookingFormSlice'
+import { dateRangeISOStringObjToString } from '@/utils/datesFns/createDateRangeString'
+import { Button } from '@/components/ui/button'
 
 export default function BikeFiltersStepUserHandler({
    setStep,
    //appBikesConfig,
    // availableSizes,
 }) {
-   const dateRange = useSelector(selectDateRange)
+   const dispatch = useDispatch()
+   const strDateRangeObj = useSelector(selectDateRange)
+   const storedBikesByUnits = useSelector(selectBikesByUnits)
+
+   const dateRange = dateRangeISOStringObjToString(strDateRangeObj)
+
+   console.log('dateRange BikeFiltersStepUserHandler -> ', dateRange)
 
    const {
       data: appBikesConfig,
@@ -26,23 +38,37 @@ export default function BikeFiltersStepUserHandler({
    const { data: availableSizes, isLoading: isLoadingSizes } =
       useGetAvailableSizesQuery({ dateRange })
 
-   const handleNext = () => {
-      // setStep(1)
-   }
-   const handlePrev = () => {
-      // router.push(`/booking?step=1`)
-   }
+   const renderShowBikesButton = ({ size, type, range }) => (
+      <Button
+         onClick={() => {
+            dispatch(bikeSearchParamsSelected({ size, type, range }))
+            setStep(3)
+         }}
+         disabled={!range}
+         //type="submit"
+      >
+         MOSTRAR BICICLETAS
+      </Button>
+   )
+   const renderPrevButton = () => (
+      <Button
+         onClick={() => setStep(storedBikesByUnits.length === 0 ? 0 : 1)}
+         className="text-greenCorp"
+      >
+         atrás
+      </Button>
+   )
    return isLoadingConfig || isLoadingSizes ? (
-      <div>LOADINGGG</div>
+      <div>LOADINGGG BikeFiltersStep #########</div>
    ) : (
       <BikeFiltersStep
          isLoadingSizes={isLoadingSizes}
          availableSizes={availableSizes}
          appBikesConfig={appBikesConfig}
          dateRange={dateRange}
-         handleNext={handleNext}
-         handlePrev={handlePrev}
          disabled={true}
+         renderShowBikesButton={renderShowBikesButton}
+         renderPrevButton={renderPrevButton}
       />
    )
 }
