@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import BookingResumeStep from './BookingResumeStep'
 import { Button } from '@/components/ui/button'
 import { useSelector } from 'react-redux'
@@ -10,14 +10,22 @@ import {
    selectDateRange,
 } from '@/lib/redux/slices/bookingFormSlice'
 import { selectAppBikesConfig } from '@/lib/redux/slices/appConfigSlice'
+import { useLazyCreateCookieQuery } from '@/lib/redux/apiSlices/cookieApi'
 
 export default function BookingResumeUserHandler({ setStep }) {
+   const [triggerCookie] = useLazyCreateCookieQuery()
+
    const bikes = useSelector(selectBikesByUnits)
    const bookingDayPrice = useSelector(selectBookingDayPrice)
    const bookingDuration = useSelector(selectBookingDuration)
-   const appBikesConfig = useSelector(selectAppBikesConfig)
    const bookingManagement = useSelector(selectBookingManagement)
    const dateRange = useSelector(selectDateRange)
+
+   const appBikesConfig = useSelector(selectAppBikesConfig)
+
+   //const resumeCookieValue=createBookingResumeCookie({bikes, bookingManagement, dateRange, })
+   // triggerCookie({ name: 'bookingResume', value: resumeCookieValue })
+
    const handleBikePrice = getBikeSegmentPrice(appBikesConfig.segmentList)
 
    const renderPrevButton = () => (
@@ -25,6 +33,7 @@ export default function BookingResumeUserHandler({ setStep }) {
          atrás
       </Button>
    )
+
    return (
       <div>
          <BookingResumeStep
@@ -50,4 +59,19 @@ function getBikeSegmentPrice(segmentList) {
       const [{ segmentPrice }] = segment
       return segmentPrice
    }
+}
+
+function createBookingResumeCookie({ bikes, bookingManagement, dateRange }) {
+   const bikesData = bikes.map((bike) => ({
+      modelId: bike.modelId,
+      bikeSize: bike.bikeSize,
+   }))
+   const managementData = { ...bookingManagement }
+   const dateRangeData = { ...dateRange }
+   const cookieValue = JSON.stringify({
+      bikesData,
+      managementData,
+      dateRangeData,
+   })
+   return cookieValue
 }

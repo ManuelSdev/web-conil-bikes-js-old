@@ -16,7 +16,11 @@ import BookingManagementUserHandler from './step_4/BookingManagementUserHandler'
 import BookingResumeUserHandler from './step_5/BookingResumeUserHandler'
 import { appBikesConfigLoaded } from '@/lib/redux/slices/appConfigSlice'
 
-export default function UserStepper({ stepperDataCookie, appBikesConfig }) {
+export default function UserStepper({
+   //bookingResumeCookie,
+   stepperDataCookie,
+   appBikesConfig,
+}) {
    const dispatch = useDispatch()
    console.log('UserStepper appBikesConfig ->', appBikesConfig)
    dispatch(appBikesConfigLoaded(appBikesConfig))
