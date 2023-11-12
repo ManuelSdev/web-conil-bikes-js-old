@@ -12,11 +12,11 @@ WITH AvailableBikes AS (
                             SELECT booking_id
                             FROM booking
                             WHERE booking_state != 'cancelled'
-                                AND $[dateRange]::tstzrange && booking_date_range
+                                AND $ [ dateRange ]::tstzrange && booking_date_range
                         )
                 )
         )
-        AND bike_size = $[size]
+        AND bike_size = $ [ SIZE ]
     ORDER BY bike_size ASC
 )
 SELECT DISTINCT model_type

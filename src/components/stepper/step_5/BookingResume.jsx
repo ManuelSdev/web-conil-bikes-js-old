@@ -1,38 +1,33 @@
-import {
-   selectBikesByUnits,
-   selectBookingDayPrice,
-   selectBookingDuration,
-   selectBookingManagement,
-   selectDateRange,
-} from '@/lib/redux/slices/bookingFormSlice'
 import { BIKE_RANGES_MAP, BIKE_TYPES_MAP } from '@/utils/app/appValues'
 import React from 'react'
-import { useSelector } from 'react-redux'
 import {
    CheckIcon,
    ClockIcon,
    QuestionMarkCircleIcon,
    XMarkIcon,
 } from '@heroicons/react/20/solid'
-import { selectAppBikesConfig } from '@/lib/redux/slices/appConfigSlice'
 import {
    CalendarDaysIcon,
    CreditCardIcon,
    UserCircleIcon,
 } from '@heroicons/react/20/solid'
+import { add, format } from 'date-fns'
 
 export default function BookingResume({
-   bikes,
-   bookingDayPrice,
-   bookingDuration,
+   name,
+   phone,
+   email,
+   address,
+   delivery,
+   pickup,
+   bikesByUnits: bikes,
    dateRange,
-   bookingManagement,
-   handleBikePrice,
+   dayPrice,
+   totalPrice,
+   duration,
+   renderCheckoutButton,
 }) {
    const { from, to } = dateRange
-   const { address, delivery, pickup } = bookingManagement
-   const userData = ['name', 'email', 'phone', 'address']
-   const bookingTotalPrice = bookingDayPrice * bookingDuration
 
    return (
       <div className="bg-white">
@@ -72,7 +67,11 @@ export default function BookingResume({
                                        </p>
                                     </h4>
                                     <p className="ml-4 text-sm font-medium text-gray-900">
-                                       {handleBikePrice(bike)} €/día
+                                       {
+                                          bike.price
+                                          // handleBikePrice(bike)
+                                       }{' '}
+                                       €/día
                                     </p>
                                  </div>
                                  <p className="mt-1 text-sm text-gray-500">
@@ -145,7 +144,43 @@ export default function BookingResume({
                               />
                            </dt>
                            <dd className="text-sm font-medium leading-6 text-gray-900">
-                              Alex Curren
+                              {name}
+                           </dd>
+                        </div>
+                        <div className="mt-4 flex w-full flex-none gap-x-4 ">
+                           <dt className="flex-none">
+                              <span className="sr-only">Due date</span>
+                              <CalendarDaysIcon
+                                 className="h-6 w-5 text-gray-400"
+                                 aria-hidden="true"
+                              />
+                           </dt>
+                           <dd className="text-sm leading-6 text-gray-500">
+                              <time dateTime="2023-01-31">{email}</time>
+                           </dd>
+                        </div>
+                        <div className="mt-4 flex w-full flex-none gap-x-4 ">
+                           <dt className="flex-none">
+                              <span className="sr-only">Due date</span>
+                              <CalendarDaysIcon
+                                 className="h-6 w-5 text-gray-400"
+                                 aria-hidden="true"
+                              />
+                           </dt>
+                           <dd className="text-sm leading-6 text-gray-500">
+                              <time dateTime="2023-01-31">{phone}</time>
+                           </dd>
+                        </div>
+                        <div className="mt-4 flex w-full flex-none gap-x-4 ">
+                           <dt className="flex-none">
+                              <span className="sr-only">Due date</span>
+                              <CalendarDaysIcon
+                                 className="h-6 w-5 text-gray-400"
+                                 aria-hidden="true"
+                              />
+                           </dt>
+                           <dd className="text-sm leading-6 text-gray-500">
+                              <time dateTime="2023-01-31">{address}</time>
                            </dd>
                         </div>
                         <div className="mt-4 flex w-full flex-none gap-x-4 ">
@@ -158,47 +193,10 @@ export default function BookingResume({
                            </dt>
                            <dd className="text-sm leading-6 text-gray-500">
                               <time dateTime="2023-01-31">
-                                 manuel@email.com
-                              </time>
-                           </dd>
-                        </div>
-                        <div className="mt-4 flex w-full flex-none gap-x-4 ">
-                           <dt className="flex-none">
-                              <span className="sr-only">Due date</span>
-                              <CalendarDaysIcon
-                                 className="h-6 w-5 text-gray-400"
-                                 aria-hidden="true"
-                              />
-                           </dt>
-                           <dd className="text-sm leading-6 text-gray-500">
-                              <time dateTime="2023-01-31">+34 626852960</time>
-                           </dd>
-                        </div>
-                        <div className="mt-4 flex w-full flex-none gap-x-4 ">
-                           <dt className="flex-none">
-                              <span className="sr-only">Due date</span>
-                              <CalendarDaysIcon
-                                 className="h-6 w-5 text-gray-400"
-                                 aria-hidden="true"
-                              />
-                           </dt>
-                           <dd className="text-sm leading-6 text-gray-500">
-                              <time dateTime="2023-01-31">
-                                 calle direccion aquí
-                              </time>
-                           </dd>
-                        </div>
-                        <div className="mt-4 flex w-full flex-none gap-x-4 ">
-                           <dt className="flex-none">
-                              <span className="sr-only">Due date</span>
-                              <CalendarDaysIcon
-                                 className="h-6 w-5 text-gray-400"
-                                 aria-hidden="true"
-                              />
-                           </dt>
-                           <dd className="text-sm leading-6 text-gray-500">
-                              <time dateTime="2023-01-31">
-                                 January 31, 2023
+                                 {`Del ${format(
+                                    new Date(from),
+                                    'dd/MM/yyyy'
+                                 )} al ${format(new Date(to), 'dd/MM/yyyy')}}`}
                               </time>
                            </dd>
                         </div>
@@ -212,8 +210,9 @@ export default function BookingResume({
                               />
                            </dt>
                            <dd className="text-sm leading-6 text-gray-500">
-                              Recogida de bicicletas en tienda el día de inicio
-                              de la reserva
+                              {delivery
+                                 ? 'Entrega de bicicletas en tienda el día de inicio de la reserva'
+                                 : 'Entrega de biciletas a domicilio el día de inicio de la reserva'}
                            </dd>
                         </div>
                         <div className="mt-4 flex w-full flex-none gap-x-4 ">
@@ -225,8 +224,9 @@ export default function BookingResume({
                               />
                            </dt>
                            <dd className="text-sm leading-6 text-gray-500">
-                              Devolución de bicicletas en tienda el día de
-                              inicio de la reserva
+                              {pickup
+                                 ? 'Devolución de bicicletas en tienda el último día de la reserva'
+                                 : 'Recogida de bicicletas a domicilio el último día de la reserva'}
                            </dd>
                         </div>
                      </dl>
@@ -254,10 +254,10 @@ export default function BookingResume({
                      <dl className="mt-6 space-y-4">
                         <div className="flex items-center justify-between">
                            <dt className="text-sm text-gray-600">
-                              Total por día
+                              Precio por día
                            </dt>
                            <dd className="text-sm font-medium text-gray-900">
-                              {bookingDayPrice} €
+                              {dayPrice} €
                            </dd>
                         </div>
                         <div className="flex items-center justify-between border-t border-gray-200 pt-4">
@@ -277,7 +277,7 @@ export default function BookingResume({
                               </a>
                            </dt>
                            <dd className="text-sm font-medium text-gray-900">
-                              {bookingDuration} días
+                              {duration} días
                            </dd>
                         </div>
                         <div className="flex items-center justify-between border-t border-gray-200 pt-4">
@@ -297,27 +297,20 @@ export default function BookingResume({
                               </a>
                            </dt>
                            <dd className="text-sm font-medium text-gray-900">
-                              $8.32
+                              holi €
                            </dd>
                         </div>
                         <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                            <dt className="text-base font-medium text-gray-900">
-                              Total
+                              Precio final
                            </dt>
                            <dd className="text-base font-medium text-gray-900">
-                              {bookingTotalPrice} €
+                              {totalPrice} €
                            </dd>
                         </div>
                      </dl>
 
-                     <div className="mt-6">
-                        <button
-                           type="submit"
-                           className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
-                        >
-                           Checkout
-                        </button>
-                     </div>
+                     <div className="mt-6">{renderCheckoutButton()}</div>
                   </section>
                </div>
             </form>

@@ -1,4 +1,6 @@
-import { getAvailableBikes } from '@/lib/pg-promise/crud/bikes'
+//import { getAvailableBikes } from '@/lib/pg-promise/crud/bikes'
+
+import { getAvailableBikes } from '@/lib/pg/crud/bikes'
 
 export async function GET(req, { params }) {
    const { dateRange, size, type, range } = params

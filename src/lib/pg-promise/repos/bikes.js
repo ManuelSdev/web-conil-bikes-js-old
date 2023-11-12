@@ -44,7 +44,8 @@ export default class BikesRepository {
       //console.log('BookingsRepository.#bookingQueryFiles -> ',BookingsRepository.bookingQueryFiles)
       const sizes = await this.db.map(
          //   BikesRepository.bookingQueryFiles.findAvailableSizesInRange,
-         this.bikesQueryFiles.findAvailableSizesInRange,
+         // this.bikesQueryFiles.findAvailableSizesInRange,
+         'SELECT * FROM get_sizes(${dateRange})',
          {
             dateRange,
          },
@@ -92,7 +93,7 @@ export default class BikesRepository {
          }
          //(row) => row.model_range
       )
-      //console.log('bikes ------------------------------>', bikes)
+      console.log('bikes ------------------------------>', bikes)
       return bikes
    }
    async findAppBikesConfig() {

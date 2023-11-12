@@ -27,13 +27,8 @@ import React from 'react'
 import { sizesList, typesList } from '@/utils/app/appValues'
 import { capitalizeFirst } from '@/utils/app/functions'
 
-export default function TypeSelect({
-   form,
-   availableTypes,
-   selectedSize,
-   handleChange,
-}) {
-   console.log('availableTypes IN TypeSelect @->', availableTypes)
+export default function TypeSelect({ form, availableTypes, handleChange }) {
+   // console.log('availableTypes IN TypeSelect @->', availableTypes)
 
    return (
       <FormField

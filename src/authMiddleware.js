@@ -1,5 +1,3 @@
-import { is } from 'date-fns/locale'
-
 export async function authMiddleware({
    isAdmin,
    request,
@@ -7,7 +5,7 @@ export async function authMiddleware({
    resolvedUrl,
 }) {
    console.log('############################################################')
-
+   //TODO: usar verifySessionCookie o esto no vale pa na
    const urlToRedirect = isAdmin
       ? new URL('/auth', request.url)
       : new URL('/auth/sign-in', request.url)

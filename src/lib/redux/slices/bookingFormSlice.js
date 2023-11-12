@@ -4,6 +4,7 @@ import { differenceInDays } from 'date-fns'
 
 const initialState = {
    //dateRange: '',
+   segmentList: [],
    dateRange: { from: '', to: '' },
    bikes: [],
    address: '',
@@ -20,12 +21,16 @@ const bookingFormSlice = createSlice({
    name: 'bookingForm',
    initialState,
    reducers: {
+      segmentListLoaded: (state, action) => {
+         //  console.log('segmentListLoaded action.payload _> ', action.payload)
+         state.segmentList = action.payload
+      },
       dateRangeSelected: (state, action) => {
-         console.log('dateRangeSelected action.payload _> ', action.payload)
+         // console.log('dateRangeSelected action.payload _> ', action.payload)
          state.dateRange = action.payload
       },
       bookingManagementSelected: (state, action) => {
-         console.log('bookingManagementSelected action.payload _> ', action)
+         //  console.log('bookingManagementSelected action.payload _> ', action)
          const { address, delivery, pickup } = action.payload
          state.address = address
          state.delivery = delivery
@@ -49,13 +54,13 @@ const bookingFormSlice = createSlice({
          )
          //    console.log('only one', onlyOne)
          if (onlyOne) {
-            console.log('only one------------')
+            console.log('bikeRemoved in bookingFormSlice: solo hay una')
             state.bikes = state.bikes.filter(
                (bike) =>
                   !(bike.bikeSize === bikeSize && bike.modelId === modelId)
             )
          } else {
-            console.log('MAS DE UNA***********')
+            console.log('bikeRemoved in bookingFormSlice: más de una')
             state.bikes = state.bikes.map((bike) => {
                if (bike.bikeSize === bikeSize && bike.modelId === modelId) {
                   return { ...bike, quantity: bike.quantity - 1 }
@@ -65,16 +70,14 @@ const bookingFormSlice = createSlice({
       },
 
       bikeSearchParamsSelected: (state, action) => {
-         console.log(
-            'bikeSearchParamsSelected action.payload _> ',
-            action.payload
-         )
+         //console.log('bikeSearchParamsSelected action.payload _> ',action.payload)
          state.bikeSearchParams = action.payload
       },
    },
 })
 
 export const {
+   segmentListLoaded,
    dateRangeSelected,
    bookingManagementSelected,
    bikeSelected,
@@ -83,7 +86,7 @@ export const {
 } = bookingFormSlice.actions
 
 export default bookingFormSlice.reducer
-
+export const selectSegmentList = (state) => state.bookingForm.segmentList
 export const selectDateRange = (state) => state.bookingForm.dateRange
 
 export const selectBikes = (state) => state.bookingForm.bikes
@@ -100,6 +103,10 @@ export const selectBookingManagement = createSelector(
    (address, delivery, pickup) => ({ address, delivery, pickup })
 )
 
+export const selectBikesToAddToBooking = createSelector(
+   [selectBikes],
+   (bikes) => bikes.map((bike) => ({ ...bike, quantity: 1 }))
+)
 export const selectBikesByUnits = createSelector([selectBikes], (bikes) => {
    // console.log(bikes)
    const bikesInUnits = bikes.map((bike) => {
@@ -123,7 +130,19 @@ export const selectBikesByUnits = createSelector([selectBikes], (bikes) => {
 
    return bikesInUnits.flat()
 })
-
+export const selectAvailableBikes = createSelector([selectBikes], (bikes) =>
+   bikes.map((bike) => {
+      const { quantity, availability } = bike
+      //   console.log(bike)
+      if (availability >= 0) {
+         if (availability > 0) {
+            if (quantity <= availability) return bike
+            else return { ...bike, quantity: availability }
+         }
+         //si availability === 0 no retorna ninguna bike
+      } else return bike
+   })
+)
 export const selectBookingDayPrice = createSelector(
    [selectAppBikesConfig, selectBikesByUnits],
    (bikesConfig, bikesInUnits) => {
@@ -152,38 +171,66 @@ export const selectBookingDuration = createSelector(
       return duration
    }
 )
+export const selectBookingData = createSelector(
+   [selectBikes, selectBikesByUnits, selectDateRange, selectBookingManagement],
+   (bikesWithQuantity, bikesByUnits, dateRange, bookingManagement) => {
+      const { from, to } = dateRange
+      const duration = differenceInDays(new Date(to), new Date(from))
+      const dayPrice = bikesByUnits.reduce((acc, bike) => {
+         return acc + bike.price
+      }, 0)
+      const totalPrice = dayPrice * duration
+      //Es
+      const bikesForQuery = bikesWithQuantity.map(
+         ({ modelId, bikeSize, quantity }) => ({ modelId, bikeSize, quantity })
+      )
+      return {
+         bikes: bikesForQuery,
+         bikesByUnits,
+         dayPrice,
+         dateRange,
+         duration,
+         totalPrice,
+         ...bookingManagement,
+      }
+   }
+)
 function addBike(state, action) {
-   //No desctructure count propertie and add quantity property
-   const {
-      modelId,
-      bikeSize,
-      modelName,
-      modelType,
-      modelRange,
-      modelBrand,
-      modelDesc,
-      modelImages,
-   } = action.payload
    //modelId=modelId: modelId del modelo, no modelId de bicicleta
    const newBike = {
-      modelId,
-      bikeSize,
-      modelName,
-      modelType,
-      modelRange,
-      modelBrand,
-      modelDesc,
-      modelImages,
-      quantity: 1,
+      ...action.payload,
    }
    const exist = state.bikes.some(
       (bike) => bike.bikeSize === bikeSize && bike.modelId === modelId
    )
-   state.bikes = exist
-      ? state.bikes.map((bike) => {
-           if (bike.bikeSize === bikeSize && bike.modelId === modelId) {
-              return { ...bike, quantity: bike.quantity + 1 }
-           } else return bike
-        })
-      : [...state.bikes, newBike]
+   if (exist) {
+      /**
+       * Sabemos que la bici existe en el array de bikes, pero hay que volver
+       * a reccorrer el array para encontrarla y actualizar actualizar su quantity.
+       * Las bicis que no son iguales a la que se añade, no se modifican y solo se retornan
+       */
+      state.bikes = state.bikes.map((bike) => {
+         if (bike.bikeSize === bikeSize && bike.modelId === modelId) {
+            return { ...bike, quantity: bike.quantity + 1 }
+         } else return bike
+      })
+   } else {
+      const bikePrice = getBikeSegmentPrice(state.segmentList)(newBike)
+      state.bikes = [
+         ...state.bikes,
+         { ...newBike, quantity: 1, price: bikePrice },
+      ]
+   }
+}
+
+function getBikeSegmentPrice(segmentList) {
+   return (bike) => {
+      const segment = segmentList.filter(
+         (segment) =>
+            segment.modelType === bike.modelType &&
+            segment.modelRange === bike.modelRange
+      )
+      const [{ segmentPrice }] = segment
+      return segmentPrice
+   }
 }

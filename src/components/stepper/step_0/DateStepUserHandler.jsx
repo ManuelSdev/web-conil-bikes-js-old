@@ -15,6 +15,7 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
 export default function DateStepUserHandler({ setStep, cookieDateRange }) {
+   console.log('DateStepUserHandler @@@->')
    const dispatch = useDispatch()
    const storedDateRange = useSelector(selectDateRange)
    const dateRangeObj = dateRangeISOStrObjToDateRangeObjs(storedDateRange)
@@ -81,10 +82,10 @@ export default function DateStepUserHandler({ setStep, cookieDateRange }) {
 }
 
 function dateRangeObjToISOString(dateRange) {
-   console.log('dateRange @->', dateRange)
+   //console.log('dateRange @->', dateRange)
    const isoStringRangeObj = dateRangeObjToISOStringObj(dateRange)
-   console.log('isoStringRangeObj ->', isoStringRangeObj)
+   // console.log('isoStringRangeObj ->', isoStringRangeObj)
    const strDateRange = dateRangeISOStringObjToString(isoStringRangeObj)
-   console.log('strDateRange ->', strDateRange)
+   // console.log('strDateRange ->', strDateRange)
    return strDateRange
 }

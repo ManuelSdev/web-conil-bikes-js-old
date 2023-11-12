@@ -1,64 +1,89 @@
-import React, { useEffect } from 'react'
+import React, { use, useEffect } from 'react'
 import BookingResumeStep from './BookingResumeStep'
 import { Button } from '@/components/ui/button'
 import { useSelector } from 'react-redux'
 import {
+   selectBikes,
    selectBikesByUnits,
-   selectBookingDayPrice,
+   selectBookingData,
    selectBookingDuration,
    selectBookingManagement,
    selectDateRange,
 } from '@/lib/redux/slices/bookingFormSlice'
 import { selectAppBikesConfig } from '@/lib/redux/slices/appConfigSlice'
 import { useLazyCreateCookieQuery } from '@/lib/redux/apiSlices/cookieApi'
+import { useCreateBookingMutation } from '@/lib/redux/apiSlices/bookingApi'
+import { dateRangeISOStringObjToString } from '@/utils/datesFns/createDateRangeString'
 
-export default function BookingResumeUserHandler({ setStep }) {
+export default function BookingResumeUserHandler({ setStep, user }) {
    const [triggerCookie] = useLazyCreateCookieQuery()
 
-   const bikes = useSelector(selectBikesByUnits)
-   const bookingDayPrice = useSelector(selectBookingDayPrice)
-   const bookingDuration = useSelector(selectBookingDuration)
-   const bookingManagement = useSelector(selectBookingManagement)
-   const dateRange = useSelector(selectDateRange)
+   const storedBookingData = useSelector(selectBookingData)
 
-   const appBikesConfig = useSelector(selectAppBikesConfig)
+   const bookingResumeData = {
+      ...user,
+      ...storedBookingData,
+      isAdmin: true,
+   }
+   const {
+      bikes,
+      userId,
+      isAdmin,
+      dateRange,
+      address,
+      totalPrice: price,
+      email,
+      delivery,
+      pickup,
+      duration,
+   } = bookingResumeData
 
-   //const resumeCookieValue=createBookingResumeCookie({bikes, bookingManagement, dateRange, })
-   // triggerCookie({ name: 'bookingResume', value: resumeCookieValue })
+   const strDateRange = dateRangeISOStringObjToString(dateRange)
 
-   const handleBikePrice = getBikeSegmentPrice(appBikesConfig.segmentList)
+   const queryData = {
+      bikes,
+      userId,
+      isAdmin,
+      dateRange: strDateRange,
+      address,
+      price,
+      email,
+      delivery,
+      pickup,
+      duration,
+   }
 
+   const [
+      createBooking,
+      {
+         // status,
+         //  isUninitialized,
+         isLoading,
+         isSuccess,
+         data,
+         isError,
+         reset,
+      },
+   ] = useCreateBookingMutation({ fixedCacheKey: 'createBooking-key' })
    const renderPrevButton = () => (
       <Button onClick={() => setStep(4)} className="text-greenCorp">
          atrás
       </Button>
    )
-
+   const renderCheckoutButton = () => (
+      <Button type="submit" onClick={() => createBooking(queryData)}>
+         Confirmar reserva
+      </Button>
+   )
    return (
       <div>
          <BookingResumeStep
-            bikes={bikes}
-            bookingManagement={bookingManagement}
-            dateRange={dateRange}
-            bookingDayPrice={bookingDayPrice}
-            bookingDuration={bookingDuration}
-            handleBikePrice={handleBikePrice}
             renderPrevButton={renderPrevButton}
+            renderCheckoutButton={renderCheckoutButton}
+            {...bookingResumeData}
          />
       </div>
    )
-}
-
-function getBikeSegmentPrice(segmentList) {
-   return (bike) => {
-      const segment = segmentList.filter(
-         (segment) =>
-            segment.modelType === bike.modelType &&
-            segment.modelRange === bike.modelRange
-      )
-      const [{ segmentPrice }] = segment
-      return segmentPrice
-   }
 }
 
 function createBookingResumeCookie({ bikes, bookingManagement, dateRange }) {

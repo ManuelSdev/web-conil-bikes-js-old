@@ -35,7 +35,7 @@ export function createDateRangeString({
       )(fromDate)
 
    const convertDateRangeToString = ({ from, to }) =>
-      console.log('=========== pipe from > ', from) ||
+      //console.log('=========== pipe from > ', from) ||
       pipe(
          dateRangeObjToISOStringObj,
          dateRangeISOStringObjToString
@@ -81,18 +81,18 @@ function fromDateToDateRangeObj(outsideDates) {
 }
 
 export function dateRangeObjToISOStringObj(dateRangeObj) {
-   console.log('dateRangeObjToISOStringObj -> ', dateRangeObj)
+   //console.log('dateRangeObjToISOStringObj -> ', dateRangeObj)
    const { from, to } = dateRangeObj
-   console.log('from @-> ', from)
-   console.log('to @-> ', to)
+   //console.log('from @-> ', from)
+   // console.log('to @-> ', to)
    return {
-      from: from ? console.log('hoddddddddddddddd') || from.toISOString() : '',
+      from: from ? from.toISOString() : '',
       to: to ? to.toISOString() : '',
    }
 }
 
 export function dateRangeISOStrObjToDateRangeObjs({ from, to }) {
-   console.log('dateRangeISOStrObjToDateRangeObjs -> ', { from, to })
+   //console.log('dateRangeISOStrObjToDateRangeObjs -> ', { from, to })
    return {
       from: from ? new Date(from) : '',
       to: to ? new Date(to) : '',

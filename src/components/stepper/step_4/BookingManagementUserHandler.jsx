@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import BookingManagementStep from './BookingManagementStep'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -20,6 +20,7 @@ const FormSchema = z.object({
 })
 
 export default function BookingManagementUserHandler({ setStep }) {
+   console.log('BookingManagementUserHandler @@@->')
    const dispatch = useDispatch()
 
    /** BookingManagementForm **/
@@ -31,13 +32,23 @@ export default function BookingManagementUserHandler({ setStep }) {
          ...bookingManagement,
       },
    })
-   const { address, delivery, pickup } = form.getValues()
+
+   useEffect(() => {
+      //console.log('useEffect bookingManagement ->', bookingManagement)
+      //  form.setValue('address', bookingManagement.address)
+      //  form.setValue('delivery', bookingManagement.delivery)
+      //  form.setValue('pickup', bookingManagement.pickup)
+      return () => {
+         //Si pongo esto en el cuerpo del componente no pilla los valores....?¿
+         const { address, delivery, pickup } = form.getValues()
+         dispatch(bookingManagementSelected({ address, delivery, pickup }))
+      }
+   }, [])
 
    const renderNextButton = () => (
       <Button
-         disabled={!address}
+         disabled={!form.getValues().address}
          onClick={() => {
-            // dispatch(bookingManagementSelected({ address, delivery, pickup }))
             setStep(5)
          }}
          className="text-greenCorp"

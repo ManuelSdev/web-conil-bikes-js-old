@@ -68,7 +68,7 @@ export default function BikeFiltersForm({
       lastPromiseInfoTypes,
    ] = useLazyGetAvailableTypesQuery()
 
-   console.log('availableTypes IN BikeFilters @->', availableTypes)
+   //console.log('availableTypes IN BikeFilters @->', availableTypes)
 
    const [
       triggerRange,
@@ -83,7 +83,7 @@ export default function BikeFiltersForm({
    const handleSizeChange = (field) => (selectedSizeValue) => {
       field.onChange(selectedSizeValue)
       // setBikeForm({ ...form, size: lastSelectedSize })
-      console.log('## CALL getAvailableSizesInRange FROM BikeFilters ##')
+      //console.log('## CALL getAvailableSizesInRange FROM BikeFilters ##')
 
       triggerType({ dateRange, size: selectedSizeValue })
    }

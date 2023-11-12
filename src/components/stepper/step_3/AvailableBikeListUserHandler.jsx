@@ -13,6 +13,7 @@ import AvailableBikeListStep from './AvailableBikeListStep'
 import { dateRangeISOStringObjToString } from '@/utils/datesFns/createDateRangeString'
 
 export default function AvailableBikeListUserHandler({ setStep }) {
+   console.log('AvailableBikeListUserHandler @@@->')
    const storedDateRange = useSelector(selectDateRange)
    const dateRange = dateRangeISOStringObjToString(storedDateRange)
    const bikeSearchParams = useSelector(selectBikesearchParams)
@@ -23,11 +24,11 @@ export default function AvailableBikeListUserHandler({ setStep }) {
       refetch,
       isFetching,
    } = useGetAvailableBikesQuery({ dateRange, ...bikeSearchParams })
-   console.log('availableBikes ->', availableBikes)
+   // console.log('availableBikes ->', availableBikes)
    const dispatch = useDispatch()
 
    const handleSelect = (bike) => (ev) => {
-      console.log('bike ->', bike)
+      // console.log('bike ->', bike)
       dispatch(bikeSelected(bike))
       setStep(1)
    }

@@ -36,9 +36,9 @@ export const bookingApi = baseApi.injectEndpoints({
          // providesTags: ['User'],
       }),
 
-      addBooking: builder.mutation({
+      createBooking: builder.mutation({
          query: (data) => ({
-            url: BOOKINGS,
+            url: '/bookings',
             method: 'POST',
             /*
                 headers: {
@@ -75,7 +75,7 @@ export const {
    useLazyGetBookingDatesInRangeQuery,
    useGetBookingsOnDateQuery,
    useLazyGetBookingsOnDateQuery,
-   useAddBookingMutation,
+   useCreateBookingMutation,
 
    useUpdateBookingMutation,
 } = bookingApi

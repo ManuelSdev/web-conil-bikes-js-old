@@ -37,7 +37,6 @@ export default function RangeSelect({
    /*
    const segmentList = useSelector(selectDatabaseInfoSegmentList)
 */
-   console.log(appBikesConfig)
    const { segmentList } = appBikesConfig
    const rangeInfo = (range) => {
       let price

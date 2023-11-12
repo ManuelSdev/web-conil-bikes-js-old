@@ -1,4 +1,4 @@
-WITH AvaiableBikes AS (
+WITH AvailableBikes AS (
     SELECT DISTINCT bike_size,
         model_id
     FROM bike
@@ -12,13 +12,13 @@ WITH AvaiableBikes AS (
                             SELECT booking_id
                             FROM booking
                             WHERE booking_state != 'cancelled'
-                                AND '[2023-11-14T23:00:00.000Z,2023-11-22T23:00:00.000Z]'::tstzrange && booking_date_range
+                                AND '[2023-11-10T23:00:00.000Z,2023-11-21T23:00:00.000Z]'::tstzrange && booking_date_range
                         )
                 )
         )
-        AND bike_size = 'm'
+        AND bike_size = 'xxl'
     ORDER BY bike_size ASC
 )
 SELECT DISTINCT model_type
-FROM AvaiableBikes
+FROM AvailableBikes
     INNER JOIN model USING (model_id)

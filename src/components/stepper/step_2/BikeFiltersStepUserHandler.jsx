@@ -19,13 +19,12 @@ export default function BikeFiltersStepUserHandler({
    //appBikesConfig,
    // availableSizes,
 }) {
+   console.log('BikeFiltersStepUserHandler @@@->')
    const dispatch = useDispatch()
    const strDateRangeObj = useSelector(selectDateRange)
    const storedBikesByUnits = useSelector(selectBikesByUnits)
 
    const dateRange = dateRangeISOStringObjToString(strDateRangeObj)
-
-   console.log('dateRange BikeFiltersStepUserHandler -> ', dateRange)
 
    const {
       data: appBikesConfig,
