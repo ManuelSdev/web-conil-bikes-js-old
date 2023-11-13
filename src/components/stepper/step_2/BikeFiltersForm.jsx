@@ -31,7 +31,7 @@ const FormSchema = z.object({
 export default function BikeFiltersForm({
    dateRange,
    availableSizes,
-   appBikesConfig,
+   segmentList,
    renderShowBikesButton,
    //form,
    // setStep,
@@ -129,7 +129,7 @@ export default function BikeFiltersForm({
                availableTypes={availableTypes}
             />
             <RangeSelect
-               appBikesConfig={appBikesConfig}
+               segmentList={segmentList}
                form={form}
                selectedType={type}
                selectedRange={range}

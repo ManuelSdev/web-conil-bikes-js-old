@@ -22,28 +22,30 @@ export default function UserStepper({ user, stepperDataCookie, segmentList }) {
 
    //console.log('UserStepper segmentList ->', segmentList)
 
-   dispatch(segmentListLoaded(segmentList))
-
    const [deleteCookieTrigger] = useLazyDeleteCookieQuery()
 
    const initialStepperData = createInitialStepperData(stepperDataCookie)
 
-   const { step: initialStep, dateRange } = initialStepperData
+   const { step: initialStep } = initialStepperData
 
-   const [step, setStep] = useState(0)
+   const [step, setStep] = useState(null)
 
    //dispatch(dateRangeSelected(dateRange))
 
    useEffect(() => {
       if (stepperDataCookie) {
          deleteCookieTrigger('stepperData')
-         setReduxStore(initialStepperData, dispatch)
+         const { dateRange, size, type, range } = initialStepperData
+         const dateRangeISOStringObj = stringDateRangeToISOStringObj(dateRange)
+         dispatch(dateRangeSelected(dateRangeISOStringObj))
+         dispatch(bikeSearchParamsSelected({ size, type, range }))
       }
       //  console.log('useEffect stepperDataCookie ->', stepperDataCookie)
-
+      dispatch(segmentListLoaded(segmentList))
+      console.log('useEffect initialStep ->', initialStep)
       setStep(initialStep)
    }, [])
-
+   if (step === null) return <div>loading................................</div>
    return (
       <div>
          {step === 0 && <DateStepUserHandler setStep={setStep} />}
@@ -62,18 +64,24 @@ export default function UserStepper({ user, stepperDataCookie, segmentList }) {
       </div>
    )
 }
-
+/**
+ *
+ * @param {object} stepperDataCookie
+ * @returns
+ * @description Recibe un objeto stepperDataCookie y devuelve un objeto stepperData con el step
+ * convertido a number
+ */
 function createInitialStepperData(stepperDataCookie) {
    if (stepperDataCookie) {
       const stepperData = JSON.parse(stepperDataCookie.value)
       stepperData.step = parseInt(stepperData.step)
       return stepperData
-   } else return { step: 0, dateRange: '' }
+   } else return { step: 0 }
 }
 
 function setReduxStore(initialStepperData, dispatch) {
    const { dateRange, size, type, range } = initialStepperData
    const dateRangeISOStringObj = stringDateRangeToISOStringObj(dateRange)
-   dispatch(dateRangeSelected(dateRange))
+   dispatch(dateRangeSelected(dateRangeISOStringObj))
    dispatch(bikeSearchParamsSelected({ size, type, range }))
 }

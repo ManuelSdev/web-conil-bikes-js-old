@@ -200,8 +200,10 @@ function addBike(state, action) {
    const newBike = {
       ...action.payload,
    }
+   console.log('newBike en addBike -> ', newBike)
    const exist = state.bikes.some(
-      (bike) => bike.bikeSize === bikeSize && bike.modelId === modelId
+      (bike) =>
+         bike.bikeSize === newBike.bikeSize && bike.modelId === newBike.modelId
    )
    if (exist) {
       /**
@@ -210,7 +212,10 @@ function addBike(state, action) {
        * Las bicis que no son iguales a la que se añade, no se modifican y solo se retornan
        */
       state.bikes = state.bikes.map((bike) => {
-         if (bike.bikeSize === bikeSize && bike.modelId === modelId) {
+         if (
+            bike.bikeSize === newBike.bikeSize &&
+            bike.modelId === newBike.modelId
+         ) {
             return { ...bike, quantity: bike.quantity + 1 }
          } else return bike
       })

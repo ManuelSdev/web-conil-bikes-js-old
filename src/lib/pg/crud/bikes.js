@@ -8,6 +8,7 @@ import {
    findAvailableRanges,
    findAvailableSizesInRange,
    findAvailableTypes,
+   findAppBikeConfigSegments,
 } from '../repos/bikes'
 
 console.log(
@@ -76,14 +77,14 @@ export async function getAvailableBikes({ dateRange, size, type, range }) {
       console.log('### ERROR CRUD api/getAvailableBikes -> ', error)
    }
 }
-export async function getAppBikesConfig() {
+export async function getAppBikeConfigSegments() {
    try {
       //   const db = client()
       console.log('@@ CRUD FN findAppBikesConfig @@')
-      const config = await db.bikes.findAppBikesConfig()
+      const config = await findAppBikeConfigSegments()
       //  console.log('availableTypes en findAppBikesConfig-> ', config)
       return NextResponse.json(config, { status: 201 })
    } catch (error) {
-      console.log('### ERROR CRUD api/getAppBikesConfig -> ', error)
+      console.log('### ERROR CRUD api/getAppBikeConfigSegments -> ', error)
    }
 }

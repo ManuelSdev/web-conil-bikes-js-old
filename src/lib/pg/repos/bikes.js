@@ -37,3 +37,11 @@ export const findAvailableBikes = async ({ dateRange, size, type, range }) => {
    console.log('rows en findAvailableBikes -> ', rows)
    return rows
 }
+
+export const findAppBikeConfigSegments = async () => {
+   const text =
+      'SELECT model_type as "modelType", model_range as "modelRange", segment_price as "segmentPrice" FROM Segment'
+   const { rows } = await query({ text })
+   console.log('rows en findBikeConfigSegments -> ', rows)
+   return rows
+}

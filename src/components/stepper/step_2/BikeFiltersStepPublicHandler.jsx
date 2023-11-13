@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
 export default function BikeFiltersStepPublicHandler({
-   appBikesConfig,
+   segmentList,
    availableSizes,
    dateRange,
 }) {
@@ -28,15 +28,21 @@ export default function BikeFiltersStepPublicHandler({
          </Button>
       </Link>
    )
+   const renderPrevButton = () => (
+      <Link href={`/booking?step=0&date=${dateRange}`}>
+         <Button className="text-greenCorp">atrás</Button>
+      </Link>
+   )
    return (
       <BikeFiltersStep
          availableSizes={availableSizes}
-         appBikesConfig={appBikesConfig}
+         segmentList={segmentList}
          dateRange={dateRange}
          handleNext={handleNext}
          handlePrev={handlePrev}
          disabled={true}
          renderShowBikesButton={renderShowBikesButton}
+         renderPrevButton={renderPrevButton}
       />
    )
 }

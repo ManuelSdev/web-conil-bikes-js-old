@@ -10,6 +10,8 @@ import {
 } from '@/utils/datesFns/createDateRangeString'
 import { useRouter } from 'next/navigation'
 import DateStep from './DateStep'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 const FROM = 'from'
 const TO = 'to'
@@ -26,25 +28,28 @@ export default function DateStepPublicHandler({ dateRange: urlStrDateRange }) {
    // const isoStringRangeObj = dateRangeObjToISOStringObj(dateRange)
    const strDateRange = dateRangeToISOString(dateRange)
 
-   const handleNext = () => {
-      router.push(`/booking?step=1&date=${strDateRange}`)
-      // router.push(`/booking?${urlParams({ step: 1, ...isoStringRangeObj })}`)
-   }
-   const handlePrev = () => {
-      router.push(`/`)
-   }
-
    const handleSelect = (picker) => (selectedDate) => {
       setDateRange({ ...dateRange, [picker]: selectedDate })
    }
-
+   const renderNextButton = () => (
+      <Link href={`/booking?step=1&date=${strDateRange}`}>
+         <Button disabled={!from || !to} className="text-greenCorp">
+            continuar
+         </Button>
+      </Link>
+   )
+   const renderPrevButton = () => (
+      <Link href={`/`}>
+         <Button className="text-greenCorp">atrás</Button>
+      </Link>
+   )
    return (
       <DateStep
          from={from}
          to={to}
-         handleNext={handleNext}
-         handlePrev={handlePrev}
          handleSelect={handleSelect}
+         renderNextButton={renderNextButton}
+         renderPrevButton={renderPrevButton}
       />
    )
 }

@@ -31,13 +31,12 @@ export default function RangeSelect({
    form,
    availableRanges,
    handleChange,
-   appBikesConfig,
+   segmentList,
    selectedType,
 }) {
    /*
    const segmentList = useSelector(selectDatabaseInfoSegmentList)
 */
-   const { segmentList } = appBikesConfig
    const rangeInfo = (range) => {
       let price
       segmentList.forEach((segment) => {

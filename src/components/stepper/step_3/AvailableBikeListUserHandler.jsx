@@ -38,7 +38,7 @@ export default function AvailableBikeListUserHandler({ setStep }) {
       </Button>
    )
    return isLoading ? (
-      <div>LOADINGFGGG</div>
+      <div>LOADING availableBikes EN @@@ USER AvailableBikeListStep @@@</div>
    ) : (
       <AvailableBikeListStep
          isLogged={true}

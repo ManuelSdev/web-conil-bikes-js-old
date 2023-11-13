@@ -10,6 +10,7 @@ import {
    bikeSearchParamsSelected,
    selectBikesByUnits,
    selectDateRange,
+   selectSegmentList,
 } from '@/lib/redux/slices/bookingFormSlice'
 import { dateRangeISOStringObjToString } from '@/utils/datesFns/createDateRangeString'
 import { Button } from '@/components/ui/button'
@@ -25,7 +26,7 @@ export default function BikeFiltersStepUserHandler({
    const storedBikesByUnits = useSelector(selectBikesByUnits)
 
    const dateRange = dateRangeISOStringObjToString(strDateRangeObj)
-
+   const segmentList = useSelector(selectSegmentList)
    const {
       data: appBikesConfig,
       isLoading: isLoadingConfig,
@@ -63,7 +64,7 @@ export default function BikeFiltersStepUserHandler({
       <BikeFiltersStep
          isLoadingSizes={isLoadingSizes}
          availableSizes={availableSizes}
-         appBikesConfig={appBikesConfig}
+         segmentList={segmentList}
          dateRange={dateRange}
          disabled={true}
          renderShowBikesButton={renderShowBikesButton}
