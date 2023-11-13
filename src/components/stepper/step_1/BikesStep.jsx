@@ -8,6 +8,7 @@ import MobileBottomAppBar from '@/components/layouts/site/MobileBottomAppBar'
 import { useRouter } from 'next/navigation'
 export default function BikesStep(props) {
    return <div>BikesStep</div>
+   /*
    const router = useRouter()
    const { dateRange } = props
    const selectedBikes = useSelector(selectBikes)
@@ -39,4 +40,5 @@ export default function BikesStep(props) {
          />
       </div>
    )
+   */
 }
