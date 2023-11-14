@@ -3,18 +3,37 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { SignInForm } from './SignInForm'
 import useFirebaseAuth from '@/lib/firebase/client/useFirebaseAuth'
 import AuthFormCard from './AuthFormCard'
 import { Button } from '../ui/button'
 import GoogleIcon from '../svg/GoogleIcon'
 import Link from 'next/link'
+import useOnAuthStateChange from '@/lib/firebase/client/useOnAuthStateChange'
 
 export default function SigInFormPageHandler({ isAdmin }) {
-   const { doSignInWithEmailAndPassword, doSignInWithRedirect } =
-      useFirebaseAuth()
+   const {
+      doSignInWithEmailAndPassword,
+      doSignInWithRedirect,
+      doGetRedirectResult,
+      doCreateSessionCookie,
+      loadingUseFirebaseAuth,
+   } = useFirebaseAuth()
+   /*
+   const { authUser, loading: loadingOnAuthStateChange } =
+      useOnAuthStateChange()
+   console.log('loadingUseFirebaseAuth -> ', loadingUseFirebaseAuth)
+   console.log('loadingOnAuthStateChange -> ', loadingOnAuthStateChange)
+   //doGetRedirectResult()
 
+   useEffect(() => {
+      console.log('authUser -> ', authUser)
+      authUser && doGetRedirectResult()
+      // authUser && doCreateSessionCookie(authUser.accessToken)
+   }, [authUser])
+*/
+   //if (loadingOnAuthStateChange) return <div>loadingOnAuthStateChange signin page: wait for authUser...</div>
    const FormSchema = z.object({
       username: z.string().min(2, {
          message: 'Username must be at least 2 characters.',
@@ -48,10 +67,7 @@ export default function SigInFormPageHandler({ isAdmin }) {
       </Button>
    )
    const renderGoogleButton = (props) => (
-      <Button
-         //onClick={doSignInWithRedirect}
-         {...props}
-      >
+      <Button onClick={doSignInWithRedirect} {...props}>
          <GoogleIcon className="mr-2 h-6 w-6" />
          INICIAR SESIÓN CON GOOGLE
       </Button>
@@ -66,6 +82,7 @@ export default function SigInFormPageHandler({ isAdmin }) {
          Crear cuenta
       </Link>
    )
+   //  loadingUseFirebaseAuth || loadingOnAuthStateChange ? (<div>loadingOnAuthStateChange signin page: wait for authUser...</div>) :
 
    return (
       <div>

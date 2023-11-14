@@ -5,36 +5,55 @@ import {
    signOut,
    GoogleAuthProvider,
    getRedirectResult,
+   getAdditionalUserInfo,
+   signInWithCredential,
 } from 'firebase/auth'
 import { app } from './firebaseClient'
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useCreateSessionCookieMutation } from '@/lib/redux/apiSlices/authApi'
+import {
+   useDeleteCookieQuery,
+   useLazyCreateCookieQuery,
+} from '@/lib/redux/apiSlices/cookieApi'
+
+import useOnAuthStateChange from './useOnAuthStateChange'
 
 const provider = new GoogleAuthProvider()
 
 export default function useFirebaseAuth() {
+   //const { authUser, loading: loadingAuthState } = useOnAuthStateChange()
+   console.log('provider -> ', provider)
    const auth = getAuth(app)
    const [loading, setLoading] = useState(false)
    const router = useRouter()
-   const [createSessionCookie] = useCreateSessionCookieMutation()
+   const [triggerCookie] = useLazyCreateCookieQuery()
+
+   const [createSessionCookie, { loading: loadingCreateSession }] =
+      useCreateSessionCookieMutation()
 
    // console.log('isSuccess -> ', isSuccess)
    // console.log('data -> ', data)
    // const datas = '==================================='
    const doCreateSessionCookie = async (accessToken) => {
+      //   console.log('doCreateSessionCookie SETLOADING A TRUE @@ ')
+      //   setLoading(true)
       try {
          const { success, resolvedUrl } =
             await createSessionCookie(accessToken).unwrap()
 
          //si crea la cookie session correctamente, borro (deslogo) el estado de auth
-         //en el cliente
+         //en el clienteS
          console.log('resolvedUrl -> ', resolvedUrl)
+         console.log('ANTES de signOut -> ')
          success && signOut(auth)
+         console.log('DESPUES de signOut -> ')
+         console.log('doCreateSessionCookie signOut-> ')
          success && router.push(resolvedUrl)
       } catch (error) {
          signOut(auth)
+         //setLoading(true)
          console.log('errorrr en doCreateSessionCookie -> ', error)
          throw error
       }
@@ -114,11 +133,29 @@ export default function useFirebaseAuth() {
          const { code } = err
          //  const error = errorHandlerSignMailAndPass(code)
          //  setLoading(false)
-         throw error
+         throw err
          // return { error }
       }
    }
+   /**
+    * @description dooSignInWithRedirect te redirige a la página de login del provider
+    *  (google en este caso). Cuando te logas en esa página, te devuelve a la página
+    * anterior, en este caso /auth/sign-in. De vuelta en /auth/sign-in, hay que
+    * recuperar la información del login en el provider y crear la cookie de sesión.
+    * Esta operacion no la haremos en /auth/sign-in porque, los renderizados que implica
+    * al usar un estado de loading, hacen que la interfaz se vea mal.
+    * Entonces, creamos una cookie que indique que estamos en una operación signInWithRedirect.
+    * Cuando el provider nos devuelve a /auth/sign-in, si existe la cookie, la págiona redirige
+    * a /auth/checking, donde se recupera la información del login en el provider y se crea la
+    * cookie de sesión usando doGetRedirectResult.
+    *
+    *
+    */
    const doSignInWithRedirect = async (ev) => {
+      const addCookie = await triggerCookie({
+         name: 'signInWithRedirect',
+         value: true,
+      })
       //CLAVE evitar bucles con onAuthStateChanged
       //https://firebase.google.com/docs/auth/web/manage-users?hl=es-419
       //uso opción 3
@@ -126,14 +163,91 @@ export default function useFirebaseAuth() {
       //Solución proxy inverso en next: rewrite en next.config.js
       //https://stackoverflow.com/questions/75349917/confirmation-of-why-cross-origin-problems-occur-when-using-signinwithredirect-ar
       //https://community.fly.io/t/reverse-proxy-to-firebase-authentication-for-simple-nextjs-app/12013/2
-      console.log('doSignInWithRedirect @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
       await signInWithRedirect(auth, provider)
-      const result = await getRedirectResult(auth)
-      console.log(
-         'doSignInWithRedirect #################################### ',
-         result
-      )
    }
 
-   return { loading, doSignInWithEmailAndPassword, doSignInWithRedirect }
+   /**
+    * @description getRedirectResult recupera la información del login recien hecho en la página
+    * del provider. El objeto credential contiene dos token (idToken y accessToken) que,
+    * según la docu, sirven para las APIS de google, pero no están directamente relacionados con
+    * firebase, de modo que no pueden ser verificados por firebase admin con getAuth().verifyIdToken(accessToken).
+    * Por tanto, no sirvern para crear una cookie de sesion En cambio, si usas el hook useonAuthStateChanged,
+    * puedes obtener el accessToken propio de firebase que si es verificable por firebase admin.
+    * ENTONCES: el método que verifica/convierte el token (accessToken) de google es signInWithCredential,
+    * que a su vez devuelve un userCredential que contiene el accessToken propio de firebase.
+    * Una vez obtenido el accessToken propio de firebase, se puede crear la cookie de sesión igual
+    * que cuando te logas con email y password.
+    *
+    */
+   //Cuando terminas en la página de login propia de google y vuelves a tu página,
+   // recuperas el token OAuth de g
+   const doGetRedirectResult = async () => {
+      try {
+         const deleteCookie = useDeleteCookieQuery('signInWithRedirect')
+
+         const result = await getRedirectResult(auth)
+         if (!result) {
+            return console.log(
+               'CUSTOM RETURN doGetRedirectResult: No hay result'
+            )
+         }
+         //   if (!result) throw new Error('CUSTOM ERROR: No hay result')
+         // This gives you a Google Access Token. You can use it to access Google APIs.
+         const googleCredential =
+            GoogleAuthProvider.credentialFromResult(result)
+         const fireCredential = await signInWithCredential(
+            auth,
+            googleCredential
+         )
+         console.log('fireCredential -> ', fireCredential)
+         const {
+            user: { accessToken, emailVerified },
+         } = fireCredential
+         if (emailVerified || email === 'admin@test.com') {
+            //   const { modified } = await checkCustomClaims(accessToken).unwrap()
+            const modified = false
+            if (modified) {
+               const reloadedToken = await user.getIdToken(true)
+               //  console.log('ACCESS TOKEN ***RELOADED*** -> ', reloadedToken)
+               await doCreateSessionCookie(reloadedToken)
+               //return { emailVerified, accessToken: reloadedToken }
+            } else {
+               await doCreateSessionCookie(accessToken)
+               //       console.log('PUTA DATAAAAAAAAAAAAAAAA -> ', data)
+            }
+         } else {
+            const error = { code: 'custom/unverified' }
+            setLoading(false)
+            throw error
+         }
+         /*
+         const { idToken, accessToken } = googleCredential
+         console.log('idToken directo en getRedirectResult -> ', idToken)
+         console.log('accessToken directo en getRedirectResult ->', accessToken)
+          await doCreateSessionCookie(idToken)
+         const additionalUserInfo = getAdditionalUserInfo(result)
+         */
+
+         //console.log('additionalUserInfo -> ', additionalUserInfo)
+      } catch (error) {
+         // Handle Errors here.
+         console.log('error en getRedirectResult -> ', error)
+         /*
+         const errorCode = error.code
+         const errorMessage = error.message
+         // The email of the user's account used.
+         const email = error.customData.email
+         // The AuthCredential type that was used.
+         const credential = GoogleAuthProvider.credentialFromError(error)
+         */
+      }
+   }
+   return {
+      loadingUseFirebaseAuth: loading,
+
+      doSignInWithEmailAndPassword,
+      doSignInWithRedirect,
+      doGetRedirectResult,
+      doCreateSessionCookie,
+   }
 }
