@@ -4,7 +4,7 @@ const urlParams = (obj) => new URLSearchParams(obj)
 export const authApi = baseApi.injectEndpoints({
    endpoints: (builder) => ({
       //https://redux-toolkit.js.org/rtk-query/usage/customizing-queries#performing-multiple-requests-with-a-single-query
-
+      /*
       createAccount: builder.mutation({
          query: ({ name, phone, email, password }) => ({
             url: 'auth',
@@ -13,6 +13,7 @@ export const authApi = baseApi.injectEndpoints({
             body: { action: 'createAccount', name, phone, email, password },
          }),
       }),
+      */
       //Estos token son idToken según docu pero en el objeto que pillo en cliente se llaman accessToken
       checkCustomClaims: builder.mutation({
          query: (token) => ({
@@ -68,7 +69,6 @@ export const authApi = baseApi.injectEndpoints({
 })
 
 export const {
-   useCreateAccountMutation,
    useSignOutMutation,
    useDashboardSignOutMutation,
    useCreateSessionCookieMutation,

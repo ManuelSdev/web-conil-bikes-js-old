@@ -28,7 +28,7 @@ export default function AuthFormCard({
          <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
             {children}
             {/*renderCheckbox()*/}
-            {renderSubmitButton(buttonProps)}
+            {/*renderSubmitButton(buttonProps)*/}
 
             {(renderOptionalLinkLeft || renderOptionalLinkRight) && (
                <div className="mt-4 flex items-center justify-between">

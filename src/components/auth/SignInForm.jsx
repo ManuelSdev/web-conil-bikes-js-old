@@ -28,7 +28,15 @@ const FormSchema = z.object({
    }),
 })
 
-export function SignInForm({ form, onSubmit }) {
+export function SignInForm({ onSubmit }) {
+   const form = useForm({
+      // resolver: zodResolver(FormSchema),
+      defaultValues: {
+         email: '',
+         password: '',
+      },
+   })
+
    return (
       <Form {...form}>
          <form onSubmit={form.handleSubmit(onSubmit)} className="w-f space-y-6">
@@ -67,6 +75,9 @@ export function SignInForm({ form, onSubmit }) {
                   </FormItem>
                )}
             />
+            <Button className="w-full" type="submit">
+               Iniciar sesión
+            </Button>
          </form>
       </Form>
    )

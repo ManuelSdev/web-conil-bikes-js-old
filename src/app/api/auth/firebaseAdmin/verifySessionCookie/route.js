@@ -1,5 +1,4 @@
 import { verifySessionCookie } from '@/lib/firebase/admin/verifySessionCookie'
-import { ro } from 'date-fns/locale'
 import { cookies } from 'next/headers'
 
 export async function GET(req) {

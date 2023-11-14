@@ -13,13 +13,9 @@ import Link from 'next/link'
 import useOnAuthStateChange from '@/lib/firebase/client/useOnAuthStateChange'
 
 export default function SigInFormPageHandler({ isAdmin }) {
-   const {
-      doSignInWithEmailAndPassword,
-      doSignInWithRedirect,
-      doGetRedirectResult,
-      doCreateSessionCookie,
-      loadingUseFirebaseAuth,
-   } = useFirebaseAuth()
+   console.log('@@ RENDER SigInFormPageHandler @@')
+   const { doSignInWithEmailAndPassword, doSignInWithRedirect } =
+      useFirebaseAuth()
    /*
    const { authUser, loading: loadingOnAuthStateChange } =
       useOnAuthStateChange()
@@ -34,27 +30,16 @@ export default function SigInFormPageHandler({ isAdmin }) {
    }, [authUser])
 */
    //if (loadingOnAuthStateChange) return <div>loadingOnAuthStateChange signin page: wait for authUser...</div>
-   const FormSchema = z.object({
-      username: z.string().min(2, {
-         message: 'Username must be at least 2 characters.',
-      }),
-   })
-
-   const form = useForm({
-      // resolver: zodResolver(FormSchema),
-      defaultValues: {
-         email: '',
-         password: '',
-      },
-   })
 
    async function onSubmit(data, event) {
-      //console.log('data ->', data)
-      // console.log('ev ->', ev)
+      console.log('data ->', data)
+      console.log('ev ->', event)
       event.preventDefault()
       const { email, password } = data
       try {
-         await doSignInWithEmailAndPassword({ email, password })
+         console.log('data ->', data)
+         console.log('ev ->', event)
+         //  await doSignInWithEmailAndPassword({ email, password })
       } catch (error) {
          //handleOpen(error)
          console.log('doSignInWithEmailAndPassword ERROR -> ', error)
@@ -63,7 +48,7 @@ export default function SigInFormPageHandler({ isAdmin }) {
 
    const renderSubmitButton = (props) => (
       <Button {...props} type="submit">
-         Iniciar sesión
+         Iniciar sesións
       </Button>
    )
    const renderGoogleButton = (props) => (
@@ -88,12 +73,11 @@ export default function SigInFormPageHandler({ isAdmin }) {
       <div>
          <AuthFormCard
             label={'Inicio de sesión'}
-            renderSubmitButton={renderSubmitButton}
             renderOptionalLinkLeft={renderOptionalLinkLeft}
             renderOptionalLinkRight={!isAdmin && renderOptionalLinkRight}
             renderGoogleButton={!isAdmin && renderGoogleButton}
          >
-            <SignInForm form={form} onSubmit={onSubmit}></SignInForm>
+            <SignInForm onSubmit={onSubmit}></SignInForm>
          </AuthFormCard>
       </div>
    )

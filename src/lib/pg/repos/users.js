@@ -8,3 +8,13 @@ export const findUserByEmail = async ({ email }) => {
    const [userId] = rows.flat()
    return userId
 }
+
+export const addUser = async ({ name, email, phone }) => {
+   const text =
+      'INSERT INTO App_user (user_name,user_email,user_phone) VALUES ($1,$2,$3) RETURNING user_id'
+   const values = [name, email, phone]
+   const rowMode = 'array'
+   const { rows } = await query({ text, values, rowMode })
+   const [addedUserId] = rows.flat()
+   return addedUserId
+}
