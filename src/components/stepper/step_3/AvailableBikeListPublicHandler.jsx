@@ -6,7 +6,7 @@ import AvailableBikesList from './AvailableBikeList'
 import MobileBottomAppBar from '@/components/layouts/site/MobileBottomAppBar'
 import { useLazyCreateCookieQuery } from '@/lib/redux/apiSlices/cookieApi'
 import { useRouter } from 'next/navigation'
-import { AlertDialogButton } from './AlertDialogButton'
+import { AlertDialogButton } from '../../common/AlertDialogButton'
 
 export default function AvailableBikeListPublicHandler({
    searchParams,

@@ -1,18 +1,30 @@
 'use client'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import * as z from 'zod'
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SignInForm } from './SignInForm'
 import useFirebaseAuth from '@/lib/firebase/client/useFirebaseAuth'
 import AuthFormCard from './AuthFormCard'
 import { Button } from '../ui/button'
 import GoogleIcon from '../svg/GoogleIcon'
 import Link from 'next/link'
-import useOnAuthStateChange from '@/lib/firebase/client/useOnAuthStateChange'
+import { DialogWindow } from '../common/DialogWindow'
+import useDialogWindow from '../common/useDialogWindow'
 
-export default function SigInFormPageHandler({ isAdmin }) {
+export default function SigInFormPageHandler({ isAdmin, isEmailVerified }) {
+   const initialDialog = isEmailVerified && {
+      open: false,
+      title: 'El email se verificó correctamente',
+      description:
+         'Ya puedes iniciar sesión con tu cuenta de correo electrónico',
+      closeText: 'Aceptar',
+   }
+   console.log('initialDialog -> ', initialDialog)
+   const { dialog, toggleDialog } = useDialogWindow(initialDialog)
+
+   useEffect(() => {
+      initialDialog && toggleDialog(true)
+   }, [])
+
    console.log('@@ RENDER SigInFormPageHandler @@')
    const { doSignInWithEmailAndPassword, doSignInWithRedirect } =
       useFirebaseAuth()
@@ -39,7 +51,7 @@ export default function SigInFormPageHandler({ isAdmin }) {
       try {
          console.log('data ->', data)
          console.log('ev ->', event)
-         //  await doSignInWithEmailAndPassword({ email, password })
+         await doSignInWithEmailAndPassword({ isAdmin, email, password })
       } catch (error) {
          //handleOpen(error)
          console.log('doSignInWithEmailAndPassword ERROR -> ', error)
@@ -71,6 +83,7 @@ export default function SigInFormPageHandler({ isAdmin }) {
 
    return (
       <div>
+         <DialogWindow onOpenChange={toggleDialog} {...dialog} />
          <AuthFormCard
             label={'Inicio de sesión'}
             renderOptionalLinkLeft={renderOptionalLinkLeft}

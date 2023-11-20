@@ -3,6 +3,20 @@ const urlParams = (obj) => new URLSearchParams(obj)
 
 export const authApi = baseApi.injectEndpoints({
    endpoints: (builder) => ({
+      getUserData: builder.query({
+         query: ({ uid, email }) => {
+            if (uid) return { url: `auth/firebaseAdmin/getUserData?uid=${uid}` }
+            if (email)
+               return {
+                  url: `auth/firebaseAdmin/getUserData?email=${email}`,
+               }
+         },
+      }),
+      sendEmailVerification: builder.query({
+         query: ({ name, email }) => ({
+            url: `auth/firebaseAdmin/sendEmailVerification?name=${name}&email=${email}`,
+         }),
+      }),
       //https://redux-toolkit.js.org/rtk-query/usage/customizing-queries#performing-multiple-requests-with-a-single-query
       /*
       createAccount: builder.mutation({
@@ -69,6 +83,9 @@ export const authApi = baseApi.injectEndpoints({
 })
 
 export const {
+   useGetUserDataQuery,
+   useLazyGetUserDataQuery,
+   useLazySendEmailVerificationQuery,
    useSignOutMutation,
    useDashboardSignOutMutation,
    useCreateSessionCookieMutation,

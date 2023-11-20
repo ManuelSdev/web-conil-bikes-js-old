@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { SignInForm } from './SignInForm'
 import useFirebaseAuth from '@/lib/firebase/client/useFirebaseAuth'
 import AuthFormCard from './AuthFormCard'
@@ -27,6 +27,10 @@ export default function SigUpFormPageHandler({ isAdmin }) {
       },
    ] = useCreateAccountMutation({ fixedCacheKey: 'createBooking-key' })
 
+   const { doSendEmailVerification } = useFirebaseAuth()
+   const [isEmailSent, setIsEmailSent] = useState(false)
+
+   const onOpenChange = () => setDialog({ ...dialog, open: true })
    /**
     * Confirmación de correo electrónico
     * https://stackoverflow.com/questions/73695535/how-to-check-confirm-password-with-zod
@@ -38,7 +42,20 @@ export default function SigUpFormPageHandler({ isAdmin }) {
       event.preventDefault()
       const { name, phone, email, password } = data
       try {
-         await createAccount({ name, phone, email, password })
+         const { data: customToken } = await createAccount({
+            name,
+            phone,
+            email,
+            password,
+         })
+
+         /**
+          * Con el customToken puedo obtener el usuario desde el cliente
+          */
+         //await doSendEmailVerification(customToken)
+         setIsEmailSent(true)
+         //  console.log('ok ->', ok)
+         // console.log('userRecord ->', userRecord)
       } catch (error) {
          //handleOpen(error)
          console.log('ERROR:createAccount en SignUpFormPageHandler -> ', error)
@@ -52,13 +69,17 @@ export default function SigUpFormPageHandler({ isAdmin }) {
    )
 
    const renderOptionalLinkLeft = (props) => (
-      <Link href="/auth/reset" {...props}>
+      <Link href="/auth/sign-in" {...props}>
          ¿Ya tienes una cuenta? Inicia sesión
       </Link>
    )
 
    return (
       <div>
+         {isEmailSent && (
+            <div>Se ha enviado un correo electrónico de verificación</div>
+         )}
+
          <AuthFormCard
             label={'Inicio de sesión'}
             renderOptionalLinkLeft={renderOptionalLinkLeft}

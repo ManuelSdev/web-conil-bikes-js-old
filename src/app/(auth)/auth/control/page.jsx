@@ -1,6 +1,40 @@
-import AuthActionsPageHandler from '@/components/auth/AuthActionsPageHandler'
+import RecoverEmailHandler from '@/components/auth/controlActionHandlers/RecoverEmailHandler'
+import ResetPasswordHander from '@/components/auth/controlActionHandlers/ResetPasswordHander'
+import VeriffyEmailFormPageHandler from '@/components/auth/emailActions/VeriffyEmailFormPageHandler'
+import { app } from '@/lib/firebase/client/firebaseClient'
+
+import { applyActionCode, getAuth } from 'firebase/auth'
+import { redirect } from 'next/navigation'
 import React from 'react'
 
-export default function FirebaseAuthActionsControlPage({ searchParams }) {
-   return <AuthActionsPageHandler searchParams={searchParams} />
+export default async function FireEmailActionsControlPage({ searchParams }) {
+   const { mode, oobCode: actionCode, apiKey, continueUrl, lang } = searchParams
+
+   console.log('searchParams -> ', searchParams)
+   if (mode === 'verifyEmail') {
+      /**
+       * Si applyActionCode no lanza error, entonces el código es válido
+       * y se ha verificado la cuenta. Ahora redirecciono a la página de login
+       * y le paso como query param verified=true. Esto permite que, al
+       * redireccionar a la página de login, se muestre un modal con
+       * un mensaje de cuenta verificada.
+       */
+      try {
+         const auth = getAuth(app)
+         await applyActionCode(auth, actionCode)
+
+         //return <VerifyEmailHandler searchParams={searchParams} />
+      } catch (error) {
+         console.log('Error en verificiación de código -> ', error)
+
+         return <VeriffyEmailFormPageHandler isVerifyError={true} />
+      }
+      redirect('/auth/sign-in?verified=true')
+   }
+   if (mode === 'resetPassword')
+      return <ResetPasswordHander searchParams={searchParams} />
+   if (mode === 'recoverEmail')
+      return <RecoverEmailHandler searchParams={searchParams} />
 }
+
+// return <AuthActionsPageHandler searchParams={searchParams} />

@@ -3,6 +3,7 @@ import 'server-only'
 import { cache } from 'react'
 import { addUser, findUserByEmail } from '../repos/users'
 import { NextResponse } from 'next/server'
+import { th } from 'date-fns/locale'
 
 export async function getUserByEmail({ email }) {
    //console.log('dateRange en getAvailableSizesInRange -> ', dateRange)
@@ -23,10 +24,11 @@ export async function createAppUser({ name, email, phone }) {
       //  const db = client()
       console.log('@@ CRUD FN createUser @@')
       const createdAppUserId = await addUser({ name, email, phone })
-      console.log('createdUserId en createUser-> ', createdUserId)
+      console.log('createdUserId en createUser-> ', createdAppUserId)
       return createdAppUserId
-      return NextResponse.json(createdUserId, { status: 201 })
+      return NextResponse.json(createdAppUserId, { status: 201 })
    } catch (error) {
       console.log('### ERROR CRUD api/createUser -> ', error)
+      throw new Error(error)
    }
 }

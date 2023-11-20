@@ -34,8 +34,8 @@ function getToken(authHeader) {
 }
 
 async function verifyCustomClaimsAdmin(accessToken) {
-   const decodeToken = await getAuth().verifyIdToken(accessToken)
-   const { admin } = decodeToken
+   const decodedToken = await getAuth().verifyIdToken(accessToken)
+   const { admin } = decodedToken
    return admin
 }
 

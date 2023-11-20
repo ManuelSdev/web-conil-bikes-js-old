@@ -7,6 +7,8 @@ import {
    getRedirectResult,
    getAdditionalUserInfo,
    signInWithCredential,
+   sendEmailVerification,
+   signInWithCustomToken,
 } from 'firebase/auth'
 import { app } from './firebaseClient'
 
@@ -24,7 +26,7 @@ const provider = new GoogleAuthProvider()
 
 export default function useFirebaseAuth() {
    //const { authUser, loading: loadingAuthState } = useOnAuthStateChange()
-   console.log('provider -> ', provider)
+   //console.log('provider -> ', provider)
    const auth = getAuth(app)
    const [loading, setLoading] = useState(false)
    const router = useRouter()
@@ -50,7 +52,7 @@ export default function useFirebaseAuth() {
          success && signOut(auth)
          console.log('DESPUES de signOut -> ')
          console.log('doCreateSessionCookie signOut-> ')
-         success && router.push(resolvedUrl)
+         //  success && router.push(resolvedUrl)
       } catch (error) {
          signOut(auth)
          //setLoading(true)
@@ -60,8 +62,47 @@ export default function useFirebaseAuth() {
 
       //Y luego mando a la resolvedUrl que me diga el server
    }
+   //Recibe customToken creado con firebase admin
 
-   const doSignInWithEmailAndPassword = async ({ email, password }) => {
+   const doVerifyEmail = async ({ actionCode }) => {}
+
+   const doSendEmailVerification_ = async ({ customToken }) => {
+      setLoading(true)
+      try {
+         const userCredential = await signInWithCustomToken(auth, customToken)
+         console.log('userCredential.user -> ', userCredential.user)
+         console.log('auth.currentUser-> ', auth.currentUser)
+         const { user } = userCredential
+         // const response = await sendEmailVerification(user)
+         // console.log('response de sendEmailVerification -> ', response)
+      } catch (error) {
+         console.log('error en doSendEmailVerification -> ', error)
+         throw new Error(error)
+      } finally {
+         //  signOut(auth)
+         setLoading(false)
+      }
+   }
+
+   const doSendEmailVerification = async (email) => {
+      setLoading(true)
+      try {
+         console.log('auth.currentUser -> ', auth.currentUser)
+         const res = await sendEmailVerification(auth.currentUser)
+         return res
+      } catch (error) {
+         console.log('error en doSendEmailVerification -> ', error)
+         throw new Error(error)
+      } finally {
+         //  signOut(auth)
+         setLoading(false)
+      }
+   }
+   const doSignInWithEmailAndPassword = async ({
+      isAdmin,
+      email,
+      password,
+   }) => {
       //  console.log('doSignInWithEmailAndPassword    ', email, password)
       /**
        * Como voy a gestionar la autenticación con cookies de sesión desde el server,
@@ -87,8 +128,17 @@ export default function useFirebaseAuth() {
             email,
             password
          )
+         console.log(
+            '@@@@@@@@@@@@@@@@@@@@@@@@@@@  userCredential -> ',
+            userCredential
+         )
          const { user } = userCredential
          const { accessToken, emailVerified } = user
+         //https://firebase.google.com/docs/auth/admin/custom-claims?hl=es&authuser=2#access_custom_claims_on_the_client
+
+         const { claims } = await user.getIdTokenResult()
+         console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@ decodedToken -> ', claims)
+
          //   console.log('ACCESS TOKEN INICIAL -> ', user)
 
          /**
@@ -165,7 +215,7 @@ export default function useFirebaseAuth() {
       //https://community.fly.io/t/reverse-proxy-to-firebase-authentication-for-simple-nextjs-app/12013/2
       await signInWithRedirect(auth, provider)
    }
-
+   //TODO: admin.auth().updateUser(uid, { emailVerified: true }) cuando haces el login con google
    /**
     * @description getRedirectResult recupera la información del login recien hecho en la página
     * del provider. El objeto credential contiene dos token (idToken y accessToken) que,
@@ -203,23 +253,7 @@ export default function useFirebaseAuth() {
          const {
             user: { accessToken, emailVerified },
          } = fireCredential
-         if (emailVerified || email === 'admin@test.com') {
-            //   const { modified } = await checkCustomClaims(accessToken).unwrap()
-            const modified = false
-            if (modified) {
-               const reloadedToken = await user.getIdToken(true)
-               //  console.log('ACCESS TOKEN ***RELOADED*** -> ', reloadedToken)
-               await doCreateSessionCookie(reloadedToken)
-               //return { emailVerified, accessToken: reloadedToken }
-            } else {
-               await doCreateSessionCookie(accessToken)
-               //       console.log('PUTA DATAAAAAAAAAAAAAAAA -> ', data)
-            }
-         } else {
-            const error = { code: 'custom/unverified' }
-            setLoading(false)
-            throw error
-         }
+         await doCreateSessionCookie(accessToken)
          /*
          const { idToken, accessToken } = googleCredential
          console.log('idToken directo en getRedirectResult -> ', idToken)
@@ -243,8 +277,8 @@ export default function useFirebaseAuth() {
       }
    }
    return {
-      loadingUseFirebaseAuth: loading,
-
+      loading,
+      doSendEmailVerification,
       doSignInWithEmailAndPassword,
       doSignInWithRedirect,
       doGetRedirectResult,
