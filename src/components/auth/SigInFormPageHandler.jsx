@@ -9,52 +9,64 @@ import GoogleIcon from '../svg/GoogleIcon'
 import Link from 'next/link'
 import { DialogWindow } from '../common/DialogWindow'
 import useDialogWindow from '../common/useDialogWindow'
+import { signInErrorHandler } from '@/lib/firebase/client/authErrorHandler'
+import { useRouter } from 'next/navigation'
 
 export default function SigInFormPageHandler({ isAdmin, isEmailVerified }) {
-   const initialDialog = isEmailVerified && {
-      open: false,
-      title: 'El email se verificó correctamente',
-      description:
-         'Ya puedes iniciar sesión con tu cuenta de correo electrónico',
-      closeText: 'Aceptar',
-   }
-   console.log('initialDialog -> ', initialDialog)
-   const { dialog, toggleDialog } = useDialogWindow(initialDialog)
+   console.log('@@ RENDER SigInFormPageHandler @@')
+   //Initial dialog cuando vienes redireccionado de la página de verificación de email
+
+   const { doSignInWithEmailAndPassword, doSignInWithRedirect, isLoading } =
+      useFirebaseAuth()
+
+   const { dialog, setDialog, onOpenChange, setOnOpenChange } =
+      useDialogWindow(null)
+
+   const router = useRouter()
 
    useEffect(() => {
-      initialDialog && toggleDialog(true)
+      //Cuando vienes redireccionado de la página de verificación de email
+      if (isEmailVerified) {
+         const verifiedDoneDialog = {
+            open: true,
+            title: 'Verificación completada',
+            description:
+               'Ya puedes iniciar sesión con tu cuenta de correo electrónico',
+            closeText: 'Aceptar',
+         }
+         setDialog(verifiedDoneDialog)
+      }
    }, [])
 
-   console.log('@@ RENDER SigInFormPageHandler @@')
-   const { doSignInWithEmailAndPassword, doSignInWithRedirect } =
-      useFirebaseAuth()
-   /*
-   const { authUser, loading: loadingOnAuthStateChange } =
-      useOnAuthStateChange()
-   console.log('loadingUseFirebaseAuth -> ', loadingUseFirebaseAuth)
-   console.log('loadingOnAuthStateChange -> ', loadingOnAuthStateChange)
-   //doGetRedirectResult()
-
-   useEffect(() => {
-      console.log('authUser -> ', authUser)
-      authUser && doGetRedirectResult()
-      // authUser && doCreateSessionCookie(authUser.accessToken)
-   }, [authUser])
-*/
-   //if (loadingOnAuthStateChange) return <div>loadingOnAuthStateChange signin page: wait for authUser...</div>
-
    async function onSubmit(data, event) {
-      console.log('data ->', data)
-      console.log('ev ->', event)
+      //console.log('data ->', data)
+      // console.log('ev ->', event)
       event.preventDefault()
       const { email, password } = data
       try {
-         console.log('data ->', data)
-         console.log('ev ->', event)
          await doSignInWithEmailAndPassword({ isAdmin, email, password })
       } catch (error) {
          //handleOpen(error)
          console.log('doSignInWithEmailAndPassword ERROR -> ', error)
+
+         const { code } = error
+
+         const { title, description } = signInErrorHandler(code)
+
+         if (code === 'custom/unverified') {
+            console.log('code === custom/unverified')
+            setOnOpenChange({
+               onOpenChange: (bool) =>
+                  router.push('/auth/control-verify-email'),
+            })
+         }
+
+         setDialog({
+            open: true,
+            title,
+            description,
+            closeText: 'Aceptar',
+         })
       }
    }
 
@@ -83,8 +95,9 @@ export default function SigInFormPageHandler({ isAdmin, isEmailVerified }) {
 
    return (
       <div>
-         <DialogWindow onOpenChange={toggleDialog} {...dialog} />
+         <DialogWindow onOpenChange={onOpenChange} {...dialog} />
          <AuthFormCard
+            isLoading={isLoading}
             label={'Inicio de sesión'}
             renderOptionalLinkLeft={renderOptionalLinkLeft}
             renderOptionalLinkRight={!isAdmin && renderOptionalLinkRight}

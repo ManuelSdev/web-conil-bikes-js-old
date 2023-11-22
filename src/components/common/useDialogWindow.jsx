@@ -16,5 +16,13 @@ export default function useDialogWindow(initialDialog) {
 
    const toggleDialog = (bool) => setDialog({ ...dialog, open: bool })
 
-   return { dialog, setDialog, toggleDialog }
+   const [onOpenChangeWrapper, setOnOpenChange] = useState({
+      onOpenChange: toggleDialog,
+   })
+   const { onOpenChange } = onOpenChangeWrapper
+   /**
+    *
+    */
+
+   return { dialog, setDialog, toggleDialog, onOpenChange, setOnOpenChange }
 }

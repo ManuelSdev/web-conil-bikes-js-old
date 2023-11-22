@@ -10,38 +10,37 @@ import { VerifyEmailForm } from './VerifyEmailForm'
 import useDialogWindow from '@/components/common/useDialogWindow'
 import { DialogWindow } from '@/components/common/DialogWindow'
 import {
+   useFirebaseAdminActionsMutation,
    useLazyGetUserDataQuery,
    useLazySendEmailVerificationQuery,
 } from '@/lib/redux/apiSlices/authApi'
 import { useRouter } from 'next/navigation'
 
 export default function VeriffyEmailFormPageHandler({ isVerifyError }) {
-   const initialDialog = isVerifyError && {
-      open: false,
-      title: 'Se ha producido un error al verificar el correo electrónico',
-      description:
-         'Es posible que el correo de verificación que te enviamos haya caducado. Por favor, introduce tu correo electrónico para volver a recibir un correo de verificación',
-      closeText: 'Aceptar',
-   }
+   const { dialog, setDialog, toggleDialog, onOpenChange, setOnOpenChange } =
+      useDialogWindow(null)
 
-   const { dialog, setDialog, toggleDialog } = useDialogWindow(initialDialog)
-
-   const [onOpenChangeHandler, setOnOpenChangeHandler] = useState({
-      onOpenChange: toggleDialog,
-   })
-
-   const { onOpenChange } = onOpenChangeHandler
    useEffect(() => {
-      initialDialog && toggleDialog(true)
+      if (isVerifyError) {
+         const verificationErrorDialog = {
+            open: true,
+            title: 'Se ha producido un error al verificar el correo electrónico',
+            description:
+               'Es posible que el correo de verificación que te enviamos haya caducado. Por favor, introduce tu correo electrónico para volver a recibir un correo de verificación',
+            closeText: 'Aceptar',
+         }
+         setDialog
+      }
    }, [])
 
    const [getUserDataTrigger, { data, isSuccess, isFetching }] =
       useLazyGetUserDataQuery()
+   const [fireAdminActionsTrigger] = useFirebaseAdminActionsMutation()
 
    const [sendEmailVerificationTrigger] = useLazySendEmailVerificationQuery()
    console.log('dialog ->', dialog)
 
-   const { doSendEmailVerification, loading } = useFirebaseAuth()
+   const { loading } = useFirebaseAuth()
 
    const [isEmailSent, setIsEmailSent] = useState(false)
 
@@ -70,10 +69,14 @@ export default function VeriffyEmailFormPageHandler({ isVerifyError }) {
           */
          const res = await getUserDataTrigger({ email })
          console.log('res ->', res)
-         const { data, isError } = res
+         const { isError } = res
 
          if (isError) {
-            const { code, message } = data
+            const {
+               error: {
+                  data: { code, message },
+               },
+            } = res
             if (code === 'auth/user-not-found') {
                setDialog({
                   open: true,
@@ -82,26 +85,37 @@ export default function VeriffyEmailFormPageHandler({ isVerifyError }) {
                   closeText: 'Aceptar',
                })
             }
-         } else {
-            const { displayName: name, emailVerified } = data
+         }
+
+         if (!isError) {
+            const {
+               data: { displayName: name, emailVerified, uid },
+            } = res
+
             if (emailVerified) {
-               setOnOpenChangeHandler({
+               setOnOpenChange({
                   onOpenChange: (bool) => router.push('/auth/sign-in'),
                })
 
                setDialog({
                   open: true,
-                  title: 'Cuenta verificada',
+                  title: 'Esta cuenta ya fue verificada',
                   description: 'Puedes iniciar sesión con esta cuenta',
                   closeText: 'Aceptar',
                })
-            } else {
+            }
+
+            if (!emailVerified) {
                //TODO este error no tiene sentido
                const res = await sendEmailVerificationTrigger({ name, email })
+
                console.log('sendEmailVerificationTrigger res ->', res)
+
                const { data, isError } = res
+
                if (isError) {
                   const { code, message } = data
+
                   if (code === 'auth/user-not-found') {
                      setDialog({
                         open: true,
@@ -111,7 +125,7 @@ export default function VeriffyEmailFormPageHandler({ isVerifyError }) {
                      })
                   }
                } else {
-                  setOnOpenChangeHandler({
+                  setOnOpenChange({
                      onOpenChange: (bool) => router.push('/auth/sign-in'),
                   })
                   setDialog({

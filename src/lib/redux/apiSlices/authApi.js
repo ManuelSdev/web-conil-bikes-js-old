@@ -3,6 +3,49 @@ const urlParams = (obj) => new URLSearchParams(obj)
 
 export const authApi = baseApi.injectEndpoints({
    endpoints: (builder) => ({
+      /**
+       * Endpoints que gestionan la propia app
+       */
+      createSessionCookie: builder.mutation({
+         query: (token) =>
+            console.log(
+               'TOKEN RECIBIDO EN authApi para el header de createSessionCookie -> ',
+               token
+            ) || {
+               url: 'auth/createSessionCookie',
+               method: 'POST',
+               headers: {
+                  Authorization: `Bearer ${token}`,
+               },
+               body: { action: 'createSessionCookie' },
+            },
+      }),
+
+      /**
+       * Endpoints que gestionan funciones de firebase admin
+       */
+      createFirebaseUser: builder.query({
+         query: ({ name, phone, email, password }) => ({
+            url: `auth/firebaseAdmin/createUser?name=${name}&phone=${phone}&email=${email}&password=${password}`,
+         }),
+      }),
+      firebaseAdminActions: builder.mutation({
+         query: (obj) => ({
+            url: 'auth/firebaseAdmin',
+            method: 'POST',
+            body: obj,
+         }),
+      }),
+      /*
+      createFirebaseUser: builder.mutation({
+         query: ({ name, phone, email, password }) => ({
+            url: 'auth/firebaseAdmin/createUser',
+            method: 'POST',
+
+            body: { name, phone, email, password },
+         }),
+      }),
+      */
       getUserData: builder.query({
          query: ({ uid, email }) => {
             if (uid) return { url: `auth/firebaseAdmin/getUserData?uid=${uid}` }
@@ -17,6 +60,7 @@ export const authApi = baseApi.injectEndpoints({
             url: `auth/firebaseAdmin/sendEmailVerification?name=${name}&email=${email}`,
          }),
       }),
+
       //https://redux-toolkit.js.org/rtk-query/usage/customizing-queries#performing-multiple-requests-with-a-single-query
       /*
       createAccount: builder.mutation({
@@ -39,20 +83,7 @@ export const authApi = baseApi.injectEndpoints({
             body: { action: 'checkCustomClaims' },
          }),
       }),
-      createSessionCookie: builder.mutation({
-         query: (token) =>
-            console.log(
-               'TOKEN RECIBIDO EN authApi para el header de createSessionCookie -> ',
-               token
-            ) || {
-               url: 'auth/createSessionCookie',
-               method: 'POST',
-               headers: {
-                  Authorization: `Bearer ${token}`,
-               },
-               body: { action: 'createSessionCookie' },
-            },
-      }),
+
       signOut: builder.mutation({
          query: (role) => ({
             url: 'auth/sessionLogout',
@@ -86,6 +117,9 @@ export const {
    useGetUserDataQuery,
    useLazyGetUserDataQuery,
    useLazySendEmailVerificationQuery,
+   useLazyCreateFirebaseUserQuery,
+   useFirebaseAdminActionsMutation,
+   //useCreateFirebaseUserMutation,
    useSignOutMutation,
    useDashboardSignOutMutation,
    useCreateSessionCookieMutation,

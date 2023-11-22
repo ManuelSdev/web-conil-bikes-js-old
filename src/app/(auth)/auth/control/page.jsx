@@ -1,5 +1,5 @@
-import RecoverEmailHandler from '@/components/auth/controlActionHandlers/RecoverEmailHandler'
-import ResetPasswordHander from '@/components/auth/controlActionHandlers/ResetPasswordHander'
+import RecoverEmailPageHandler from '@/components/auth/emailActions/RecoverEmailPageHandler'
+import ResetPasswordPageHandler from '@/components/auth/emailActions/ResetPasswordPageHandler'
 import VeriffyEmailFormPageHandler from '@/components/auth/emailActions/VeriffyEmailFormPageHandler'
 import { app } from '@/lib/firebase/client/firebaseClient'
 
@@ -26,15 +26,13 @@ export default async function FireEmailActionsControlPage({ searchParams }) {
          //return <VerifyEmailHandler searchParams={searchParams} />
       } catch (error) {
          console.log('Error en verificiación de código -> ', error)
-
+         redirect('/auth/control-verify-email?error_code=true')
          return <VeriffyEmailFormPageHandler isVerifyError={true} />
       }
       redirect('/auth/sign-in?verified=true')
    }
    if (mode === 'resetPassword')
-      return <ResetPasswordHander searchParams={searchParams} />
+      return <ResetPasswordPageHandler searchParams={searchParams} />
    if (mode === 'recoverEmail')
-      return <RecoverEmailHandler searchParams={searchParams} />
+      return <RecoverEmailPageHandler searchParams={searchParams} />
 }
-
-// return <AuthActionsPageHandler searchParams={searchParams} />

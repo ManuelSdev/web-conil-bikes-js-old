@@ -24,6 +24,8 @@ export async function POST(req) {
    console.log('email en users api route -> ', email)
 
    try {
+      //Crear usuario en la base de datos de la app
+      const createdAppUserId = await createAppUser({ name, email, phone })
       //Crear usuario en firebase
       const userRecord = await createFireUser({
          name,
@@ -31,19 +33,28 @@ export async function POST(req) {
          email,
          password,
       })
-      const { uid } = userRecord
-      //Crear usuario en la base de datos de la app
-      //TODO si falla, elimiar el usuario de firebase
-      const createdAppUserId = await createAppUser({ name, email, phone, role })
-      //Añado customClaim con el id de usuario de la base de datos de la app
-      await getAuth().setCustomUserClaims(uid, {
-         appUid: createdAppUserId,
-         appRole: role,
-      })
-      //Compruebo que el customClaim se ha añadido
-      const userRecordRes = await getAuth().getUser(uid)
-      console.log('userRecordRes en createUserAccount -> ', userRecordRes)
-      //pillo el uid del usuario creado en firebase
+      /**
+       * La verificación de email se hace en el cliente.  Esto implica que tienes que estar
+       * logado/tener sesión activa en el cliente, porque el método sendEmailVerification()
+       *  recibe como parametro el usuario.
+       * ENTONCES: aquí solo hago el registro de una nueva cuenta pero, en el cliente, no hay
+       * nadie logado. Necesito una forma de obtener un token de verificación de la autenticación
+       * en el cliente.
+       * @Clave: creo token personalizado en el server y lo mando al cliente para evitar tener
+       * que autenticar al usuario en el cliente.
+       * @Clave: puedes meter custom claims en el token personalizado
+       * https://firebase.google.com/docs/auth/admin/create-custom-tokens?hl=es&authuser=2#create_custom_tokens_using_the_firebase_admin_sdk
+       *
+       */
+
+      // console.log('createdFireUserRecord -> ', createdFireUserRecord)
+      const customToken = await getAuth().createCustomToken(
+         createdFireUserRecord.uid
+      )
+      console.log('customToken -> ', customToken)
+      //const a = await getAuth().getUserByEmail(email)
+      // console.log('a =================== -> ', a)
+
       const linkToControlPage = await getAuth().generateEmailVerificationLink(
          email,
          continueUrl
@@ -55,10 +66,9 @@ export async function POST(req) {
          to: email,
       })
 
-      return NextResponse.json({ result: 'ok' }, { status: 201 })
+      return NextResponse.json(customToken, { status: 201 })
    } catch (error) {
       console.log('### ERROR USERS API route -> ', error)
-      return NextResponse.json(error, { status: 500 })
    }
 }
 

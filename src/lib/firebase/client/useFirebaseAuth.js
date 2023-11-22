@@ -28,7 +28,7 @@ export default function useFirebaseAuth() {
    //const { authUser, loading: loadingAuthState } = useOnAuthStateChange()
    //console.log('provider -> ', provider)
    const auth = getAuth(app)
-   const [loading, setLoading] = useState(false)
+   const [isLoading, setIsLoading] = useState(false)
    const router = useRouter()
    const [triggerCookie] = useLazyCreateCookieQuery()
 
@@ -39,8 +39,8 @@ export default function useFirebaseAuth() {
    // console.log('data -> ', data)
    // const datas = '==================================='
    const doCreateSessionCookie = async (accessToken) => {
-      //   console.log('doCreateSessionCookie SETLOADING A TRUE @@ ')
-      //   setLoading(true)
+      //   console.log('doCreateSessionCookie setIsLoading A TRUE @@ ')
+      //   setIsLoading(true)
       try {
          const { success, resolvedUrl } =
             await createSessionCookie(accessToken).unwrap()
@@ -52,10 +52,10 @@ export default function useFirebaseAuth() {
          success && signOut(auth)
          console.log('DESPUES de signOut -> ')
          console.log('doCreateSessionCookie signOut-> ')
-         //  success && router.push(resolvedUrl)
+         success && router.push(resolvedUrl)
       } catch (error) {
          signOut(auth)
-         //setLoading(true)
+         //setIsLoading(true)
          console.log('errorrr en doCreateSessionCookie -> ', error)
          throw error
       }
@@ -64,38 +64,12 @@ export default function useFirebaseAuth() {
    }
    //Recibe customToken creado con firebase admin
 
-   const doVerifyEmail = async ({ actionCode }) => {}
-
-   const doSendEmailVerification_ = async ({ customToken }) => {
-      setLoading(true)
+   const doSignInWithCustomToken = async (customToken) => {
       try {
          const userCredential = await signInWithCustomToken(auth, customToken)
-         console.log('userCredential.user -> ', userCredential.user)
-         console.log('auth.currentUser-> ', auth.currentUser)
-         const { user } = userCredential
-         // const response = await sendEmailVerification(user)
-         // console.log('response de sendEmailVerification -> ', response)
+         console.log('userCredential -> ', userCredential)
       } catch (error) {
-         console.log('error en doSendEmailVerification -> ', error)
-         throw new Error(error)
-      } finally {
-         //  signOut(auth)
-         setLoading(false)
-      }
-   }
-
-   const doSendEmailVerification = async (email) => {
-      setLoading(true)
-      try {
-         console.log('auth.currentUser -> ', auth.currentUser)
-         const res = await sendEmailVerification(auth.currentUser)
-         return res
-      } catch (error) {
-         console.log('error en doSendEmailVerification -> ', error)
-         throw new Error(error)
-      } finally {
-         //  signOut(auth)
-         setLoading(false)
+         console.log('error en doSignInWithCustomToken -> ', error)
       }
    }
    const doSignInWithEmailAndPassword = async ({
@@ -120,7 +94,7 @@ export default function useFirebaseAuth() {
        * sacar ese accessToken del usuario, por eso necesito que, por un espacio de tiempo, el estado de auth
        * exista en el cliente para obtener el accessToken con desde onAuthStateChanged
        */
-      setLoading(true)
+      setIsLoading(true)
 
       try {
          const userCredential = await signInWithEmailAndPassword(
@@ -136,42 +110,13 @@ export default function useFirebaseAuth() {
          const { accessToken, emailVerified } = user
          //https://firebase.google.com/docs/auth/admin/custom-claims?hl=es&authuser=2#access_custom_claims_on_the_client
 
-         const { claims } = await user.getIdTokenResult()
-         console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@ decodedToken -> ', claims)
-
-         //   console.log('ACCESS TOKEN INICIAL -> ', user)
-
-         /**
-          * CLAVE: si el email aun no se ha verificado, no se crea la session cookie.
-          * Se invita a verificar y se muestra botón para reenviar correo con link para
-          * verificar
-          */
-         /**
-          * Si se ha verificado, comprueba si existen custom claims
-          * Si en la comprobación se modifican los custom claims, modified será true
-          * y es necesario recargar un nuevo token que contenga los nuevos custom claims
-          */
          //CLAVE https://stackoverflow.com/questions/70073367/js-multiple-nested-try-catch-blocks
 
-         if (emailVerified || email === 'admin@test.com') {
-            //   const { modified } = await checkCustomClaims(accessToken).unwrap()
-            const modified = false
-            if (modified) {
-               const reloadedToken = await user.getIdToken(true)
-               //  console.log('ACCESS TOKEN ***RELOADED*** -> ', reloadedToken)
-               await doCreateSessionCookie(reloadedToken)
-               //return { emailVerified, accessToken: reloadedToken }
-            } else {
-               await doCreateSessionCookie(accessToken)
-               //       console.log('PUTA DATAAAAAAAAAAAAAAAA -> ', data)
-            }
-            //Si no hay modificaciones en custom claims, se devuelve el token inicial
-
-            // setLoading(false)
-            // return { emailVerified, accessToken }
+         if (emailVerified) {
+            await doCreateSessionCookie(accessToken)
          } else {
+            signOut(auth)
             const error = { code: 'custom/unverified' }
-            setLoading(false)
             throw error
          }
 
@@ -182,9 +127,11 @@ export default function useFirebaseAuth() {
          // console.log('doSignInWithEmailAndPassword ERROR -> ', err)
          const { code } = err
          //  const error = errorHandlerSignMailAndPass(code)
-         //  setLoading(false)
+         //  setIsLoading(false)
          throw err
          // return { error }
+      } finally {
+         setIsLoading(false)
       }
    }
    /**
@@ -277,8 +224,7 @@ export default function useFirebaseAuth() {
       }
    }
    return {
-      loading,
-      doSendEmailVerification,
+      isLoading,
       doSignInWithEmailAndPassword,
       doSignInWithRedirect,
       doGetRedirectResult,

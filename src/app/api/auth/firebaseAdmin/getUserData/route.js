@@ -18,12 +18,16 @@ export async function GET(req) {
 
       return Response.json(userRecord, { status: 201 })
    } catch (error) {
-      const { code, message } = error
+      const { errorInfo } = error
       console.log(
          'ROUTE HANDLER ERROR: /api/auth/firebaseAdmin/getUserData  ->',
          error
       )
+      console.log(
+         'ROUTE HANDLER ERROR: /api/auth/firebaseAdmin/getUserData  ->',
+         error.errorInfo
+      )
       //return redirectToUnauthorized()
-      return Response.json(error, { status: 501 })
+      return Response.json(errorInfo, { status: 500 })
    }
 }

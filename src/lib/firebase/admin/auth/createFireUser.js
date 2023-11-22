@@ -14,7 +14,7 @@ export async function createFireUser({
    console.log('aaaaaaaaaaaaaaa', phone)
 
    const newUser = {
-      uid: createdAppUserId.toString(),
+      // uid: createdAppUserId.toString(),
       displayName: name,
       phoneNumber: '+34' + phone.toString(),
       email: email,

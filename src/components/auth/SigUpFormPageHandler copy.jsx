@@ -24,7 +24,6 @@ import {
 import { signUpErrorHandler } from '@/lib/firebase/client/authErrorHandler'
 import { DialogWindow } from '../common/DialogWindow'
 import { is } from 'date-fns/locale'
-import { useRouter } from 'next/navigation'
 
 export default function SigUpFormPageHandler({ isAdmin }) {
    /*
@@ -43,10 +42,7 @@ export default function SigUpFormPageHandler({ isAdmin }) {
    */
    const [createFireUserTrigger] = useLazyCreateFirebaseUserQuery()
    const [fireAdminActionsTrigger] = useFirebaseAdminActionsMutation()
-   const router = useRouter()
-   // const [createAppUserTrigger] = useCreateUserMutation()
-   const [createUserAccountTrigger, { isLoading }] = useCreateAccountMutation()
-
+   const [createAppUserTrigger] = useCreateUserMutation()
    const { dialog, setDialog, toggleDialog, onOpenChange, setOnOpenChange } =
       useDialogWindow()
 
@@ -60,34 +56,75 @@ export default function SigUpFormPageHandler({ isAdmin }) {
       // console.log('ev ->', ev)
       event.preventDefault()
       const { name, phone, email, password } = data
+      try {
+         //Creo usuario en firebase
+         const resFireUser = await createFireUserTrigger({
+            name,
+            phone,
+            email,
+            password,
+         })
+         console.log('resFireUser -> ', resFireUser)
+         const { isError } = resFireUser
 
-      const createUserAccountRes = await createUserAccountTrigger({
-         name,
-         phone,
-         email,
-         password,
-      })
+         if (isError) {
+            throw new Error(resFireUser.error)
+         }
 
-      const { isError } = createUserAccountRes
+         const {
+            data: {
+               userRecord: { uid },
+            },
+         } = resFireUser
+         //Creo usuario en la base de datos de la app
+         //TODO: si no se crea, eliminar el usuario de firebase
+         const createdAppUserId = await createAppUserTrigger({
+            name,
+            email,
+            phone,
+         })
+         //Le asigno el id de usuario de la app al usuario de firebase
+         const setCustomUserClaimsRes = await fireAdminActionsTrigger({
+            uid,
+            action: 'setCustomUserClaims',
+            customClaims: { appId: createdAppUserId },
+         })
+         console.log('setCustomUserClaimsRes -> ', setCustomUserClaimsRes)
+         //Obtengo el usuario de firebase para comprobar customClaims recien creados
+         const getFirebaseUserRes = await fireAdminActionsTrigger({
+            uid,
+            action: 'getUser',
+         })
+         const {
+            data: {
+               customClaims: { appId },
+            },
+         } = getFirebaseUserRes
+         console.log('getFirebaseUserRes -> ', getFirebaseUserRes)
 
-      if (!isError) {
+         /*
+         const { data: customToken } = await createAccount({
+            name,
+            phone,
+            email,
+            password,
+         })
+
          setOnOpenChange({
             onOpenChange: (bool) => router.push('/auth/sign-in'),
          })
          setDialog({
             open: true,
-            title: 'La cuenta se ha creado correctamente',
+            title: 'Se ha enviado un correo electrónico de verificación',
             description: `Se ha enviado un correo electrónico de verificación a '${email}'. Revisa tu bandeja de entrada y recuerda que es posible que lo encuentres en la carpeta de spam o correo no deseado`,
             closeText: 'Aceptar',
          })
-      }
-      if (isError) {
+         */
+      } catch (error) {
+         //handleOpen(error)
          const {
-            error,
-            error: {
-               data: { code },
-            },
-         } = createUserAccountRes
+            data: { code },
+         } = error
          console.log('ERROR:createAccount en SignUpFormPageHandler -> ', error)
          const dialogMessage = signUpErrorHandler(code)
          setDialog({
@@ -115,7 +152,6 @@ export default function SigUpFormPageHandler({ isAdmin }) {
       <div>
          <DialogWindow {...dialog} onOpenChange={onOpenChange} />
          <AuthFormCard
-            isLoading={isLoading}
             label={'Crear cuenta'}
             renderOptionalLinkLeft={renderOptionalLinkLeft}
          >

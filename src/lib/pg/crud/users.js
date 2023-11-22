@@ -18,12 +18,12 @@ export async function getUserByEmail({ email }) {
    }
 }
 
-export async function createAppUser({ name, email, phone }) {
+export async function createAppUser({ name, email, phone, role }) {
    //console.log('dateRange en getAvailableSizesInRange -> ', dateRange)
    try {
       //  const db = client()
       console.log('@@ CRUD FN createUser @@')
-      const createdAppUserId = await addUser({ name, email, phone })
+      const createdAppUserId = await addUser({ name, email, phone, role })
       console.log('createdUserId en createUser-> ', createdAppUserId)
       return createdAppUserId
       return NextResponse.json(createdAppUserId, { status: 201 })
