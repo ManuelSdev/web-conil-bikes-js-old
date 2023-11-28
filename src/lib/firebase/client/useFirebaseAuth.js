@@ -7,8 +7,9 @@ import {
    getRedirectResult,
    getAdditionalUserInfo,
    signInWithCredential,
-   sendEmailVerification,
+   sendVerificationEmail,
    signInWithCustomToken,
+   confirmPasswordReset,
 } from 'firebase/auth'
 import { app } from './firebaseClient'
 
@@ -16,11 +17,12 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useCreateSessionCookieMutation } from '@/lib/redux/apiSlices/authApi'
 import {
-   useDeleteCookieQuery,
+   useLazyDeleteCookieQuery,
    useLazyCreateCookieQuery,
 } from '@/lib/redux/apiSlices/cookieApi'
 
 import useOnAuthStateChange from './useOnAuthStateChange'
+import { th } from 'date-fns/locale'
 
 const provider = new GoogleAuthProvider()
 
@@ -28,9 +30,13 @@ export default function useFirebaseAuth() {
    //const { authUser, loading: loadingAuthState } = useOnAuthStateChange()
    //console.log('provider -> ', provider)
    const auth = getAuth(app)
-   const [isLoading, setIsLoading] = useState(false)
+   const [isLoading, setLoading] = useState(false)
+
    const router = useRouter()
-   const [triggerCookie] = useLazyCreateCookieQuery()
+
+   const [createCookieTrigger] = useLazyCreateCookieQuery()
+
+   const [deleteCookieTrigger] = useLazyDeleteCookieQuery()
 
    const [createSessionCookie, { loading: loadingCreateSession }] =
       useCreateSessionCookieMutation()
@@ -39,8 +45,11 @@ export default function useFirebaseAuth() {
    // console.log('data -> ', data)
    // const datas = '==================================='
    const doCreateSessionCookie = async (accessToken) => {
-      //   console.log('doCreateSessionCookie setIsLoading A TRUE @@ ')
-      //   setIsLoading(true)
+      //   console.log('doCreateSessionCookie SETLOADING A TRUE @@ ')
+      //   setLoading(true)
+      //TODO: el unwrap de una mutation puede devolver un objeto res o un error
+      //Estás asumiendo que siempre devuelve un objeto res y lo destructuras
+      //pero si devuelve un error, no lo estás capturando, aunque fallará la dsctructuración
       try {
          const { success, resolvedUrl } =
             await createSessionCookie(accessToken).unwrap()
@@ -55,7 +64,7 @@ export default function useFirebaseAuth() {
          success && router.push(resolvedUrl)
       } catch (error) {
          signOut(auth)
-         //setIsLoading(true)
+         //setLoading(true)
          console.log('errorrr en doCreateSessionCookie -> ', error)
          throw error
       }
@@ -63,13 +72,43 @@ export default function useFirebaseAuth() {
       //Y luego mando a la resolvedUrl que me diga el server
    }
    //Recibe customToken creado con firebase admin
-
+   //Esto loga desde el cliente con un customToken creado en el server
+   //Ütil para logar sin password, como en reset password
    const doSignInWithCustomToken = async (customToken) => {
       try {
          const userCredential = await signInWithCustomToken(auth, customToken)
-         console.log('userCredential -> ', userCredential)
+
+         const { user } = userCredential
+
+         const { accessToken } = user
+         //TODO RESPASAR TODAS LAS MUTATIONS PARA VER SI DEVUELVEN UN OBJETO RES O UN ERROR
+         const res = await createSessionCookie(accessToken).unwrap()
+         return res
       } catch (error) {
          console.log('error en doSignInWithCustomToken -> ', error)
+      }
+   }
+   const doConfirmPasswordReset = async ({
+      actionCode,
+      newPassword,
+      customToken,
+   }) => {
+      try {
+         const res = await confirmPasswordReset(auth, actionCode, newPassword)
+         const { success, resolvedUrl } =
+            await doSignInWithCustomToken(customToken)
+         //Ahora tienes la confirmación y la cookie de sesión, redireccionas desde el cliente
+         //No necesitas deslogar en cliente porque no has logado para conseguir un token,
+         //ya que has usado un customToken directamente
+         if (success) return { success: true }
+         else {
+            const error =
+               'Error en doConfirmPasswordReset en createSessionCookie'
+            throw error
+         }
+      } catch (error) {
+         console.log('error en doConfirmPasswordReset -> ', error)
+         return { success: false, error }
       }
    }
    const doSignInWithEmailAndPassword = async ({
@@ -94,7 +133,7 @@ export default function useFirebaseAuth() {
        * sacar ese accessToken del usuario, por eso necesito que, por un espacio de tiempo, el estado de auth
        * exista en el cliente para obtener el accessToken con desde onAuthStateChanged
        */
-      setIsLoading(true)
+      setLoading(true)
 
       try {
          const userCredential = await signInWithEmailAndPassword(
@@ -127,11 +166,11 @@ export default function useFirebaseAuth() {
          // console.log('doSignInWithEmailAndPassword ERROR -> ', err)
          const { code } = err
          //  const error = errorHandlerSignMailAndPass(code)
-         //  setIsLoading(false)
+         //  setLoading(false)
          throw err
          // return { error }
       } finally {
-         setIsLoading(false)
+         setLoading(false)
       }
    }
    /**
@@ -149,7 +188,7 @@ export default function useFirebaseAuth() {
     *
     */
    const doSignInWithRedirect = async (ev) => {
-      const addCookie = await triggerCookie({
+      const addCookie = await createCookieTrigger({
          name: 'signInWithRedirect',
          value: true,
       })
@@ -180,7 +219,7 @@ export default function useFirebaseAuth() {
    // recuperas el token OAuth de g
    const doGetRedirectResult = async () => {
       try {
-         const deleteCookie = useDeleteCookieQuery('signInWithRedirect')
+         const deleteCookie = await deleteCookieTrigger('signInWithRedirect')
 
          const result = await getRedirectResult(auth)
          if (!result) {
@@ -229,5 +268,6 @@ export default function useFirebaseAuth() {
       doSignInWithRedirect,
       doGetRedirectResult,
       doCreateSessionCookie,
+      doConfirmPasswordReset,
    }
 }

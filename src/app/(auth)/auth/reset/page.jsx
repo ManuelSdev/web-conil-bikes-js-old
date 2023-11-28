@@ -1,5 +1,5 @@
-import React from 'react'
+import ResetPassFormPageHandler from '@/components/auth/emailActions/ResetPassFormPageHandler'
 
 export default function ResetPasswordPage() {
-   return <div>ResetPasswordPage</div>
+   return <ResetPassFormPageHandler />
 }

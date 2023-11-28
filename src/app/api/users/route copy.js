@@ -35,7 +35,7 @@ export async function POST(req) {
       })
       /**
        * La verificación de email se hace en el cliente.  Esto implica que tienes que estar
-       * logado/tener sesión activa en el cliente, porque el método sendEmailVerification()
+       * logado/tener sesión activa en el cliente, porque el método sendVerificationEmail()
        *  recibe como parametro el usuario.
        * ENTONCES: aquí solo hago el registro de una nueva cuenta pero, en el cliente, no hay
        * nadie logado. Necesito una forma de obtener un token de verificación de la autenticación

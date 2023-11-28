@@ -12,32 +12,19 @@ import { DialogWindow } from '@/components/common/DialogWindow'
 import {
    useFirebaseAdminActionsMutation,
    useLazyGetUserDataQuery,
-   useLazySendEmailVerificationQuery,
+   useLazySendAuthEmailQuery,
 } from '@/lib/redux/apiSlices/authApi'
 import { useRouter } from 'next/navigation'
 
-export default function VeriffyEmailFormPageHandler({ isVerifyError }) {
+export default function VerifyEmailFormPageHandler() {
    const { dialog, setDialog, toggleDialog, onOpenChange, setOnOpenChange } =
       useDialogWindow(null)
-
-   useEffect(() => {
-      if (isVerifyError) {
-         const verificationErrorDialog = {
-            open: true,
-            title: 'Se ha producido un error al verificar el correo electrónico',
-            description:
-               'Es posible que el correo de verificación que te enviamos haya caducado. Por favor, introduce tu correo electrónico para volver a recibir un correo de verificación',
-            closeText: 'Aceptar',
-         }
-         setDialog
-      }
-   }, [])
 
    const [getUserDataTrigger, { data, isSuccess, isFetching }] =
       useLazyGetUserDataQuery()
    const [fireAdminActionsTrigger] = useFirebaseAdminActionsMutation()
 
-   const [sendEmailVerificationTrigger] = useLazySendEmailVerificationQuery()
+   const [sendVerificationEmailTrigger] = useLazySendAuthEmailQuery()
    console.log('dialog ->', dialog)
 
    const { loading } = useFirebaseAuth()
@@ -107,9 +94,13 @@ export default function VeriffyEmailFormPageHandler({ isVerifyError }) {
 
             if (!emailVerified) {
                //TODO este error no tiene sentido
-               const res = await sendEmailVerificationTrigger({ name, email })
+               const res = await sendVerificationEmailTrigger({
+                  name,
+                  email,
+                  type: 'verify',
+               })
 
-               console.log('sendEmailVerificationTrigger res ->', res)
+               console.log('sendVerificationEmailTrigger res ->', res)
 
                const { data, isError } = res
 
@@ -138,19 +129,19 @@ export default function VeriffyEmailFormPageHandler({ isVerifyError }) {
             }
          }
 
-         // const res = await doSendEmailVerification(email)
+         // const res = await doSendVerificationEmail(email)
 
          /**
           * Con el customToken puedo obtener el usuario desde el cliente
           */
-         //await doSendEmailVerification(customToken)
+         //await doSendVerificationEmail(customToken)
          // setIsEmailSent(true)
          //  console.log('ok ->', ok)
          // console.log('userRecord ->', userRecord)
       } catch (error) {
          //handleOpen(error)
          console.log(
-            'ERROR:doSendEmailVerification en SignUpFormPageHandler -> ',
+            'ERROR:doSendVerificationEmail en SignUpFormPageHandler -> ',
             error
          )
       }
@@ -174,7 +165,7 @@ export default function VeriffyEmailFormPageHandler({ isVerifyError }) {
       <div>
          <DialogWindow {...dialog} onOpenChange={onOpenChange} />
          <AuthFormCard
-            label={'Verificación de correo electrónico'}
+            label={'Solicitar correo de verificación'}
             renderOptionalLinkLeft={renderOptionalLinkLeft}
          >
             <VerifyEmailForm onSubmit={onSubmit}></VerifyEmailForm>

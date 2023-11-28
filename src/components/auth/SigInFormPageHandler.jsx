@@ -56,8 +56,7 @@ export default function SigInFormPageHandler({ isAdmin, isEmailVerified }) {
          if (code === 'custom/unverified') {
             console.log('code === custom/unverified')
             setOnOpenChange({
-               onOpenChange: (bool) =>
-                  router.push('/auth/control-verify-email'),
+               onOpenChange: (bool) => router.push('/auth/verify'),
             })
          }
 

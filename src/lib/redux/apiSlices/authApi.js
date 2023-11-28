@@ -55,9 +55,9 @@ export const authApi = baseApi.injectEndpoints({
                }
          },
       }),
-      sendEmailVerification: builder.query({
-         query: ({ name, email }) => ({
-            url: `auth/firebaseAdmin/sendEmailVerification?name=${name}&email=${email}`,
+      sendAuthEmail: builder.query({
+         query: ({ name, email, type }) => ({
+            url: `auth/firebaseAdmin/sendAuthEmail?name=${name}&email=${email}&type=${type}`,
          }),
       }),
 
@@ -116,7 +116,7 @@ export const authApi = baseApi.injectEndpoints({
 export const {
    useGetUserDataQuery,
    useLazyGetUserDataQuery,
-   useLazySendEmailVerificationQuery,
+   useLazySendAuthEmailQuery,
    useLazyCreateFirebaseUserQuery,
    useFirebaseAdminActionsMutation,
    //useCreateFirebaseUserMutation,

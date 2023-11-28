@@ -41,3 +41,4 @@ export const signUpErrorHandler = (code) => {
          return 'No es posible crear una cuenta en este momento'
    }
 }
+//TODO: mejora los mensajes de error

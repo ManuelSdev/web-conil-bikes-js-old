@@ -15,7 +15,7 @@ export default async function UserSignInPage({ searchParams }) {
     * Tienes verified en query param cuando vienes redireccionado desde
     * desde /auth/control page
     */
-   const { verified: isEmailVerified } = searchParams
+   // const { verified: isEmailVerified } = searchParams
 
-   return <SigInFormPageHandler isEmailVerified={isEmailVerified} />
+   return <SigInFormPageHandler />
 }

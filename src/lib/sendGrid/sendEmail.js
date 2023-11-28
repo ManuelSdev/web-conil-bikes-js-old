@@ -1,13 +1,18 @@
 import mail from '@sendgrid/mail'
 import basicEmailTemplate from '@/lib/emailTemplates/basicTemplate'
 
-const sendGridSendEmail = async ({ userName, buttonLink, to }) => {
+const sendGridSendEmail = async ({
+   userName,
+   buttonLink,
+   to,
+   buttonText,
+   firstMessage,
+}) => {
    mail.setApiKey(process.env.SENDGRID_API_KEY)
    const mailTemplateConfig = {
       userName,
-      firstMessage:
-         'Haz click en el botón para verificar tu email y finalizar el registro',
-      buttonText: 'Verificar email',
+      firstMessage,
+      buttonText,
       buttonLink,
    }
 
@@ -19,7 +24,7 @@ const sendGridSendEmail = async ({ userName, buttonLink, to }) => {
          to, // Change to your recipient
          // Change to your verified sender
          from: 'masanchezzm@gmail.com',
-         subject: 'BIenvenido a Conil Bikes',
+         subject: 'Bienvenido a Conil Bikes',
          // text: 'Verifica tu email para finalizar el registro',
          html: emailHtml,
       }
