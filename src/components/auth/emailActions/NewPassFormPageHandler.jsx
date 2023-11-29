@@ -7,7 +7,7 @@ import useFirebaseAuth from '@/lib/firebase/client/useFirebaseAuth'
 import { NewPassForm } from './NewPassForm'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-
+csrftok
 export default function NewPassFormPageHandler({
    searchParams,
    customToken,
