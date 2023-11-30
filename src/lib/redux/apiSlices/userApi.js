@@ -5,12 +5,13 @@ const urlParams = (obj) => new URLSearchParams(obj)
 const userApi = baseApi.injectEndpoints({
    endpoints: (builder) => ({
       //https://redux-toolkit.js.org/rtk-query/usage/customizing-queries#performing-multiple-requests-with-a-single-query
-      /*
+
       getUser: builder.query({
-         query: (userIdentifier) =>
-            console.log('===================', userIdentifier) ||
-            USERS(userIdentifier),
+         query: ({ id, email }) =>
+            console.log('email en getUser -> ', email) ||
+            `users?email=${email}`,
       }),
+      /*
       getUserBooking: builder.query({
          query: (userIdentifier) => USERS_BOOKINGS(userIdentifier),
          //query: (userIdentifier) => '/users/1/bookings ',
@@ -29,8 +30,6 @@ const userApi = baseApi.injectEndpoints({
 export const {
    useGetUserQuery,
    useLazyGetUserQuery,
-   useGetUserBookingQuery,
-   useLazyGetUserBookingQuery,
    useCreateAccountMutation,
 } = userApi
 

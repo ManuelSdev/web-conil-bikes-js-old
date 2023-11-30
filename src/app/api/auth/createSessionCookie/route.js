@@ -12,9 +12,12 @@ export async function POST(req) {
 
 async function createSessionCookie(req) {
    app()
+   const body = await req.json()
+   const { isAdmin } = body
+   console.log('isAdmin -> ', isAdmin)
    const authHeader = req.headers.get('authorization')
    const accessToken = getToken(authHeader)
-   const isAdmin = await verifyCustomClaimsAdmin(accessToken)
+   // const isAdmin = await verifyCustomClaimsAdmin(accessToken)
    const res = await setCookies(isAdmin, accessToken)
    if (res.result.success) {
       const resolvedUrl = await getRedirectUrl(isAdmin, req)
@@ -35,8 +38,8 @@ function getToken(authHeader) {
 
 async function verifyCustomClaimsAdmin(accessToken) {
    const decodedToken = await getAuth().verifyIdToken(accessToken)
-   const { admin } = decodedToken
-   return admin
+   const { appRole } = decodedToken
+   return appRole === 'user' ? false : true
 }
 
 async function setCookies(isAdmin, accessToken) {
@@ -48,8 +51,6 @@ async function setCookies(isAdmin, accessToken) {
       const cookieName = isAdmin ? 'adminSession' : 'userSession'
       const cookieOptions = { maxAge: expiresIn, httpOnly: true, secure: true }
       cookies().set(cookieName, sessionCookie, cookieOptions)
-      cookies().set('cookieName', 'sessionCookie', cookieOptions)
-      // cookies().delete('resolvedUrl')
       return { result: { success: true }, status: { status: 200 } }
    } catch (err) {
       console.log('ERROR createSessionCookie  ', err)

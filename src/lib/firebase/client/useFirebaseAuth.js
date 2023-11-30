@@ -23,6 +23,7 @@ import {
 
 import useOnAuthStateChange from './useOnAuthStateChange'
 import { th } from 'date-fns/locale'
+import { useLazyGetUserQuery } from '@/lib/redux/apiSlices/userApi'
 
 const provider = new GoogleAuthProvider()
 
@@ -37,6 +38,7 @@ export default function useFirebaseAuth() {
    const [createCookieTrigger] = useLazyCreateCookieQuery()
 
    const [deleteCookieTrigger] = useLazyDeleteCookieQuery()
+   const [getUserTrigger] = useLazyGetUserQuery()
 
    const [createSessionCookie, { loading: loadingCreateSession }] =
       useCreateSessionCookieMutation()
@@ -44,15 +46,17 @@ export default function useFirebaseAuth() {
    // console.log('isSuccess -> ', isSuccess)
    // console.log('data -> ', data)
    // const datas = '==================================='
-   const doCreateSessionCookie = async (accessToken) => {
+   const doCreateSessionCookie = async ({ accessToken, isAdmin = false }) => {
       //   console.log('doCreateSessionCookie SETLOADING A TRUE @@ ')
       //   setLoading(true)
       //TODO: el unwrap de una mutation puede devolver un objeto res o un error
       //Estás asumiendo que siempre devuelve un objeto res y lo destructuras
       //pero si devuelve un error, no lo estás capturando, aunque fallará la dsctructuración
       try {
-         const { success, resolvedUrl } =
-            await createSessionCookie(accessToken).unwrap()
+         const { success, resolvedUrl } = await createSessionCookie({
+            accessToken,
+            isAdmin,
+         }).unwrap()
 
          //si crea la cookie session correctamente, borro (deslogo) el estado de auth
          //en el clienteS
@@ -74,6 +78,7 @@ export default function useFirebaseAuth() {
    //Recibe customToken creado con firebase admin
    //Esto loga desde el cliente con un customToken creado en el server
    //Ütil para logar sin password, como en reset password
+
    const doSignInWithCustomToken = async (customToken) => {
       try {
          const userCredential = await signInWithCustomToken(auth, customToken)
@@ -111,6 +116,50 @@ export default function useFirebaseAuth() {
          return { success: false, error }
       }
    }
+   const doAdminSignInWithEmailAndPassword = async ({
+      isAdmin,
+      email,
+      password,
+   }) => {
+      setLoading(true)
+
+      try {
+         const userCredential = await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+         )
+
+         const idTokenResult = await auth.currentUser.getIdTokenResult()
+
+         const {
+            claims: { appRole },
+         } = idTokenResult
+         //Solo crea la cookie si appRole es admin o manager
+         if (appRole === 'user') {
+            const error = { code: 'custom/unauthorized' }
+            throw error
+         }
+         const { user } = userCredential
+         const { accessToken } = user
+
+         await doCreateSessionCookie({ accessToken, isAdmin: true })
+
+         //return { emailVerified }
+      } catch (err) {
+         //    signOut(auth)
+         //todo mira que esto retorne ok por si dejas mensaje en ui
+         // console.log('doSignInWithEmailAndPassword ERROR -> ', err)
+         const { code } = err
+         //  const error = errorHandlerSignMailAndPass(code)
+         //  setLoading(false)
+         throw err
+         // return { error }
+      } finally {
+         setLoading(false)
+      }
+   }
+
    const doSignInWithEmailAndPassword = async ({
       isAdmin,
       email,
@@ -145,8 +194,13 @@ export default function useFirebaseAuth() {
             '@@@@@@@@@@@@@@@@@@@@@@@@@@@  userCredential -> ',
             userCredential
          )
+         const idTokenResult = await auth.currentUser.getIdTokenResult()
+         const { claims: role } = idTokenResult
+         if (isAdmin && role === 'admin')
+            throw new Error('custom/permission-denied')
          const { user } = userCredential
          const { accessToken, emailVerified } = user
+
          //https://firebase.google.com/docs/auth/admin/custom-claims?hl=es&authuser=2#access_custom_claims_on_the_client
 
          //CLAVE https://stackoverflow.com/questions/70073367/js-multiple-nested-try-catch-blocks
@@ -264,6 +318,7 @@ export default function useFirebaseAuth() {
    }
    return {
       isLoading,
+      doAdminSignInWithEmailAndPassword,
       doSignInWithEmailAndPassword,
       doSignInWithRedirect,
       doGetRedirectResult,

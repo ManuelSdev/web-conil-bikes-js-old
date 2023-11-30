@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { SignInForm } from './SignInForm'
 import useFirebaseAuth from '@/lib/firebase/client/useFirebaseAuth'
 import AuthFormCard from './AuthFormCard'
@@ -12,31 +12,21 @@ import useDialogWindow from '../common/useDialogWindow'
 import { signInErrorHandler } from '@/lib/firebase/client/authErrorHandler'
 import { useRouter } from 'next/navigation'
 
-export default function SigInFormPageHandler({ isAdmin, isEmailVerified }) {
+export default function SigInFormPageHandler({ isAdmin }) {
    console.log('@@ RENDER SigInFormPageHandler @@')
    //Initial dialog cuando vienes redireccionado de la página de verificación de email
 
-   const { doSignInWithEmailAndPassword, doSignInWithRedirect, isLoading } =
-      useFirebaseAuth()
+   const {
+      doAdminSignInWithEmailAndPassword,
+      doSignInWithEmailAndPassword,
+      doSignInWithRedirect,
+      isLoading,
+   } = useFirebaseAuth()
 
    const { dialog, setDialog, onOpenChange, setOnOpenChange } =
       useDialogWindow(null)
 
    const router = useRouter()
-
-   useEffect(() => {
-      //Cuando vienes redireccionado de la página de verificación de email
-      if (isEmailVerified) {
-         const verifiedDoneDialog = {
-            open: true,
-            title: 'Verificación completada',
-            description:
-               'Ya puedes iniciar sesión con tu cuenta de correo electrónico',
-            closeText: 'Aceptar',
-         }
-         setDialog(verifiedDoneDialog)
-      }
-   }, [])
 
    async function onSubmit(data, event) {
       //console.log('data ->', data)
@@ -44,15 +34,21 @@ export default function SigInFormPageHandler({ isAdmin, isEmailVerified }) {
       event.preventDefault()
       const { email, password } = data
       try {
-         await doSignInWithEmailAndPassword({ isAdmin, email, password })
+         if (isAdmin)
+            await doAdminSignInWithEmailAndPassword({
+               isAdmin,
+               email,
+               password,
+            })
+         else await doSignInWithEmailAndPassword({ isAdmin, email, password })
       } catch (error) {
          //handleOpen(error)
          console.log('doSignInWithEmailAndPassword ERROR -> ', error)
 
          const { code } = error
-
+         console.log('code ->', code)
          const { title, description } = signInErrorHandler(code)
-
+         console.log('title ->', title)
          if (code === 'custom/unverified') {
             console.log('code === custom/unverified')
             setOnOpenChange({

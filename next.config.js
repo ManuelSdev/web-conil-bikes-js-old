@@ -20,6 +20,10 @@ const nextConfig = {
          'trek.scene7.com',
       ],
    },
+   cookies: {
+      secure: true,
+      httpOnly: true,
+   },
 }
 
 module.exports = nextConfig

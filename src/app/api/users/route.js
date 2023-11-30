@@ -1,98 +1,10 @@
-import { createFireUser } from '@/lib/firebase/admin/auth/createFireUser'
-import { createAppUser } from '@/lib/pg/crud/users'
-import sendGridSendEmail from '@/lib/sendGrid/sendEmail'
+import { getUserByEmail } from '@/lib/pg/crud/users'
 
-import { getAuth } from 'firebase-admin/auth'
-import { NextResponse } from 'next/server'
-/**
- *
- * @Clave: así puedes obtener custom claims en el server
- * https://firebase.google.com/docs/auth/admin/custom-claims?hl=es&authuser=2#defining_roles_via_backend_script
- * const fireUser = await getAuth().getUserByEmail(email)
- */
-
-export async function POST(req) {
+export async function GET(req) {
+   console.log('ooooooooooooooooooooooooooooooooooooooooooo')
+   const searchParams = req.nextUrl.searchParams
+   const email = searchParams.get('email')
+   console.log('email -------->', email)
+   return getUserByEmail({ email })
    //console.log('req.body -------->', req.method)
-   const body = await req.json()
-   const { role = 'user', name, phone, email, password } = body
-
-   //https://firebase.google.com/docs/auth/admin/email-action-links?hl=es&authuser=2#initialize_actioncodesettings
-   const continueUrl = {
-      url: 'http://localhost:3000/',
-   }
-
-   console.log('email en users api route -> ', email)
-
-   try {
-      //Crear usuario en firebase
-      const userRecord = await createFireUser({
-         name,
-         phone,
-         email,
-         password,
-      })
-      const { uid } = userRecord
-      //Crear usuario en la base de datos de la app
-      //TODO si falla, elimiar el usuario de firebase
-      const createdAppUserId = await createAppUser({ name, email, phone, role })
-      //Añado customClaim con el id de usuario de la base de datos de la app
-      await getAuth().setCustomUserClaims(uid, {
-         appUid: createdAppUserId,
-         appRole: role,
-      })
-      //Compruebo que el customClaim se ha añadido
-      const userRecordRes = await getAuth().getUser(uid)
-      console.log('userRecordRes en createUserAccount -> ', userRecordRes)
-      //pillo el uid del usuario creado en firebase
-      const linkToControlPage = await getAuth().generateEmailVerificationLink(
-         email,
-         continueUrl
-      )
-
-      const sendgridResponse = await sendGridSendEmail({
-         userName: name,
-         buttonLink: linkToControlPage,
-         to: email,
-      })
-
-      return NextResponse.json({ result: 'ok' }, { status: 201 })
-   } catch (error) {
-      console.log('### ERROR USERS API route -> ', error)
-      return NextResponse.json(error, { status: 500 })
-   }
 }
-
-/*
-async function sendSengridEmail({ userName, buttonLink, to }) {
-   mail.setApiKey(process.env.SENDGRID_API_KEY)
-   const mailTemplateConfig = {
-      userName,
-      firstMessage:
-         'Haz click en el botón para verificar tu email y finalizar el registro',
-      buttonText: 'Verificar email',
-      buttonLink,
-   }
-
-   const emailHtml = basicEmailTemplate(mailTemplateConfig)
-   //console.log('emailHtml -> ', emailHtml)
-   // const html = emailTemplate('linkToControlPage')
-   try {
-      const msg = {
-         to, // Change to your recipient
-         // Change to your verified sender
-         from: 'masanchezzm@gmail.com',
-         subject: 'BIenvenido a Conil Bikes',
-         // text: 'Verifica tu email para finalizar el registro',
-         html: emailHtml,
-      }
-      const sendgridResponse = await mail.send(msg)
-      return sendgridResponse
-   } catch (error) {
-      const {
-         response: { body: errors },
-      } = error
-      console.log('### ERROR sendgridResponse API route -> ', errors)
-      throw new Error(errors)
-   }
-}
-*/
