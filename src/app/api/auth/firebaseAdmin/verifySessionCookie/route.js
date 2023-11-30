@@ -13,10 +13,7 @@ export async function GET(req) {
    //console.log('HANDLER:verifySessionCookie sessionCookie ->', sessionCookie)
    try {
       const decodeClaims = await verifySessionCookie(sessionCookie.value)
-      console.log(
-         '############################################################ decodeClaims ->',
-         decodeClaims
-      )
+      // console.log('##### decodeClaims ->', decodeClaims)
       //TODO: parche para pruebas , revisa el uso de roles
       const adminEmail = process.env.ADMIN_EMAIL
       const { appRole, email } = decodeClaims
