@@ -39,10 +39,10 @@ export const findBookingBikesById = async (bookingId) => {
    const text = 'SELECT * FROM find_booking_bikes_by_id($1)'
    const values = [bookingId]
    const rowMode = 'array'
-   const { rows } = await query({ text, values })
+   const { rows: bikes } = await query({ text, values })
    //array de objetos
-   console.log('rows en findBookingBikesById -> ', rows)
-   return rows
+   console.log('rows en findBookingBikesById -> ', bikes)
+   return bikes
 }
 export const addBooking = async ({
    bikes,

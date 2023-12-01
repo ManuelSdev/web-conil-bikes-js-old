@@ -21,6 +21,7 @@ const tabs = [
 ]
 
 export default function BookingTabs({ bookingData, bikes }) {
+   console.log('bikes -> ', bikes)
    const {
       email,
       price,
@@ -37,6 +38,7 @@ export default function BookingTabs({ bookingData, bikes }) {
    } = bookingData
    //console.log('----------------> '))
    const [from, to] = dateRange
+
    const dataList = [
       ['Nombre', name],
 

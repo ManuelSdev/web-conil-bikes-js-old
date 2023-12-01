@@ -35,7 +35,7 @@ export async function getBookingWithBikesById(bookingId) {
    const booking = await findBookingById(bookingId)
    const bookingBikes = await findBookingBikesById(bookingId)
    return NextResponse.json(
-      { bookingData: booking, bookingBikes },
+      { bookingData: booking, bikes: bookingBikes },
       { status: 201 }
    )
 }
