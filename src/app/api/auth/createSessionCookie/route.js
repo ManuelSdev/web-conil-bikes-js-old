@@ -1,4 +1,5 @@
 import { app } from '@/lib/firebase/admin/firebaseAdmin'
+import { is } from 'date-fns/locale'
 import { getAuth } from 'firebase-admin/auth'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
@@ -17,10 +18,13 @@ async function createSessionCookie(req) {
    console.log('isAdmin -> ', isAdmin)
    const authHeader = req.headers.get('authorization')
    const accessToken = getToken(authHeader)
+   // console.log('accessToken -> ', accessToken)
    // const isAdmin = await verifyCustomClaimsAdmin(accessToken)
-   const res = await setCookies(isAdmin, accessToken)
+   console.log('uno -> ')
+   const res = await setCookies({ isAdmin, accessToken })
+   console.log('dos -> ')
    if (res.result.success) {
-      const resolvedUrl = await getRedirectUrl(isAdmin, req)
+      const resolvedUrl = await getRedirectUrl({ isAdmin, req })
 
       res.result.resolvedUrl = resolvedUrl
       return res
@@ -42,12 +46,14 @@ async function verifyCustomClaimsAdmin(accessToken) {
    return appRole === 'user' ? false : true
 }
 
-async function setCookies(isAdmin, accessToken) {
+async function setCookies({ isAdmin, accessToken }) {
+   // console.log('accessToken -> ', accessToken)
    const expiresIn = 60 * 60 * 24 * 5 * 1000
    try {
       const sessionCookie = await getAuth().createSessionCookie(accessToken, {
          expiresIn,
       })
+      console.log('sessionCookie -> ', sessionCookie)
       const cookieName = isAdmin ? 'adminSession' : 'userSession'
       const cookieOptions = { maxAge: expiresIn, httpOnly: true, secure: true }
       cookies().set(cookieName, sessionCookie, cookieOptions)
@@ -62,8 +68,9 @@ async function setCookies(isAdmin, accessToken) {
    }
 }
 
-async function getRedirectUrl(isAdmin, req) {
-   console.log('***************** req -> ', req.cookies.has('resolvedUrl'))
+async function getRedirectUrl({ isAdmin, req }) {
+   console.log('***************** isAdmin -> ', isAdmin)
+   // console.log('***************** req -> ', req.cookies.has('resolvedUrl'))
    if (isAdmin) return '/dashboard/bookings'
    else if (req.cookies.has('resolvedUrl')) {
       const resolvedUrl = req.cookies.get('resolvedUrl')

@@ -19,7 +19,7 @@ export async function GET(req) {
       // cookies().delete('resolvedUrl')
       //  return { result: { success: true }, status: { status: 200 } }
    } catch (err) {
-      console.log('ERROR createSessionCookie  ', err)
+      console.log('ERROR al crear cookie en api/cookies  ', err)
       // res.status(401).send('UNAUTHORIZED REQUEST!')
    }
 

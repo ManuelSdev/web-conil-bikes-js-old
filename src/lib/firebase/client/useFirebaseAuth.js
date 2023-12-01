@@ -49,6 +49,7 @@ export default function useFirebaseAuth() {
    const doCreateSessionCookie = async ({ accessToken, isAdmin = false }) => {
       //   console.log('doCreateSessionCookie SETLOADING A TRUE @@ ')
       //   setLoading(true)
+      console.log('doCreateSessionCookie -> ', accessToken)
       //TODO: el unwrap de una mutation puede devolver un objeto res o un error
       //Estás asumiendo que siempre devuelve un objeto res y lo destructuras
       //pero si devuelve un error, no lo estás capturando, aunque fallará la dsctructuración
@@ -122,7 +123,7 @@ export default function useFirebaseAuth() {
       password,
    }) => {
       setLoading(true)
-
+      console.log('doAdminSignInWithEmailAndPassword -> ', email, password)
       try {
          const userCredential = await signInWithEmailAndPassword(
             auth,
@@ -194,10 +195,13 @@ export default function useFirebaseAuth() {
             '@@@@@@@@@@@@@@@@@@@@@@@@@@@  userCredential -> ',
             userCredential
          )
+         /*
+         //Esto era para distinguir los usuarios admin de los users normales
          const idTokenResult = await auth.currentUser.getIdTokenResult()
          const { claims: role } = idTokenResult
          if (isAdmin && role === 'admin')
             throw new Error('custom/permission-denied')
+         */
          const { user } = userCredential
          const { accessToken, emailVerified } = user
 
@@ -206,7 +210,7 @@ export default function useFirebaseAuth() {
          //CLAVE https://stackoverflow.com/questions/70073367/js-multiple-nested-try-catch-blocks
 
          if (emailVerified) {
-            await doCreateSessionCookie(accessToken)
+            await doCreateSessionCookie({ accessToken })
          } else {
             signOut(auth)
             const error = { code: 'custom/unverified' }

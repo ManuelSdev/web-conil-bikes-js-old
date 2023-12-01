@@ -33,6 +33,8 @@ export default function SigInFormPageHandler({ isAdmin }) {
       // console.log('ev ->', event)
       event.preventDefault()
       const { email, password } = data
+      console.log('email ->', email)
+      console.log('password ->', password)
       try {
          if (isAdmin)
             await doAdminSignInWithEmailAndPassword({

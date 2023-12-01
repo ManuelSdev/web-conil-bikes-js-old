@@ -10,7 +10,10 @@ import CustomCaptionLabel from './CustomCaptionLabel'
 import CustomRow from './CustomRow'
 import CustomDay from './CustomDay'
 import { useRouter } from 'next/navigation'
-import { useGetBookingDatesInRangeQuery } from '@/lib/redux/apiSlices/bookingApi'
+import {
+   useGetBookingDatesInRangeQuery,
+   useLazyGetBookingDatesInRangeQuery,
+} from '@/lib/redux/apiSlices/bookingApi'
 
 const urlParams = (obj) => new URLSearchParams(obj)
 
@@ -20,9 +23,15 @@ export default function CalendarHandlerUrl({
    //console.log('CalendarHandlerUrl *************************')
    //console.log('initialBookingDates en CalendarHandler -> ', initialBookingDates  )
    const router = useRouter()
+
    const [bookingDates, setBookingDates] = React.useState(initialBookingDates)
+
    const [number, setNumber] = useState(0)
+
    const [dateRange, setDateRange] = useState('')
+
+   const [getBookingDatesOnMonth, { data: bookingDatesOnMonth2 }] =
+      useLazyGetBookingDatesInRangeQuery()
 
    const handleSelect = (selectedDay) => {
       const date = selectedDay.toISOString()
@@ -30,13 +39,16 @@ export default function CalendarHandlerUrl({
       const params = urlParams({ date })
       router.push(`/dashboard/bookings?${params}`)
    }
-   const handeDateRange = (displayMonth) => {
+   const handeDateRange = async (displayMonth) => {
+      console.log('handeDateRange displayMonth -> ', displayMonth)
       const dateRange = createDateRangeString({
          // @ts-ignore
          fromDate: displayMonth,
          outsideDates: true,
       })
       setNumber(number + 1)
+      const res = await getBookingDatesOnMonth(dateRange)
+      console.log('res -> ', res)
       setDateRange(dateRange)
       // refetch()
    }
@@ -57,11 +69,22 @@ export default function CalendarHandlerUrl({
    })
 
    console.log('bookingDatesOnMonth -> ', bookingDatesOnMonth)
-
+   /*
    useEffect(() => {
       dateRange && refetch()
       bookingDatesOnMonth && setBookingDates(bookingDatesOnMonth)
    }, [dateRange, bookingDatesOnMonth])
+*/
+   /*
+   useEffect(() => {
+      const getDates=async(dateRange)=>{
+         const res= await getBookingDatesOnMonth(dateRange)
+         return res
+      }
+      dateRange && getDates(dateRange)
+      bookingDatesOnMonth && setBookingDates(bookingDatesOnMonth)
+   }, [dateRange, bookingDatesOnMonth])
+*/
 
    const handleMonthChange = (displayMonth) => handeDateRange(displayMonth)
    return (

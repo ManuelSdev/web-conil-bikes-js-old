@@ -13,6 +13,7 @@ import {
 
 export async function getBookingDatesInRange(dateRange) {
    const bookings = await findBookingDatesInRange(dateRange)
+   console.log('bookings en getBookingDatesInRange -> ', bookings)
    return NextResponse.json(bookings, { status: 201 })
 }
 

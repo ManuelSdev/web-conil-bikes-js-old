@@ -19,7 +19,7 @@ const userApi = baseApi.injectEndpoints({
       */
       createAccount: builder.mutation({
          query: ({ name, phone, email, password }) => ({
-            url: 'users',
+            url: '/users/create',
             method: 'POST',
             body: { name, phone, email, password },
          }),

@@ -1,21 +1,13 @@
 import MainNav from '@/components/admin/MainNav'
 import React from 'react'
 
-export default function layout({
-   userProfile,
-   userList,
-   newUser,
-   className,
-   ...props
-}) {
+export default function layout({ children }) {
    //console.log('layout props -> ', props)
 
    return (
       <div>
          <MainNav />
-         {userProfile}
-         {userList}
-         {newUser}
+         {children}
       </div>
    )
 }

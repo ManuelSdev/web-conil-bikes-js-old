@@ -12,12 +12,18 @@ export const findUserByEmail = async ({ email }) => {
    return user
 }
 export const findUserIdByEmail = async ({ email }) => {
+   console.log('email en findUserIdByEmail -> ', email)
    const text = 'SELECT user_id FROM App_user WHERE user_email=$1'
    const values = [email]
    const rowMode = 'array'
-   const { rows } = await query({ text, values, rowMode })
-   const [userId] = rows.flat()
-   return userId
+   try {
+      const { rows } = await query({ text, values, rowMode })
+      console.log('rows en findUserIdByEmail -> ', rows)
+      const [userId] = rows.flat()
+      return userId
+   } catch (error) {
+      throw new Error(error)
+   }
 }
 export const findUserRole = async ({ email }) => {
    const text = 'SELECT user_role FROM App_user WHERE user_email=$1'
