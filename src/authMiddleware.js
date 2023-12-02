@@ -1,10 +1,14 @@
+/**
+ * Este middleware revisa las cookies de sesión y redirecciona a la página de login
+ * en caso de que el usuario no esté logueado
+ */
+
 export async function authMiddleware({
    isAdmin,
    request,
    NextResponse,
    resolvedUrl,
 }) {
-   console.log('############################################################')
    //TODO: usar verifySessionCookie o esto no vale pa na
    const urlToRedirect = isAdmin
       ? new URL('/auth', request.url)
@@ -60,7 +64,7 @@ function redirectToLogin(NextResponse, resolvedUrlCookieValue, urlToRedirect) {
    // Setting cookies on the response using the `ResponseCookies` API
    const response = NextResponse.redirect(urlToRedirect, { status: 302 })
    response.cookies.set('resolvedUrl', resolvedUrlCookieValue, cookieOptions)
-
+   console.log('## redirectToLogin -> ', resolvedUrlCookieValue)
    return response
 }
 /*

@@ -44,6 +44,8 @@ export default function SigInFormPageHandler({ isAdmin, isEmailVerified }) {
       event.preventDefault()
       const { email, password } = data
       try {
+         if (isAdmin) {
+         }
          await doSignInWithEmailAndPassword({ isAdmin, email, password })
       } catch (error) {
          //handleOpen(error)
