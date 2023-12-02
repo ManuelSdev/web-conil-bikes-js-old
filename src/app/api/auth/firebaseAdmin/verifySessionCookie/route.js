@@ -13,12 +13,16 @@ export async function GET(req) {
    //console.log('HANDLER:verifySessionCookie sessionCookie ->', sessionCookie)
    try {
       const decodeClaims = await verifySessionCookie(sessionCookie.value)
-
-      const { admin, email } = decodeClaims
+      // console.log('##### decodeClaims ->', decodeClaims)
+      //TODO: parche para pruebas , revisa el uso de roles
+      const adminEmail = process.env.ADMIN_EMAIL
+      const { appRole, email } = decodeClaims
+      const isAdmin = appRole === 'admin' || appRole === 'manager'
       // console.log('HANDLER: verifySessionCookie ADMIN ->', admin)
       if (role === 'admin') {
-         if (admin) return Response.json({ verified: true })
-         if (!admin) {
+         if (isAdmin || adminEmail === email)
+            return Response.json({ verified: true })
+         if (!isAdmin) {
             const error = {
                code: 'custom',
                message: 'No admin custom claim',
@@ -27,7 +31,7 @@ export async function GET(req) {
          }
       }
       if (role === 'user') {
-         return Response.json({ verified: true })
+         if (appRole === 'user') return Response.json({ verified: true })
       }
       return Response.json({ verified: true })
    } catch (error) {

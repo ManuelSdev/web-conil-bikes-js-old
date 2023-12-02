@@ -78,7 +78,7 @@ const actions = {
          // res.setHeader('Set-Cookie', `resolvedUrl=/; Max-Age=0`)
          res.status(200).end(JSON.stringify({ success: true, resolvedUrl }))
       } catch (err) {
-         console.log('ERROR createSessionCookie  ', err)
+         console.log('ERROR createSessionCookie usando actions ', err)
          res.status(401).send('UNAUTHORIZED REQUEST!')
       }
    },

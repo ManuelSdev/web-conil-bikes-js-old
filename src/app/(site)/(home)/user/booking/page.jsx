@@ -1,7 +1,7 @@
 import UserStepper from '@/components/stepper/UserStepper'
 import { verifySessionCookie } from '@/lib/firebase/admin/verifySessionCookie'
 import { getAppBikeConfigSegments } from '@/lib/pg/crud/bikes'
-import { getUserByEmail } from '@/lib/pg/crud/users'
+import { getUserIdByEmail } from '@/lib/pg/crud/users'
 import { cookies } from 'next/headers'
 
 import React from 'react'
@@ -34,7 +34,7 @@ async function getPageData(userSessionCookie) {
    const decodeClaims = await verifySessionCookie(userSessionCookie.value)
    const { name, email, phone_number: phone } = decodeClaims
 
-   const resAppUserId = await getUserByEmail({ email })
+   const resAppUserId = await getUserIdByEmail({ email })
    const appUserId = await resAppUserId.json()
 
    const resAppBikesConfigSegments = await getAppBikeConfigSegments()

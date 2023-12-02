@@ -26,7 +26,7 @@ export default async function BookingList({ bookings, urlDate }) {
    const res = await getBookingOnDate(date)
    const { bookings } = await res.json()
    */
-   //console.log('BookingListPage  bookings-> ', bookings)
+   console.log('BookingListPage  bookings-> ', bookings)
 
    const setType = (booking) => {
       if (booking.state === PENDING) {
@@ -65,7 +65,7 @@ export default async function BookingList({ bookings, urlDate }) {
                </TableHeader>
                <TableBody>
                   {bookings.map((booking) => (
-                     <TableRow key={booking.id}>
+                     <TableRow key={booking.bookingId}>
                         <TableCell className={'pl-4 pr-3 sm:pl-6'}>
                            {booking.bikes}
                         </TableCell>
@@ -80,15 +80,17 @@ export default async function BookingList({ bookings, urlDate }) {
                            }
                         >
                            <Link
-                              //href={`/dashboard/bookings/manage/${booking.id}`}
+                              //href={`/dashboard/bookings/manage/${booking.bookingId}`}
                               href={`/dashboard/bookings?${urlParams({
                                  date: urlDate,
-                                 bookingId: booking.id,
+                                 bookingId: booking.bookingId,
                               })}`}
                               className="text-indigo-600 hover:text-indigo-900"
                            >
                               Vers
-                              <span className="sr-only">, {booking.id}</span>
+                              <span className="sr-only">
+                                 , {booking.bookingId}
+                              </span>
                            </Link>
                         </TableCell>
                      </TableRow>

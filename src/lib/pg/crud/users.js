@@ -1,7 +1,12 @@
 import 'server-only'
 
 import { cache } from 'react'
-import { addUser, findUserByEmail } from '../repos/users'
+import {
+   addUser,
+   findUserByEmail,
+   findUserIdByEmail,
+   findUserRole,
+} from '../repos/users'
 import { NextResponse } from 'next/server'
 import { th } from 'date-fns/locale'
 
@@ -15,6 +20,30 @@ export async function getUserByEmail({ email }) {
       return NextResponse.json(appUser, { status: 201 })
    } catch (error) {
       console.log('### ERROR CRUD api/getUserByEmail -> ', error)
+   }
+}
+export async function getUserIdByEmail({ email }) {
+   //console.log('dateRange en getAvailableSizesInRange -> ', dateRange)
+   try {
+      //  const db = client()
+      console.log('@@ CRUD FN getUserIdByEmail @@')
+      const appUserId = await findUserIdByEmail({ email })
+      console.log('appUser en getUserIdByEmail-> ', appUserId)
+      return NextResponse.json(appUserId, { status: 201 })
+   } catch (error) {
+      console.log('### ERROR CRUD api/getUserIdByEmail -> ', error)
+   }
+}
+export async function getUserRole({ email }) {
+   //console.log('dateRange en getAvailableSizesInRange -> ', dateRange)
+   try {
+      //  const db = client()
+      console.log('@@ CRUD FN getUserRole @@')
+      const userRole = await findUserRole({ email })
+      console.log('appUser en getUserRole-> ', userRole)
+      return NextResponse.json(userRole, { status: 201 })
+   } catch (error) {
+      console.log('### ERROR CRUD api/getUserRole -> ', error)
    }
 }
 

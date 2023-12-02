@@ -98,7 +98,7 @@ export default class BookingsRepository {
             dateRange,
          }
       )
-      //console.log('BookingsRepository.findBookingDatesInRange -> ', dates)
+      console.log('BookingsRepository.findBookingDatesInRange -> ', dates)
       dates.startdates ??= []
       dates.enddates ??= []
       dates.startenddates ??= []

@@ -23,9 +23,10 @@ export async function authMiddleware({
       : null
 
    if (!sessionCookie) {
+      //console.log('##### SIN sessionCookie')
       return redirectToLogin(NextResponse, resolvedUrl, urlToRedirect)
    }
-   console.log('@@ auth reques.url -> ', request.url)
+   //console.log('@@ auth reques.url authMiddleware -> ', request.url)
 
    const res = await fetch(
       process.env.URL +
@@ -42,8 +43,11 @@ export async function authMiddleware({
    )
    //TODO: termina cuando el mail no está verificado
    const { verified, error } = await res.json()
-   if (!verified)
+   if (!verified) {
+      // console.log('##### SIN verified')
       return redirectToLogin(NextResponse, resolvedUrl, urlToRedirect)
+   }
+   //console.log('##### FIN authMiddleware')
 }
 
 function redirectToLogin(NextResponse, resolvedUrlCookieValue, urlToRedirect) {

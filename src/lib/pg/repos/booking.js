@@ -1,5 +1,49 @@
 import { query } from '../db'
 
+export const findBookingDatesInRange = async (dateRange) => {
+   const text = 'SELECT * FROM find_booking_dates_in_range($1)'
+   const values = [dateRange]
+   const rowMode = 'array'
+   const {
+      rows: [bookingDates],
+   } = await query({ text, values })
+   bookingDates.startDates ??= []
+   bookingDates.endDates ??= []
+   bookingDates.startEndDates ??= []
+   return bookingDates
+}
+
+export const findBookingOnDate = async (date) => {
+   const text = 'SELECT * FROM find_booking_on_date($1)'
+   const values = [date]
+   const rowMode = 'array'
+   const { rows } = await query({ text, values })
+   //array de objetos
+   //console.log('rows en findBookingOnDate -> ', rows)
+   return rows
+}
+
+export const findBookingById = async (bookingId) => {
+   const text = 'SELECT * FROM find_booking_by_id($1)'
+   const values = [bookingId]
+   const rowMode = 'array'
+   const {
+      rows: [booking],
+   } = await query({ text, values })
+   booking.dateRange = JSON.parse(booking.dateRange)
+   console.log('booking en findBookingById -> ', booking)
+   return booking
+}
+
+export const findBookingBikesById = async (bookingId) => {
+   const text = 'SELECT * FROM find_booking_bikes_by_id($1)'
+   const values = [bookingId]
+   const rowMode = 'array'
+   const { rows: bikes } = await query({ text, values })
+   //array de objetos
+   console.log('rows en findBookingBikesById -> ', bikes)
+   return bikes
+}
 export const addBooking = async ({
    bikes,
    userId,

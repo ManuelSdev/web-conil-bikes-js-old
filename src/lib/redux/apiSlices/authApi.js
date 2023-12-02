@@ -7,17 +7,17 @@ export const authApi = baseApi.injectEndpoints({
        * Endpoints que gestionan la propia app
        */
       createSessionCookie: builder.mutation({
-         query: (token) =>
+         query: ({ accessToken, isAdmin }) =>
             console.log(
                'TOKEN RECIBIDO EN authApi para el header de createSessionCookie -> ',
-               token
+               isAdmin
             ) || {
                url: 'auth/createSessionCookie',
                method: 'POST',
                headers: {
-                  Authorization: `Bearer ${token}`,
+                  Authorization: `Bearer ${accessToken}`,
                },
-               body: { action: 'createSessionCookie' },
+               body: { action: 'createSessionCookie', isAdmin },
             },
       }),
 

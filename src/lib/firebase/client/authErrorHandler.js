@@ -23,6 +23,11 @@ export const signInErrorHandler = (code) => {
                'Pulsa aceptar para que te enviemos un nuevo email de verificación',
          }
          break
+      case 'custom/unauthorized':
+         return {
+            title: 'Acceso no autorizado',
+            description: '',
+         }
       default:
          return 'No es posible iniciar sesión en este momento'
    }

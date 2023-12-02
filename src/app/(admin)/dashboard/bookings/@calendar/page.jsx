@@ -5,16 +5,19 @@ import { createDateRangeString } from '@/utils/datesFns/createDateRangeString'
 
 import { todayString } from '@/utils/datesFns/today'
 import { redirect } from 'next/navigation'
-import { getBookingDatesInRange } from '@/lib/pg-promise/crud/bookings'
+//import { getBookingDatesInRange } from '@/lib/pg-promise/crud/bookings'
 import ReduxProviderWrapper from '@/lib/redux/ReduxProviderWrapper'
+import { getBookingDatesInRange } from '@/lib/pg/crud/bookings'
 
 const urlParams = (obj) => new URLSearchParams(obj)
 
 export default async function CalendarPage({ params, searchParams }) {
    const { date: encodedDate } = searchParams
    const dateRange = createDateRangeString({ outsideDates: true })
+
    const res = await getBookingDatesInRange(dateRange)
-   const { bookingDates } = await res.json()
+   const bookingDates = await res.json()
+   //console.log('bookingDates -> ', bookingDates)
    //console.log('isBookingToday -> ', isBookingToday(bookingDates))
    const isBookingToday = isFindedToday(bookingDates)
 

@@ -16,7 +16,7 @@ const primary = [
    { name: 'Usuarios', href: '#', icon: FolderIcon, current: false },
    { name: 'Calendario', href: '#', icon: CalendarIcon, current: false },
    {
-      name: 'Documents',
+      name: 'Administración',
       href: '#',
       icon: DocumentDuplicateIcon,
       current: false,
