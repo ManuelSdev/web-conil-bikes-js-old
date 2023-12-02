@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 
 import { authMiddleware } from './authMiddleware'
+import authPassMiddleware from './authPassMiddleware'
 
 // This function can be marked `async` if using `await` inside
 /**
@@ -41,6 +42,12 @@ export function middleware(request) {
          request,
          NextResponse,
          resolvedUrl,
+      })
+   if (pathName.startsWith('/booking'))
+      return authPassMiddleware({
+         request,
+         NextResponse,
+         urlToRedirect: '/user/booking',
       })
    // return NextResponse.redirect(new URL('/about-2', request.url))
 

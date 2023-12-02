@@ -1,3 +1,8 @@
+/**
+ * Este middleware revisa las cookies de sesión y redirecciona a la página de login
+ * en caso de que el usuario no esté logueado
+ */
+
 export async function authMiddleware({
    isAdmin,
    request,
