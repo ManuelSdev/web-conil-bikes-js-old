@@ -43,8 +43,7 @@ export default function SigUpFormPageHandler({ isAdmin }) {
    const [createFireUserTrigger] = useLazyCreateFirebaseUserQuery()
    const [fireAdminActionsTrigger] = useFirebaseAdminActionsMutation()
    const [createAppUserTrigger] = useCreateUserMutation()
-   const { dialog, setDialog, toggleDialog, onOpenChange, setOnOpenChange } =
-      useDialogWindow()
+   const { dialog, handleSetDialog } = useDialogWindow()
 
    /**
     * Confirmación de correo electrónico
@@ -127,7 +126,7 @@ export default function SigUpFormPageHandler({ isAdmin }) {
          } = error
          console.log('ERROR:createAccount en SignUpFormPageHandler -> ', error)
          const dialogMessage = signUpErrorHandler(code)
-         setDialog({
+         handleSetDialog({
             open: true,
             title: 'Ha ocurrido un error',
             description: dialogMessage,
@@ -150,7 +149,7 @@ export default function SigUpFormPageHandler({ isAdmin }) {
 
    return (
       <div>
-         <DialogWindow {...dialog} onOpenChange={onOpenChange} />
+         <DialogWindow {...dialog} />
          <AuthFormCard
             label={'Crear cuenta'}
             renderOptionalLinkLeft={renderOptionalLinkLeft}

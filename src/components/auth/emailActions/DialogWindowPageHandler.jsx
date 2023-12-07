@@ -12,16 +12,15 @@ export default function DialogWindowPageHandler({
 }) {
    const router = useRouter()
 
-   const { dialog, setDialog, toggleDialog, onOpenChange, setOnOpenChange } =
-      useDialogWindow()
+   const { dialog, handleSetDialog } = useDialogWindow()
 
    useEffect(() => {
       onOpenChangeLink &&
          setOnOpenChange({
             onOpenChange: (bool) => router.push(onOpenChangeLink),
          })
-      initialDialog && setDialog(initialDialog)
+      initialDialog && handleSetDialog(initialDialog)
    }, [])
 
-   return <DialogWindow {...dialog} onOpenChange={onOpenChange} />
+   return <DialogWindow {...dialog} />
 }

@@ -20,7 +20,7 @@ export const signInErrorHandler = (code) => {
          return {
             title: 'Cuenta no verificada',
             description:
-               'Pulsa aceptar para que te enviemos un nuevo email de verificación',
+               'Pulsa aceptar para solicitar un nuevo email de verificación',
          }
          break
       case 'custom/unauthorized':

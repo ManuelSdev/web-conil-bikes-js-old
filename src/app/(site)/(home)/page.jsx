@@ -9,6 +9,7 @@ import PageContainer from '@/components/layouts/site/PageContainer'
 import { headers } from 'next/headers'
 import { getAppBikesConfig } from '@/lib/pg-promise/crud/bikes'
 import TestClientFireAuth from '@/components/a/TestClientFireAuth'
+import { DialogWindow } from '@/components/common/DialogWindow'
 
 const cards = [
    {
@@ -56,6 +57,7 @@ export default async function HomePage() {
    const res = await getAppBikesConfig()
    const appBikesConfig = await res.json()
    // console.log('params IN HOME PAGE@-> ', appBikesConfig)
+
    return (
       <>
          <div className="min-h-slimBarScreen md:min-h-fatBarScreen  w-full bg-home-main bg-cover bg-fixed bg-[70%] bg-no-repeat pt-slimTopAppBar md:pt-fatTopAppBar min-[900px]:bg-center">

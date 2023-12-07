@@ -5,24 +5,27 @@ export default function useDialogWindow(initialDialog) {
       ? initialDialog
       : {
            open: false,
-           title: 'title',
-           description: 'description',
-           actionText: 'actionText',
-           closeText: 'closeText',
-           handleAction: () => {},
+           title: '',
+           description: '',
+           actionText: '',
+           closeText: '',
+           handleAction: () => {
+              //  console.log('handleAction')
+           },
+           onOpenChange: (bool) => {
+              console.log('onOpenChange', bool)
+              handleSetDialog({ open: bool })
+           },
         }
 
    const [dialog, setDialog] = useState(initialDialogState)
+   // console.log('dialog ->', dialog)
+   function handleSetDialog(newDialog) {
+      setDialog({ ...dialog, ...newDialog })
+   }
 
-   const toggleDialog = (bool) => setDialog({ ...dialog, open: bool })
-
-   const [onOpenChangeWrapper, setOnOpenChange] = useState({
-      onOpenChange: toggleDialog,
-   })
-   const { onOpenChange } = onOpenChangeWrapper
-   /**
-    *
-    */
-
-   return { dialog, setDialog, toggleDialog, onOpenChange, setOnOpenChange }
+   return {
+      dialog,
+      handleSetDialog,
+   }
 }

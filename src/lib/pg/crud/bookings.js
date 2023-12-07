@@ -41,7 +41,12 @@ export async function getBookingWithBikesById(bookingId) {
    )
 }
 
-export async function createBooking({
+export async function createBooking(data) {
+   const result = await addBooking(data)
+   console.log('result en createBooking -> ', result)
+}
+
+export async function createBooking_({
    bikes,
    userId,
    isAdmin,

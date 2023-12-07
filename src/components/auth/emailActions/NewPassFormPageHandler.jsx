@@ -14,8 +14,7 @@ export default function NewPassFormPageHandler({
 }) {
    const { oobCode: actionCode } = searchParams
 
-   const { dialog, setDialog, toggleDialog, onOpenChange, setOnOpenChange } =
-      useDialogWindow(null)
+   const { dialog, handleSetDialog } = useDialogWindow(null)
    const { doConfirmPasswordReset } = useFirebaseAuth()
    const router = useRouter()
    const handleConfirmPasswordReset = async (newPassword) => {
@@ -25,26 +24,22 @@ export default function NewPassFormPageHandler({
          customToken,
       })
       if (success) {
-         setOnOpenChange({
-            onOpenChange: (bool) => router.push('/'),
-         })
-         setDialog({
+         handleSetDialog({
             open: true,
             title: 'Contraseña cambiada',
             description:
                'Tu contraseña se ha cambiado correctamente. Ahora puedes iniciar sesión con tu nueva contraseña',
             closeText: 'Aceptar',
+            onOpenChange: (bool) => router.push('/'),
          })
       } else {
-         setOnOpenChange({
-            onOpenChange: (bool) => router.push('/auth/reset'),
-         })
-         setDialog({
+         handleSetDialog({
             open: true,
             title: 'Ha ocurrido un error',
             description:
                'No se ha podido cambiar la contraseña. Es posible que el enlace haya caducado. Por favor, solicita un nuevo correo de cambio de contraseña',
             closeText: 'Aceptar',
+            onOpenChange: (bool) => router.push('/auth/reset'),
          })
       }
    }
@@ -63,7 +58,7 @@ export default function NewPassFormPageHandler({
    )
    return (
       <div>
-         <DialogWindow onOpenChange={onOpenChange} {...dialog} />
+         <DialogWindow {...dialog} />
          <AuthFormCard
             label={'Cambiar contraseña'}
             renderOptionalLinkLeft={renderOptionalLinkLeft}

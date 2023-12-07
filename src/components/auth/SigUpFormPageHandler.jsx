@@ -47,8 +47,7 @@ export default function SigUpFormPageHandler({ isAdmin }) {
    // const [createAppUserTrigger] = useCreateUserMutation()
    const [createUserAccountTrigger, { isLoading }] = useCreateAccountMutation()
 
-   const { dialog, setDialog, toggleDialog, onOpenChange, setOnOpenChange } =
-      useDialogWindow()
+   const { dialog, handleSetDialog } = useDialogWindow()
 
    /**
     * Confirmación de correo electrónico
@@ -71,14 +70,12 @@ export default function SigUpFormPageHandler({ isAdmin }) {
       const { isError } = createUserAccountRes
 
       if (!isError) {
-         setOnOpenChange({
-            onOpenChange: (bool) => router.push('/auth/sign-in'),
-         })
-         setDialog({
+         handleSetDialog({
             open: true,
             title: 'La cuenta se ha creado correctamente',
             description: `Se ha enviado un correo electrónico de verificación a '${email}'. Revisa tu bandeja de entrada y recuerda que es posible que lo encuentres en la carpeta de spam o correo no deseado`,
             closeText: 'Aceptar',
+            onOpenChange: (bool) => router.push('/auth/sign-in'),
          })
       }
       if (isError) {
@@ -90,7 +87,7 @@ export default function SigUpFormPageHandler({ isAdmin }) {
          } = createUserAccountRes
          console.log('ERROR:createAccount en SignUpFormPageHandler -> ', error)
          const dialogMessage = signUpErrorHandler(code)
-         setDialog({
+         handleSetDialog({
             open: true,
             title: 'Ha ocurrido un error',
             description: dialogMessage,
@@ -113,7 +110,7 @@ export default function SigUpFormPageHandler({ isAdmin }) {
 
    return (
       <div>
-         <DialogWindow {...dialog} onOpenChange={onOpenChange} />
+         <DialogWindow {...dialog} />
          <AuthFormCard
             isLoading={isLoading}
             label={'Crear cuenta'}

@@ -65,13 +65,18 @@ export default function BookingResumeUserHandler({ setStep, user }) {
          reset,
       },
    ] = useCreateBookingMutation({ fixedCacheKey: 'createBooking-key' })
+
+   const handleCreateBooking = async (queryData) => {
+      const res = await createBooking(queryData).unwrap()
+      console.log('res ->', res)
+   }
    const renderPrevButton = () => (
       <Button onClick={() => setStep(4)} className="text-greenCorp">
          atrás
       </Button>
    )
    const renderCheckoutButton = () => (
-      <Button type="submit" onClick={() => createBooking(queryData)}>
+      <Button type="submit" onClick={() => handleCreateBooking(queryData)}>
          Confirmar reserva
       </Button>
    )

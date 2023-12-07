@@ -17,15 +17,14 @@ import {
 import { useRouter } from 'next/navigation'
 
 export default function VerifyEmailFormPageHandler() {
-   const { dialog, setDialog, toggleDialog, onOpenChange, setOnOpenChange } =
-      useDialogWindow(null)
+   const { dialog, handleSetDialog } = useDialogWindow(null)
 
    const [getUserDataTrigger, { data, isSuccess, isFetching }] =
       useLazyGetUserDataQuery()
    const [fireAdminActionsTrigger] = useFirebaseAdminActionsMutation()
 
    const [sendVerificationEmailTrigger] = useLazySendAuthEmailQuery()
-   console.log('dialog ->', dialog)
+   //console.log('dialog ->', dialog)
 
    const { loading } = useFirebaseAuth()
 
@@ -65,7 +64,7 @@ export default function VerifyEmailFormPageHandler() {
                },
             } = res
             if (code === 'auth/user-not-found') {
-               setDialog({
+               handleSetDialog({
                   open: true,
                   title: 'Ha ocurrido un error',
                   description: `El correo electrónico '${email}' no está registrado`,
@@ -80,15 +79,12 @@ export default function VerifyEmailFormPageHandler() {
             } = res
 
             if (emailVerified) {
-               setOnOpenChange({
-                  onOpenChange: (bool) => router.push('/auth/sign-in'),
-               })
-
-               setDialog({
+               handleSetDialog({
                   open: true,
                   title: 'Esta cuenta ya fue verificada',
                   description: 'Puedes iniciar sesión con esta cuenta',
                   closeText: 'Aceptar',
+                  onOpenChange: (bool) => router.push('/auth/sign-in'),
                })
             }
 
@@ -106,9 +102,9 @@ export default function VerifyEmailFormPageHandler() {
 
                if (isError) {
                   const { code, message } = data
-
+                  //todo: revisar si hay más errores/porque solouno
                   if (code === 'auth/user-not-found') {
-                     setDialog({
+                     handleSetDialog({
                         open: true,
                         title: 'Ha ocurrido un error',
                         description: `Indeterminado`,
@@ -116,14 +112,12 @@ export default function VerifyEmailFormPageHandler() {
                      })
                   }
                } else {
-                  setOnOpenChange({
-                     onOpenChange: (bool) => router.push('/auth/sign-in'),
-                  })
-                  setDialog({
+                  handleSetDialog({
                      open: true,
                      title: 'Se ha enviado un correo electrónico de verificación',
                      description: `Se ha enviado un correo electrónico de verificación a '${email}'. Revisa tu bandeja de entrada y recuerda que es posible que lo encuentres en la carpeta de spam o correo no deseado`,
                      closeText: 'Aceptar',
+                     onOpenChange: (bool) => router.push('/auth/sign-in'),
                   })
                }
             }
@@ -141,7 +135,7 @@ export default function VerifyEmailFormPageHandler() {
       } catch (error) {
          //handleOpen(error)
          console.log(
-            'ERROR:doSendVerificationEmail en SignUpFormPageHandler -> ',
+            'ERROR:doSendVerificationEmail en VerifyEmailFormPageHandler -> ',
             error
          )
       }
@@ -163,7 +157,7 @@ export default function VerifyEmailFormPageHandler() {
       <div>LOADING...</div>
    ) : (
       <div>
-         <DialogWindow {...dialog} onOpenChange={onOpenChange} />
+         <DialogWindow {...dialog} />
          <AuthFormCard
             label={'Solicitar correo de verificación'}
             renderOptionalLinkLeft={renderOptionalLinkLeft}

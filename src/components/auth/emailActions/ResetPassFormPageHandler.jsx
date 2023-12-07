@@ -9,8 +9,7 @@ import Link from 'next/link'
 import { useLazySendAuthEmailQuery } from '@/lib/redux/apiSlices/authApi'
 
 export default function ResetPassFormPageHandler() {
-   const { dialog, setDialog, toggleDialog, onOpenChange, setOnOpenChange } =
-      useDialogWindow(null)
+   const { dialog, handleSetDialog } = useDialogWindow(null)
    const [sendAuthEmailTrigger] = useLazySendAuthEmailQuery()
    async function onSubmit(data, event) {
       // console.log('data ->', data)
@@ -34,7 +33,7 @@ export default function ResetPassFormPageHandler() {
    )
    return (
       <div>
-         <DialogWindow onOpenChange={onOpenChange} {...dialog} />
+         <DialogWindow {...dialog} />
          <AuthFormCard
             label={'Cambiar contraseña'}
             renderOptionalLinkLeft={renderOptionalLinkLeft}

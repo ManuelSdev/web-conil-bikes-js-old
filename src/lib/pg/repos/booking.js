@@ -1,4 +1,5 @@
-import { query } from '../db'
+import pool, { query } from '../db'
+import { addBookingText } from '../textSql/bookings/addBooking'
 
 export const findBookingDatesInRange = async (dateRange) => {
    const text = 'SELECT * FROM find_booking_dates_in_range($1)'
@@ -14,12 +15,13 @@ export const findBookingDatesInRange = async (dateRange) => {
 }
 
 export const findBookingOnDate = async (date) => {
+   console.log('date en findBookingOnDate -> ', date)
    const text = 'SELECT * FROM find_booking_on_date($1)'
    const values = [date]
    const rowMode = 'array'
    const { rows } = await query({ text, values })
    //array de objetos
-   //console.log('rows en findBookingOnDate -> ', rows)
+   console.log('rows en findBookingOnDate -> ', rows)
    return rows
 }
 
@@ -44,7 +46,7 @@ export const findBookingBikesById = async (bookingId) => {
    console.log('rows en findBookingBikesById -> ', bikes)
    return bikes
 }
-export const addBooking = async ({
+export const addBooking_ = async ({
    bikes,
    userId,
    isAdmin,
@@ -75,11 +77,11 @@ export const addBooking = async ({
    ]
 
    const rowMode = 'array'
-   const { rows } = await query({ text, values })
-   console.log(
-      'rows en addBooking @@@@@@@@@@@@@@@@@ #####################-> ',
-      rows
-   )
+
+   const res = await query({ text, values })
+   console.log('res en addBooking @@@-> ', res)
+   const { rows } = res
+   console.log('rows en addBooking @@@@-> ', rows)
    return rows
 }
 
@@ -94,4 +96,27 @@ const a = {
    'delivery': false,
    'pickup': false,
    'duration': 43,
+}
+
+export const addBooking = async (data) => {
+   const text = addBookingText(data)
+   const client = await pool.connect()
+   try {
+      await client.query('BEGIN')
+      console.log('@@@@@@@@@@@+++++++ query text en addBooking', text)
+      const { rows } = await client.query(text)
+      await client.query('COMMIT')
+      return rows
+      const [{ booking_id: bookingId }] = rows
+      console.log('@@@@@@@@@@@+++++++ response en addBooking', rows)
+      res.status(201).json(bookingId)
+   } catch (err) {
+      await client.query('ROLLBACK')
+      console.log('ERROR API CREATE BOOKING', err.message)
+      return err
+      res.status(500)
+   } finally {
+      console.log('============ FINALLY ================')
+      client.release()
+   }
 }

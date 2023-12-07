@@ -23,8 +23,7 @@ export default function SigInFormPageHandler({ isAdmin }) {
       isLoading,
    } = useFirebaseAuth()
 
-   const { dialog, setDialog, onOpenChange, setOnOpenChange } =
-      useDialogWindow(null)
+   const { dialog, handleSetDialog } = useDialogWindow(null)
 
    const router = useRouter()
 
@@ -51,18 +50,15 @@ export default function SigInFormPageHandler({ isAdmin }) {
          console.log('code ->', code)
          const { title, description } = signInErrorHandler(code)
          console.log('title ->', title)
-         if (code === 'custom/unverified') {
-            console.log('code === custom/unverified')
-            setOnOpenChange({
-               onOpenChange: (bool) => router.push('/auth/verify'),
-            })
-         }
-
-         setDialog({
+         const unverified = code === 'custom/unverified'
+         handleSetDialog({
             open: true,
             title,
             description,
-            closeText: 'Aceptar',
+            ...(unverified && {
+               actionText: 'aceptar',
+               handleAction: () => router.push('/auth/verify'),
+            }),
          })
       }
    }
@@ -92,7 +88,7 @@ export default function SigInFormPageHandler({ isAdmin }) {
 
    return (
       <div>
-         <DialogWindow onOpenChange={onOpenChange} {...dialog} />
+         <DialogWindow {...dialog} />
          <AuthFormCard
             isLoading={isLoading}
             label={'Inicio de sesión'}
