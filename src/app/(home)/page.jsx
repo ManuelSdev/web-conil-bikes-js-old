@@ -5,7 +5,7 @@ import ShopImage from '@/public/images/home/shop.jpg'
 import RepairImage from '@/public/images/home/repair.jpg'
 import ImageCard from '@/components/ImageCard'
 import IconCorpName from '@/components/svg/IconCorpName'
-import PageContainer from '@/components/layouts/site/PageContainer'
+import SiteContainer from '@/components/layouts/site/SiteContainer'
 import { headers } from 'next/headers'
 import { getAppBikesConfig } from '@/lib/pg-promise/crud/bikes'
 import TestClientFireAuth from '@/components/a/TestClientFireAuth'
@@ -71,7 +71,7 @@ export default async function HomePage() {
                />
             </div>
          </div>
-         <PageContainer>
+         <SiteContainer>
             <div className="HomePage  px-8 lg:px-8">
                <div className="mt-16 grid  auto-rows-fr grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                   {cards.map((card, idx) => (
@@ -79,7 +79,7 @@ export default async function HomePage() {
                   ))}
                </div>
             </div>
-         </PageContainer>
+         </SiteContainer>
       </>
    )
 }

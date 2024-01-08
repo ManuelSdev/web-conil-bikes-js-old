@@ -25,7 +25,7 @@ export default function BookingResume({
    dayPrice,
    totalPrice,
    duration,
-   renderCheckoutButton,
+   renderSubmitButton,
 }) {
    const { from, to } = dateRange
 
@@ -310,7 +310,7 @@ export default function BookingResume({
                         </div>
                      </dl>
 
-                     <div className="mt-6">{renderCheckoutButton()}</div>
+                     <div className="mt-6">{renderSubmitButton()}</div>
                   </section>
                </div>
             </form>

@@ -15,14 +15,7 @@ export default async function UserBookingStepperPage() {
    const { name, email, phone, appUserId, segmentList } =
       await getPageData(userSessionCookie)
 
-   return (
-      <UserStepper
-         user={{ name, email, phone, userId: appUserId }}
-         stepperDataCookie={stepperDataCookie}
-         //   bookingResumeCookie={bookingResumeCookie}
-         segmentList={segmentList}
-      />
-   )
+   return <div>USER BOOKING PAGE</div>
 }
 
 async function getFireUserBySessionCookie(cookie) {
@@ -42,3 +35,12 @@ async function getPageData(userSessionCookie) {
 
    return { name, email, phone, appUserId, segmentList }
 }
+
+/*
+  <UserStepper
+         user={{ name, email, phone, userId: appUserId }}
+         stepperDataCookie={stepperDataCookie}
+         //   bookingResumeCookie={bookingResumeCookie}
+         segmentList={segmentList}
+      />
+      */

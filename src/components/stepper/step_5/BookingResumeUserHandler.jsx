@@ -66,7 +66,8 @@ export default function BookingResumeUserHandler({ setStep, user }) {
       },
    ] = useCreateBookingMutation({ fixedCacheKey: 'createBooking-key' })
 
-   const handleCreateBooking = async (queryData) => {
+   const handleSubmit = async (event) => {
+      event.preventDefault()
       const res = await createBooking(queryData).unwrap()
       console.log('res ->', res)
    }
@@ -75,8 +76,8 @@ export default function BookingResumeUserHandler({ setStep, user }) {
          atrás
       </Button>
    )
-   const renderCheckoutButton = () => (
-      <Button type="submit" onClick={() => handleCreateBooking(queryData)}>
+   const renderSubmitButton = () => (
+      <Button type="submit" onClick={handleSubmit}>
          Confirmar reserva
       </Button>
    )
@@ -84,7 +85,7 @@ export default function BookingResumeUserHandler({ setStep, user }) {
       <div>
          <BookingResumeStep
             renderPrevButton={renderPrevButton}
-            renderCheckoutButton={renderCheckoutButton}
+            renderSubmitButton={renderSubmitButton}
             {...bookingResumeData}
          />
       </div>

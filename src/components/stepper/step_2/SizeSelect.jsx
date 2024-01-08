@@ -41,7 +41,7 @@ export default function SizeSelect({ form, availableSizes, handleChange }) {
                >
                   <FormControl>
                      <SelectTrigger>
-                        <SelectValue placeholder="Select a verified email to display" />
+                        <SelectValue placeholder="Talla" />
                      </SelectTrigger>
                   </FormControl>
                   <SelectContent>

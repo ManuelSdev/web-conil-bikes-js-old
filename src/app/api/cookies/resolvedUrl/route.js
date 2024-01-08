@@ -16,10 +16,13 @@ export async function GET(req) {
 
       //   cookies().set('ddddddd', '/hola')
       // console.log('result -> ', result, 'status -> ', status)
-      return new Response('Hello, Next.js!', {
-         status: 200,
-         headers: { 'Set-Cookie': `token=${'token'}` },
-      })
+      return new Response(
+         { succes: true },
+         {
+            status: 200,
+            headers: { 'Set-Cookie': `token=${'token'}` },
+         }
+      )
       const res = NextResponse.json({ result: 'ok' }, { status: 200 })
       res.cookies.set(resolvedUrl)
       return res

@@ -16,7 +16,7 @@ export default function DialogWindowPageHandler({
 
    useEffect(() => {
       onOpenChangeLink &&
-         setOnOpenChange({
+         handleSetDialog({
             onOpenChange: (bool) => router.push(onOpenChangeLink),
          })
       initialDialog && handleSetDialog(initialDialog)

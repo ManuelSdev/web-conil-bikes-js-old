@@ -27,7 +27,12 @@ import React from 'react'
 import { sizesList, typesList } from '@/utils/app/appValues'
 import { capitalizeFirst } from '@/utils/app/functions'
 
-export default function TypeSelect({ form, availableTypes, handleChange }) {
+export default function TypeSelect({
+   form,
+   availableTypes,
+   handleChange,
+   isLoading,
+}) {
    // console.log('availableTypes IN TypeSelect @->', availableTypes)
 
    return (
@@ -43,7 +48,7 @@ export default function TypeSelect({ form, availableTypes, handleChange }) {
                >
                   <FormControl>
                      <SelectTrigger>
-                        <SelectValue placeholder="Select a verified email to display" />
+                        <SelectValue placeholder="Tipo" />
                      </SelectTrigger>
                   </FormControl>
                   <SelectContent>

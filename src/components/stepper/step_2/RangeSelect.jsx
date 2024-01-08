@@ -60,7 +60,7 @@ export default function RangeSelect({
                >
                   <FormControl>
                      <SelectTrigger>
-                        <SelectValue placeholder="Select a verified email to display" />
+                        <SelectValue placeholder="Gama" />
                      </SelectTrigger>
                   </FormControl>
                   <SelectContent>

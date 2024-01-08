@@ -1,8 +1,17 @@
 import { verifySessionCookie } from '@/lib/firebase/admin/verifySessionCookie'
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
+import { NextResponse } from 'next/server'
 
 export async function GET(req) {
    // console.log('############################################################')
+   const expiresIn = 60 * 60 * 24 * 5 * 1000
+   const cookieOptions = {
+      maxAge: expiresIn,
+      httpOnly: true,
+      secure: true,
+   }
+
    const searchParams = req.nextUrl.searchParams
    const role = searchParams.get('role')
    const cookieStore = cookies()
@@ -13,7 +22,8 @@ export async function GET(req) {
    //console.log('HANDLER:verifySessionCookie sessionCookie ->', sessionCookie)
    try {
       const decodeClaims = await verifySessionCookie(sessionCookie.value)
-      // console.log('##### decodeClaims ->', decodeClaims)
+      //  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+      console.log('##### decodeClaims ->', decodeClaims)
       //TODO: parche para pruebas , revisa el uso de roles
       const adminEmail = process.env.ADMIN_EMAIL
       const { appRole, email } = decodeClaims
@@ -39,8 +49,16 @@ export async function GET(req) {
          'ROUTE HANDLER ERROR: /api/auth/firebaseAdmin/verifySessionCookie  ->',
          error
       )
+
+      if (role !== 'admin') {
+         cookies().set('name', 'lee')
+         console.log('####################')
+         //  return redirect('http://localhost:3000/auth/sign-in')
+      }
+
+      //  return redirect('/auth/login')
       //return redirectToUnauthorized()
-      Response.json({ verified: false, error })
+      return Response.json({ verified: false, error })
    }
 }
 

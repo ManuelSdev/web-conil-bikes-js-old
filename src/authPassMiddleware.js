@@ -11,6 +11,9 @@ export default async function authPassMiddleware({
    NextResponse,
    urlToRedirect,
 }) {
+   console.log(
+      '======================================================================='
+   )
    const sessionCookie = request.cookies.has('userSession')
       ? request.cookies.get('userSession')
       : null
@@ -26,9 +29,31 @@ export default async function authPassMiddleware({
       )
       //TODO: revisa cuando el mail no está verificado
       const { verified, error } = await res.json()
+      console.log('authPassMiddleware verified ->', verified)
+      console.log('authPassMiddleware error ->', error)
       if (verified) {
          const url = new URL(urlToRedirect, request.url)
          return NextResponse.redirect(url, { status: 302 })
+      }
+
+      if (error) {
+         //Si hay error al verificar cookie, redirecciono a la página de login para
+         //sobreescribir la cookie
+         const res = await fetch(
+            process.env.URL + '/api/cookies?name=userSession&value=a&maxAge=0'
+         )
+         const { succes } = await res.json()
+         if (succes) {
+            console.log(
+               'ERROR en verificación de cookie, la borro y redirecciono a la página de login'
+            )
+            return NextResponse.redirect(
+               new URL('/auth/sign-in', request.url),
+               {
+                  status: 302,
+               }
+            )
+         }
       }
    }
 }

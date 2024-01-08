@@ -13,7 +13,7 @@ import {
    useLazyGetAvailableRangesQuery,
    useLazyGetAvailableTypesQuery,
 } from '@/lib/redux/apiSlices/bikeApi'
-import { da } from 'date-fns/locale'
+import { da, de } from 'date-fns/locale'
 import TypeSelect from './TypeSelect'
 import RangeSelect from './RangeSelect'
 import { Button } from '@/components/ui/button'
@@ -57,6 +57,8 @@ export default function BikeFiltersForm({
 
    const form = useForm({ resolver: zodResolver(FormSchema) })
    const { size, type, range } = form.getValues()
+   console.log('form values @->', form.getValues())
+   console.log('form @->', form)
    const [
       triggerType,
       {
@@ -82,6 +84,7 @@ export default function BikeFiltersForm({
    }
    const handleSizeChange = (field) => (selectedSizeValue) => {
       field.onChange(selectedSizeValue)
+      // form.reset()
       // setBikeForm({ ...form, size: lastSelectedSize })
       //console.log('## CALL getAvailableSizesInRange FROM BikeFilters ##')
 
@@ -89,6 +92,7 @@ export default function BikeFiltersForm({
    }
 
    const handleType = (field) => (selectedTypeValue) => {
+      console.log('field -> ', field)
       field.onChange(selectedTypeValue)
       //  updateBikeForm({ type: selectedTypeValue })
       triggerRange({ dateRange, size, type: selectedTypeValue })
@@ -127,6 +131,7 @@ export default function BikeFiltersForm({
                isLoading={isLoadingTypes}
                //   LoadingLabel={LoadingLabel}
                availableTypes={availableTypes}
+               isLoading={isLoadingTypes}
             />
             <RangeSelect
                segmentList={segmentList}
