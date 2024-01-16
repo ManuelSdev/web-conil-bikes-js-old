@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
+import Step from '../Step'
 
 const FormSchema = z.object({
    address: z.string().min(2, {
@@ -19,7 +20,7 @@ const FormSchema = z.object({
    pickup: z.boolean(),
 })
 
-export default function BookingManagementUserHandler({ setStep }) {
+export default function BookingManagementUserHandler({ setStep, ...props }) {
    console.log('BookingManagementUserHandler @@@->')
    const dispatch = useDispatch()
 
@@ -62,10 +63,16 @@ export default function BookingManagementUserHandler({ setStep }) {
       </Button>
    )
    return (
-      <BookingManagementStep
-         form={form}
+      <Step
          renderNextButton={renderNextButton}
          renderPrevButton={renderPrevButton}
-      />
+         {...props}
+      >
+         <BookingManagementStep
+            form={form}
+            renderNextButton={renderNextButton}
+            renderPrevButton={renderPrevButton}
+         />
+      </Step>
    )
 }

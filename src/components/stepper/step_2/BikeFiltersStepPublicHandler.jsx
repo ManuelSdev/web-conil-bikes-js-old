@@ -3,6 +3,7 @@ import React from 'react'
 import BikeFiltersStep from './BikeFiltersStep'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import Step from '../Step'
 
 export default function BikeFiltersStepPublicHandler({
    segmentList,
@@ -34,15 +35,20 @@ export default function BikeFiltersStepPublicHandler({
       </Link>
    )
    return (
-      <BikeFiltersStep
-         availableSizes={availableSizes}
-         segmentList={segmentList}
-         dateRange={dateRange}
-         handleNext={handleNext}
-         handlePrev={handlePrev}
-         disabled={true}
+      <Step
          renderShowBikesButton={renderShowBikesButton}
          renderPrevButton={renderPrevButton}
-      />
+      >
+         <BikeFiltersStep
+            availableSizes={availableSizes}
+            segmentList={segmentList}
+            dateRange={dateRange}
+            handleNext={handleNext}
+            handlePrev={handlePrev}
+            disabled={true}
+            renderShowBikesButton={renderShowBikesButton}
+            renderPrevButton={renderPrevButton}
+         />
+      </Step>
    )
 }

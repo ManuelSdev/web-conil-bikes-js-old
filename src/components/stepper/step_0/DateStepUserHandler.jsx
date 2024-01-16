@@ -13,8 +13,14 @@ import {
 } from '@/utils/datesFns/createDateRangeString'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import StepperControlButtons from '../StepperControlButtons'
+import Step from '../Step'
 
-export default function DateStepUserHandler({ setStep, cookieDateRange }) {
+export default function DateStepUserHandler({
+   setStep,
+   cookieDateRange,
+   ...props
+}) {
    console.log('DateStepUserHandler @@@->')
    const dispatch = useDispatch()
    const storedDateRange = useSelector(selectDateRange)
@@ -54,30 +60,36 @@ export default function DateStepUserHandler({ setStep, cookieDateRange }) {
       const strDateRange = dateRangeObjToISOString(newDateRangeObj)
       dispatch(dateRangeSelected(isoStringRangeObj))
    }
-   const renderNextButton = () => (
+   const renderNextButton = (className) => (
       <Button
          disabled={!from || !to}
          onClick={() => setStep(1)}
-         className="text-greenCorp"
+         className={className}
       >
          continuar
       </Button>
    )
-   const renderPrevButton = () => (
+   const renderPrevButton = (className) => (
       <Link href={`/`}>
-         <Button className="text-greenCorp">atrás</Button>
+         <Button className={className}>atrás</Button>
       </Link>
    )
    return (
-      <DateStep
-         from={from}
-         to={to}
-         handleNext={handleNext}
-         handlePrev={handlePrev}
-         handleSelect={handleSelect}
+      <Step
          renderNextButton={renderNextButton}
          renderPrevButton={renderPrevButton}
-      />
+         {...props}
+      >
+         <DateStep
+            from={from}
+            to={to}
+            handleNext={handleNext}
+            handlePrev={handlePrev}
+            handleSelect={handleSelect}
+            renderNextButton={renderNextButton}
+            renderPrevButton={renderPrevButton}
+         />
+      </Step>
    )
 }
 

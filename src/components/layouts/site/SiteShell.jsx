@@ -14,19 +14,13 @@ export default function SiteShell({ children }) {
    const [sidebarOpen, setSidebarOpen] = useState(false)
    return (
       <div>
-         <ModalSidebar
-            sidebarOpen={sidebarOpen}
-            setSidebarOpen={setSidebarOpen}
-            sidebarContent={sidebarContent}
-         />
-
          {/* Static sidebar for desktop
           <StaticSidebar sidebarContent={sidebarContent} />
          */}
 
          <div className="min-h-full">
             <SiteAppBar setSidebarOpen={setSidebarOpen} />
-            <div className="h-slimTopAppBar w-full lg:h-fatTopAppBar" />
+            <div className="h-slimTopAppBar w-full md:h-fatTopAppBar" />
             <main className="">
                <SiteContainer> {children}</SiteContainer>{' '}
             </main>

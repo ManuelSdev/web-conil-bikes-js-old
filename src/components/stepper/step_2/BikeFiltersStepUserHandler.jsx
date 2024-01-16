@@ -14,9 +14,11 @@ import {
 } from '@/lib/redux/slices/bookingFormSlice'
 import { dateRangeISOStringObjToString } from '@/utils/datesFns/createDateRangeString'
 import { Button } from '@/components/ui/button'
+import Step from '../Step'
 
 export default function BikeFiltersStepUserHandler({
    setStep,
+   ...props
    //appBikesConfig,
    // availableSizes,
 }) {
@@ -61,14 +63,20 @@ export default function BikeFiltersStepUserHandler({
    return isLoadingConfig || isLoadingSizes ? (
       <div>LOADINGGG BikeFiltersStep #########</div>
    ) : (
-      <BikeFiltersStep
-         isLoadingSizes={isLoadingSizes}
-         availableSizes={availableSizes}
-         segmentList={segmentList}
-         dateRange={dateRange}
-         disabled={true}
+      <Step
          renderShowBikesButton={renderShowBikesButton}
          renderPrevButton={renderPrevButton}
-      />
+         {...props}
+      >
+         <BikeFiltersStep
+            isLoadingSizes={isLoadingSizes}
+            availableSizes={availableSizes}
+            segmentList={segmentList}
+            dateRange={dateRange}
+            disabled={true}
+            renderShowBikesButton={renderShowBikesButton}
+            renderPrevButton={renderPrevButton}
+         />
+      </Step>
    )
 }

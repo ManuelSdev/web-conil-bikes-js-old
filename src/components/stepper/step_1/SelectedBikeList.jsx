@@ -52,12 +52,6 @@ export default function SelectedBikeList({
             ))}
          </ul>
          <Button onClick={handleAddBikeButton}>Añadir bicicleta</Button>
-         <a
-            href="#"
-            className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0"
-         >
-            View all
-         </a>
       </div>
    )
 }

@@ -1,6 +1,7 @@
 'use client'
 
 import { format } from 'date-fns'
+
 import { Calendar as CalendarIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
@@ -12,7 +13,9 @@ import {
 } from '@/components/ui/popover'
 import { cn } from '@/utils/app/functions'
 import { useState } from 'react'
-export default function DatePicker({ date, handleSelect }) {
+import { es } from 'date-fns/locale'
+
+export default function DatePicker({ date, handleSelect, label }) {
    const [open, setopen] = useState(false)
    const onSelect = (selectedDate) => {
       handleSelect(selectedDate)
@@ -29,11 +32,12 @@ export default function DatePicker({ date, handleSelect }) {
                )}
             >
                <CalendarIcon className="mr-2 h-4 w-4" />
-               {date ? format(date, 'PPP') : <span>Pick a date</span>}
+               {date ? format(date, 'PPP') : <span>{label}</span>}
             </Button>
          </PopoverTrigger>
          <PopoverContent className="w-auto p-0">
             <Calendar
+               locale={es}
                mode="single"
                selected={date}
                onSelect={onSelect}

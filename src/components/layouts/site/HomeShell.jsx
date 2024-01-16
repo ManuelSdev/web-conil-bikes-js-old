@@ -7,6 +7,7 @@ import SiteAppBar from './SiteAppBar'
 import IconCorpName from '../../svg/IconCorpName'
 import { sidebarContent } from '@/custom/sidebarContent'
 import ReduxProviderWrapper from '@/lib/redux/ReduxProviderWrapper'
+import Footer from './Footer'
 
 export default function HomeShell({ children }) {
    const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -26,7 +27,9 @@ export default function HomeShell({ children }) {
             <SiteAppBar setSidebarOpen={setSidebarOpen} />
 
             <main className="pt-slimTopAppBar">{children}</main>
-            <footer>FOOTER</footer>
+            <footer>
+               <Footer />
+            </footer>
          </div>
       </div>
    )

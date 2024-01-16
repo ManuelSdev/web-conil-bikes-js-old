@@ -1,3 +1,4 @@
+import StepsLine from '@/components/stepper/StepsLine'
 import UserStepper from '@/components/stepper/UserStepper'
 import { verifySessionCookie } from '@/lib/firebase/admin/verifySessionCookie'
 import { getAppBikeConfigSegments } from '@/lib/pg/crud/bikes'
@@ -15,7 +16,17 @@ export default async function UserBookingStepperPage() {
    const { name, email, phone, appUserId, segmentList } =
       await getPageData(userSessionCookie)
 
-   return <div>USER BOOKING PAGE</div>
+   return (
+      <div>
+         {' '}
+         <UserStepper
+            user={{ name, email, phone, userId: appUserId }}
+            stepperDataCookie={stepperDataCookie}
+            //   bookingResumeCookie={bookingResumeCookie}
+            segmentList={segmentList}
+         />
+      </div>
+   )
 }
 
 async function getFireUserBySessionCookie(cookie) {

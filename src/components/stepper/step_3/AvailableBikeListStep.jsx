@@ -6,7 +6,7 @@ export default function AvailableBikeListStep(props) {
    return (
       <div>
          <AvailableBikesList {...props} />
-         <MobileBottomAppBar {...props} />
+         {/*   <MobileBottomAppBar {...props} />*/}
       </div>
    )
 }

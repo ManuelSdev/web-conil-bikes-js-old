@@ -6,7 +6,7 @@ export default function BikeFiltersStep(props) {
    return (
       <div>
          <BikeFiltersForm {...props} />
-         <MobileBottomAppBar {...props} />
+         {/*     <MobileBottomAppBar {...props} />*/}
       </div>
    )
 }

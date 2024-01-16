@@ -15,6 +15,9 @@ import BikeFiltersStepUserHandler from './step_2/BikeFiltersStepUserHandler'
 import AvailableBikeListUserHandler from './step_3/AvailableBikeListUserHandler'
 import BookingManagementUserHandler from './step_4/BookingManagementUserHandler'
 import BookingResumeUserHandler from './step_5/BookingResumeUserHandler'
+import StepsLine from '@/components/stepper/StepsLine'
+import StepsTail from './StepsTail'
+import StepsPanel from './StepsPanel'
 
 export default function UserStepper({ user, stepperDataCookie, segmentList }) {
    console.log('UserStepper @@@->')
@@ -29,6 +32,12 @@ export default function UserStepper({ user, stepperDataCookie, segmentList }) {
    const { step: initialStep } = initialStepperData
 
    const [step, setStep] = useState(null)
+   const [stepDone, setStepDone] = useState({
+      one: false,
+      two: false,
+      three: false,
+      four: false,
+   })
 
    //dispatch(dateRangeSelected(dateRange))
 
@@ -45,21 +54,40 @@ export default function UserStepper({ user, stepperDataCookie, segmentList }) {
       console.log('useEffect initialStep ->', initialStep)
       setStep(initialStep)
    }, [])
+
    if (step === null) return <div>loading................................</div>
+
    return (
       <div>
-         {step === 0 && <DateStepUserHandler setStep={setStep} />}
-         {step === 1 && <SelectedBikesStepUserHandler setStep={setStep} />}
-         {step === 2 && <BikeFiltersStepUserHandler setStep={setStep} />}
+         {step === 0 && (
+            <DateStepUserHandler
+               step={step}
+               setStep={setStep}
+               setStepDone={setStepDone}
+            />
+         )}
+         {step === 1 && (
+            <SelectedBikesStepUserHandler step={step} setStep={setStep} />
+         )}
+         {step === 2 && (
+            <BikeFiltersStepUserHandler step={step} setStep={setStep} />
+         )}
          {step === 3 && (
             <AvailableBikeListUserHandler
+               step={step}
                initialStepperData={initialStepperData}
                setStep={setStep}
             />
          )}
-         {step === 4 && <BookingManagementUserHandler setStep={setStep} />}
+         {step === 4 && (
+            <BookingManagementUserHandler step={step} setStep={setStep} />
+         )}
          {step === 5 && (
-            <BookingResumeUserHandler setStep={setStep} user={user} />
+            <BookingResumeUserHandler
+               step={step}
+               setStep={setStep}
+               user={user}
+            />
          )}
       </div>
    )

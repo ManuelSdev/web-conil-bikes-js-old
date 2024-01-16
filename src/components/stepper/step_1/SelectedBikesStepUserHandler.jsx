@@ -12,8 +12,10 @@ import { useRouter } from 'next/navigation'
 import SelectedBikeListStep from './SelectedBikeListStep'
 import { set } from 'date-fns'
 import { Button } from '@/components/ui/button'
+import Step from '../Step'
+import StepperControlButtons from '../StepperControlButtons'
 
-export default function SelectedBikesStepUserHandler({ setStep }) {
+export default function SelectedBikesStepUserHandler({ setStep, ...props }) {
    const dispatch = useDispatch()
 
    const storedBikesByUnits = useSelector(selectBikesByUnits)
@@ -41,12 +43,19 @@ export default function SelectedBikesStepUserHandler({ setStep }) {
    )
 
    return (
-      <SelectedBikeListStep
-         bikes={storedBikesByUnits}
-         handleDeleteButton={handleDeleteButton}
-         handleAddBikeButton={handleAddBikeButton}
-         renderNextButton={renderNextButton}
-         renderPrevButton={renderPrevButton}
-      />
+      <Step>
+         <StepperControlButtons
+            renderNextButton={renderNextButton}
+            renderPrevButton={renderPrevButton}
+            {...props}
+         />
+         <SelectedBikeListStep
+            bikes={storedBikesByUnits}
+            handleDeleteButton={handleDeleteButton}
+            handleAddBikeButton={handleAddBikeButton}
+            renderNextButton={renderNextButton}
+            renderPrevButton={renderPrevButton}
+         />
+      </Step>
    )
 }

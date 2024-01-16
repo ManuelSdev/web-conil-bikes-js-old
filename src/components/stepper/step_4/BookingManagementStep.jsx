@@ -6,7 +6,7 @@ export default function BookingManagementStep(props) {
    return (
       <div>
          <BookingManagementForm {...props} />
-         <MobileBottomAppBar {...props} />
+         {/* <MobileBottomAppBar {...props} />*/}
       </div>
    )
 }

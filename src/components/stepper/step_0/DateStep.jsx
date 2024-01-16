@@ -7,12 +7,15 @@ const TO = 'to'
 
 export default function DateStep({ from, to, handleSelect, ...props }) {
    return (
-      <div>
-         <div>
-            <DatePicker date={from} handleSelect={handleSelect(FROM)} />
-            <DatePicker date={to} handleSelect={handleSelect(TO)} />
-         </div>
-         <MobileBottomAppBar {...props} />
+      <div className="flex justify-center gap-5">
+         <DatePicker
+            label="Inicio"
+            date={from}
+            handleSelect={handleSelect(FROM)}
+         />
+         <DatePicker label="Fin" date={to} handleSelect={handleSelect(TO)} />
       </div>
    )
 }
+
+/*<MobileBottomAppBar {...props} />*/

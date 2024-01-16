@@ -14,8 +14,9 @@ import { selectAppBikesConfig } from '@/lib/redux/slices/appConfigSlice'
 import { useLazyCreateCookieQuery } from '@/lib/redux/apiSlices/cookieApi'
 import { useCreateBookingMutation } from '@/lib/redux/apiSlices/bookingApi'
 import { dateRangeISOStringObjToString } from '@/utils/datesFns/createDateRangeString'
+import Step from '../Step'
 
-export default function BookingResumeUserHandler({ setStep, user }) {
+export default function BookingResumeUserHandler({ setStep, user, ...props }) {
    const [triggerCookie] = useLazyCreateCookieQuery()
 
    const storedBookingData = useSelector(selectBookingData)
@@ -82,13 +83,17 @@ export default function BookingResumeUserHandler({ setStep, user }) {
       </Button>
    )
    return (
-      <div>
+      <Step
+         renderPrevButton={renderPrevButton}
+         renderSubmitButton={renderSubmitButton}
+         {...props}
+      >
          <BookingResumeStep
             renderPrevButton={renderPrevButton}
             renderSubmitButton={renderSubmitButton}
             {...bookingResumeData}
          />
-      </div>
+      </Step>
    )
 }
 

@@ -9,6 +9,8 @@ import GoogleLocation from './GoogleLocation'
 import IconCorpName from '@/components/svg/IconCorpName'
 
 import Link from 'next/link'
+import Social from './Social'
+import Copyright from './Copyright'
 
 export default function FooterMobile({ navigation }) {
    return (
@@ -26,11 +28,11 @@ export default function FooterMobile({ navigation }) {
                   <AccordionContent>
                      {item.subtitles.map((subtitle, index) =>
                         subtitle.href ? (
-                           <div>
+                           <div key={index}>
                               <Link href={subtitle.href}> {subtitle.name}</Link>
                            </div>
                         ) : (
-                           <div className="flex gap-2">
+                           <div key={index} className="flex gap-2">
                               <div>
                                  <subtitle.icon {...subtitle.iconProps} />
                               </div>
@@ -43,6 +45,8 @@ export default function FooterMobile({ navigation }) {
                </AccordionItem>
             ))}
          </Accordion>
+         <Social className="mt-10" iconClassName="h-9 w-9" />
+         <Copyright />
       </div>
    )
 }

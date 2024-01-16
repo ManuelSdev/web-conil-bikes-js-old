@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation'
 import DateStep from './DateStep'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import Step from '../Step'
 
 const FROM = 'from'
 const TO = 'to'
@@ -44,13 +45,18 @@ export default function DateStepPublicHandler({ dateRange: urlStrDateRange }) {
       </Link>
    )
    return (
-      <DateStep
-         from={from}
-         to={to}
-         handleSelect={handleSelect}
+      <Step
          renderNextButton={renderNextButton}
          renderPrevButton={renderPrevButton}
-      />
+      >
+         <DateStep
+            from={from}
+            to={to}
+            handleSelect={handleSelect}
+            renderNextButton={renderNextButton}
+            renderPrevButton={renderPrevButton}
+         />
+      </Step>
    )
 }
 

@@ -21,7 +21,7 @@ export default function FooterDesktop({ navigation, contact, social }) {
                      />
                   </div>
 
-                  <div className="hidden  md:block ">
+                  <div className="mt-7  hidden md:block">
                      <Social />
                   </div>
                </div>
@@ -32,8 +32,8 @@ export default function FooterDesktop({ navigation, contact, social }) {
                   </div>
                </div>
 
-               <div className="grid-cols-subgrid col-span-3 grid">
-                  <div className="grid grid-cols-3">
+               <div className="grid-cols-subgrid col-span-3 grid ">
+                  <div className="mt-5 grid grid-cols-3 md:mt-0">
                      {navigation.map((item, index) => (
                         <div
                            key={index}
@@ -44,7 +44,9 @@ export default function FooterDesktop({ navigation, contact, social }) {
                         >
                            <div>
                               {' '}
-                              <div className="font-semibold ">{item.title}</div>
+                              <div className="pb-2 text-lg font-semibold">
+                                 {item.title}
+                              </div>
                               {item.subtitles.map((subtitle, index) => (
                                  <div key={index}>
                                     {subtitle.href ? (

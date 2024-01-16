@@ -11,8 +11,10 @@ import {
 import { Button } from '@/components/ui/button'
 import AvailableBikeListStep from './AvailableBikeListStep'
 import { dateRangeISOStringObjToString } from '@/utils/datesFns/createDateRangeString'
+import Step from '../Step'
+import StepperControlButtons from '../StepperControlButtons'
 
-export default function AvailableBikeListUserHandler({ setStep }) {
+export default function AvailableBikeListUserHandler({ setStep, ...props }) {
    console.log('AvailableBikeListUserHandler @@@->')
    const storedDateRange = useSelector(selectDateRange)
    const dateRange = dateRangeISOStringObjToString(storedDateRange)
@@ -40,13 +42,19 @@ export default function AvailableBikeListUserHandler({ setStep }) {
    return isLoading ? (
       <div>LOADING availableBikes EN @@@ USER AvailableBikeListStep @@@</div>
    ) : (
-      <AvailableBikeListStep
-         isLogged={true}
-         availableBikes={availableBikes}
-         renderSelectBikeButton={(bike) => (
-            <Button onClick={handleSelect(bike)}>Seleccionar</Button>
-         )}
-         renderPrevButton={renderPrevButton}
-      />
+      <Step>
+         <StepperControlButtons
+            renderPrevButton={renderPrevButton}
+            {...props}
+         />
+         <AvailableBikeListStep
+            isLogged={true}
+            availableBikes={availableBikes}
+            renderSelectBikeButton={(bike) => (
+               <Button onClick={handleSelect(bike)}>Seleccionar</Button>
+            )}
+            renderPrevButton={renderPrevButton}
+         />
+      </Step>
    )
 }

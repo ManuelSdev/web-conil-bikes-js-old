@@ -9,7 +9,7 @@ export default function BookingResumeStep(props) {
    return (
       <div>
          <BookingResume {...props} />
-         <MobileBottomAppBar {...props} />
+         {/* <MobileBottomAppBar {...props} />*/}
       </div>
    )
 }
