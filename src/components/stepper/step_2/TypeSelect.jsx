@@ -23,32 +23,48 @@ import {
    SelectTrigger,
    SelectValue,
 } from '@/components/ui/select'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { sizesList, typesList } from '@/utils/app/appValues'
 import { capitalizeFirst } from '@/utils/app/functions'
+import SpinnerLine from '@/components/common/SpinnerLine'
 
 export default function TypeSelect({
    form,
    availableTypes,
    handleChange,
-   isLoading,
+   isLoadingTypes,
+   className,
+   disabled,
 }) {
-   // console.log('availableTypes IN TypeSelect @->', availableTypes)
+   console.log('isLoadingTypes IN TypeSelect @->', isLoadingTypes)
+
+   useEffect(() => {
+      isLoadingTypes && form.resetField('type')
+   }, [isLoadingTypes])
 
    return (
       <FormField
          control={form.control}
          name="type"
          render={({ field }) => (
-            <FormItem>
-               <FormLabel>Email</FormLabel>
+            <FormItem className={className}>
+               <FormLabel>Tipo</FormLabel>
                <Select
                   onValueChange={handleChange(field)}
                   defaultValue={field.value}
                >
                   <FormControl>
                      <SelectTrigger>
-                        <SelectValue placeholder="Tipo" />
+                        {isLoadingTypes ? (
+                           <SpinnerLine />
+                        ) : field.value ? (
+                           <SelectValue
+                              //  aria-label={field.value}
+                              placeholder="Tipo"
+                           />
+                        ) : (
+                           'Tipo'
+                        )}
                      </SelectTrigger>
                   </FormControl>
                   <SelectContent>
@@ -70,9 +86,9 @@ export default function TypeSelect({
                      })}
                   </SelectContent>
                </Select>
-               <FormDescription>
+               {/*   <FormDescription>
                   Selecciona una talla en función de tu altura
-               </FormDescription>
+               </FormDescription>*/}
                <FormMessage />
             </FormItem>
          )}

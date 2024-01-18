@@ -23,9 +23,10 @@ import {
    SelectTrigger,
    SelectValue,
 } from '@/components/ui/select'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BIKE_RANGES_MAP, rangesList, sizesList } from '@/utils/app/appValues'
 import { capitalizeFirst } from '@/utils/app/functions'
+import SpinnerLine from '@/components/common/SpinnerLine'
 
 export default function RangeSelect({
    form,
@@ -33,6 +34,10 @@ export default function RangeSelect({
    handleChange,
    segmentList,
    selectedType,
+   className,
+   disabled,
+   isLoadingRange,
+   isLoadingTypes,
 }) {
    /*
    const segmentList = useSelector(selectDatabaseInfoSegmentList)
@@ -45,51 +50,74 @@ export default function RangeSelect({
       })
       return price ? `${price} €/día` : 'Gama no disponible'
    }
+   console.log('LOADING RANGE @->', isLoadingRange)
+   useEffect(() => {
+      ;(isLoadingRange || isLoadingTypes) && form.resetField('range')
+   }, [isLoadingRange, isLoadingTypes])
 
    return (
       <FormField
          control={form.control}
          name="range"
-         render={({ field }) => (
-            //   console.log('field -> ', field) ||
-            <FormItem>
-               <FormLabel>Email</FormLabel>
-               <Select
-                  onValueChange={handleChange(field)}
-                  defaultValue={field.value}
-               >
-                  <FormControl>
-                     <SelectTrigger>
-                        <SelectValue placeholder="Gama" />
-                     </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                     {rangesList.map((range) => {
-                        const [engRange, spaRange] = range
-                        return (
-                           <SelectItem
-                              disabled={
-                                 availableRanges
-                                    ? !availableRanges.includes(engRange)
-                                    : true
-                              }
-                              key={engRange}
-                              value={engRange}
-                           >
+         render={({ field }) =>
+            console.log('field -> ', field) || (
+               <FormItem className={className}>
+                  <FormLabel>Gama</FormLabel>
+                  <Select
+                     onValueChange={handleChange(field)}
+                     defaultValue={field.value}
+                     // value={field.value}
+                  >
+                     <FormControl>
+                        <SelectTrigger>
+                           {isLoadingRange ? (
+                              <SpinnerLine />
+                           ) : field.value ? (
+                              <SelectValue
+                                 //  aria-label={field.value}
+                                 placeholder="Gama"
+                              />
+                           ) : (
+                              'Gama'
+                           )}
+                        </SelectTrigger>
+                     </FormControl>
+                     <SelectContent>
+                        {rangesList.map((range) => {
+                           const [engRange, spaRange] = range
+                           return (
+                              <SelectItem
+                                 disabled={
+                                    availableRanges
+                                       ? !availableRanges.includes(engRange)
+                                       : true
+                                 }
+                                 key={engRange}
+                                 value={engRange}
+                              >
+                                 {`${capitalizeFirst(spaRange)} - ${rangeInfo(
+                                    engRange
+                                 )}`}
+                              </SelectItem>
+                           )
+                        })}
+
+                        {/*  {availableRanges.map((range) => (
+                           <SelectItem key={range} value={engRange}>
                               {`${capitalizeFirst(spaRange)} - ${rangeInfo(
                                  engRange
                               )}`}
                            </SelectItem>
-                        )
-                     })}
-                  </SelectContent>
-               </Select>
-               <FormDescription>
+                              ))}*/}
+                     </SelectContent>
+                  </Select>
+                  {/*    <FormDescription>
                   Selecciona una talla en función de tu altura
-               </FormDescription>
-               <FormMessage />
-            </FormItem>
-         )}
+                  </FormDescription>*/}
+                  <FormMessage />
+               </FormItem>
+            )
+         }
       />
    )
 }

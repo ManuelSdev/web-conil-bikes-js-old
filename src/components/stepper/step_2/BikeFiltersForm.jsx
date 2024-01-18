@@ -33,6 +33,7 @@ export default function BikeFiltersForm({
    availableSizes,
    segmentList,
    renderShowBikesButton,
+   ...props
    //form,
    // setStep,
 }) {
@@ -59,11 +60,12 @@ export default function BikeFiltersForm({
    const { size, type, range } = form.getValues()
    console.log('form values @->', form.getValues())
    console.log('form @->', form)
+
    const [
       triggerType,
       {
          data: availableTypes,
-         isLoading: isLoadingTypes,
+         isFetching: isLoadingTypes,
          isSuccess: isSuccessTypes,
          unsubscribe: unsubscribeTypes,
       },
@@ -74,7 +76,7 @@ export default function BikeFiltersForm({
 
    const [
       triggerRange,
-      { data: availableRanges, isLoading: isLoadingRange },
+      { data: availableRanges, isFetching: isLoadingRange },
       lastPromiseInfoRanges,
    ] = useLazyGetAvailableRangesQuery()
 
@@ -99,6 +101,7 @@ export default function BikeFiltersForm({
    }
 
    const handleRange = (field) => (selectedRangeValue) => {
+      console.log('selectedRangeValue -> ', selectedRangeValue)
       field.onChange(selectedRangeValue)
       //updateBikeForm({ range: selectedRangeValue })
       //  setBikeForm({ ...form, range: lastSelectedRange })
@@ -113,37 +116,53 @@ export default function BikeFiltersForm({
       <Form {...form}>
          <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="w-2/3 space-y-6"
+            //   className="space-y-6 sm:grid sm:grid-cols-4 sm:isLoadingSizes-4 sm:space-y-0"
+            className="gap-6 space-y-6 sm:flex sm:justify-center sm:space-y-0"
          >
             <SizeSelect
+               // className="sm:grow"
+               className="sm:min-w-[260px]"
                form={form}
                selectedSize={size}
                handleChange={handleSizeChange}
                // isLoading={isLoadingSizes}
                //     LoadingLabel={LoadingLabel}
                availableSizes={availableSizes}
+               {...props}
             />
             <TypeSelect
+               disabled
+               // className="sm:grow"
+               className="sm:min-w-[100px]"
                form={form}
                selectedSize={size}
                selectedType={type}
                handleChange={handleType}
-               isLoading={isLoadingTypes}
+               isLoadingTypes={isLoadingTypes}
                //   LoadingLabel={LoadingLabel}
                availableTypes={availableTypes}
-               isLoading={isLoadingTypes}
             />
             <RangeSelect
+               disabled
+               // className="sm:grow"
+               className="sm:min-w-[165px]"
                segmentList={segmentList}
                form={form}
                selectedType={type}
                selectedRange={range}
                handleChange={handleRange}
-               isLoading={isLoadingRange}
+               isLoadingTypes={isLoadingTypes}
+               isLoadingRange={isLoadingRange}
                //  LoadingLabel={LoadingLabel}
                availableRanges={availableRanges}
             />
-            {renderShowBikesButton({ dateRange, size, type, range })}
+            {renderShowBikesButton({
+               dateRange,
+               size,
+               type,
+               range,
+               className: 'sm:self-end',
+            })}
          </form>
       </Form>
    )

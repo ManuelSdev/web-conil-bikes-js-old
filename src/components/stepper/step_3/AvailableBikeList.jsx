@@ -38,14 +38,15 @@ const AvailableBikesList = ({ availableBikes, renderSelectBikeButton }) => {
                return (
                   <div
                      key={idx}
-                     className="w-full rounded-lg bg-white shadow dark:border-gray-700 dark:bg-gray-800"
+                     className="my-3 w-full rounded-lg bg-white shadow dark:border-gray-700 dark:bg-gray-800"
                   >
                      <div className="relative h-[200px] w-full overflow-hidden min-[450px]:h-[300px]  lg:h-[200px]">
                         <Image
                            src={src}
                            alt=""
                            fill
-                           className="rounded-t-lg object-cover"
+                           //   style={{ objectFit: 'contain' }}
+                           className="rounded-t-lg object-contain"
                         />
                      </div>
 

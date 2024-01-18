@@ -4,6 +4,7 @@ import { differenceInDays } from 'date-fns'
 
 const initialState = {
    //dateRange: '',
+   var: 0,
    segmentList: [],
    dateRange: { from: '', to: '' },
    bikes: [],
@@ -21,6 +22,9 @@ const bookingFormSlice = createSlice({
    name: 'bookingForm',
    initialState,
    reducers: {
+      varChanged: (state, action) => {
+         state.var = action.payload
+      },
       segmentListLoaded: (state, action) => {
          //  console.log('segmentListLoaded action.payload _> ', action.payload)
          state.segmentList = action.payload
@@ -77,6 +81,7 @@ const bookingFormSlice = createSlice({
 })
 
 export const {
+   varChanged,
    segmentListLoaded,
    dateRangeSelected,
    bookingManagementSelected,
@@ -86,6 +91,8 @@ export const {
 } = bookingFormSlice.actions
 
 export default bookingFormSlice.reducer
+
+export const selectVar = (state) => state.bookingForm.var
 export const selectSegmentList = (state) => state.bookingForm.segmentList
 export const selectDateRange = (state) => state.bookingForm.dateRange
 

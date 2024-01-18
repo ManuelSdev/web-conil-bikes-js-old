@@ -15,6 +15,7 @@ import {
 import { dateRangeISOStringObjToString } from '@/utils/datesFns/createDateRangeString'
 import { Button } from '@/components/ui/button'
 import Step from '../Step'
+import SpinnerLine from '@/components/common/SpinnerLine'
 
 export default function BikeFiltersStepUserHandler({
    setStep,
@@ -60,14 +61,13 @@ export default function BikeFiltersStepUserHandler({
          atrás
       </Button>
    )
-   return isLoadingConfig || isLoadingSizes ? (
-      <div>LOADINGGG BikeFiltersStep #########</div>
-   ) : (
+   return (
       <Step
          renderShowBikesButton={renderShowBikesButton}
          renderPrevButton={renderPrevButton}
          {...props}
       >
+         {/*<SpinnerLine />*/}
          <BikeFiltersStep
             isLoadingSizes={isLoadingSizes}
             availableSizes={availableSizes}

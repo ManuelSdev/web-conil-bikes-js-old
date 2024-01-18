@@ -7,9 +7,10 @@ const steps = [
    { name: 'Resumen', href: '#', status: 'upcoming', id: 4 },
 ]
 
-export default function StepsPanel({ step: currentStep, className }) {
-   //console.log('StepsPanel step ->', step)
-   //const currentStep =      step === 0 ? 1 : step >= 1 && step <= 3 ? 2 : step === 4 ? 3 : 4
+export default function StepsPanel({ step, className }) {
+   console.log('StepsPanel step ->', step)
+   const currentStep =
+      step === 0 ? 1 : step >= 1 && step <= 3 ? 2 : step === 4 ? 3 : 4
    console.log('StepsLine currentStep ->', currentStep)
    return (
       <nav aria-label="Progress" className={className}>

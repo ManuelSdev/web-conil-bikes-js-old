@@ -25,25 +25,37 @@ import {
 } from '@/components/ui/select'
 import React from 'react'
 import { sizesList } from '@/utils/app/appValues'
+import SpinnerLine from '@/components/common/SpinnerLine'
 
-export default function SizeSelect({ form, availableSizes, handleChange }) {
+export default function SizeSelect({
+   form,
+   availableSizes,
+   handleChange,
+   isLoadingSizes,
+   className,
+}) {
    return (
       <FormField
          control={form.control}
          name="size"
          render={({ field }) => (
             //   console.log('field -> ', field) ||
-            <FormItem>
-               <FormLabel>Email</FormLabel>
+            <FormItem className={className}>
+               <FormLabel>Talla</FormLabel>
                <Select
                   onValueChange={handleChange(field)}
                   defaultValue={field.value}
                >
                   <FormControl>
                      <SelectTrigger>
-                        <SelectValue placeholder="Talla" />
+                        {isLoadingSizes ? (
+                           <SpinnerLine />
+                        ) : (
+                           <SelectValue placeholder="Talla" />
+                        )}
                      </SelectTrigger>
                   </FormControl>
+
                   <SelectContent>
                      {sizesList.map((elem) => {
                         const [size, [min, max]] = elem
@@ -63,9 +75,9 @@ export default function SizeSelect({ form, availableSizes, handleChange }) {
                      })}
                   </SelectContent>
                </Select>
-               <FormDescription>
+               {/* <FormDescription>
                   Selecciona una talla en función de tu altura
-               </FormDescription>
+                  </FormDescription>*/}
                <FormMessage />
             </FormItem>
          )}
