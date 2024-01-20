@@ -23,7 +23,6 @@ export default async function BookingDatePage({ params }) {
          <DrawerDemo />
          <ToastDemo />
          <OrderCard />
-         <Cart />
       </div>
    )
 }

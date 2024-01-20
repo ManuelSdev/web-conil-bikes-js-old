@@ -20,6 +20,8 @@ import { useRouter } from 'next/navigation'
 import BikeFiltersForm from '@/components/stepper/step_2/BikeFiltersForm'
 import AvailableBikeListStep from '@/components/stepper/step_3/AvailableBikeListStep'
 import StepLayout from '@/components/stepper/stepLayout/StepLayout'
+import BikeCard from '@/components/stepper/step_3/BikeCard'
+import { Separator } from '@/components/ui/separator'
 
 export default function BikesStepHandler({
    setStep,
@@ -93,7 +95,7 @@ export default function BikesStepHandler({
       // setStep(1)
    }
    return (
-      <StepLayout>
+      <div>
          <BikeFiltersForm
             isLoadingSizes={isLoadingSizes}
             availableSizes={availableSizes}
@@ -108,7 +110,23 @@ export default function BikesStepHandler({
                LOADING availableBikes EN @@@ USER AvailableBikeListStep @@@
             </div>
          ) : availableBikes ? (
-            <AvailableBikeListStep
+            <div className="bg-[RGB(243,240,243)]">
+               {availableBikes.map((bike, idx) => (
+                  <div>
+                     <BikeCard bike={bike} />
+                     <Separator className="holi my-4" />
+                  </div>
+               ))}
+            </div>
+         ) : (
+            <div>NADA AUN</div>
+         )}
+      </div>
+   )
+}
+
+/*
+ <AvailableBikeListStep
                isLogged={true}
                availableBikes={availableBikes}
                renderSelectBikeButton={(bike) => (
@@ -116,9 +134,4 @@ export default function BikesStepHandler({
                )}
                renderPrevButton={renderPrevButton}
             />
-         ) : (
-            <div>NADA AUN</div>
-         )}
-      </StepLayout>
-   )
-}
+            */

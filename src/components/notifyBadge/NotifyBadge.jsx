@@ -1,0 +1,14 @@
+import { cn } from '@/utils/app/functions'
+import React from 'react'
+
+export default function NotifyBadge({ className, ...props }) {
+   return (
+      <button
+         className={cn(
+            'relative inline-flex items-center rounded-lg bg-blue-500 p-3 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800',
+            className
+         )}
+         {...props}
+      />
+   )
+}
