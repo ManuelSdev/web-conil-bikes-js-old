@@ -1,7 +1,9 @@
+import { DrawerDemo } from '@/components/drawer/DrawerDemo'
 import StepsLine from '@/components/stepper/StepsLine'
 import StepsPanel from '@/components/stepper/StepsPanel'
 import UserStepper from '@/components/stepper/UserStepper'
 import BikeFiltersStepHandler from '@/components/stepper/step_2/BikeFiltersStepHandler'
+import AvailableBikeListHandler from '@/components/stepper/step_3/AvailableBikeListHandler'
 import { verifySessionCookie } from '@/lib/firebase/admin/verifySessionCookie'
 import { getAppBikeConfigSegments } from '@/lib/pg/crud/bikes'
 import { getUserIdByEmail } from '@/lib/pg/crud/users'
@@ -9,6 +11,7 @@ import { cookies } from 'next/headers'
 import Link from 'next/link'
 
 import React from 'react'
+import BikesStepHandler from './BikesStepHandler'
 
 export default async function UserBookingStepperPage({ params }) {
    const { segmentList } = await getPageData()
@@ -16,7 +19,8 @@ export default async function UserBookingStepperPage({ params }) {
       <div>
          {' '}
          <StepsPanel step={2} />
-         <BikeFiltersStepHandler segmentList={segmentList} />
+         <BikesStepHandler segmentList={segmentList} />
+         <DrawerDemo />
       </div>
    )
 }
@@ -27,3 +31,9 @@ async function getPageData(userSessionCookie) {
 
    return { segmentList }
 }
+/*
+   <StepLayout>
+            {' '}
+            <BikeFiltersStepHandler segmentList={segmentList} />
+         </StepLayout>
+         */

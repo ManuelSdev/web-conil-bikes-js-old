@@ -27,7 +27,7 @@ export default function ImageCard({ src, label, title, text }) {
                {text}
             </p>
             <Link
-               href="/booking?step=0"
+               href="/bookingg/date"
                //  href="/user/booking"
             >
                Ver más

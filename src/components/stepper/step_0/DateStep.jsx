@@ -10,7 +10,7 @@ export default function DateStep({ from, to, handleSelect, linkDisabled }) {
    return (
       <div>
          <div className="flex justify-center gap-5">
-            <div className="relative bg-gray-900 bg-opacity-75 px-6 py-32 sm:px-12 sm:py-40 lg:px-16">
+            <div className="relative bg-gray-900 bg-opacity-75 px-6 sm:px-12 sm:py-40 lg:px-16">
                <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
                   <h2
                      id="social-impact-heading"
@@ -19,7 +19,7 @@ export default function DateStep({ from, to, handleSelect, linkDisabled }) {
                      <span className="block sm:inline">Alquiler de </span>
                      <span className="block sm:inline">bicicletas premium</span>
                   </h2>
-                  <p className="mt-3 text-xl text-white">
+                  <p className="mt-3  text-white">
                      Conil Bikes es un distribuidor oficial de bicicletas
                      Specialized, ofreciendo bicicletas de alquiler en Conil,
                      Vejer, Barbate y alrededores. Disponemos de una gama
@@ -31,13 +31,15 @@ export default function DateStep({ from, to, handleSelect, linkDisabled }) {
                      continuación:
                   </p>
 
-                  <div className="mt-8 py-3">
+                  <div className="mt-8 flex w-full justify-between gap-5 py-3 md:justify-center">
                      <DatePicker
+                        className="grow md:w-1/3 md:grow-0"
                         label="Inicio"
                         date={from}
                         handleSelect={handleSelect(FROM)}
                      />
                      <DatePicker
+                        className="grow md:w-1/3  md:grow-0"
                         label="Fin"
                         date={to}
                         handleSelect={handleSelect(TO)}

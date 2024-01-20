@@ -1,24 +1,27 @@
 'use client'
-import React from 'react'
-import BikeFiltersStep from './BikeFiltersStep'
+import React, { useEffect } from 'react'
 import {
    useGetAppBikesConfigQuery,
    useGetAvailableSizesQuery,
+   useLazyGetAvailableBikesQuery,
 } from '@/lib/redux/apiSlices/bikeApi'
 import { useDispatch, useSelector } from 'react-redux'
 import {
    bikeSearchParamsSelected,
    selectBikesByUnits,
+   bikeSelected,
    selectDateRange,
-   selectSegmentList,
+   segmentListLoaded,
 } from '@/lib/redux/slices/bookingFormSlice'
 import { dateRangeISOStringObjToString } from '@/utils/datesFns/createDateRangeString'
 import { Button } from '@/components/ui/button'
-import Step from '../Step'
-import SpinnerLine from '@/components/common/SpinnerLine'
-import { useRouter } from 'next/navigation'
 
-export default function BikeFiltersStepHandler({
+import { useRouter } from 'next/navigation'
+import BikeFiltersForm from '@/components/stepper/step_2/BikeFiltersForm'
+import AvailableBikeListStep from '@/components/stepper/step_3/AvailableBikeListStep'
+import StepLayout from '@/components/stepper/stepLayout/StepLayout'
+
+export default function BikesStepHandler({
    setStep,
    segmentList,
    ...props
@@ -27,6 +30,7 @@ export default function BikeFiltersStepHandler({
 }) {
    console.log('BikeFiltersStepUserHandler @@@->')
    const dispatch = useDispatch()
+
    const strDateRangeObj = useSelector(selectDateRange)
    const { from, to } = strDateRangeObj
    const isDateRange = !!from && !!to
@@ -34,6 +38,9 @@ export default function BikeFiltersStepHandler({
    const router = useRouter()
    const dateRange = dateRangeISOStringObjToString(strDateRangeObj)
    console.log('dateRange @->', isDateRange)
+   useEffect(() => {
+      dispatch(segmentListLoaded(segmentList))
+   }, [])
 
    //isDateRange || router.push('/bookingg/date')
    //const segmentList = useSelector(selectSegmentList)
@@ -48,11 +55,22 @@ export default function BikeFiltersStepHandler({
    const { data: availableSizes, isLoading: isLoadingSizes } =
       useGetAvailableSizesQuery({ dateRange })
 
+   const [
+      triggerBikes,
+      {
+         data: availableBikes,
+         isFetching: isFetchingBikes,
+         isSuccess: isSuccessBikes,
+         unsubscribe,
+      },
+      lastPromiseInfoBikes,
+   ] = useLazyGetAvailableBikesQuery()
+
    const renderShowBikesButton = ({ size, type, range, className }) => (
       <Button
          className={className}
          onClick={() => {
-            dispatch(bikeSearchParamsSelected({ size, type, range }))
+            triggerBikes({ dateRange, size, type, range })
             //   setStep(3)
          }}
          disabled={!range}
@@ -69,47 +87,38 @@ export default function BikeFiltersStepHandler({
          atrás
       </Button>
    )
+   const handleSelect = (bike) => (ev) => {
+      // console.log('bike ->', bike)
+      dispatch(bikeSelected(bike))
+      // setStep(1)
+   }
    return (
-      <BikeFiltersStep
-         isLoadingSizes={isLoadingSizes}
-         availableSizes={availableSizes}
-         segmentList={segmentList}
-         dateRange={dateRange}
-         disabled={true}
-         renderShowBikesButton={renderShowBikesButton}
-         renderPrevButton={renderPrevButton}
-      />
-   )
-}
-
-const countries = { france: '🇫🇷', 'united-kingdom': '🇬🇧', spain: '🇪🇸' }
-
-const Ess = () => {
-   const [value, setValue] = React.useState('france')
-   return (
-      <Select.Root value={value} onValueChange={setValue}>
-         <Select.Trigger>
-            <Select.Value aria-label={value}>{countries[value]}</Select.Value>
-            <Select.Icon />
-         </Select.Trigger>
-         <Select.Portal>
-            <Select.Content>
-               <Select.Viewport>
-                  <Select.Item value="france">
-                     <Select.ItemText>France</Select.ItemText>
-                     <Select.ItemIndicator>…</Select.ItemIndicator>
-                  </Select.Item>
-                  <Select.Item value="united-kingdom">
-                     <Select.ItemText>United Kingdom</Select.ItemText>
-                     <Select.ItemIndicator>…</Select.ItemIndicator>
-                  </Select.Item>
-                  <Select.Item value="spain">
-                     <Select.ItemText>Spain</Select.ItemText>
-                     <Select.ItemIndicator>…</Select.ItemIndicator>
-                  </Select.Item>
-               </Select.Viewport>
-            </Select.Content>
-         </Select.Portal>
-      </Select.Root>
+      <StepLayout>
+         <BikeFiltersForm
+            isLoadingSizes={isLoadingSizes}
+            availableSizes={availableSizes}
+            segmentList={segmentList}
+            dateRange={dateRange}
+            disabled={true}
+            renderShowBikesButton={renderShowBikesButton}
+            renderPrevButton={renderPrevButton}
+         />
+         {isFetchingBikes ? (
+            <div>
+               LOADING availableBikes EN @@@ USER AvailableBikeListStep @@@
+            </div>
+         ) : availableBikes ? (
+            <AvailableBikeListStep
+               isLogged={true}
+               availableBikes={availableBikes}
+               renderSelectBikeButton={(bike) => (
+                  <Button onClick={handleSelect(bike)}>Seleccionar</Button>
+               )}
+               renderPrevButton={renderPrevButton}
+            />
+         ) : (
+            <div>NADA AUN</div>
+         )}
+      </StepLayout>
    )
 }

@@ -61,7 +61,7 @@ export default async function HomePage() {
    return (
       <>
          <div className="min-h-slimBarScreen md:min-h-fatBarScreen  w-full bg-home-main bg-cover bg-fixed bg-[70%] bg-no-repeat pt-slimTopAppBar md:pt-fatTopAppBar min-[900px]:bg-center">
-            <TestClientFireAuth />
+            {/* <TestClientFireAuth />*/}
             <div className=" flex h-full items-center	 justify-center backdrop-brightness-75">
                <IconCorpName
                   className={

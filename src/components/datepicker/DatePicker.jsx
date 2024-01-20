@@ -15,7 +15,7 @@ import { cn } from '@/utils/app/functions'
 import { useState } from 'react'
 import { es } from 'date-fns/locale'
 
-export default function DatePicker({ date, handleSelect, label }) {
+export default function DatePicker({ date, handleSelect, label, className }) {
    const [open, setopen] = useState(false)
    const onSelect = (selectedDate) => {
       handleSelect(selectedDate)
@@ -27,8 +27,10 @@ export default function DatePicker({ date, handleSelect, label }) {
             <Button
                variant={'outline'}
                className={cn(
-                  'w-[280px] justify-start text-left font-normal',
-                  !date && 'text-muted-foreground'
+                  //    'w-[280px] ',
+                  'justify-start text-left font-normal',
+                  !date && 'text-muted-foreground',
+                  className
                )}
             >
                <CalendarIcon className="mr-2 h-4 w-4" />

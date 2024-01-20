@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import React from 'react'
 import SiteShell from '@/components/layouts/site/SiteShell'
 import ReduxProviderWrapper from '@/lib/redux/ReduxProviderWrapper'
+import { Toaster } from '@/components/ui/toaster'
 
 export async function generateStaticParams() {
    return [{ lang: 'es-ES' }]
@@ -20,6 +21,7 @@ export default function SiteLayout(props) {
          <body>
             <ReduxProviderWrapper>
                <SiteShell {...props} />
+               <Toaster />
             </ReduxProviderWrapper>
          </body>
       </html>

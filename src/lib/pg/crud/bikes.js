@@ -71,7 +71,7 @@ export async function getAvailableBikes({ dateRange, size, type, range }) {
          type,
          range,
       })
-      console.log('availableTypes en getAvailableBikes-> ', availableBikes)
+      console.log('availableBikes en getAvailableBikes-> ', availableBikes)
       return NextResponse.json(availableBikes, { status: 201 })
    } catch (error) {
       console.log('### ERROR CRUD api/getAvailableBikes -> ', error)

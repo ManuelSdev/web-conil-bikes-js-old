@@ -43,7 +43,7 @@ export function middleware(request) {
          NextResponse,
          resolvedUrl,
       })
-   if (pathName.startsWith('/booking'))
+   if (pathName.startsWith('/abooking'))
       return authPassMiddleware({
          request,
          NextResponse,

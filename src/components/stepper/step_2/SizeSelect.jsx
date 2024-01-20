@@ -51,7 +51,9 @@ export default function SizeSelect({
                         {isLoadingSizes ? (
                            <SpinnerLine />
                         ) : (
-                           <SelectValue placeholder="Talla" />
+                           <SelectValue placeholder="Talla">
+                              {field.value?.toUpperCase()}
+                           </SelectValue>
                         )}
                      </SelectTrigger>
                   </FormControl>
