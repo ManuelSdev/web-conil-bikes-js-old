@@ -29,10 +29,10 @@ export default async function StepTwoPage({ searchParams }) {
 }
 
 async function getPageData(dateRange) {
-   //  console.log('## CALL getAvailableSizesInRange FROM STEP 1 ##')
+   // //console.log('## CALL getAvailableSizesInRange FROM STEP 1 ##')
    const resAvailableSizes = await getAvailableSizesInRange(dateRange)
    const availableSizes = await resAvailableSizes.json()
-   // console.log('availableSizes IN PAGE STEP 1 @-> ', availableSizes)
+   ////console.log('availableSizes IN PAGE STEP 1 @-> ', availableSizes)
 
    const resAppBikesConfig = await getAppBikesConfig()
    const appBikesConfig = await resAppBikesConfig.json()

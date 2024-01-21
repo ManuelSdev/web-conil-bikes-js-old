@@ -57,7 +57,7 @@ function fromDateToDateRangeObj(outsideDates) {
          seconds: 0,
          milliseconds: 0,
       })
-      // console.log('FROM QUE ENTRA EN fromDateToDateRangeObj -> ', from)
+      ////console.log('FROM QUE ENTRA EN fromDateToDateRangeObj -> ', from)
       const startMonth = from ? startOfMonth(from) : startOfMonth(today)
       const endMonth = from ? endOfMonth(from) : endOfMonth(today)
 
@@ -66,8 +66,8 @@ function fromDateToDateRangeObj(outsideDates) {
             ? { from: from, to: addMonths(from, 1) }
             : { from: today, to: endOfMonth(today) }
          const dateRange = { from: startMonth, to: endMonth }
-         // console.log(' setDateRange -> ', dateRange)
-         // console.log(' setDateRangesssssssssss -> ', dateRanges.to.toISOString())
+         ////console.log(' setDateRange -> ', dateRange)
+         ////console.log(' setDateRangesssssssssss -> ', dateRanges.to.toISOString())
          return dateRange
       }
       if (outsideDates) {
@@ -84,7 +84,7 @@ export function dateRangeObjToISOStringObj(dateRangeObj) {
    //console.log('dateRangeObjToISOStringObj -> ', dateRangeObj)
    const { from, to } = dateRangeObj
    //console.log('from @-> ', from)
-   // console.log('to @-> ', to)
+   ////console.log('to @-> ', to)
    return {
       from: from ? from.toISOString() : '',
       to: to ? to.toISOString() : '',

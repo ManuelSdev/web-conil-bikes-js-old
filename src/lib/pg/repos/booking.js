@@ -15,13 +15,13 @@ export const findBookingDatesInRange = async (dateRange) => {
 }
 
 export const findBookingOnDate = async (date) => {
-   console.log('date en findBookingOnDate -> ', date)
+   //console.log('date en findBookingOnDate -> ', date)
    const text = 'SELECT * FROM find_booking_on_date($1)'
    const values = [date]
    const rowMode = 'array'
    const { rows } = await query({ text, values })
    //array de objetos
-   console.log('rows en findBookingOnDate -> ', rows)
+   //console.log('rows en findBookingOnDate -> ', rows)
    return rows
 }
 
@@ -33,7 +33,7 @@ export const findBookingById = async (bookingId) => {
       rows: [booking],
    } = await query({ text, values })
    booking.dateRange = JSON.parse(booking.dateRange)
-   console.log('booking en findBookingById -> ', booking)
+   //console.log('booking en findBookingById -> ', booking)
    return booking
 }
 
@@ -43,7 +43,7 @@ export const findBookingBikesById = async (bookingId) => {
    const rowMode = 'array'
    const { rows: bikes } = await query({ text, values })
    //array de objetos
-   console.log('rows en findBookingBikesById -> ', bikes)
+   //console.log('rows en findBookingBikesById -> ', bikes)
    return bikes
 }
 export const addBooking_ = async ({
@@ -60,7 +60,7 @@ export const addBooking_ = async ({
 }) => {
    const jsonBikes = JSON.stringify(bikes)
    const strJsonBikes = `${jsonBikes}`
-   console.log('strJsonBikes en addBooking -> ', strJsonBikes)
+   //console.log('strJsonBikes en addBooking -> ', strJsonBikes)
    const text =
       'CALL add_booking($1::text, $2::INTEGER, $3::BOOLEAN, $4::tstzrange, $5::TEXT, $6::SMALLINT, $7::TEXT, $8::BOOLEAN, $9::BOOLEAN,$10::SMALLINT, null)'
    const values = [
@@ -79,9 +79,9 @@ export const addBooking_ = async ({
    const rowMode = 'array'
 
    const res = await query({ text, values })
-   console.log('res en addBooking @@@-> ', res)
+   //console.log('res en addBooking @@@-> ', res)
    const { rows } = res
-   console.log('rows en addBooking @@@@-> ', rows)
+   //console.log('rows en addBooking @@@@-> ', rows)
    return rows
 }
 
@@ -103,20 +103,20 @@ export const addBooking = async (data) => {
    const client = await pool.connect()
    try {
       await client.query('BEGIN')
-      console.log('@@@@@@@@@@@+++++++ query text en addBooking', text)
+      //console.log('@@@@@@@@@@@+++++++ query text en addBooking', text)
       const { rows } = await client.query(text)
       await client.query('COMMIT')
       return rows
       const [{ booking_id: bookingId }] = rows
-      console.log('@@@@@@@@@@@+++++++ response en addBooking', rows)
+      //console.log('@@@@@@@@@@@+++++++ response en addBooking', rows)
       res.status(201).json(bookingId)
    } catch (err) {
       await client.query('ROLLBACK')
-      console.log('ERROR API CREATE BOOKING', err.message)
+      //console.log('ERROR API CREATE BOOKING', err.message)
       return err
       res.status(500)
    } finally {
-      console.log('============ FINALLY ================')
+      //console.log('============ FINALLY ================')
       client.release()
    }
 }

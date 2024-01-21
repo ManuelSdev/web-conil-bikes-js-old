@@ -11,16 +11,27 @@ import { cookies } from 'next/headers'
 import Link from 'next/link'
 
 import React from 'react'
-import BikesStepHandler from './BikesStepHandler'
+import BikesStepHandlerTest from './BikesStepHandlerTest'
+import StepsTail from '@/components/stepper/StepsTail'
+import BookingManagementHandler from '@/components/stepper/step_4/BookingManagementHandler'
+import Step from '@/components/stepper/Step'
+import AvailableBikeListHandlerTest from '@/components/stepper/step_3/AvailableBikeListHandlerTest'
+import {
+   getAppBikeSegments,
+   getUserPageAuth,
+} from '@/utils/serverFns/serverFns'
 
 export default async function UserBookingStepperPage({ params }) {
-   const { segmentList } = await getPageData()
+   const { segmentList } = await getAppBikeSegments()
+   const userAuth = await getUserPageAuth()
    return (
       <div>
-         {' '}
-         <StepsPanel step={2} />
-         <BikesStepHandler segmentList={segmentList} />
-         <DrawerDemo />
+         <Step step={2}>
+            <BikesStepHandlerTest segmentList={segmentList} />
+
+            <DrawerDemo />
+         </Step>
+         <AvailableBikeListHandlerTest logged={userAuth.isLogged} />
       </div>
    )
 }

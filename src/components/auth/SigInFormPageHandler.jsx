@@ -13,7 +13,7 @@ import { signInErrorHandler } from '@/lib/firebase/client/authErrorHandler'
 import { useRouter } from 'next/navigation'
 
 export default function SigInFormPageHandler({ isAdmin }) {
-   console.log('@@ RENDER SigInFormPageHandler @@')
+   //console.log('@@ RENDER SigInFormPageHandler @@')
    //Initial dialog cuando vienes redireccionado de la página de verificación de email
 
    const {
@@ -29,11 +29,11 @@ export default function SigInFormPageHandler({ isAdmin }) {
 
    async function onSubmit(data, event) {
       //console.log('data ->', data)
-      // console.log('ev ->', event)
+      ////console.log('ev ->', event)
       event.preventDefault()
       const { email, password } = data
-      console.log('email ->', email)
-      console.log('password ->', password)
+      //console.log('email ->', email)
+      //console.log('password ->', password)
       try {
          if (isAdmin)
             await doAdminSignInWithEmailAndPassword({
@@ -44,12 +44,12 @@ export default function SigInFormPageHandler({ isAdmin }) {
          else await doSignInWithEmailAndPassword({ isAdmin, email, password })
       } catch (error) {
          //handleOpen(error)
-         console.log('doSignInWithEmailAndPassword ERROR -> ', error)
+         //console.log('doSignInWithEmailAndPassword ERROR -> ', error)
 
          const { code } = error
-         console.log('code ->', code)
+         //console.log('code ->', code)
          const { title, description } = signInErrorHandler(code)
-         console.log('title ->', title)
+         //console.log('title ->', title)
          const unverified = code === 'custom/unverified'
          handleSetDialog({
             open: true,

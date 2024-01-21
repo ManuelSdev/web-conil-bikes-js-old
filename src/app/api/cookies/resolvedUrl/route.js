@@ -10,12 +10,12 @@ export async function GET(req) {
       //  sameSite: strict,
    }
    const resolvedUrl = cookies().get('resolvedUrl')
-   console.log('resolvedUrl -> ', resolvedUrl)
+   //console.log('resolvedUrl -> ', resolvedUrl)
    try {
-      console.log('@@@@@   ===============  @@@@@')
+      //console.log('@@@@@   ===============  @@@@@')
 
       //   cookies().set('ddddddd', '/hola')
-      // console.log('result -> ', result, 'status -> ', status)
+      ////console.log('result -> ', result, 'status -> ', status)
       return new Response(
          { succes: true },
          {
@@ -35,6 +35,6 @@ export async function GET(req) {
       )
       return Response.json({ result: 'ok' }, { status: 200 })
    } catch (error) {
-      console.log('ROUTE HANDLER ERROR: /api/cookies  ->', error)
+      //console.log('ROUTE HANDLER ERROR: /api/cookies  ->', error)
    }
 }

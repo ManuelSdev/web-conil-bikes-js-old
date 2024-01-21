@@ -8,7 +8,7 @@ export async function POST(req) {
 
 const actions = {
    createSessionCookie: async (req, res) => {
-      console.log(
+     //console.log(
          '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 2',
          req.cookies
       )
@@ -35,12 +35,12 @@ const actions = {
          if (authHeader.startsWith('Bearer ')) {
             return authHeader.substring(7, authHeader.length)
          } else {
-            console.log('ERROR ON GET-TOKEN')
+           //console.log('ERROR ON GET-TOKEN')
          }
       }
       // 1- Pilla token
       const accessToken = getToken(authHeader)
-      console.log(
+     //console.log(
          '################ token que llega al backend -> ',
          accessToken
       )
@@ -50,7 +50,7 @@ const actions = {
       const resolvedUrl = getResolvedUrl(admin)
       // 3- Crea una sessionCookie y la pasas al header como userSession (user) o adminSessión en función de si admin=true o false
       //const cookieText=admin?
-      // console.log('va tokennnnn = ', token)
+      ////console.log('va tokennnnn = ', token)
       const expiresIn = 60 * 60 * 24 * 5 * 1000
       app()
       try {
@@ -78,7 +78,7 @@ const actions = {
          // res.setHeader('Set-Cookie', `resolvedUrl=/; Max-Age=0`)
          res.status(200).end(JSON.stringify({ success: true, resolvedUrl }))
       } catch (err) {
-         console.log('ERROR createSessionCookie usando actions ', err)
+        //console.log('ERROR createSessionCookie usando actions ', err)
          res.status(401).send('UNAUTHORIZED REQUEST!')
       }
    },

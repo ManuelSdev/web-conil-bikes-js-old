@@ -12,8 +12,8 @@ export default function ResetPassFormPageHandler() {
    const { dialog, handleSetDialog } = useDialogWindow(null)
    const [sendAuthEmailTrigger] = useLazySendAuthEmailQuery()
    async function onSubmit(data, event) {
-      // console.log('data ->', data)
-      // console.log('ev ->', ev)
+      ////console.log('data ->', data)
+      ////console.log('ev ->', ev)
       event.preventDefault()
       const { email } = data
       try {
@@ -22,7 +22,7 @@ export default function ResetPassFormPageHandler() {
             type: 'reset',
          })
       } catch (error) {
-         console.log('error en ResetPassFormPageHandler-> ', error)
+         //console.log('error en ResetPassFormPageHandler-> ', error)
       }
    }
 

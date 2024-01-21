@@ -20,7 +20,7 @@ export default function MyCalendar({ errorMessage, ...props }) {
    const [from, setFrom] = useState(false)
    return (
       <Calendar
-         onChange={(e) => console.log('onChange->', e)}
+         onChange={(e) =>//console.log('onChange->', e)}
          //esto marca día actual
          value={today(getLocalTimeZone())}
          className={'w-fit max-w-full text-cyan-400'}
@@ -33,7 +33,7 @@ export default function MyCalendar({ errorMessage, ...props }) {
          </header>
          <CalendarGrid>
             {(date) => (
-               //      console.log(date) ||
+               //     //console.log(date) ||
                <CustomCalendarCell
                   className={clsx(
                      '-m-px w-8 cursor-default rounded-md border-2 border-solid border-transparent text-center leading-8 outline-none',

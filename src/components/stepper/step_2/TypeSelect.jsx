@@ -36,7 +36,7 @@ export default function TypeSelect({
    className,
    disabled,
 }) {
-   console.log('isLoadingTypes IN TypeSelect @->', isLoadingTypes)
+   //console.log('isLoadingTypes IN TypeSelect @->', isLoadingTypes)
 
    useEffect(() => {
       isLoadingTypes && form.resetField('type')

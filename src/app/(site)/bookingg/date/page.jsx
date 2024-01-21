@@ -13,16 +13,21 @@ import React from 'react'
 import { ToastDemo } from './ToastDemo'
 import OrderCard from '@/components/a/OrderCard'
 import Cart from '@/components/a/Cart'
+import Step from '@/components/stepper/Step'
 
 export default async function BookingDatePage({ params }) {
+   const userSessionCookie = cookies().get('userSession')
+   //console.log('userSessionCookie ', userSessionCookie)
    return (
       <div>
          {' '}
-         <StepsPanel step={1} /> <Link href="/bookingg/bikes">ir a page B</Link>
-         <DateStepHandler />
-         <DrawerDemo />
-         <ToastDemo />
-         <OrderCard />
+         <Step step={1} title={'Hola'}>
+            {' '}
+            <DateStepHandler />
+            <DrawerDemo />
+            <ToastDemo />
+            <OrderCard />
+         </Step>
       </div>
    )
 }

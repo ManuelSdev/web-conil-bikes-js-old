@@ -20,12 +20,12 @@ export function middleware(request) {
 
    const resolvedUrl = pathName + searchPath
    /*
-   console.log('middleware request.nextUrl -> ', request.nextUrl)
-   console.log(
+  //console.log('middleware request.nextUrl -> ', request.nextUrl)
+  //console.log(
       'middleware request.nextUrl.pathname -> ',
       request.nextUrl.pathname
    )
-   console.log('middleware request.url  ', request.url)
+  //console.log('middleware request.url  ', request.url)
 */
    if (pathName.startsWith('/dashboard'))
       return authMiddleware({

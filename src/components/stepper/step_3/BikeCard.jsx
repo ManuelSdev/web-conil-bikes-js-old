@@ -15,7 +15,7 @@ const product = {
       'Sample of 30 icons with friendly and fun details in outline, filled, and brand color styles.',
 }
 
-export default function BikeCard({ bike }) {
+export default function BikeCard({ bike, renderSelectBikeButton }) {
    const { modelBrand, modelName, modelDesc, modelImages, avaiable } = bike
    const [src] = modelImages
    return (
@@ -59,12 +59,13 @@ export default function BikeCard({ bike }) {
                   <p className="mt-6 text-gray-500"> {modelDesc}</p>
 
                   <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
-                     <button
+                     {/* <button
                         type="button"
                         className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
                      >
                         Pay {product.price}
-                     </button>
+                     </button>*/}
+                     {renderSelectBikeButton(bike)}
                      <button
                         type="button"
                         className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-50 px-8 py-3 text-base font-medium text-indigo-700 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"

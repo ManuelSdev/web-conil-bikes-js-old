@@ -43,7 +43,7 @@ export function BookingManagementForm({ step, dateRange }) {
    })
    const { address, delivery, pickup } = form.getValues()
    function onSubmit(data) {
-      console.log('data -> ', data)
+      //console.log('data -> ', data)
    }
    const handleNext = () => {
       router.push(`/booking?step=3&date=${dateRange}`)

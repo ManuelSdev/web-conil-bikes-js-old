@@ -43,13 +43,13 @@ export default function useFirebaseAuth() {
    const [createSessionCookie, { loading: loadingCreateSession }] =
       useCreateSessionCookieMutation()
 
-   // console.log('isSuccess -> ', isSuccess)
-   // console.log('data -> ', data)
+   ////console.log('isSuccess -> ', isSuccess)
+   ////console.log('data -> ', data)
    // const datas = '==================================='
    const doCreateSessionCookie = async ({ accessToken, isAdmin = false }) => {
-      //   console.log('doCreateSessionCookie SETLOADING A TRUE @@ ')
+      //  //console.log('doCreateSessionCookie SETLOADING A TRUE @@ ')
       //   setLoading(true)
-      console.log('doCreateSessionCookie -> ', accessToken)
+     //console.log('doCreateSessionCookie -> ', accessToken)
       //TODO: el unwrap de una mutation puede devolver un objeto res o un error
       //Estás asumiendo que siempre devuelve un objeto res y lo destructuras
       //pero si devuelve un error, no lo estás capturando, aunque fallará la dsctructuración
@@ -61,16 +61,16 @@ export default function useFirebaseAuth() {
 
          //si crea la cookie session correctamente, borro (deslogo) el estado de auth
          //en el clienteS
-         console.log('resolvedUrl -> ', resolvedUrl)
-         console.log('ANTES de signOut -> ')
+        //console.log('resolvedUrl -> ', resolvedUrl)
+        //console.log('ANTES de signOut -> ')
          success && signOut(auth)
-         console.log('DESPUES de signOut -> ')
-         console.log('doCreateSessionCookie signOut-> ')
+        //console.log('DESPUES de signOut -> ')
+        //console.log('doCreateSessionCookie signOut-> ')
          success && router.push(resolvedUrl)
       } catch (error) {
          signOut(auth)
          //setLoading(true)
-         console.log('errorrr en doCreateSessionCookie -> ', error)
+        //console.log('errorrr en doCreateSessionCookie -> ', error)
          throw error
       }
 
@@ -91,9 +91,10 @@ export default function useFirebaseAuth() {
          const res = await createSessionCookie(accessToken).unwrap()
          return res
       } catch (error) {
-         console.log('error en doSignInWithCustomToken -> ', error)
+        //console.log('error en doSignInWithCustomToken -> ', error)
       }
    }
+
    const doConfirmPasswordReset = async ({
       actionCode,
       newPassword,
@@ -113,17 +114,18 @@ export default function useFirebaseAuth() {
             throw error
          }
       } catch (error) {
-         console.log('error en doConfirmPasswordReset -> ', error)
+        //console.log('error en doConfirmPasswordReset -> ', error)
          return { success: false, error }
       }
    }
+
    const doAdminSignInWithEmailAndPassword = async ({
       isAdmin,
       email,
       password,
    }) => {
       setLoading(true)
-      console.log('doAdminSignInWithEmailAndPassword -> ', email, password)
+     //console.log('doAdminSignInWithEmailAndPassword -> ', email, password)
       try {
          const userCredential = await signInWithEmailAndPassword(
             auth,
@@ -150,7 +152,7 @@ export default function useFirebaseAuth() {
       } catch (err) {
          //    signOut(auth)
          //todo mira que esto retorne ok por si dejas mensaje en ui
-         // console.log('doSignInWithEmailAndPassword ERROR -> ', err)
+         ////console.log('doSignInWithEmailAndPassword ERROR -> ', err)
          const { code } = err
          //  const error = errorHandlerSignMailAndPass(code)
          //  setLoading(false)
@@ -166,7 +168,7 @@ export default function useFirebaseAuth() {
       email,
       password,
    }) => {
-      //  console.log('doSignInWithEmailAndPassword    ', email, password)
+      // //console.log('doSignInWithEmailAndPassword    ', email, password)
       /**
        * Como voy a gestionar la autenticación con cookies de sesión desde el server,
        * no necesito mantener el estado de sesión en el cliente
@@ -191,7 +193,7 @@ export default function useFirebaseAuth() {
             email,
             password
          )
-         console.log(
+        //console.log(
             '@@@@@@@@@@@@@@@@@@@@@@@@@@@  userCredential -> ',
             userCredential
          )
@@ -221,7 +223,7 @@ export default function useFirebaseAuth() {
       } catch (err) {
          //    signOut(auth)
          //todo mira que esto retorne ok por si dejas mensaje en ui
-         // console.log('doSignInWithEmailAndPassword ERROR -> ', err)
+         ////console.log('doSignInWithEmailAndPassword ERROR -> ', err)
          const { code } = err
          //  const error = errorHandlerSignMailAndPass(code)
          //  setLoading(false)
@@ -281,7 +283,7 @@ export default function useFirebaseAuth() {
 
          const result = await getRedirectResult(auth)
          if (!result) {
-            return console.log(
+            return//console.log(
                'CUSTOM RETURN doGetRedirectResult: No hay result'
             )
          }
@@ -293,15 +295,15 @@ export default function useFirebaseAuth() {
             auth,
             googleCredential
          )
-         console.log('fireCredential -> ', fireCredential)
+        //console.log('fireCredential -> ', fireCredential)
          const {
             user: { accessToken, emailVerified },
          } = fireCredential
          await doCreateSessionCookie(accessToken)
          /*
          const { idToken, accessToken } = googleCredential
-         console.log('idToken directo en getRedirectResult -> ', idToken)
-         console.log('accessToken directo en getRedirectResult ->', accessToken)
+        //console.log('idToken directo en getRedirectResult -> ', idToken)
+        //console.log('accessToken directo en getRedirectResult ->', accessToken)
           await doCreateSessionCookie(idToken)
          const additionalUserInfo = getAdditionalUserInfo(result)
          */
@@ -309,7 +311,7 @@ export default function useFirebaseAuth() {
          //console.log('additionalUserInfo -> ', additionalUserInfo)
       } catch (error) {
          // Handle Errors here.
-         console.log('error en getRedirectResult -> ', error)
+        //console.log('error en getRedirectResult -> ', error)
          /*
          const errorCode = error.code
          const errorMessage = error.message

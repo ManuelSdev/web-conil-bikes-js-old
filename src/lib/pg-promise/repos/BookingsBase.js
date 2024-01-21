@@ -18,7 +18,7 @@ import { bookings } from '../sql'
 //const bookingQueryFiles = mapFnToQueryFile(bookings)
 export default class BookingsBase {
    static #staticConstructorDummyResult = (function () {
-      console.log(
+     //console.log(
          '+++++++++++++++++++++++++++++++++++++++ static constructor called'
       ) // once!
    })()
@@ -26,7 +26,7 @@ export default class BookingsBase {
       const bookingQueryFiles = Object.fromEntries(
          Object.entries(obj).map(([k, v], i) => [k, v()])
       )
-      console.log(
+     //console.log(
          '    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -> '
          //,      bookingQueryFiles
       )
@@ -34,14 +34,14 @@ export default class BookingsBase {
    }
    static #bookings = { ...bookings }
    static bookingQueryFiles =
-      console.log(
+     //console.log(
          '===================================????????????????????????????????'
       ) ||
       Object.fromEntries(
          Object.entries(BookingsBase.#bookings).map(([k, v], i) => [k, v()])
       )
    constructor() {
-      console.log(
+     //console.log(
          '********************************* instance constructor called ********************************'
       )
    }

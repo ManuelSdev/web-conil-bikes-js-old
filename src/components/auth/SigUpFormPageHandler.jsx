@@ -55,8 +55,8 @@ export default function SigUpFormPageHandler({ isAdmin }) {
     */
 
    async function onSubmit(data, event) {
-      console.log('data ->', data)
-      // console.log('ev ->', ev)
+      //console.log('data ->', data)
+      ////console.log('ev ->', ev)
       event.preventDefault()
       const { name, phone, email, password } = data
 
@@ -85,7 +85,7 @@ export default function SigUpFormPageHandler({ isAdmin }) {
                data: { code },
             },
          } = createUserAccountRes
-         console.log('ERROR:createAccount en SignUpFormPageHandler -> ', error)
+         //console.log('ERROR:createAccount en SignUpFormPageHandler -> ', error)
          const dialogMessage = signUpErrorHandler(code)
          handleSetDialog({
             open: true,

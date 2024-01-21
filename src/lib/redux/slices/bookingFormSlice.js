@@ -26,15 +26,15 @@ const bookingFormSlice = createSlice({
          state.var = action.payload
       },
       segmentListLoaded: (state, action) => {
-         //  console.log('segmentListLoaded action.payload _> ', action.payload)
+         // //console.log('segmentListLoaded action.payload _> ', action.payload)
          state.segmentList = action.payload
       },
       dateRangeSelected: (state, action) => {
-         // console.log('dateRangeSelected action.payload _> ', action.payload)
+         ////console.log('dateRangeSelected action.payload _> ', action.payload)
          state.dateRange = action.payload
       },
       bookingManagementSelected: (state, action) => {
-         //  console.log('bookingManagementSelected action.payload _> ', action)
+         // //console.log('bookingManagementSelected action.payload _> ', action)
          const { address, delivery, pickup } = action.payload
          state.address = address
          state.delivery = delivery
@@ -46,7 +46,7 @@ const bookingFormSlice = createSlice({
 
       //El usuario elimina una bicicleta
       bikeRemoved: (state, action) => {
-         // console.log(action.payload)
+         ////console.log(action.payload)
          const bike = action.payload
          const { modelId, bikeSize } = bike
          //Comprueba si solo hay una unidad/quantity===1
@@ -56,15 +56,15 @@ const bookingFormSlice = createSlice({
                bike.modelId === modelId &&
                bike.quantity === 1
          )
-         //    console.log('only one', onlyOne)
+         //   //console.log('only one', onlyOne)
          if (onlyOne) {
-            console.log('bikeRemoved in bookingFormSlice: solo hay una')
+            //console.log('bikeRemoved in bookingFormSlice: solo hay una')
             state.bikes = state.bikes.filter(
                (bike) =>
                   !(bike.bikeSize === bikeSize && bike.modelId === modelId)
             )
          } else {
-            console.log('bikeRemoved in bookingFormSlice: más de una')
+            //console.log('bikeRemoved in bookingFormSlice: más de una')
             state.bikes = state.bikes.map((bike) => {
                if (bike.bikeSize === bikeSize && bike.modelId === modelId) {
                   return { ...bike, quantity: bike.quantity - 1 }
@@ -115,7 +115,7 @@ export const selectBikesToAddToBooking = createSelector(
    (bikes) => bikes.map((bike) => ({ ...bike, quantity: 1 }))
 )
 export const selectBikesByUnits = createSelector([selectBikes], (bikes) => {
-   // console.log(bikes)
+   ////console.log(bikes)
    const bikesInUnits = bikes.map((bike) => {
       const multipleItem = []
       let n = 1
@@ -140,7 +140,7 @@ export const selectBikesByUnits = createSelector([selectBikes], (bikes) => {
 export const selectAvailableBikes = createSelector([selectBikes], (bikes) =>
    bikes.map((bike) => {
       const { quantity, availability } = bike
-      //   console.log(bike)
+      //  //console.log(bike)
       if (availability >= 0) {
          if (availability > 0) {
             if (quantity <= availability) return bike
@@ -155,8 +155,8 @@ export const selectBookingDayPrice = createSelector(
    (bikesConfig, bikesInUnits) => {
       const dayPrice = bikesInUnits.reduce((acc, bike) => {
          const { modelType, modelRange } = bike
-         //  console.log('????????????????????????????????', modelType)
-         //  console.log('????????????????????????????????', modelRange)
+         // //console.log('????????????????????????????????', modelType)
+         // //console.log('????????????????????????????????', modelRange)
          const [{ segmentPrice }] = bikesConfig.segmentList.filter(
             (segment) =>
                segment.modelType === modelType &&
@@ -207,7 +207,7 @@ function addBike(state, action) {
    const newBike = {
       ...action.payload,
    }
-   console.log('newBike en addBike -> ', newBike)
+   //console.log('newBike en addBike -> ', newBike)
    const exist = state.bikes.some(
       (bike) =>
          bike.bikeSize === newBike.bikeSize && bike.modelId === newBike.modelId

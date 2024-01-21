@@ -12,12 +12,12 @@ function classNames(...classes) {
 }
 
 export default function StepsLine({ step }) {
-   console.log('StepsLine step ->', step)
+   //console.log('StepsLine step ->', step)
    //Los pasos 1,2 y 3 se consideran un solo paso (elegir bicicleta)
    const currentStep =
       step === 0 ? 1 : step >= 1 && step <= 3 ? 2 : step === 4 ? 3 : 4
 
-   //   console.log('StepsLine currentStep ->', currentStep)
+   //  //console.log('StepsLine currentStep ->', currentStep)
 
    //const handleStep
    return (

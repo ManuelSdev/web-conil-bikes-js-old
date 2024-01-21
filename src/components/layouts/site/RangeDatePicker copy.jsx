@@ -25,7 +25,7 @@ export default function RangeDatePicker() {
       setDateRange({ ...dateRange, [picker]: newValue })
       setopen(false)
    }
-   console.log(open)
+   //console.log(open)
    return (
       <div>
          <Popover onOpenChange={setopen} open={open}>

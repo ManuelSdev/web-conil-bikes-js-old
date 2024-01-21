@@ -5,7 +5,7 @@ export async function authMiddleware({
    resolvedUrl,
    forceRedirectTo,
 }) {
-   console.log('############################################################')
+   //console.log('############################################################')
    //TODO: usar verifySessionCookie o esto no vale pa na
    const redirectFn = setRedirect({
       NextResponse,
@@ -26,7 +26,7 @@ export async function authMiddleware({
    if (!sessionCookie) {
       return redirectFn()
    }
-   console.log('@@ auth reques.url -> ', request.url)
+   //console.log('@@ auth reques.url -> ', request.url)
 
    const res = await fetch(
       process.env.URL +
@@ -101,7 +101,7 @@ function setRedirect({
                throw error
             }
          } catch (error) {
-            console.log(
+           //console.log(
                'ERROR en withGuard: isDashboardPage && adminSession, but...  ->',
                error
             )

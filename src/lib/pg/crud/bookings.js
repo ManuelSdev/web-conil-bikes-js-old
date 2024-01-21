@@ -13,7 +13,7 @@ import {
 
 export async function getBookingDatesInRange(dateRange) {
    const bookings = await findBookingDatesInRange(dateRange)
-   console.log('bookings en getBookingDatesInRange -> ', bookings)
+  //console.log('bookings en getBookingDatesInRange -> ', bookings)
    return NextResponse.json(bookings, { status: 201 })
 }
 
@@ -43,7 +43,7 @@ export async function getBookingWithBikesById(bookingId) {
 
 export async function createBooking(data) {
    const result = await addBooking(data)
-   console.log('result en createBooking -> ', result)
+  //console.log('result en createBooking -> ', result)
 }
 
 export async function createBooking_({
@@ -58,7 +58,7 @@ export async function createBooking_({
    pickup,
    duration,
 }) {
-   console.log('params en createBooking -> ', {
+  //console.log('params en createBooking -> ', {
       bikes,
       userId,
       isAdmin,
@@ -72,7 +72,7 @@ export async function createBooking_({
    })
    try {
       //  const db = client()
-      console.log('@@ CRUD FN createBooking @@')
+     //console.log('@@ CRUD FN createBooking @@')
       const createdBookingId = await addBooking({
          bikes,
          userId,
@@ -85,9 +85,9 @@ export async function createBooking_({
          pickup,
          duration,
       })
-      console.log('createdBookingId en createBooking-> ', createdBookingId)
+     //console.log('createdBookingId en createBooking-> ', createdBookingId)
       return NextResponse.json(createdBookingId, { status: 201 })
    } catch (error) {
-      console.log('### ERROR CRUD api/createBooking -> ', error)
+     //console.log('### ERROR CRUD api/createBooking -> ', error)
    }
 }

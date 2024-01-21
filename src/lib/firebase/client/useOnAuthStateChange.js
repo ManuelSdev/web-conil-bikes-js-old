@@ -12,7 +12,7 @@ const useOnAuthStateChange = () => {
    const [loading, setLoading] = useState(true)
 
    const authStateChanged = async (authState) => {
-      console.log('useOnAuthStateChange authState->', authState)
+      //console.log('useOnAuthStateChange authState->', authState)
       if (!authState) {
          setAuthUser(null)
          setLoading(false)
@@ -27,11 +27,11 @@ const useOnAuthStateChange = () => {
 
    // listen for Firebase state change
    useEffect(() => {
-      //    console.log('=============', auth)
+      //   //console.log('=============', auth)
       const unsubscribe = onAuthStateChanged(auth, authStateChanged)
       return () => unsubscribe()
    }, [])
-   //   console.log('LOADING 1 -> ', loading)
+   //  //console.log('LOADING 1 -> ', loading)
    return {
       authUser,
       loading,

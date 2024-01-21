@@ -10,6 +10,6 @@ export default async function BookingListPage({ params, searchParams }) {
    const res = date ? await getBookingOnDate(date) : null
 
    const bookings = date ? await res.json() : { bookings: null }
-   console.log('bookings -> ', bookings)
+   //console.log('bookings -> ', bookings)
    return <BookingList bookings={bookings} urlDate={encodedDate} />
 }

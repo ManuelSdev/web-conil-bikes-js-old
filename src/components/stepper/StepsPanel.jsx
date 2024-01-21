@@ -1,3 +1,4 @@
+import { cn } from '@/utils/app/functions'
 import { CheckIcon } from '@heroicons/react/24/solid'
 
 const steps = [
@@ -10,9 +11,9 @@ const steps = [
 export default function StepsPanel({ step: currentStep, className }) {
    //console.log('StepsPanel step ->', step)
    //const currentStep =      step === 0 ? 1 : step >= 1 && step <= 3 ? 2 : step === 4 ? 3 : 4
-   console.log('StepsLine currentStep ->', currentStep)
+   //console.log('StepsLine currentStep ->', currentStep)
    return (
-      <nav aria-label="Progress" className={className}>
+      <nav aria-label="Progress">
          <ol
             role="list"
             className=" flex divide-y-0 rounded-md border border-gray-300"

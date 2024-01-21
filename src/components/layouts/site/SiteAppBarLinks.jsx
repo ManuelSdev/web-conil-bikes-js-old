@@ -26,7 +26,7 @@ const contains = (str, arr) => arr.some((item) => str.includes(item))
 export default function SiteAppBarLinks() {
    const [isCurrent, setIsCurrent] = useState()
    const pathname = usePathname()
-   console.log('pathname', pathname)
+   //console.log('pathname', pathname)
    return (
       <div className="BUTTONS hidden md:block ">
          <div className="hidden h-slimTopAppBar sm:-my-px sm:ml-6 sm:flex sm:space-x-8  md:h-fatTopAppBar">

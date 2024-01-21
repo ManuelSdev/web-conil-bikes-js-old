@@ -25,7 +25,7 @@ export default function BikeFiltersStepHandler({
    //appBikesConfig,
    // availableSizes,
 }) {
-   console.log('BikeFiltersStepUserHandler @@@->')
+   //console.log('BikeFiltersStepUserHandler @@@->')
    const dispatch = useDispatch()
    const strDateRangeObj = useSelector(selectDateRange)
    const { from, to } = strDateRangeObj
@@ -33,7 +33,7 @@ export default function BikeFiltersStepHandler({
    const storedBikesByUnits = useSelector(selectBikesByUnits)
    const router = useRouter()
    const dateRange = dateRangeISOStringObjToString(strDateRangeObj)
-   console.log('dateRange @->', isDateRange)
+   //console.log('dateRange @->', isDateRange)
 
    //isDateRange || router.push('/bookingg/date')
    //const segmentList = useSelector(selectSegmentList)

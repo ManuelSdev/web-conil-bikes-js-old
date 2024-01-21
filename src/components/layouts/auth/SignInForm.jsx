@@ -45,7 +45,7 @@ export function SignInForm() {
    })
    /*
    function onSubmit(data: z.infer<typeof FormSchema>) {
-      console.log('data ->', data)
+     //console.log('data ->', data)
       toast({
          title: 'You submitted the following values:',
          description: (
@@ -61,14 +61,14 @@ export function SignInForm() {
 
    async function onSubmit(data, event) {
       //console.log('data ->', data)
-      // console.log('ev ->', ev)
+      ////console.log('ev ->', ev)
       event.preventDefault()
       const { email, password } = data
       try {
          await doSignInWithEmailAndPassword({ email, password })
       } catch (error) {
          //handleOpen(error)
-         console.log('doSignInWithEmailAndPassword ERROR -> ', error)
+         //console.log('doSignInWithEmailAndPassword ERROR -> ', error)
       }
       toast({
          title: 'You submitted the following values:',

@@ -54,9 +54,9 @@ export const db = pgp(connection) // database instance;
 /*
 db.any('select * from users where active = $1', [true])
    .then((data) => {
-      console.log('DATA:', data)
+     //console.log('DATA:', data)
    })
    .catch((error) => {
-      console.log('ERROR:', error)
+     //console.log('ERROR:', error)
    })
 */

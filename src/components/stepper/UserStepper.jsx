@@ -20,7 +20,7 @@ import StepsTail from './StepsTail'
 import StepsPanel from './StepsPanel'
 
 export default function UserStepper({ user, stepperDataCookie, segmentList }) {
-   console.log('UserStepper @@@->')
+   //console.log('UserStepper @@@->')
    const dispatch = useDispatch()
 
    //console.log('UserStepper segmentList ->', segmentList)
@@ -49,9 +49,9 @@ export default function UserStepper({ user, stepperDataCookie, segmentList }) {
          dispatch(dateRangeSelected(dateRangeISOStringObj))
          dispatch(bikeSearchParamsSelected({ size, type, range }))
       }
-      //  console.log('useEffect stepperDataCookie ->', stepperDataCookie)
+      // //console.log('useEffect stepperDataCookie ->', stepperDataCookie)
       dispatch(segmentListLoaded(segmentList))
-      console.log('useEffect initialStep ->', initialStep)
+      //console.log('useEffect initialStep ->', initialStep)
       setStep(initialStep)
    }, [])
 

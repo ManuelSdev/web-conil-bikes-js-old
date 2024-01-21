@@ -44,8 +44,8 @@ export default function NewPassFormPageHandler({
       }
    }
    async function onSubmit(data, event) {
-      // console.log('data ->', data)
-      // console.log('ev ->', ev)
+      ////console.log('data ->', data)
+      ////console.log('ev ->', ev)
       event.preventDefault()
       const { password } = data
       handleConfirmPasswordReset(password)

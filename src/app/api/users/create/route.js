@@ -21,7 +21,7 @@ export async function POST(req) {
       url: 'http://localhost:3000/',
    }
 
-   console.log('email en users api route -> ', email)
+   //console.log('email en users api route -> ', email)
 
    try {
       //Crear usuario en firebase
@@ -42,7 +42,7 @@ export async function POST(req) {
       })
       //Compruebo que el customClaim se ha añadido
       const userRecordRes = await getAuth().getUser(uid)
-      console.log('userRecordRes en createUserAccount -> ', userRecordRes)
+      //console.log('userRecordRes en createUserAccount -> ', userRecordRes)
       //pillo el uid del usuario creado en firebase
       const linkToControlPage = await getAuth().generateEmailVerificationLink(
          email,
@@ -57,7 +57,7 @@ export async function POST(req) {
 
       return NextResponse.json({ result: 'ok' }, { status: 201 })
    } catch (error) {
-      console.log('### ERROR USERS API route -> ', error)
+      //console.log('### ERROR USERS API route -> ', error)
       return NextResponse.json(error, { status: 500 })
    }
 }
@@ -91,7 +91,7 @@ async function sendSengridEmail({ userName, buttonLink, to }) {
       const {
          response: { body: errors },
       } = error
-      console.log('### ERROR sendgridResponse API route -> ', errors)
+     //console.log('### ERROR sendgridResponse API route -> ', errors)
       throw new Error(errors)
    }
 }

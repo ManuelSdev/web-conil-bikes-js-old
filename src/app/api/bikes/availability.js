@@ -150,19 +150,19 @@ export async function fn(req, res) {
    // const client = await pool.connect()
    try {
       // await client.query('BEGIN')
-      console.log('@@@@@@@@@@@+++++++', text)
+      //console.log('@@@@@@@@@@@+++++++', text)
       const { rows } = await query(text)
       // await client.query('COMMIT')
-      console.log('@@@@@@@@@@@+++++++', rows)
+      //console.log('@@@@@@@@@@@+++++++', rows)
       res.status(201).json(rows)
    } catch (err) {
       // await client.query('ROLLBACK')
-      console.log('ERROR API AVAIABILITY--^^', err.message)
+      //console.log('ERROR API AVAIABILITY--^^', err.message)
       res.status(500)
    }
 }
 export default async function handler(req, res) {
-   //  console.log('==========', req.query)
+   // //console.log('==========', req.query)
 
    fn(req, res)
 }

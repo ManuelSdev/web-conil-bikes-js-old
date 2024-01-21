@@ -51,8 +51,8 @@ export default function SigUpFormPageHandler({ isAdmin }) {
     */
 
    async function onSubmit(data, event) {
-      console.log('data ->', data)
-      // console.log('ev ->', ev)
+      //console.log('data ->', data)
+      ////console.log('ev ->', ev)
       event.preventDefault()
       const { name, phone, email, password } = data
       try {
@@ -63,7 +63,7 @@ export default function SigUpFormPageHandler({ isAdmin }) {
             email,
             password,
          })
-         console.log('resFireUser -> ', resFireUser)
+         //console.log('resFireUser -> ', resFireUser)
          const { isError } = resFireUser
 
          if (isError) {
@@ -88,7 +88,7 @@ export default function SigUpFormPageHandler({ isAdmin }) {
             action: 'setCustomUserClaims',
             customClaims: { appId: createdAppUserId },
          })
-         console.log('setCustomUserClaimsRes -> ', setCustomUserClaimsRes)
+         //console.log('setCustomUserClaimsRes -> ', setCustomUserClaimsRes)
          //Obtengo el usuario de firebase para comprobar customClaims recien creados
          const getFirebaseUserRes = await fireAdminActionsTrigger({
             uid,
@@ -99,7 +99,7 @@ export default function SigUpFormPageHandler({ isAdmin }) {
                customClaims: { appId },
             },
          } = getFirebaseUserRes
-         console.log('getFirebaseUserRes -> ', getFirebaseUserRes)
+         //console.log('getFirebaseUserRes -> ', getFirebaseUserRes)
 
          /*
          const { data: customToken } = await createAccount({
@@ -124,7 +124,7 @@ export default function SigUpFormPageHandler({ isAdmin }) {
          const {
             data: { code },
          } = error
-         console.log('ERROR:createAccount en SignUpFormPageHandler -> ', error)
+         //console.log('ERROR:createAccount en SignUpFormPageHandler -> ', error)
          const dialogMessage = signUpErrorHandler(code)
          handleSetDialog({
             open: true,

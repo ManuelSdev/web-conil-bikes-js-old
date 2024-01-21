@@ -41,13 +41,13 @@ export const query = async ({ text, rowMode, values }) => {
    const res = await pool.query(queryConf)
    const duration = Date.now() - start
 
-   console.log('@@@ NODE-PG query stats-->', {
+  //console.log('@@@ NODE-PG query stats-->', {
       query: text,
       duration,
       rows: res.rowCount,
    })
    //console.log('@@@ NODE-PG duration -->', { duration, rows: res.rowCount })
-   // console.log('@@@ NODE-PG rowCount -->', text)
+   ////console.log('@@@ NODE-PG rowCount -->', text)
    return res
 }
 /***

@@ -16,7 +16,7 @@ export const appConfigSlice = createSlice({
    reducers: {
       appConfigLoaded: (state, action) =>
          /*  
-      console.log(
+     //console.log(
             'databaseInfoSlice ACTION PAYLOAD --------------------->>> ',
             action.payload
          ) ||

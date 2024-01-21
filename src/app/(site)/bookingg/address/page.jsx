@@ -6,14 +6,16 @@ import { getAppBikeConfigSegments } from '@/lib/pg/crud/bikes'
 import { getUserIdByEmail } from '@/lib/pg/crud/users'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
+import BookingManagementHandler from '@/components/stepper/step_4/BookingManagementHandler'
 
 import React from 'react'
+import Step from '@/components/stepper/Step'
 
 export default async function UserBookingStepperPage({ params }) {
    return (
-      <div>
+      <Step step={3}>
          {' '}
-         <StepsPanel step={3} /> adios
-      </div>
+         <BookingManagementHandler />
+      </Step>
    )
 }

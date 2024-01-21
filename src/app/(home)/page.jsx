@@ -53,10 +53,10 @@ export default async function HomePage() {
    //TODO: que es esto de referer?
    const headersList = headers()
    const referer = headersList.get('referer')
-   console.log('referer ->', referer)
+   //console.log('referer ->', referer)
    const res = await getAppBikesConfig()
    const appBikesConfig = await res.json()
-   // console.log('params IN HOME PAGE@-> ', appBikesConfig)
+   ////console.log('params IN HOME PAGE@-> ', appBikesConfig)
 
    return (
       <>

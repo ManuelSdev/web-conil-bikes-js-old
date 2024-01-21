@@ -30,7 +30,7 @@ export default function BikesStepHandler({
    //appBikesConfig,
    // availableSizes,
 }) {
-   console.log('BikeFiltersStepUserHandler @@@->')
+   //console.log('BikeFiltersStepUserHandler @@@->')
    const dispatch = useDispatch()
 
    const strDateRangeObj = useSelector(selectDateRange)
@@ -39,7 +39,7 @@ export default function BikesStepHandler({
    const storedBikesByUnits = useSelector(selectBikesByUnits)
    const router = useRouter()
    const dateRange = dateRangeISOStringObjToString(strDateRangeObj)
-   console.log('dateRange @->', isDateRange)
+   //console.log('dateRange @->', isDateRange)
    useEffect(() => {
       dispatch(segmentListLoaded(segmentList))
    }, [])
@@ -90,7 +90,7 @@ export default function BikesStepHandler({
       </Button>
    )
    const handleSelect = (bike) => (ev) => {
-      // console.log('bike ->', bike)
+      ////console.log('bike ->', bike)
       dispatch(bikeSelected(bike))
       // setStep(1)
    }

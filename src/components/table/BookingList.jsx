@@ -26,7 +26,7 @@ export default async function BookingList({ bookings, urlDate }) {
    const res = await getBookingOnDate(date)
    const { bookings } = await res.json()
    */
-   console.log('BookingListPage  bookings-> ', bookings)
+   //console.log('BookingListPage  bookings-> ', bookings)
 
    const setType = (booking) => {
       if (booking.state === PENDING) {

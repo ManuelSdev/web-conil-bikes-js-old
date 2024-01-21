@@ -18,7 +18,7 @@ export default function CustomCaptionLabel(props) {
       formatters: { formatCaption },
    } = useDayPicker()
 
-   console.log('displayMonth -> ')
+   //console.log('displayMonth -> ')
    return loading ? (
       <div role="status">
          <svg

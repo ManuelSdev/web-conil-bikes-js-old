@@ -21,10 +21,10 @@ export default async function PublicStepTwoBookingPage({ searchParams }) {
 }
 
 async function getPageData(dateRange) {
-   //  console.log('## CALL getAvailableSizesInRange FROM STEP 1 ##')
+   // //console.log('## CALL getAvailableSizesInRange FROM STEP 1 ##')
    const resAvailableSizes = await getAvailableSizesInRange({ dateRange })
    const availableSizes = await resAvailableSizes.json()
-   // console.log('availableSizes IN PAGE STEP 1 @-> ', availableSizes)
+   ////console.log('availableSizes IN PAGE STEP 1 @-> ', availableSizes)
 
    const resAppBikesConfigSegments = await getAppBikeConfigSegments()
    const segmentList = await resAppBikesConfigSegments.json()

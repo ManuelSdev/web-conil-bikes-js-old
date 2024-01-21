@@ -30,7 +30,13 @@ const FormSchema = z.object({
    pickup: z.boolean(),
 })
 
-export function BookingManagementForm({ step, dateRange, form, onSubmit }) {
+export function BookingManagementForm({
+   step,
+   dateRange,
+   form,
+   onSubmit,
+   renderNextButton,
+}) {
    const router = useRouter()
    /*
    const bookingManagement = useSelector(selectBookingManagement)
@@ -46,16 +52,13 @@ export function BookingManagementForm({ step, dateRange, form, onSubmit }) {
 */
    return (
       <Form {...form}>
-         <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="w-2/3 space-y-6"
-         >
+         <form onSubmit={form.handleSubmit(onSubmit)} className=" space-y-6">
             <FormField
                control={form.control}
                name="address"
                render={({ field }) => (
-                  <FormItem>
-                     <FormLabel>Username</FormLabel>
+                  <FormItem className="w-2/3">
+                     <FormLabel>Dirección</FormLabel>
                      <FormControl>
                         <Input placeholder="Dirección" {...field} />
                      </FormControl>
@@ -141,6 +144,7 @@ export function BookingManagementForm({ step, dateRange, form, onSubmit }) {
                   </FormItem>
                )}
             />
+            {renderNextButton()}
             <Button type="submit">Submit</Button>
          </form>
       </Form>

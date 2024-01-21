@@ -13,9 +13,9 @@ export default function BikesStep(props) {
    const { dateRange } = props
    const selectedBikes = useSelector(selectBikes)
    //console.log('selectedBikes ->', selectedBikes.length)
-   console.log('typeof dateRange ->', typeof dateRange)
+  //console.log('typeof dateRange ->', typeof dateRange)
    const [subStep, setSubStep] = useState(selectedBikes.length ? 0 : 1)
-   console.log('dateRange en Bikestep ->', dateRange)
+  //console.log('dateRange en Bikestep ->', dateRange)
    const handleNext = () => {
       router.push(`/booking?step=2&date=${dateRange}`)
    }

@@ -14,7 +14,7 @@ const AvailableBikesList = ({ availableBikes, renderSelectBikeButton }) => {
       setForm({ ...initialForm })
    }
    const handleClick = (bike) => (ev) => {
-      console.log('bike ->', bike)
+     //console.log('bike ->', bike)
       dispatch(bikeSelected(bike))
 
       router.push(`/user/booking?step=1&date=${dateRange}`)

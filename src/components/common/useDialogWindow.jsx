@@ -10,16 +10,16 @@ export default function useDialogWindow(initialDialog) {
            actionText: '',
            closeText: '',
            handleAction: () => {
-              //  console.log('handleAction')
+              // //console.log('handleAction')
            },
            onOpenChange: (bool) => {
-              console.log('onOpenChange', bool)
+              //console.log('onOpenChange', bool)
               handleSetDialog({ open: bool })
            },
         }
 
    const [dialog, setDialog] = useState(initialDialogState)
-   // console.log('dialog ->', dialog)
+   ////console.log('dialog ->', dialog)
    function handleSetDialog(newDialog) {
       setDialog({ ...dialog, ...newDialog })
    }

@@ -11,7 +11,7 @@ export async function createFireUser({
 }) {
    app()
    //type de createdAppUserId
-   console.log('aaaaaaaaaaaaaaa', phone)
+   //console.log('aaaaaaaaaaaaaaa', phone)
 
    const newUser = {
       // uid: createdAppUserId.toString(),
@@ -24,7 +24,7 @@ export async function createFireUser({
       const userRecord = await getAuth().createUser(newUser)
       return userRecord
    } catch (error) {
-      console.log('Error creating new user en createFireUser:', error)
+      //console.log('Error creating new user en createFireUser:', error)
       throw new Error(error)
    }
 }

@@ -79,18 +79,18 @@ export default async function handler(req, res) {
    // const dateRange = req.query
    const { from, to } = req.query
    const strDateRange = `${from},${to}`
-   console.log('--------> ', strDateRange)
+  //console.log('--------> ', strDateRange)
    try {
       await pool.connect()
       const { rows } = await pool.query(query(strDateRange))
       //await getSizes(date)
-      console.log(
+     //console.log(
          'SQL---------',
          rows.flatMap((r) => r)
       )
       res.status(201).json(rows)
    } catch (err) {
-      console.log('ERROR BIKES GET', err.message)
+     //console.log('ERROR BIKES GET', err.message)
       res.status(500)
    }
 }

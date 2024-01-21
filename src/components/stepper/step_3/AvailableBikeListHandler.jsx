@@ -18,7 +18,7 @@ import Step from '../Step'
 import StepperControlButtons from '../StepperControlButtons'
 
 export default function AvailableBikeListHandler({ setStep, ...props }) {
-   console.log('AvailableBikeListUserHandler @@@->')
+   //console.log('AvailableBikeListUserHandler @@@->')
    const storedDateRange = useSelector(selectDateRange)
    const dateRange = dateRangeISOStringObjToString(storedDateRange)
    const bikeSearchParams = useSelector(selectBikesearchParams)
@@ -37,11 +37,11 @@ export default function AvailableBikeListHandler({ setStep, ...props }) {
       lastPromiseInfoBikes,
    ] = useLazyGetAvailableBikesQuery()
 
-   // console.log('availableBikes ->', availableBikes)
+   ////console.log('availableBikes ->', availableBikes)
    const dispatch = useDispatch()
 
    const handleSelect = (bike) => (ev) => {
-      // console.log('bike ->', bike)
+      ////console.log('bike ->', bike)
       dispatch(bikeSelected(bike))
       // setStep(1)
    }
@@ -52,7 +52,7 @@ export default function AvailableBikeListHandler({ setStep, ...props }) {
          atrás
       </Button>
    )
-   console.log('availableBikes _<<<<<', availableBikes)
+   //console.log('availableBikes _<<<<<', availableBikes)
    return isFetching ? (
       <div>LOADING availableBikes EN @@@ USER AvailableBikeListStep @@@</div>
    ) : availableBikes ? (

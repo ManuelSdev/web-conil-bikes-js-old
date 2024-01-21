@@ -18,12 +18,12 @@ import { bikes } from '../sql'
  */
 export default class BikesRepository {
    static bookingQueryFiles =
-      console.log('2 ### ejecuta OBJECT ENTRIES BikesRepository ') ||
+      //console.log('2 ### ejecuta OBJECT ENTRIES BikesRepository ') ||
       Object.fromEntries(Object.entries(bikes).map(([k, v], i) => [k, v()]))
    constructor(db, pgp) {
       this.db = db
       this.pgp = pgp
-      console.log('*** Instancia BikesRepository creada')
+      //console.log('*** Instancia BikesRepository creada')
 
       /*
       this.bikesQueryFiles = Object.fromEntries(
@@ -49,7 +49,7 @@ export default class BikesRepository {
          },
          (row) => row.bike_size
       )
-      // console.log('sizes ------------------------------>', sizes)
+      ////console.log('sizes ------------------------------>', sizes)
       return sizes
    }
    async findAvailableTypes({ dateRange, size }) {
@@ -66,7 +66,7 @@ export default class BikesRepository {
          }
          // (row) => row.bike_size
       )
-      //  console.log('sizes ------------------------------>', sizes)
+      // //console.log('sizes ------------------------------>', sizes)
       return sizes
    }
 }

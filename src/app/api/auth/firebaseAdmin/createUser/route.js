@@ -37,7 +37,7 @@ export async function GET(req) {
    } catch (error) {
       const { errorInfo } = error
       const { code, message } = errorInfo
-      console.log(
+     //console.log(
          'Error creating new user en api/auth/firebaseAdmin/createUser -> ',
          error
       )

@@ -20,7 +20,7 @@ export async function GET(req) {
             actionCodeSettings,
             type,
          })
-      console.log('linkToControlPage -> ', linkToControlPage)
+     //console.log('linkToControlPage -> ', linkToControlPage)
       const sendgridResponse = await sendGridSendEmail({
          userName,
          buttonLink: linkToControlPage,
@@ -28,13 +28,13 @@ export async function GET(req) {
          to: email,
          firstMessage,
       })
-      console.log(
+     //console.log(
          'Email enviado desde VerifyEmailFormPageHandler VIA /api/auth/firebaseAdmin/sendResetEmail -> ',
          sendgridResponse
       )
       return Response.json({ success: true }, { status: 200 })
    } catch (error) {
-      console.log(
+     //console.log(
          'ROUTE HANDLER ERROR: /api/auth/firebaseAdmin/sendResetEmail  ->',
          error
       )

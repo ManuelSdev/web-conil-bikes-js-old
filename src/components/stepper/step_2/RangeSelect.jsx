@@ -50,7 +50,7 @@ export default function RangeSelect({
       })
       return price ? `${price} €/día` : 'Gama no disponible'
    }
-   console.log('LOADING RANGE @->', isLoadingRange)
+  //console.log('LOADING RANGE @->', isLoadingRange)
    useEffect(() => {
       ;(isLoadingRange || isLoadingTypes) && form.resetField('range')
    }, [isLoadingRange, isLoadingTypes])
@@ -60,7 +60,7 @@ export default function RangeSelect({
          control={form.control}
          name="range"
          render={({ field }) =>
-            console.log('field -> ', field) || (
+           //console.log('field -> ', field) || (
                <FormItem className={className}>
                   <FormLabel>Gama</FormLabel>
                   <Select

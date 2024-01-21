@@ -25,7 +25,7 @@ export const users = {
 }
 */
 export const bookings = {
-   //b: console.log(      'COÑOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO'   ),
+   //b://console.log(      'COÑOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO'   ),
    findBookingDatesInRange: () =>
       sql('/src/lib/pg-promise/sql/bookings/findBookingDatesInRange.sql'),
    findBookingOnDate: () =>
@@ -36,7 +36,7 @@ export const bookings = {
       sql('/src/lib/pg-promise/sql/bookings/findBookingBikesById.sql'),
 }
 export const bikes = {
-   //b: console.log(      'COÑOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO'   ),
+   //b://console.log(      'COÑOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO'   ),
    findAvailableSizesInRange: () =>
       sql('/src/lib/pg-promise/sql/bikes/findAvailableSizesInRange.sql'),
    findAvailableTypes: () =>

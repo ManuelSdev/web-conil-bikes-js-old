@@ -44,7 +44,7 @@ export async function authMiddleware({
    //TODO: termina cuando el mail no está verificado
    const { verified, error } = await res.json()
    if (!verified) {
-      // console.log('##### SIN verified')
+      ////console.log('##### SIN verified')
       return redirectToLogin(NextResponse, resolvedUrl, urlToRedirect)
    }
    //console.log('##### FIN authMiddleware')
@@ -68,7 +68,7 @@ function redirectToLogin(NextResponse, resolvedUrlCookieValue, urlToRedirect) {
    // Setting cookies on the response using the `ResponseCookies` API
    const response = NextResponse.redirect(urlToRedirect, { status: 302 })
    response.cookies.set('resolvedUrl', resolvedUrlCookieValue, cookieOptions)
-   console.log('## redirectToLogin -> ', resolvedUrlCookieValue)
+   //console.log('## redirectToLogin -> ', resolvedUrlCookieValue)
    return response
 }
 /*
@@ -89,7 +89,7 @@ function redirectToLogin(NextResponse, resolvedUrlCookieValue, urlToRedirect) {
                throw error
             }
          } catch (error) {
-            console.log(
+           //console.log(
                'ERROR en withGuard: isDashboardPage && adminSession, but...  ->',
                error
             )

@@ -8,6 +8,6 @@ export default async function PublicStepOneBookingPage({ searchParams }) {
    if (step !== '1') return null
    if (!bikes) redirect(`/booking?step=2&date=${dateRange}`)
 
-   console.log('step -> ', step)
+   //console.log('step -> ', step)
    return <SelectedBikesStepPublicHandler />
 }

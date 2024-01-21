@@ -73,7 +73,7 @@ GROUP BY
 `
 
 export default async function handler(req, res) {
-   //  console.log('==========', req.query)
+   // //console.log('==========', req.query)
    const { from, to, size, range, type } = req.query
    const dateRange = `${from},${to}`
    const text = setText(dateRange, size, range, type)
@@ -82,7 +82,7 @@ export default async function handler(req, res) {
       //console.log('------------', rows)
       res.status(201).json(rows)
    } catch (err) {
-      console.log('ERROR API AVAIABLE BIKES', err.message)
+      //console.log('ERROR API AVAIABLE BIKES', err.message)
       //todo pon algo más
       res.status(500)
    }

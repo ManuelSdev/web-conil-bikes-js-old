@@ -39,7 +39,7 @@ export default function SizeSelect({
          control={form.control}
          name="size"
          render={({ field }) => (
-            //   console.log('field -> ', field) ||
+            //  //console.log('field -> ', field) ||
             <FormItem className={className}>
                <FormLabel>Talla</FormLabel>
                <Select

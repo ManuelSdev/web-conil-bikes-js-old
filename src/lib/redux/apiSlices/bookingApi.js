@@ -5,15 +5,15 @@ export const bookingApi = baseApi.injectEndpoints({
    endpoints: (builder) => ({
       getBooking: builder.query({
          query: ({ id, ...filters }) =>
-            console.log(BOOKINGSS(id, filters)) ||
+           //console.log(BOOKINGSS(id, filters)) ||
             // BOOKINGS + `?${urlParams({ id })}`
             BOOKINGSS(id, filters),
          /*
          transformResponse: (response, meta, arg) => {
             const res = response
             const { status } = meta.response
-            console.log('@@@@@@@@@@@@@@ transformRes res _> ', res)
-            console.log('@@@@@@@@@@@@@@ transformRes status _> ', status)
+           //console.log('@@@@@@@@@@@@@@ transformRes res _> ', res)
+           //console.log('@@@@@@@@@@@@@@ transformRes status _> ', status)
 
             return res
          },
@@ -52,7 +52,7 @@ export const bookingApi = baseApi.injectEndpoints({
       }),
       updateBooking: builder.mutation({
          query: (data) =>
-            console.log('_______________++', data) || {
+           //console.log('_______________++', data) || {
                url: BOOKINGS,
                method: 'PATCH',
                /*

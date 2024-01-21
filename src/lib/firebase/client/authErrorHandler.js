@@ -34,7 +34,7 @@ export const signInErrorHandler = (code) => {
 }
 
 export const signUpErrorHandler = (code) => {
-   console.log('code en signUpErrorHandler -> ', code)
+   //console.log('code en signUpErrorHandler -> ', code)
    switch (code) {
       case 'auth/email-already-exists':
          return 'Ya existe una cuenta con el email proporcionado'

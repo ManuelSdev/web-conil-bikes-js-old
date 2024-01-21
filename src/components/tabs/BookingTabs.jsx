@@ -21,7 +21,7 @@ const tabs = [
 ]
 
 export default function BookingTabs({ bookingData, bikes }) {
-   console.log('bikes -> ', bikes)
+   //console.log('bikes -> ', bikes)
    const {
       email,
       price,

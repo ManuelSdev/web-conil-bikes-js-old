@@ -48,10 +48,10 @@ export default async function handler(req, res) {
    try {
       const { rows } = await query(text, 'array')
       const availableRanges = rows.flatMap((r) => r)
-      //  console.log('++++++++', availableRanges)
+      // //console.log('++++++++', availableRanges)
       res.status(201).json(availableRanges)
    } catch (err) {
-      console.log('ERROR API AVAIABLE RANGES', err.message)
+      //console.log('ERROR API AVAIABLE RANGES', err.message)
       res.status(500)
    }
 }

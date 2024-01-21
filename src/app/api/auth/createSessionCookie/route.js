@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation'
 export async function POST(req) {
    //   const body = await req.json()
    const { result, status } = await createSessionCookie(req)
-   console.log('result -> ', result, 'status -> ', status)
+   //console.log('result -> ', result, 'status -> ', status)
    return Response.json(result, status)
 }
 
@@ -15,14 +15,14 @@ async function createSessionCookie(req) {
    app()
    const body = await req.json()
    const { isAdmin } = body
-   console.log('isAdmin -> ', isAdmin)
+   //console.log('isAdmin -> ', isAdmin)
    const authHeader = req.headers.get('authorization')
    const accessToken = getToken(authHeader)
-   // console.log('accessToken -> ', accessToken)
+   ////console.log('accessToken -> ', accessToken)
    // const isAdmin = await verifyCustomClaimsAdmin(accessToken)
-   console.log('uno -> ')
+   //console.log('uno -> ')
    const res = await setCookies({ isAdmin, accessToken })
-   console.log('dos -> ')
+   //console.log('dos -> ')
    if (res.result.success) {
       const resolvedUrl = await getRedirectUrl({ isAdmin, req })
 
@@ -36,7 +36,7 @@ function getToken(authHeader) {
    if (authHeader.startsWith('Bearer ')) {
       return authHeader.substring(7, authHeader.length)
    } else {
-      console.log('ERROR ON GET-TOKEN')
+      //console.log('ERROR ON GET-TOKEN')
    }
 }
 
@@ -47,19 +47,19 @@ async function verifyCustomClaimsAdmin(accessToken) {
 }
 
 async function setCookies({ isAdmin, accessToken }) {
-   // console.log('accessToken -> ', accessToken)
+   ////console.log('accessToken -> ', accessToken)
    const expiresIn = 60 * 60 * 24 * 5 * 1000
    try {
       const sessionCookie = await getAuth().createSessionCookie(accessToken, {
          expiresIn,
       })
-      console.log('sessionCookie -> ', sessionCookie)
+      //console.log('sessionCookie -> ', sessionCookie)
       const cookieName = isAdmin ? 'adminSession' : 'userSession'
       const cookieOptions = { maxAge: expiresIn, httpOnly: true, secure: true }
       cookies().set(cookieName, sessionCookie, cookieOptions)
       return { result: { success: true }, status: { status: 200 } }
    } catch (err) {
-      console.log('ERROR createSessionCookie  ', err)
+      //console.log('ERROR createSessionCookie  ', err)
       // res.status(401).send('UNAUTHORIZED REQUEST!')
       return {
          result: { success: false, message: 'UNAUTHORIZED REQUEST!' },
@@ -69,12 +69,13 @@ async function setCookies({ isAdmin, accessToken }) {
 }
 
 async function getRedirectUrl({ isAdmin, req }) {
-   console.log('***************** isAdmin -> ', isAdmin)
-   // console.log('***************** req -> ', req.cookies.has('resolvedUrl'))
+   //console.log('***************** isAdmin -> ', isAdmin)
+   ////console.log('***************** req -> ', req.cookies.has('resolvedUrl'))
    if (isAdmin) return '/dashboard/bookings'
    else if (req.cookies.has('resolvedUrl')) {
       const resolvedUrl = req.cookies.get('resolvedUrl')
-      console.log('resolvedUrl -> ', resolvedUrl)
+      req.cookies.delete('resolvedUrl')
+      //console.log('resolvedUrl -> ', resolvedUrl)
       //borra la cookie
       // res.setHeader('Set-Cookie', `resolvedUrl=0; Max-Age=0`)
       return resolvedUrl.value

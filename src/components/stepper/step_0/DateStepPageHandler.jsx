@@ -50,10 +50,10 @@ export default function DateStepPageHandler({ dateRange: urlStrDateRange }) {
 }
 
 function dateRangeToISOString(dateRange) {
-   console.log('dateRange @->', dateRange)
+   //console.log('dateRange @->', dateRange)
    const isoStringRangeObj = dateRangeObjToISOStringObj(dateRange)
-   console.log('isoStringRangeObj ->', isoStringRangeObj)
+   //console.log('isoStringRangeObj ->', isoStringRangeObj)
    const strDateRange = dateRangeISOStringObjToString(isoStringRangeObj)
-   console.log('strDateRange ->', strDateRange)
+   //console.log('strDateRange ->', strDateRange)
    return strDateRange
 }

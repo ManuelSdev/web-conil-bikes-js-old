@@ -15,10 +15,10 @@ export default async function StepOneBPage({ searchParams }) {
       ? await verifySessionCookie(sessionCookie.value)
       : null
    const isLogged = decodeClaims ? true : false
-   console.log('isLogged ->', isLogged)
+   //console.log('isLogged ->', isLogged)
    //   if (!isLogged) await setResolvedUrlCookie()
 
-   console.log('## CALL getAvailableSizesInRange FROM STEP 1b ##')
+   //console.log('## CALL getAvailableSizesInRange FROM STEP 1b ##')
    const res = await getAvailableBikes({ dateRange, size, type, range })
 
    const availableBikes = await res.json()

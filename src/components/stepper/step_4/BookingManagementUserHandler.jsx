@@ -21,7 +21,7 @@ const FormSchema = z.object({
 })
 
 export default function BookingManagementUserHandler({ setStep, ...props }) {
-   console.log('BookingManagementUserHandler @@@->')
+   //console.log('BookingManagementUserHandler @@@->')
    const dispatch = useDispatch()
 
    /** BookingManagementForm **/

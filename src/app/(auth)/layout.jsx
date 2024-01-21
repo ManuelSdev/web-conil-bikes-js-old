@@ -16,7 +16,7 @@ export const metadata = {
 }
 
 export default function LoginLayout(props) {
-   // console.log('Props /bookin/layout -> ', props)
+   ////console.log('Props /bookin/layout -> ', props)
    return (
       <html lang="es-ES" dir="ltr" className="h-full bg-red-500">
          <body className="h-full">

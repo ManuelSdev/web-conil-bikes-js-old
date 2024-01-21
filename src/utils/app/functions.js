@@ -28,7 +28,7 @@ export const mappedBikeRange = (range) =>
    BIKE_RANGES_MAP[range]?.slice(1)
 
 export const simpleFormatFromToDate = (from, to) => {
-   console.log(from)
+   //console.log(from)
    return {
       formatedFrom: format(new Date(from), 'dd/MM/yyyy'),
       formatedTo: format(new Date(to), 'dd/MM/yyyy'),

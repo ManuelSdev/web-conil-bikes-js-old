@@ -40,7 +40,7 @@ export default function CalendarHandlerUrl({
       router.push(`/dashboard/bookings?${params}`)
    }
    const handeDateRange = async (displayMonth) => {
-      console.log('handeDateRange displayMonth -> ', displayMonth)
+      //console.log('handeDateRange displayMonth -> ', displayMonth)
       const dateRange = createDateRangeString({
          // @ts-ignore
          fromDate: displayMonth,
@@ -48,7 +48,7 @@ export default function CalendarHandlerUrl({
       })
       setNumber(number + 1)
       const res = await getBookingDatesOnMonth(dateRange)
-      console.log('res -> ', res)
+      //console.log('res -> ', res)
       setDateRange(dateRange)
       // refetch()
    }
@@ -68,7 +68,7 @@ export default function CalendarHandlerUrl({
       // refetchOnMountOrArgChange: true
    })
 
-   console.log('bookingDatesOnMonth -> ', bookingDatesOnMonth)
+   //console.log('bookingDatesOnMonth -> ', bookingDatesOnMonth)
    /*
    useEffect(() => {
       dateRange && refetch()
@@ -107,7 +107,7 @@ export default function CalendarHandlerUrl({
             }}
             bookingDates={bookingDates}
             isLoading={isFetching}
-            //  toDate={(o) => console.log(o}
+            //  toDate={(o) =>//console.log(o}
 
             //modifiers={{ booked: bookedDays }}
             //modifiersClassNames={{booked: 'bg-red-700', selected: 'bg-green-700',}}
@@ -168,9 +168,9 @@ console.log('lastDayInLastWeek toISOString ->', lastDayInLastWeek.toISOString())
          fromDate: displayMonth,
          outsideDates: true,
       })
-      console.log('monthChangeHandler dateRange ---------------> ', dateRange)
+     //console.log('monthChangeHandler dateRange ---------------> ', dateRange)
       try {
-         //    console.log('== LANZA FETCH ==')
+         //   //console.log('== LANZA FETCH ==')
          //TODO: cambiar URL para producción
          //TODO: revisa eso de method: 'GET'
          const res = await fetch(
@@ -178,13 +178,13 @@ console.log('lastDayInLastWeek toISOString ->', lastDayInLastWeek.toISOString())
             `../api?${urlParams({ dateRange })}`
          )
          const { bookingDates } = await res.json()
-         console.log(
+        //console.log(
             'bookingDatesInRange en monthChangeHandler ---------------> ',
             bookingDates
          )
          setBookingDates(bookingDates)
       } catch (error) {
-         console.log('monthChangeHandler error -> ', error)
+        //console.log('monthChangeHandler error -> ', error)
       }
    }
    */

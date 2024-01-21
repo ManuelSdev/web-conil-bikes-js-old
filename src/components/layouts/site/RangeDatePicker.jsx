@@ -25,7 +25,7 @@ export default function RangeDatePicker() {
    const handleSelect = (picker) => (selectedDate) => {
       setDateRange({ ...dateRange, [picker]: selectedDate })
    }
-   console.log(open)
+   //console.log(open)
    return (
       <div>
          <DatePicker date={from} handleSelect={handleSelect(FROM)} />

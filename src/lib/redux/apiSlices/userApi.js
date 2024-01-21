@@ -8,7 +8,7 @@ const userApi = baseApi.injectEndpoints({
 
       getUser: builder.query({
          query: ({ id, email }) =>
-            console.log('email en getUser -> ', email) ||
+            //console.log('email en getUser -> ', email) ||
             `users?email=${email}`,
       }),
       /*
@@ -43,21 +43,21 @@ export const {
             //arg debe ser {id: value} o {email:value}
             // const identifier = arg.id ?? arg.email
             const { identifier } = arg
-            console.log(arg)
+           //console.log(arg)
 
             const userResult = await fetchWithBQ(
                USERS + `?${urlParams({ identifier })}`
             )
             if (userResult.error) return { error: userResult.error }
             //users es un array con un solo objeto
-            console.log(userResult)
+           //console.log(userResult)
             const [user] = userResult.data
             const { email } = user
 
             const bookingResult = await fetchWithBQ(
                BOOKINGS_USER + `?${urlParams({ email })}`
             )
-            console.log(bookingResult)
+           //console.log(bookingResult)
             //todo pulir mensaje si no hay reservas (array bookings vacío)
             //queryFn debe devolver un objeto {data:value} o {error:value}
             return bookingResult.error

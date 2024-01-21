@@ -12,7 +12,7 @@ import { i18n } from '../../i18n-config'
  */
 export function getHeadersLocale(headers) {
    const headersList = headers()
-   console.log('headersList en server ->', headersList.get('Accept-Language'))
+   //console.log('headersList en server ->', headersList.get('Accept-Language'))
 
    // Negotiator expects plain object so we need to transform headers
    const negotiatorHeaders = {}
@@ -24,7 +24,7 @@ export function getHeadersLocale(headers) {
    )
    const locale = matchLocale(languages, locales, i18n.defaultLocale)
 
-   console.log('=============', locale)
+   //console.log('=============', locale)
    return locale
 }
 

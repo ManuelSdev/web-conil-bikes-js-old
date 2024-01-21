@@ -34,7 +34,7 @@ const sendGridSendEmail = async ({
       const {
          response: { body: errors },
       } = error
-      console.log('### ERROR sendgridResponse API route -> ', errors)
+      //console.log('### ERROR sendgridResponse API route -> ', errors)
       throw new Error(errors)
    }
 }

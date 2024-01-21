@@ -33,7 +33,7 @@ export default function CustomRow(props) {
       )
    }
 
-   console.log('displayMonth -> ')
+   //console.log('displayMonth -> ')
    return (
       <tr className={classNames.row} style={styles.row}>
          {weekNumberCell}

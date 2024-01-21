@@ -37,8 +37,8 @@ export default function BikeFiltersForm({
    //form,
    // setStep,
 }) {
-   // console.log('============', form.getValues())
-   // console.log('dateRange @->', a)
+   ////console.log('============', form.getValues())
+   ////console.log('dateRange @->', a)
    /*
    const {
       data: availableSizes,
@@ -58,8 +58,8 @@ export default function BikeFiltersForm({
 
    const form = useForm({ resolver: zodResolver(FormSchema) })
    const { size, type, range } = form.getValues()
-   console.log('form values @->', form.getValues())
-   console.log('form @->', form)
+   //console.log('form values @->', form.getValues())
+   //console.log('form @->', form)
 
    const [
       triggerType,
@@ -94,14 +94,14 @@ export default function BikeFiltersForm({
    }
 
    const handleType = (field) => (selectedTypeValue) => {
-      console.log('field -> ', field)
+      //console.log('field -> ', field)
       field.onChange(selectedTypeValue)
       //  updateBikeForm({ type: selectedTypeValue })
       triggerRange({ dateRange, size, type: selectedTypeValue })
    }
 
    const handleRange = (field) => (selectedRangeValue) => {
-      console.log('selectedRangeValue -> ', selectedRangeValue)
+      //console.log('selectedRangeValue -> ', selectedRangeValue)
       field.onChange(selectedRangeValue)
       //updateBikeForm({ range: selectedRangeValue })
       //  setBikeForm({ ...form, range: lastSelectedRange })
@@ -117,11 +117,11 @@ export default function BikeFiltersForm({
          <form
             onSubmit={form.handleSubmit(onSubmit)}
             //   className="space-y-6 sm:grid sm:grid-cols-4 sm:isLoadingSizes-4 sm:space-y-0"
-            className="gap-6 space-y-6 sm:flex sm:justify-center sm:space-y-0"
+            className="space-y-8"
          >
             <SizeSelect
                // className="sm:grow"
-               className="sm:min-w-[260px]"
+               className="space-y-2 "
                form={form}
                selectedSize={size}
                handleChange={handleSizeChange}

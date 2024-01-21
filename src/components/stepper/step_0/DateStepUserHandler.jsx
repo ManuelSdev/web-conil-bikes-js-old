@@ -21,7 +21,7 @@ export default function DateStepUserHandler({
    cookieDateRange,
    ...props
 }) {
-   console.log('DateStepUserHandler @@@->')
+   //console.log('DateStepUserHandler @@@->')
    const dispatch = useDispatch()
    const storedDateRange = useSelector(selectDateRange)
    const dateRangeObj = dateRangeISOStrObjToDateRangeObjs(storedDateRange)
@@ -30,7 +30,7 @@ export default function DateStepUserHandler({
    const dateRange = storedDateRange
       ? stringDateRangeToDateRangeObj(storedDateRange)
       : { from: '', to: '' }
-   console.log('dateRange ->', dateRange)
+  //console.log('dateRange ->', dateRange)
    const { from, to } = dateRange
    */
    /*
@@ -43,7 +43,7 @@ export default function DateStepUserHandler({
    // const [dateRange, setDateRange] = useState(initialDetaRangeObj)
 
    // const { from, to } = dateRange
-   // console.log('dateRange ->', dateRange)
+   ////console.log('dateRange ->', dateRange)
    // const strDateRange = dateRangeObjToISOString(dateRange)
 
    const handleNext = () => {
@@ -96,8 +96,8 @@ export default function DateStepUserHandler({
 function dateRangeObjToISOString(dateRange) {
    //console.log('dateRange @->', dateRange)
    const isoStringRangeObj = dateRangeObjToISOStringObj(dateRange)
-   // console.log('isoStringRangeObj ->', isoStringRangeObj)
+   ////console.log('isoStringRangeObj ->', isoStringRangeObj)
    const strDateRange = dateRangeISOStringObjToString(isoStringRangeObj)
-   // console.log('strDateRange ->', strDateRange)
+   ////console.log('strDateRange ->', strDateRange)
    return strDateRange
 }

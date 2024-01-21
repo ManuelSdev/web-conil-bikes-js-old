@@ -8,10 +8,10 @@ const steps = [
 ]
 
 export default function StepsPanel({ step, className }) {
-   console.log('StepsPanel step ->', step)
+   //console.log('StepsPanel step ->', step)
    const currentStep =
       step === 0 ? 1 : step >= 1 && step <= 3 ? 2 : step === 4 ? 3 : 4
-   console.log('StepsLine currentStep ->', currentStep)
+   //console.log('StepsLine currentStep ->', currentStep)
    return (
       <nav aria-label="Progress" className={className}>
          <ol

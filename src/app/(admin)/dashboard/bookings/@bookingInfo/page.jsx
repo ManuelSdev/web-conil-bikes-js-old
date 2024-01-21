@@ -9,7 +9,7 @@ export default async function BookingInfoPage({ params, searchParams }) {
    const { bookingData, bikes } = bookingId
       ? await res.json()
       : { bookingData: null, bikes: null }
-   console.log('bookingData -> ', bookingData)
+   //console.log('bookingData -> ', bookingData)
    return bookingId ? (
       <BookingTabs bookingData={bookingData} bikes={bikes} />
    ) : null

@@ -47,7 +47,7 @@ export default async function handler(req, res) {
       const availableTypes = rows.flatMap((r) => r)
       res.status(201).json(availableTypes)
    } catch (err) {
-      console.log('ERROR API AVAIABLE TYPES', err.message)
+      //console.log('ERROR API AVAIABLE TYPES', err.message)
       res.status(500)
    }
 }

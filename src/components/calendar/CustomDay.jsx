@@ -46,7 +46,7 @@ export default function CustomDay({ date, displayMonth, ...props }) {
       return <div {...dayRender.divProps} />
    }
    //console.log('bookingDates -> ', bookingDates)
-   // console.log('date -> ', date)
+   ////console.log('date -> ', date)
 
    const isSameMonth = isSameMonthFns(date, displayMonth)
    //Si la primera fecha es anterior a la segunda, devuelve -1. Si son iguales, devuelve 0. Si la primera fecha es posterior a la segunda, devuelve 1.
@@ -160,9 +160,9 @@ function calendarCellClass({ date, bookingDatesOnMonth }) {
 }
 
 function isDateDisabled({ date, bookingDatesOnMonth }) {
-   //  console.log('bookingDatesOnMonth s->', bookingDatesOnMonth)
+   // //console.log('bookingDatesOnMonth s->', bookingDatesOnMonth)
    const { startDates, endDates, startEndDates } = bookingDatesOnMonth
-   //  console.log('startDates s->', startDates)
+   // //console.log('startDates s->', startDates)
    const fromDays = startDates.filter((startDate) =>
       isSameDay(date, new Date(startDate))
    )
@@ -172,8 +172,8 @@ function isDateDisabled({ date, bookingDatesOnMonth }) {
    const dualDays = startEndDates.filter((dualDate) =>
       isSameDay(date, new Date(dualDate))
    )
-   //  console.log("++++++++++", f);
-   //   console.log("----------", t);
+   // //console.log("++++++++++", f);
+   //  //console.log("----------", t);
    if (fromDays.length !== 0 || toDays.length !== 0 || dualDays.length !== 0) {
       return false
    } else return true

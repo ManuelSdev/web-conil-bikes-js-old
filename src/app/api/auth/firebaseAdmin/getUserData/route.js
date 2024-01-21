@@ -8,8 +8,8 @@ export async function GET(req) {
     */
    const uid = searchParams.get('uid')
    const email = searchParams.get('email')
-   console.log('uid ->', uid)
-   console.log('email ->', email)
+  //console.log('uid ->', uid)
+  //console.log('email ->', email)
    app()
    try {
       const userRecord = uid
@@ -19,11 +19,11 @@ export async function GET(req) {
       return Response.json(userRecord, { status: 201 })
    } catch (error) {
       const { errorInfo } = error
-      console.log(
+     //console.log(
          'ROUTE HANDLER ERROR: /api/auth/firebaseAdmin/getUserData  ->',
          error
       )
-      console.log(
+     //console.log(
          'ROUTE HANDLER ERROR: /api/auth/firebaseAdmin/getUserData  ->',
          error.errorInfo
       )

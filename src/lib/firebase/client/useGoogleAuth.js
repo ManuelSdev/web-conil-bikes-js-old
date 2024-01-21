@@ -53,9 +53,9 @@ const UseGoogleAuth = () => {
       //https://community.fly.io/t/reverse-proxy-to-firebase-authentication-for-simple-nextjs-app/12013/2
       // const result = await getRedirectResult(auth)
       // if (!authUser && !result)
-      // console.log('first', ev)
+      ////console.log('first', ev)
       // const results = await signInWithRedirect(auth, provider)
-      // console.log(' ya hay user userrdsfsddr', result)
+      ////console.log(' ya hay user userrdsfsddr', result)
       try {
          if (!authUser) {
             await signInWithRedirect(auth, provider)
@@ -63,13 +63,13 @@ const UseGoogleAuth = () => {
             // This gives you a Google Access Token. You can use it to access Google APIs.
             const credential = GoogleAuthProvider.credentialFromResult(result)
             const token = credential.accessToken
-            console.log('token google ->', token)
+            //console.log('token google ->', token)
          }
 
          const operationType = result.operationType
-         console.log('###########', operationType)
+         //console.log('###########', operationType)
       } catch (error) {
-         console.log('########### hay error', error)
+         //console.log('########### hay error', error)
          // Handle Errors here.
          const errorCode = error.code
          const errorMessage = error.message
@@ -77,10 +77,10 @@ const UseGoogleAuth = () => {
          const email = error.customData.email
          // The AuthCredential type that was used.
          const credential = GoogleAuthProvider.credentialFromError(error)
-         console.log('1', errorCode)
-         console.log('2', errorMessage)
-         console.log('3', email)
-         console.log('4', credential)
+         //console.log('1', errorCode)
+         //console.log('2', errorMessage)
+         //console.log('3', email)
+         //console.log('4', credential)
       }
    }
    //Cuando terminas en la página de login propia de google y vuelves a tu página,
@@ -105,10 +105,10 @@ const UseGoogleAuth = () => {
    const signOutGoogle = () => {
       signOut(auth)
          .then(() => {
-            console.log('@@@@@@@@@ deslogado de google')
+            //console.log('@@@@@@@@@ deslogado de google')
          })
          .catch((error) => {
-            console.log('@@@@@@@@@ error al deslogar de google', error)
+            //console.log('@@@@@@@@@ error al deslogar de google', error)
          })
    }
 

@@ -70,7 +70,7 @@ export default function BookingResumeUserHandler({ setStep, user, ...props }) {
    const handleSubmit = async (event) => {
       event.preventDefault()
       const res = await createBooking(queryData).unwrap()
-      console.log('res ->', res)
+      //console.log('res ->', res)
    }
    const renderPrevButton = () => (
       <Button onClick={() => setStep(4)} className="text-greenCorp">

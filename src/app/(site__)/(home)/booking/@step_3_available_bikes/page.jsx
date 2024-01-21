@@ -8,7 +8,7 @@ import { verifySessionCookie } from '@/lib/firebase/admin/verifySessionCookie'
 import AvailableBikeListPublicHandler from '@/components/stepper/step_3/AvailableBikeListPublicHandler'
 
 export default async function PublicStepThreeBookingPage({ searchParams }) {
-   console.log('searchParams ->', searchParams)
+   //console.log('searchParams ->', searchParams)
    const { step, date: dateRange, size, type, range } = searchParams
 
    if (step !== '3') return null
@@ -18,10 +18,10 @@ export default async function PublicStepThreeBookingPage({ searchParams }) {
       ? await verifySessionCookie(sessionCookie.value)
       : null
    const logged = decodeClaims ? true : false
-   console.log('logged ->', logged)
+   //console.log('logged ->', logged)
    //   if (!logged) await setResolvedUrlCookie()
 
-   console.log('## CALL getAvailableSizesInRange FROM STEP 1b ##')
+   //console.log('## CALL getAvailableSizesInRange FROM STEP 1b ##')
    const res = await getAvailableBikes({ dateRange, size, type, range })
 
    const availableBikes = await res.json()

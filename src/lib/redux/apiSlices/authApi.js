@@ -8,7 +8,7 @@ export const authApi = baseApi.injectEndpoints({
        */
       createSessionCookie: builder.mutation({
          query: ({ accessToken, isAdmin }) =>
-            console.log(
+           //console.log(
                'TOKEN RECIBIDO EN authApi para el header de createSessionCookie -> ',
                isAdmin
             ) || {
