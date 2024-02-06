@@ -64,11 +64,15 @@ export function DrawerDemo() {
    }
 
    return (
-      <Drawer>
+      <Drawer direction="right">
          <DrawerTrigger asChild>
             <Button variant="outline">Open Drawer</Button>
          </DrawerTrigger>
-         <DrawerContent className="w-[300px]">
+         <DrawerContent
+            side="right"
+            direction="right"
+            className="left-[calc(100%-300px)] right-0 w-[300px]"
+         >
             <div className="mx-auto h-screen w-full max-w-sm">
                <DrawerHeader>
                   <DrawerTitle>Move Goal</DrawerTitle>

@@ -6,16 +6,23 @@ import { cookies } from 'next/headers'
 
 export async function getUserPageAuth() {
    const userSessionCookie = cookies().get('userSession')
+   console.log('userSessionCookie -> ', userSessionCookie)
    if (!userSessionCookie) return { isLogged: false }
-   const decodeClaims = await verifySessionCookie(userSessionCookie.value)
 
-   if (!decodeClaims) return { isLogged: false }
+   try {
+      const decodeClaims = await verifySessionCookie(userSessionCookie.value)
 
-   const { name, email, phone_number: phone } = decodeClaims
+      //  if (!decodeClaims)
 
-   const resAppUserId = await getUserIdByEmail({ email })
-   const appUserId = await resAppUserId.json()
-   return { name, email, phone, appUserId, isLogged: true }
+      const { name, email, phone_number: phone } = decodeClaims
+
+      const resAppUserId = await getUserIdByEmail({ email })
+      const appUserId = await resAppUserId.json()
+      return { name, email, phone, appUserId, isLogged: true }
+   } catch (error) {
+      console.log('getUserPageAuth error -> ', error)
+      return { isLogged: false }
+   }
 }
 
 export async function getAppBikeSegments() {

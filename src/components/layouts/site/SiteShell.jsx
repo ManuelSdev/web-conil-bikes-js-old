@@ -14,7 +14,7 @@ export default function SiteShell({ children }) {
    return (
       <div className="min-h-full">
          <SiteAppBar />
-         <div className="h-slimTopAppBar w-full md:h-fatTopAppBar" />
+         {/* <div className="h-slimTopAppBar w-full md:h-fatTopAppBar" />*/}
          <main className="w-full">
             <SiteContainer> {children}</SiteContainer>{' '}
          </main>

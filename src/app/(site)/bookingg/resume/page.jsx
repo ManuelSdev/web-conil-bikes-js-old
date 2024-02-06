@@ -8,13 +8,19 @@ import { getAppBikeConfigSegments } from '@/lib/pg/crud/bikes'
 import { getUserIdByEmail } from '@/lib/pg/crud/users'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
-
+import {
+   getAppBikeSegments,
+   getUserPageAuth,
+} from '@/utils/serverFns/serverFns'
 import React from 'react'
 
 export default async function UserBookingStepperPage({ params }) {
+   const { segmentList } = await getAppBikeSegments()
+   const userAuth = await getUserPageAuth()
+   const { name, email, phone, userId: appUserId } = userAuth
    return (
       <Step step={4}>
-         <BookingResumeHandler />
+         <BookingResumeHandler user={userAuth} />
       </Step>
    )
 }

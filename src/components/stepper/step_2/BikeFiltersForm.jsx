@@ -156,13 +156,15 @@ export default function BikeFiltersForm({
                //  LoadingLabel={LoadingLabel}
                availableRanges={availableRanges}
             />
-            {renderShowBikesButton({
-               dateRange,
-               size,
-               type,
-               range,
-               className: 'sm:self-end',
-            })}
+            <div className="flex justify-center">
+               {renderShowBikesButton({
+                  dateRange,
+                  size,
+                  type,
+                  range,
+                  //className: 'sm:self-end',
+               })}
+            </div>
          </form>
       </Form>
    )

@@ -10,12 +10,13 @@ import BookingManagementHandler from '@/components/stepper/step_4/BookingManagem
 
 import React from 'react'
 import Step from '@/components/stepper/Step'
+import BookingAddressHandler from '@/components/stepper/step_4/BookingAddressHandler'
 
-export default async function UserBookingStepperPage({ params }) {
+export default async function AddressStepPage({ params }) {
    return (
-      <Step step={3}>
+      <Step step={3} page="address">
          {' '}
-         <BookingManagementHandler />
+         <BookingAddressHandler />
       </Step>
    )
 }

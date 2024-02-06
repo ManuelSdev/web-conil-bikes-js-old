@@ -14,13 +14,28 @@ import Link from 'next/link'
 import { CircleUserRound, Menu } from 'lucide-react'
 import { Button } from '../ui/button'
 
-export default function DrawerMenu({ open, onOpenChange, content, side }) {
+export default function DrawerMenu({
+   open,
+   onOpenChange,
+   sheetTitle,
+   description,
+   content,
+   side,
+   ...props
+}) {
    return (
-      <div className="text-white">
+      <div>
          <Sheet open={open} onOpenChange={onOpenChange}>
             {/* <SheetTrigger>{trigger} aa</SheetTrigger>*/}
-            <SheetContent side={side}>
-               {content}
+            <SheetContent className="lg:min-w-0 lg:max-w-sm" side={side}>
+               <SheetHeader>
+                  <SheetTitle>{sheetTitle}</SheetTitle>
+                  {description && (
+                     <SheetDescription>{description}</SheetDescription>
+                  )}
+                  {content}
+               </SheetHeader>
+
                {/* <SheetFooter>
                   <SheetClose asChild>
                      <Button>Save changes</Button>

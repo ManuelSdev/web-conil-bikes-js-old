@@ -72,9 +72,9 @@ async function getRedirectUrl({ isAdmin, req }) {
    //console.log('***************** isAdmin -> ', isAdmin)
    ////console.log('***************** req -> ', req.cookies.has('resolvedUrl'))
    if (isAdmin) return '/dashboard/bookings'
-   else if (req.cookies.has('resolvedUrl')) {
-      const resolvedUrl = req.cookies.get('resolvedUrl')
-      req.cookies.delete('resolvedUrl')
+   else if (cookies().has('resolvedUrl')) {
+      const resolvedUrl = cookies().get('resolvedUrl')
+      cookies().delete('resolvedUrl')
       //console.log('resolvedUrl -> ', resolvedUrl)
       //borra la cookie
       // res.setHeader('Set-Cookie', `resolvedUrl=0; Max-Age=0`)

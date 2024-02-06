@@ -144,8 +144,8 @@ export function BookingManagementForm({
                   </FormItem>
                )}
             />
-            {renderNextButton()}
-            <Button type="submit">Submit</Button>
+            {/*renderNextButton()*/}
+            {/*<Button type="submit">Submit</Button>*/}
          </form>
       </Form>
    )

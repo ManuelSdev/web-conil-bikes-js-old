@@ -14,7 +14,7 @@ export default function SelectedBikeList({
    handleAddBikeButton,
 }) {
    return (
-      <div className="">
+      <div>
          <ul role="list" className="divide-y divide-gray-100">
             {bikes.map((bike, idx) => (
                <li
@@ -36,7 +36,7 @@ export default function SelectedBikeList({
                         <p className="truncate text-xs leading-5 text-gray-500">
                            {`${capitalizeFirst(
                               BIKE_TYPES_MAP[bike.modelType]
-                           )}, talla ${bike.bikeSize.toUpperCase()}`}
+                           )}, talla ${bike.bikeSize}`}
                         </p>
                      </div>
                   </div>
@@ -51,7 +51,7 @@ export default function SelectedBikeList({
                </li>
             ))}
          </ul>
-         {/* <Button onClick={handleAddBikeButton}>Añadir bicicleta</Button>*/}
+         <Button onClick={handleAddBikeButton}>Añadir bicicleta</Button>
       </div>
    )
 }

@@ -1,3 +1,4 @@
+'use client'
 import React, { use, useEffect } from 'react'
 import BookingResumeStep from './BookingResumeStep'
 import { Button } from '@/components/ui/button'
@@ -15,6 +16,7 @@ import { useLazyCreateCookieQuery } from '@/lib/redux/apiSlices/cookieApi'
 import { useCreateBookingMutation } from '@/lib/redux/apiSlices/bookingApi'
 import { dateRangeISOStringObjToString } from '@/utils/datesFns/createDateRangeString'
 import Step from '../Step'
+import BookingResume from './BookingResume'
 
 export default function BookingResumeHandler({ setStep, user, ...props }) {
    const [triggerCookie] = useLazyCreateCookieQuery()
@@ -86,17 +88,11 @@ export default function BookingResumeHandler({ setStep, user, ...props }) {
       </Button>
    )
    return (
-      <Step
+      <BookingResume
          renderPrevButton={renderPrevButton}
          renderSubmitButton={renderSubmitButton}
-         {...props}
-      >
-         <BookingResumeStep
-            renderPrevButton={renderPrevButton}
-            renderSubmitButton={renderSubmitButton}
-            {...bookingResumeData}
-         />
-      </Step>
+         {...bookingResumeData}
+      />
    )
 }
 

@@ -1,4 +1,3 @@
-import { DrawerDemo } from '@/components/drawer/DrawerDemo'
 import StepsLine from '@/components/stepper/StepsLine'
 import StepsPanel from '@/components/stepper/StepsPanel'
 import UserStepper from '@/components/stepper/UserStepper'
@@ -21,17 +20,17 @@ import {
    getUserPageAuth,
 } from '@/utils/serverFns/serverFns'
 
-export default async function UserBookingStepperPage({ params }) {
+export default async function BikesStepPage({ params }) {
    const { segmentList } = await getAppBikeSegments()
    const userAuth = await getUserPageAuth()
+   console.log('userAuth ', userAuth)
+   console.log('params ', params)
    return (
       <div>
-         <Step step={2}>
+         <Step step={2} page="bikes">
             <BikesStepHandlerTest segmentList={segmentList} />
-
-            <DrawerDemo />
          </Step>
-         <AvailableBikeListHandlerTest logged={userAuth.isLogged} />
+         <AvailableBikeListHandlerTest isLogged={userAuth.isLogged} />
       </div>
    )
 }

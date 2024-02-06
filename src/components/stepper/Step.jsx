@@ -4,8 +4,18 @@ import StepsLine from './StepsLine'
 import StepsPanel from './StepsPanel'
 import { Separator } from '@/components/ui/separator'
 import StepVertical from './StepVertical'
+import { Button } from '../ui/button'
+import Link from 'next/link'
+import StepControl from './StepControl'
 
-export default function Step({ step, children, title }) {
+export default function Step({
+   step,
+   children,
+   title,
+   page,
+   nextButton,
+   prevButton,
+}) {
    //console.log('Step @@@->')
    return (
       <div className=" pb-10">
@@ -18,7 +28,7 @@ export default function Step({ step, children, title }) {
          <div className="flex flex-col space-y-8 sm:flex-row sm:space-x-24 sm:space-y-0">
             <StepVertical step={step} />
 
-            <div className="flex-1 sm:max-w-2xl">{children}</div>
+            <div className="flex-1 ">{children}</div>
          </div>
       </div>
    )

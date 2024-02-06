@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import StepperControlButtons from '../StepperControlButtons'
 import Step from '../Step'
+import StepControls from '../StepControls'
 
 export default function DateStepHandler({
    setStep,
@@ -36,13 +37,30 @@ export default function DateStepHandler({
       dispatch(dateRangeSelected(isoStringRangeObj))
    }
 
+   const renderNextButton = ({ renderClassName }) => {
+      const isDisabled = !from || !to
+
+      return isDisabled ? (
+         <Button disabled className={renderClassName}>
+            Siguiente
+         </Button>
+      ) : (
+         <Link href={`/bookingg/bikes`}>
+            <Button className={renderClassName}>Siguiente</Button>
+         </Link>
+      )
+   }
+
    return (
-      <DateStep
-         from={from}
-         to={to}
-         linkDisabled={!from || !to}
-         handleSelect={handleSelect}
-      />
+      <div>
+         <DateStep
+            from={from}
+            to={to}
+            linkDisabled={!from || !to}
+            handleSelect={handleSelect}
+         />
+         <StepControls renderNextButton={renderNextButton} />
+      </div>
    )
 }
 

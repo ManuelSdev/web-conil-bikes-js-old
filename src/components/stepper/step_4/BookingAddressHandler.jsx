@@ -26,7 +26,7 @@ const FormSchema = z.object({
    pickup: z.boolean(),
 })
 
-export default function BookingManagementHandler({ setStep, ...props }) {
+export default function BookingAddressHandler({ setStep, ...props }) {
    //console.log('BookingManagementUserHandler @@@->')
    const dispatch = useDispatch()
 
@@ -64,7 +64,7 @@ export default function BookingManagementHandler({ setStep, ...props }) {
             Siguiente
          </Button>
       ) : (
-         <Link href={`/bookingg/address`}>
+         <Link href={`/bookingg/resume`}>
             <Button className={renderClassName}>Siguiente</Button>
          </Link>
       )

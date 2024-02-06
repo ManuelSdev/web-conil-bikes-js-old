@@ -4,6 +4,13 @@ import { getAuth } from 'firebase-admin/auth'
 
 export async function verifySessionCookie(sessionCookie) {
    app()
-   const decodeClaims = await getAuth().verifySessionCookie(sessionCookie)
-   return decodeClaims
+   //Si verififySessionCookie falla, devuelve un error
+   //Fallará si la cookie expira o si la firma de la cookie no es válida
+   try {
+      const decodeClaims = await getAuth().verifySessionCookie(sessionCookie)
+      console.log('decodeClaims', decodeClaims)
+      return decodeClaims
+   } catch (error) {
+      throw error
+   }
 }

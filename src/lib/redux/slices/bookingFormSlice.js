@@ -137,6 +137,7 @@ export const selectBikesByUnits = createSelector([selectBikes], (bikes) => {
 
    return bikesInUnits.flat()
 })
+
 export const selectAvailableBikes = createSelector([selectBikes], (bikes) =>
    bikes.map((bike) => {
       const { quantity, availability } = bike

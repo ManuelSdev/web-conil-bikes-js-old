@@ -22,6 +22,9 @@ import AvailableBikeListStep from '@/components/stepper/step_3/AvailableBikeList
 import StepLayout from '@/components/stepper/stepLayout/StepLayout'
 import BikeCard from '@/components/stepper/step_3/BikeCard'
 import { Separator } from '@/components/ui/separator'
+import { cn } from '@/utils/app/functions'
+import StepControls from '@/components/stepper/StepControls'
+import Link from 'next/link'
 
 export default function BikesStepHandlerTest({
    setStep,
@@ -36,7 +39,8 @@ export default function BikesStepHandlerTest({
    const strDateRangeObj = useSelector(selectDateRange)
    const { from, to } = strDateRangeObj
    const isDateRange = !!from && !!to
-   const storedBikesByUnits = useSelector(selectBikesByUnits)
+   const bikesByUnits = useSelector(selectBikesByUnits)
+   const bikesQuantity = bikesByUnits.length
    const router = useRouter()
    const dateRange = dateRangeISOStringObjToString(strDateRangeObj)
    //console.log('dateRange @->', isDateRange)
@@ -70,7 +74,7 @@ export default function BikesStepHandlerTest({
 
    const renderShowBikesButton = ({ size, type, range, className }) => (
       <Button
-         className={className}
+         className={cn('text-greenCorp', className)}
          onClick={() => {
             // triggerBikes({ dateRange, size, type, range })
             dispatch(bikeSearchParamsSelected({ size, type, range }))
@@ -82,14 +86,28 @@ export default function BikesStepHandlerTest({
          MOSTRAR BICICLETAS
       </Button>
    )
-   const renderPrevButton = () => (
-      <Button
-         //   onClick={() => setStep(storedBikesByUnits.length === 0 ? 0 : 1)}
-         className="text-greenCorp"
-      >
-         atrás
-      </Button>
+
+   const renderNextButton = ({ renderClassName }) => {
+      const isDisabled = !bikesQuantity
+
+      return isDisabled ? (
+         <Button disabled className={renderClassName}>
+            Siguiente
+         </Button>
+      ) : (
+         <Link href={`/bookingg/address`}>
+            <Button className={renderClassName}>Siguiente</Button>
+         </Link>
+      )
+   }
+
+   const renderPrevButton = ({ renderClassName }) => (
+      <Link href={'bookingg/date'}>
+         {' '}
+         <Button className={renderClassName}>Atrás</Button>
+      </Link>
    )
+
    const handleSelect = (bike) => (ev) => {
       ////console.log('bike ->', bike)
       dispatch(bikeSelected(bike))
@@ -104,6 +122,10 @@ export default function BikesStepHandlerTest({
             dateRange={dateRange}
             disabled={true}
             renderShowBikesButton={renderShowBikesButton}
+            renderPrevButton={renderPrevButton}
+         />
+         <StepControls
+            renderNextButton={renderNextButton}
             renderPrevButton={renderPrevButton}
          />
          {/*isFetchingBikes ? (

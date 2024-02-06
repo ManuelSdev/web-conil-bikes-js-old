@@ -8,11 +8,6 @@ export async function POST(req) {
 
 const actions = {
    createSessionCookie: async (req, res) => {
-     //console.log(
-         '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 2',
-         req.cookies
-      )
-
       /**
        * Si se llegó a loginPage mediante redirección en una ruta protegida por withGuard,
        * encontraemos una cookie con esa url para poder redireccionar allí
@@ -35,15 +30,12 @@ const actions = {
          if (authHeader.startsWith('Bearer ')) {
             return authHeader.substring(7, authHeader.length)
          } else {
-           //console.log('ERROR ON GET-TOKEN')
+            //console.log('ERROR ON GET-TOKEN')
          }
       }
       // 1- Pilla token
       const accessToken = getToken(authHeader)
-     //console.log(
-         '################ token que llega al backend -> ',
-         accessToken
-      )
+
       // 2- Comprueba custom claims para saber si es un token de admin o de user
       const decodeToken = await getAuth().verifyIdToken(accessToken)
       const { admin } = decodeToken
@@ -78,7 +70,7 @@ const actions = {
          // res.setHeader('Set-Cookie', `resolvedUrl=/; Max-Age=0`)
          res.status(200).end(JSON.stringify({ success: true, resolvedUrl }))
       } catch (err) {
-        //console.log('ERROR createSessionCookie usando actions ', err)
+         //console.log('ERROR createSessionCookie usando actions ', err)
          res.status(401).send('UNAUTHORIZED REQUEST!')
       }
    },

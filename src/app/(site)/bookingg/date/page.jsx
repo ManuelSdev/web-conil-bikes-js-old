@@ -14,20 +14,24 @@ import { ToastDemo } from './ToastDemo'
 import OrderCard from '@/components/a/OrderCard'
 import Cart from '@/components/a/Cart'
 import Step from '@/components/stepper/Step'
+import NotifyCart from '@/components/a/NotifyCart'
 
-export default async function BookingDatePage({ params }) {
+export default async function DateStepPage({ params }) {
    const userSessionCookie = cookies().get('userSession')
    //console.log('userSessionCookie ', userSessionCookie)
    return (
       <div>
          {' '}
-         <Step step={1} title={'Hola'}>
+         <Step step={1} title={'Hola'} page="date">
             {' '}
             <DateStepHandler />
-            <DrawerDemo />
-            <ToastDemo />
-            <OrderCard />
          </Step>
+         <NotifyCart />
       </div>
    )
 }
+/*
+  <DrawerDemo />
+            <ToastDemo />
+            <OrderCard />
+            */

@@ -23,7 +23,7 @@ export async function GET(req) {
    try {
       const decodeClaims = await verifySessionCookie(sessionCookie.value)
       // //console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-     //console.log('##### decodeClaims ->', decodeClaims)
+      //console.log('##### decodeClaims ->', decodeClaims)
       //TODO: parche para pruebas , revisa el uso de roles
       const adminEmail = process.env.ADMIN_EMAIL
       const { appRole, email } = decodeClaims
@@ -45,14 +45,14 @@ export async function GET(req) {
       }
       return Response.json({ verified: true })
    } catch (error) {
-     //console.log(
+      console.log(
          'ROUTE HANDLER ERROR: /api/auth/firebaseAdmin/verifySessionCookie  ->',
          error
       )
 
       if (role !== 'admin') {
          cookies().set('name', 'lee')
-        //console.log('####################')
+         //console.log('####################')
          //  return redirect('http://localhost:3000/auth/sign-in')
       }
 
