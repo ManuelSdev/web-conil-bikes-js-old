@@ -5,7 +5,7 @@ import { useGetAvailableBikesQuery } from '@/lib/redux/apiSlices/bikeApi'
 import { useDispatch, useSelector } from 'react-redux'
 import {
    bikeSelected,
-   selectBikesearchParams,
+   selectBikeSearchParams,
    selectDateRange,
 } from '@/lib/redux/slices/bookingFormSlice'
 import { Button } from '@/components/ui/button'
@@ -18,7 +18,7 @@ export default function AvailableBikeListUserHandler({ setStep, ...props }) {
    //console.log('AvailableBikeListUserHandler @@@->')
    const storedDateRange = useSelector(selectDateRange)
    const dateRange = dateRangeISOStringObjToString(storedDateRange)
-   const bikeSearchParams = useSelector(selectBikesearchParams)
+   const bikeSearchParams = useSelector(selectBikeSearchParams)
    const {
       data: availableBikes,
       isLoading,

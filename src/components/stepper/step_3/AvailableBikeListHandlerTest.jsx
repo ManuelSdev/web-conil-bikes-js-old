@@ -8,7 +8,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import {
    bikeSelected,
-   selectBikesearchParams,
+   selectBikeSearchParams,
    selectDateRange,
 } from '@/lib/redux/slices/bookingFormSlice'
 import { Button } from '@/components/ui/button'
@@ -21,58 +21,56 @@ import { Separator } from '@/components/ui/separator'
 import { AlertDialogButton } from '@/components/common/AlertDialogButton'
 import { useLazyCreateCookieQuery } from '@/lib/redux/apiSlices/cookieApi'
 import { useRouter } from 'next/navigation'
+import useLazyGetAvailableBikesQueryHook from '@/lib/redux/apiSlices/bikesApiHooks/useLazyGetAvailableBikesQueryHook'
+//import useAka from '@/lib/redux/apiSlices/bikesApiHooks/useAka'
 
 export default function AvailableBikeListHandlerTest({
    setStep,
    isLogged,
+   loadedAvailableBikes,
    ...props
 }) {
    console.log('AvailableBikeListUserHandler @@@->')
    const storedDateRange = useSelector(selectDateRange)
    const dateRange = dateRangeISOStringObjToString(storedDateRange)
-   const bikeSearchParams = useSelector(selectBikesearchParams)
+   const bikeSearchParams = useSelector(selectBikeSearchParams)
 
    const router = useRouter()
+
    const [triggerCookie] = useLazyCreateCookieQuery()
 
-   /*
-   const {
-      data: availableBikes,
-      isLoading,
-      isSuccess,
-      refetch,
-      isFetching,
-   } = useGetAvailableBikesQuery({ dateRange, ...bikeSearchParams })
-   */
-   // console.log('availableBikes ->', availableBikes)
    const dispatch = useDispatch()
 
-   const [
-      triggerBikes,
-      {
-         data: availableBikes,
-         isFetching: isFetchingBikes,
-         isSuccess: isSuccessBikes,
-         unsubscribe,
-      },
-      lastPromiseInfoBikes,
-   ] = useLazyGetAvailableBikesQuery()
+   const { availableBikes, isFetchingBikes, isSuccessBikes } =
+      useLazyGetAvailableBikesQueryHook()
 
    const handleSelect = (bike) => (ev) => {
       // console.log('bike ->', bike)
       dispatch(bikeSelected(bike))
       // setStep(1)
    }
+
    const renderPrevButton = () => (
       <Button onClick={() => setStep(2)} className="text-greenCorp">
          atrás
       </Button>
    )
 
-   const handleDialogAction = () => {
-      const stepperData = { dateRange, ...bikeSearchParams }
-      const cookieValue = JSON.stringify(stepperData)
-      triggerCookie({ name: 'stepperData', value: cookieValue })
+   const handleDialogAction = (bike) => {
+      console.log('bike -------------------->', bike)
+      const searchKeys = { dateRange, ...bikeSearchParams }
+
+      const searchKeyscookieValue = JSON.stringify(searchKeys)
+      const selectedBikeCookieValue = JSON.stringify(bike)
+      const byteSize = (str) => new Blob([str]).size
+      console.log(
+         'selectedBikeCookieValue ->',
+         byteSize(selectedBikeCookieValue)
+      )
+      console.log('searchKeyscookieValue ->', selectedBikeCookieValue)
+      // triggerCookie({ name: 'selectedBike', value: selectedBikeCookieValue })
+      window.localStorage.setItem('selectedBike', selectedBikeCookieValue)
+      triggerCookie({ name: 'searchKeys', value: searchKeyscookieValue })
       triggerCookie({ name: 'resolvedUrl', value: '/bookingg/bikes' })
       router.push(
          //`/user/booking?step=1b&date=${dateRange}&size=${size}&type=${type}&range=${range}`
@@ -90,35 +88,41 @@ export default function AvailableBikeListHandlerTest({
             }
             actionText={'Iniciar sesión'}
             cancelText={'Cancelar'}
-            triggerButtonText={'Seleccionarss'}
-            handleAction={handleDialogAction}
+            triggerButtonText={'Seleccionar'}
+            handleAction={(event) => handleDialogAction(bike)}
          />
       )
-
-   useEffect(() => {
-      const { size, type, range } = bikeSearchParams
-      size && type && range && triggerBikes({ dateRange, ...bikeSearchParams })
-   }, [bikeSearchParams])
-
-   return isFetchingBikes ? (
-      <div>LOADING availableBikes EN @@@ USER AvailableBikeListStep @@@</div>
-   ) : availableBikes ? (
+   const showBikes = (bikes) => (
       <div className="bg-[RGB(243,240,243)]">
-         {availableBikes.map(
+         {bikes.map(
             (bike, idx) =>
-               console.log('availableBikes -> ', availableBikes) || (
+               console.log('bikes -> ', bikes) || (
                   <div key={idx}>
                      <BikeCard
                         bike={bike}
-                        renderSelectBikeButton={renderSelectBikeButton}
+                        renderSelectBikeButton={(bike) =>
+                           renderSelectBikeButton(bike)
+                        }
                      />
                      <Separator className="holi my-4" />
                   </div>
                )
          )}
       </div>
+   )
+   /*
+   useEffect(() => {
+      const { size, type, range } = bikeSearchParams
+      size && type && range && triggerBikes({ dateRange, ...bikeSearchParams })
+   }, [bikeSearchParams])
+*/
+   return isFetchingBikes ? (
+      <div>LOADING availableBikes EN @@@ USER AvailableBikeListStep @@@</div>
+   ) : loadedAvailableBikes ? (
+      showBikes(loadedAvailableBikes)
+   ) : availableBikes ? (
+      showBikes(availableBikes)
    ) : (
       <div>NADA AUN</div>
    )
 }
-BikeCard

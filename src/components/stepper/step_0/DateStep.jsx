@@ -23,7 +23,7 @@ export default function DateStep({ from, to, handleSelect, linkDisabled }) {
                handleSelect={handleSelect(TO)}
             />
          </div>
-         {!linkDisabled ? (
+         {/*!linkDisabled ? (
             <Link
                disabled
                href="/bookingg/bikes"
@@ -39,7 +39,7 @@ export default function DateStep({ from, to, handleSelect, linkDisabled }) {
                {' '}
                Continuar
             </button>
-         )}
+         )*/}
       </div>
    )
 }

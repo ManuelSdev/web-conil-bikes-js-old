@@ -26,36 +26,43 @@ export default function NotifyCart() {
    const { dialog, handleSetDialog } = useDialogWindow(null)
    const dateRange = useSelector(selectDateRange)
    const { from, to } = dateRange
-   console.log('from', from)
+   //console.log('from', from)
    const bikesByUnits = useSelector(selectBikesByUnits)
    const bikesQuantity = bikesByUnits.length
+
    const [currentBikes, setCurrentBikes] = useState(0)
    const pathname = usePathname()
-
+   console.log(
+      '@@@@@@@@@@@@@@@@@@@@@@@@@@@   bikesQuantity @@@@@@@@@@@@@@@@@@@@@@@@@@@',
+      currentBikes
+   )
    //const bikesQuantity = 4
+   /*
    useEffect(() => {
       setCurrentBikes(bikesQuantity)
    }, [])
-
+*/
    useEffect(() => {
       if (bikesQuantity > currentBikes) {
+         setCurrentBikes(bikesQuantity)
+         console.log('opennnnnn')
          handleSetDialog({ open: true })
       }
       if (bikesQuantity === 0) {
          handleSetDialog({ open: false })
       }
-      setCurrentBikes(bikesQuantity)
+      // setCurrentBikes(bikesQuantity)
    }, [bikesQuantity])
 
    useEffect(() => {
-      handleSetDialog({ open: false })
+      // handleSetDialog({ open: false })
    }, [pathname])
 
    return (
       <div
          className={cn({
             'fixed bottom-2 right-2': true,
-            'hidden': !bikesQuantity,
+            'hidden': !currentBikes,
          })}
       >
          <NotifyBadge onClick={() => handleSetDialog({ open: true })}>
@@ -80,7 +87,7 @@ export default function NotifyCart() {
                   <Separator />
                   <div className="flex flex-col gap-5 pt-5">
                      {' '}
-                     <Button className="text-greenCorp">
+                     <Button asChild className="text-greenCorp">
                         <Link href="/bookingg/address">Continuars</Link>
                      </Button>
                      <Button

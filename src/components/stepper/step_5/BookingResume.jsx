@@ -12,6 +12,7 @@ import {
    UserCircleIcon,
 } from '@heroicons/react/20/solid'
 import { add, format } from 'date-fns'
+import Image from 'next/image'
 
 export default function BookingResume({
    name,
@@ -50,14 +51,28 @@ export default function BookingResume({
                   >
                      {bikes.map((bike, idx) => (
                         <li key={idx} className="flex py-6 sm:py-10">
-                           <div className="flex-shrink-0">
+                           {/*  <div className="flex-shrink-0">
                               <img
                                  src={bike.modelImages[0]}
                                  alt={'bike.imageAlt'}
                                  className="h-24 w-24 rounded-md object-cover object-center sm:h-48 sm:w-48"
                                  // className="h-24 w-24 rounded-md object-cover object-center sm:h-32 sm:w-32"
                               />
+                     </div>*/}
+                           <div className="relative h-[100px] w-[100px] bg-[#F1F1F1] sm:h-[150px] sm:w-[200px]">
+                              <Image
+                                 src={bike.modelImages[0]}
+                                 alt={bike.imageAlt}
+                                 fill
+                                 style={{
+                                    objectFit: 'contain',
+                                 }}
+                                 quality={100}
+                                 //width={'50%'}
+                                 //  className="h-24 w-24 rounded-md object-cover object-center sm:h-48 sm:w-48"
+                              />
                            </div>
+
                            <div className="ml-4 flex flex-1 flex-col sm:ml-6">
                               <div>
                                  <div className="flex justify-between">
@@ -192,12 +207,12 @@ export default function BookingResume({
                               />
                            </dt>
                            <dd className="text-sm leading-6 text-gray-500">
-                              <time dateTime="2023-01-31">
+                              {/* <time dateTime="2023-01-31">
                                  {`Del ${format(
                                     new Date(from),
                                     'dd/MM/yyyy'
                                  )} al ${format(new Date(to), 'dd/MM/yyyy')}}`}
-                              </time>
+                              </time>*/}
                            </dd>
                         </div>
 

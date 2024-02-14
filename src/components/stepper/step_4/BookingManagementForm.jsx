@@ -57,7 +57,7 @@ export function BookingManagementForm({
                control={form.control}
                name="address"
                render={({ field }) => (
-                  <FormItem className="w-2/3">
+                  <FormItem className="">
                      <FormLabel>Dirección</FormLabel>
                      <FormControl>
                         <Input placeholder="Dirección" {...field} />

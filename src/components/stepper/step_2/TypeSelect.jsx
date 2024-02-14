@@ -23,10 +23,11 @@ import {
    SelectTrigger,
    SelectValue,
 } from '@/components/ui/select'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { sizesList, typesList } from '@/utils/app/appValues'
 import { capitalizeFirst } from '@/utils/app/functions'
 import SpinnerLine from '@/components/common/SpinnerLine'
+import { is } from 'date-fns/locale'
 
 export default function TypeSelect({
    form,
@@ -35,13 +36,31 @@ export default function TypeSelect({
    isLoadingTypes,
    className,
    disabled,
+   loadedType,
+   selectKey,
 }) {
    //console.log('isLoadingTypes IN TypeSelect @->', isLoadingTypes)
 
+   /*
    useEffect(() => {
-      isLoadingTypes && form.resetField('type')
-   }, [isLoadingTypes])
+      loadedType && form.setValue('type', loadedType)
+   }, [])
+*/
 
+   const [types, setTypes] = useState(null)
+   /*
+   useEffect(() => {
+      form.resetField('type')
+   }, [isLoadingTypes])
+   */
+   /*
+   useEffect(() => {
+      if (availableTypes) {
+         setTypes(availableTypes)
+      }
+
+   }, [availableTypes])*/
+   console.log('selectKey', selectKey)
    return (
       <FormField
          control={form.control}
@@ -50,8 +69,12 @@ export default function TypeSelect({
             <FormItem className={className}>
                <FormLabel>Tipo</FormLabel>
                <Select
+                  key={selectKey}
+                  //      disabled={isLoadingTypes || !availableTypes}
                   onValueChange={handleChange(field)}
+                  //defaultValue={loadedType ? loadedType : field.value}
                   defaultValue={field.value}
+                  // value="sssss"
                >
                   <FormControl>
                      <SelectTrigger>
@@ -60,10 +83,10 @@ export default function TypeSelect({
                         ) : field.value ? (
                            <SelectValue
                               //  aria-label={field.value}
-                              placeholder="Tipo"
+                              placeholder="Tipo 1"
                            />
                         ) : (
-                           'Tipo'
+                           'Tipo 2'
                         )}
                      </SelectTrigger>
                   </FormControl>
@@ -72,6 +95,7 @@ export default function TypeSelect({
                         const [engType, spaType] = type
                         return (
                            <SelectItem
+                              selected={true}
                               disabled={
                                  availableTypes
                                     ? !availableTypes.includes(engType)

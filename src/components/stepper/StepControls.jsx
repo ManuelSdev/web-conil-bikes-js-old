@@ -33,16 +33,14 @@ export default function StepControls({
    }
 
    console.log('pageControl page', page)
-   const BUTTON_CN = 'mt-4 text-greenCorp'
+   const BUTTON_CN = 'mt-4'
 
    return renderPrevButton ? (
-      <div className="flex justify-evenly">
-         {renderPrevButton({ renderClassName: BUTTON_CN })}
-         {renderNextButton({ renderClassName: BUTTON_CN })}
+      <div className="mt-4 flex justify-evenly">
+         {renderPrevButton()}
+         {renderNextButton()}
       </div>
    ) : (
-      <div className="flex justify-evenly">
-         {renderNextButton({ renderClassName: BUTTON_CN })}
-      </div>
+      <div className="mt-4 flex px-8">{renderNextButton('grow ')}</div>
    )
 }

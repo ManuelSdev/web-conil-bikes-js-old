@@ -23,7 +23,7 @@ import {
    SelectTrigger,
    SelectValue,
 } from '@/components/ui/select'
-import React, { useEffect } from 'react'
+import React, { use, useEffect } from 'react'
 import { BIKE_RANGES_MAP, rangesList, sizesList } from '@/utils/app/appValues'
 import { capitalizeFirst } from '@/utils/app/functions'
 import SpinnerLine from '@/components/common/SpinnerLine'
@@ -38,6 +38,8 @@ export default function RangeSelect({
    disabled,
    isLoadingRange,
    isLoadingTypes,
+   loadedRange,
+   rangeKey,
 }) {
    /*
    const segmentList = useSelector(selectDatabaseInfoSegmentList)
@@ -51,10 +53,17 @@ export default function RangeSelect({
       return price ? `${price} €/día` : 'Gama no disponible'
    }
    //console.log('LOADING RANGE @->', isLoadingRange)
+
+   /*
+   useEffect(() => {
+      loadedRange && form.setValue('range', loadedRange)
+   }, [])
+   */
+   /*
    useEffect(() => {
       ;(isLoadingRange || isLoadingTypes) && form.resetField('range')
    }, [isLoadingRange, isLoadingTypes])
-
+*/
    return (
       <FormField
          control={form.control}
@@ -63,7 +72,9 @@ export default function RangeSelect({
             <FormItem className={className}>
                <FormLabel>Gama</FormLabel>
                <Select
+                  key={rangeKey}
                   onValueChange={handleChange(field)}
+                  // defaultValue={loadedRange ? loadedRange : field.value}
                   defaultValue={field.value}
                   // value={field.value}
                >

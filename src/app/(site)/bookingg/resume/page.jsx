@@ -19,7 +19,7 @@ export default async function UserBookingStepperPage({ params }) {
    const userAuth = await getUserPageAuth()
    const { name, email, phone, userId: appUserId } = userAuth
    return (
-      <Step step={4}>
+      <Step step={4} childClassName="sm:w-full">
          <BookingResumeHandler user={userAuth} />
       </Step>
    )

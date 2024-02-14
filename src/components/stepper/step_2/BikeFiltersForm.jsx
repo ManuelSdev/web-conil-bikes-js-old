@@ -6,9 +6,10 @@ import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { Form } from '@/components/ui/form'
 import SizeSelect from './SizeSelect'
-import React, { use } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import {
+   useGetAvailableBikesQueryState,
    useGetAvailableSizesQuery,
    useLazyGetAvailableRangesQuery,
    useLazyGetAvailableTypesQuery,
@@ -33,21 +34,23 @@ export default function BikeFiltersForm({
    availableSizes,
    segmentList,
    renderShowBikesButton,
+   loadedSearchKeys,
+
    ...props
    //form,
    // setStep,
 }) {
-   ////console.log('============', form.getValues())
-   ////console.log('dateRange @->', a)
-   /*
-   const {
-      data: availableSizes,
-      isLoading: isLoadingSizes,
-      isSuccess,
-      refetch,
-      isFetching,
-   } = useGetAvailableSizesQuery({ dateRange }, { skip: true })
-*/
+   console.log('loadedSearchKeys', loadedSearchKeys)
+   const loadedSize = loadedSearchKeys?.size
+   const loadedType = loadedSearchKeys?.type
+   const loadedRange = loadedSearchKeys?.range
+
+   const [loadedKeys, setLoadedKeys] = useState({
+      loadedSize,
+      loadedType,
+      loadedRange,
+   })
+
    const FormSchema = z.object({
       email: z
          .string({
@@ -56,10 +59,32 @@ export default function BikeFiltersForm({
          .email(),
    })
 
-   const form = useForm({ resolver: zodResolver(FormSchema) })
+   const form = useForm(
+      {
+         defaultValues: {
+            size: loadedSearchKeys?.size,
+            type: loadedSearchKeys?.type,
+            range: loadedSearchKeys?.range,
+         },
+      },
+
+      { resolver: zodResolver(FormSchema) }
+   )
+
+   if (false) {
+      form.setValue('size', loadedSearchKeys.size)
+      form.setValue('type', loadedSearchKeys.type)
+      form.setValue('range', loadedSearchKeys.range)
+   }
    const { size, type, range } = form.getValues()
-   //console.log('form values @->', form.getValues())
-   //console.log('form @->', form)
+   const a = useGetAvailableBikesQueryState({
+      dateRange,
+      size,
+      type,
+      range,
+      //className: 'sm:self-end',
+   })
+   console.log('--------------------------------- a @->', form.getValues())
 
    const [
       triggerType,
@@ -71,8 +96,11 @@ export default function BikeFiltersForm({
       },
       lastPromiseInfoTypes,
    ] = useLazyGetAvailableTypesQuery()
+   console.log('lastPromiseInfoTypes ->', lastPromiseInfoTypes)
 
-   //console.log('availableTypes IN BikeFilters @->', availableTypes)
+   //Uso de keys para resetear los select: cambiar la key vuelve a renderizar el componente
+   const [selectKeys, setSelectKeys] = useState({ typeKey: 0, rangeKey: 1 })
+   const { typeKey, rangeKey } = selectKeys
 
    const [
       triggerRange,
@@ -86,9 +114,14 @@ export default function BikeFiltersForm({
    }
    const handleSizeChange = (field) => (selectedSizeValue) => {
       field.onChange(selectedSizeValue)
+      form.resetField('type')
+      form.resetField('range')
+      setSelectKeys({ rangeKey: selectedSizeValue, typeKey: selectedSizeValue })
+      //form.resetField('type')
+      //form.resetField('range')
       // form.reset()
       // setBikeForm({ ...form, size: lastSelectedSize })
-      //console.log('## CALL getAvailableSizesInRange FROM BikeFilters ##')
+      console.log('## CALL getAvailableSizesInRange FROM BikeFilters ##')
 
       triggerType({ dateRange, size: selectedSizeValue })
    }
@@ -96,6 +129,8 @@ export default function BikeFiltersForm({
    const handleType = (field) => (selectedTypeValue) => {
       //console.log('field -> ', field)
       field.onChange(selectedTypeValue)
+      form.resetField('range')
+      setSelectKeys({ ...selectKeys, rangeKey: selectedTypeValue })
       //  updateBikeForm({ type: selectedTypeValue })
       triggerRange({ dateRange, size, type: selectedTypeValue })
    }
@@ -110,8 +145,34 @@ export default function BikeFiltersForm({
 
    const onSubmit = (data, event) => {
       event.preventDefault()
+
       // setStep(1)
    }
+   /*
+   useEffect(() => {
+      if (availableSizes && loadedKeys.loadedSize) {
+         form.setValue('size', loadedKeys.loadedSize)
+         triggerType({ dateRange, size: loadedKeys.loadedSize })
+         setLoadedKeys({ ...loadedKeys, loadedSize: null })
+      }
+   }, [availableSizes])
+
+   useEffect(() => {
+      if (availableTypes && loadedKeys.loadedType) {
+         form.setValue('type', loadedKeys.loadedType)
+         triggerRange({ dateRange, size, type: loadedKeys.loadedType })
+      }
+   }, [availableTypes])
+
+   useEffect(() => {
+      if (availableRanges && loadedKeys.loadedRange) {
+         form.setValue('range', loadedKeys.loadedRange)
+         //triggerRange({ dateRange, size, range: loadedKeys.loadedRange })
+      }
+   }, [availableRanges])
+*/
+   //Clave para resetear los select
+   //https://github.com/radix-ui/primitives/issues/1569#issuecomment-1434801848
    return (
       <Form {...form}>
          <form
@@ -120,6 +181,7 @@ export default function BikeFiltersForm({
             className="space-y-8"
          >
             <SizeSelect
+               loadedSize={loadedKeys.loadedSize}
                // className="sm:grow"
                className="space-y-2 "
                form={form}
@@ -131,7 +193,9 @@ export default function BikeFiltersForm({
                {...props}
             />
             <TypeSelect
+               selectKey={typeKey}
                disabled
+               loadedType={loadedKeys.loadedType}
                // className="sm:grow"
                className="sm:min-w-[100px]"
                form={form}
@@ -141,8 +205,11 @@ export default function BikeFiltersForm({
                isLoadingTypes={isLoadingTypes}
                //   LoadingLabel={LoadingLabel}
                availableTypes={availableTypes}
+               {...props}
             />
             <RangeSelect
+               key={rangeKey}
+               loadedRange={loadedKeys.loadedRange}
                disabled
                // className="sm:grow"
                className="sm:min-w-[165px]"
@@ -155,6 +222,7 @@ export default function BikeFiltersForm({
                isLoadingRange={isLoadingRange}
                //  LoadingLabel={LoadingLabel}
                availableRanges={availableRanges}
+               {...props}
             />
             <div className="flex justify-center">
                {renderShowBikesButton({

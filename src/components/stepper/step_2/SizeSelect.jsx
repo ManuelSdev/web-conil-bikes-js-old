@@ -23,7 +23,7 @@ import {
    SelectTrigger,
    SelectValue,
 } from '@/components/ui/select'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { sizesList } from '@/utils/app/appValues'
 import SpinnerLine from '@/components/common/SpinnerLine'
 
@@ -33,56 +33,82 @@ export default function SizeSelect({
    handleChange,
    isLoadingSizes,
    className,
+   loadedSize,
+   loadedData,
 }) {
+   //const loadedSize = loadedSearchKeys?.size
+   console.log('loadedSize', loadedSize)
+   /*
+   useEffect(() => {
+      availableSizes && loadedSize && form.setValue('size', loadedSize)
+   }, [availableSizes])
+*/
    return (
       <FormField
          control={form.control}
          name="size"
-         render={({ field }) => (
-            //  //console.log('field -> ', field) ||
-            <FormItem className={className}>
-               <FormLabel>Talla</FormLabel>
-               <Select
-                  onValueChange={handleChange(field)}
-                  defaultValue={field.value}
-               >
-                  <FormControl>
-                     <SelectTrigger>
+         render={({ field }) =>
+            console.log('field -> ', field) || (
+               <FormItem className={className}>
+                  <FormLabel>Talla</FormLabel>
+                  <Select
+                     onValueChange={handleChange(field)}
+                     //defaultValue={loadedSize ? loadedSize : field.value}
+                     defaultValue={field.value}
+                     //   defaultValue={field.value}
+                  >
+                     <FormControl>
+                        <SelectTrigger>
+                           {isLoadingSizes ? (
+                              <SpinnerLine />
+                           ) : field.value ? (
+                              <SelectValue placeholder="Talla">
+                                 {field.value?.toUpperCase()}
+                              </SelectValue>
+                           ) : (
+                              'Talla'
+                           )}
+                        </SelectTrigger>
+                        {/* <SelectTrigger>
                         {isLoadingSizes ? (
                            <SpinnerLine />
+                        ) : field.value ? (
+                           <SelectValue
+                              //  aria-label={field.value}
+                              placeholder="Talla"
+                           />
                         ) : (
-                           <SelectValue placeholder="Talla">
-                              {field.value?.toUpperCase()}
-                           </SelectValue>
+                           'Talla'
                         )}
-                     </SelectTrigger>
-                  </FormControl>
+                        </SelectTrigger>*/}
+                     </FormControl>
 
-                  <SelectContent>
-                     {sizesList.map((elem) => {
-                        const [size, [min, max]] = elem
-                        return (
-                           <SelectItem
-                              disabled={
-                                 availableSizes
-                                    ? !availableSizes.includes(size)
-                                    : true
-                              }
-                              key={size}
-                              value={size}
-                           >
-                              {`${size.toUpperCase()} - si mides entre ${min} y ${max} cm `}
-                           </SelectItem>
-                        )
-                     })}
-                  </SelectContent>
-               </Select>
-               {/* <FormDescription>
+                     <SelectContent>
+                        {sizesList.map((elem) => {
+                           const [size, [min, max]] = elem
+                           return (
+                              <SelectItem
+                                 disabled={
+                                    availableSizes
+                                       ? !availableSizes.includes(size)
+                                       : true
+                                 }
+                                 key={size}
+                                 value={size}
+                              >
+                                 {`${size.toUpperCase()} - si mides entre ${min} y ${max} cm `}
+                              </SelectItem>
+                           )
+                        })}
+                     </SelectContent>
+                  </Select>
+                  {/* <FormDescription>
                   Selecciona una talla en función de tu altura
                   </FormDescription>*/}
-               <FormMessage />
-            </FormItem>
-         )}
+                  <FormMessage />
+               </FormItem>
+            )
+         }
       />
    )
 }

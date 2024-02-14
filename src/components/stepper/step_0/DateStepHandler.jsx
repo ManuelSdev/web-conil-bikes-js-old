@@ -37,17 +37,17 @@ export default function DateStepHandler({
       dispatch(dateRangeSelected(isoStringRangeObj))
    }
 
-   const renderNextButton = ({ renderClassName }) => {
+   const renderNextButton = (className) => {
       const isDisabled = !from || !to
 
       return isDisabled ? (
-         <Button disabled className={renderClassName}>
+         <Button disabled variant="custom" className={className}>
             Siguiente
          </Button>
       ) : (
-         <Link href={`/bookingg/bikes`}>
-            <Button className={renderClassName}>Siguiente</Button>
-         </Link>
+         <Button asChild variant="custom" className={className}>
+            <Link href={'/bookingg/bikes'}>Siguiente </Link>
+         </Button>
       )
    }
 

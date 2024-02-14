@@ -52,7 +52,8 @@ module.exports = {
             },
             /** PROPIOS */
             greenCorp: {
-               DEFAULT: 'hsl(var(--green-corp))',
+               // DEFAULT: 'hsl(var(--green-corp))',
+               DEFAULT: 'hsl(var(--green-corp), <alpha-value>)',
                foreground: '#FF7F27',
             },
          },

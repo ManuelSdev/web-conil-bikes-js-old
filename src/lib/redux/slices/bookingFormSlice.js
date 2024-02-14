@@ -1,6 +1,7 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit'
+import { createSelector, createSlice, current } from '@reduxjs/toolkit'
 import { selectAppBikesConfig } from './appConfigSlice'
 import { differenceInDays } from 'date-fns'
+import { stringDateRangeToISOStringObj } from '@/utils/datesFns/createDateRangeString'
 
 const initialState = {
    //dateRange: '',
@@ -25,10 +26,22 @@ const bookingFormSlice = createSlice({
       varChanged: (state, action) => {
          state.var = action.payload
       },
+      bikeSearchParamsSelected: (state, action) => {
+         //console.log('bikeSearchParamsSelected action.payload _> ',action.payload)
+         state.bikeSearchParams = action.payload
+      },
       segmentListLoaded: (state, action) => {
          // //console.log('segmentListLoaded action.payload _> ', action.payload)
          state.segmentList = action.payload
       },
+      searchKeysLoaded: (state, action) => {
+         //console.log('searchBikesKeysLoaded action.payload _> ', action.payload)
+         const { dateRange, size, type, range } = action.payload
+         state.dateRange = stringDateRangeToISOStringObj(dateRange)
+         state.bikeSearchParams = { size, type, range }
+         // addBike(state, { payload: bike })
+      },
+
       dateRangeSelected: (state, action) => {
          ////console.log('dateRangeSelected action.payload _> ', action.payload)
          state.dateRange = action.payload
@@ -72,11 +85,6 @@ const bookingFormSlice = createSlice({
             })
          }
       },
-
-      bikeSearchParamsSelected: (state, action) => {
-         //console.log('bikeSearchParamsSelected action.payload _> ',action.payload)
-         state.bikeSearchParams = action.payload
-      },
    },
 })
 
@@ -88,6 +96,7 @@ export const {
    bikeSelected,
    bikeRemoved,
    bikeSearchParamsSelected,
+   searchKeysLoaded,
 } = bookingFormSlice.actions
 
 export default bookingFormSlice.reducer
@@ -98,7 +107,7 @@ export const selectDateRange = (state) => state.bookingForm.dateRange
 
 export const selectBikes = (state) => state.bookingForm.bikes
 
-export const selectBikesearchParams = (state) =>
+export const selectBikeSearchParams = (state) =>
    state.bookingForm.bikeSearchParams
 
 const selectBookingAddress = (state) => state.bookingForm.address
@@ -205,6 +214,7 @@ export const selectBookingData = createSelector(
 )
 function addBike(state, action) {
    //modelId=modelId: modelId del modelo, no modelId de bicicleta
+   console.log('state en addBike -> ', state)
    const newBike = {
       ...action.payload,
    }
@@ -228,6 +238,7 @@ function addBike(state, action) {
          } else return bike
       })
    } else {
+      console.log('segmentList en addBike -> ', current(state))
       const bikePrice = getBikeSegmentPrice(state.segmentList)(newBike)
       state.bikes = [
          ...state.bikes,
@@ -238,12 +249,33 @@ function addBike(state, action) {
 
 function getBikeSegmentPrice(segmentList) {
    return (bike) => {
+      //console.log('segmentList en getBikeSegmentPrice -> ', segmentList)
       const segment = segmentList.filter(
          (segment) =>
             segment.modelType === bike.modelType &&
             segment.modelRange === bike.modelRange
       )
+      // console.log('segment en getBikeSegmentPrice -> ', segment)
       const [{ segmentPrice }] = segment
+      //  console.log('segmentPrice en getBikeSegmentPrice -> ', segmentPrice)
       return segmentPrice
    }
 }
+
+/*
+const initialState = {
+   //dateRange: '',
+   var: 0,
+   segmentList: [],
+   dateRange: { from: '', to: '' },
+   bikes: [],
+   address: '',
+   delivery: false,
+   pickup: false,
+   bikeSearchParams: {
+      size: '',
+      type: '',
+      range: '',
+   },
+}
+*/

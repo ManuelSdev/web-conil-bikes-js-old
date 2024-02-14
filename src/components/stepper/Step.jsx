@@ -7,6 +7,7 @@ import StepVertical from './StepVertical'
 import { Button } from '../ui/button'
 import Link from 'next/link'
 import StepControl from './StepControl'
+import { cn } from '@/utils/app/functions'
 
 export default function Step({
    step,
@@ -15,6 +16,7 @@ export default function Step({
    page,
    nextButton,
    prevButton,
+   childClassName,
 }) {
    //console.log('Step @@@->')
    return (
@@ -25,10 +27,18 @@ export default function Step({
             Indícanos la fecha de inicio y de finalización de tu reserva
          </p>
          <Separator className="my-4" />
-         <div className="flex flex-col space-y-8 sm:flex-row sm:space-x-24 sm:space-y-0">
-            <StepVertical step={step} />
+         {/* <div className="flex flex-col space-y-8 sm:flex-row sm:space-x-24 sm:space-y-0"> */}
+         <div className="flex flex-col  space-y-8  sm:space-y-0">
+            <div className="sm:hidden">
+               <StepVertical step={step} />
+            </div>
+            <div className="hidden sm:block">
+               <StepsPanel step={step} />
+            </div>
 
-            <div className="flex-1 ">{children}</div>
+            <div className={cn('sm:mx-auto sm:w-1/2', childClassName)}>
+               {children}
+            </div>
          </div>
       </div>
    )

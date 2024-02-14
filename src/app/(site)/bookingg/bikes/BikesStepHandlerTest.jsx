@@ -1,7 +1,8 @@
 'use client'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
    useGetAppBikesConfigQuery,
+   useGetAvailableBikesQueryState,
    useGetAvailableSizesQuery,
    useLazyGetAvailableBikesQuery,
 } from '@/lib/redux/apiSlices/bikeApi'
@@ -12,8 +13,15 @@ import {
    bikeSelected,
    selectDateRange,
    segmentListLoaded,
+   searchKeysLoaded,
+   selectBikeSearchParams,
+   selectSegmentList,
+   dateRangeSelected,
 } from '@/lib/redux/slices/bookingFormSlice'
-import { dateRangeISOStringObjToString } from '@/utils/datesFns/createDateRangeString'
+import {
+   dateRangeISOStringObjToString,
+   stringDateRangeToISOStringObj,
+} from '@/utils/datesFns/createDateRangeString'
 import { Button } from '@/components/ui/button'
 
 import { useRouter } from 'next/navigation'
@@ -25,87 +33,130 @@ import { Separator } from '@/components/ui/separator'
 import { cn } from '@/utils/app/functions'
 import StepControls from '@/components/stepper/StepControls'
 import Link from 'next/link'
+import { Search } from 'lucide-react'
+import useLazyGetAvailableBikesQueryHook from '@/lib/redux/apiSlices/bikesApiHooks/useLazyGetAvailableBikesQueryHook'
+import { Loader2 } from 'lucide-react'
+import { useLazyDeleteCookieQuery } from '@/lib/redux/apiSlices/cookieApi'
+import { de } from 'date-fns/locale'
 
 export default function BikesStepHandlerTest({
    setStep,
    segmentList,
+   loadedSearchKeys: searchKeys,
+
+   loadedData,
    ...props
    //appBikesConfig,
    // availableSizes,
 }) {
-   //console.log('BikeFiltersStepUserHandler @@@->')
    const dispatch = useDispatch()
 
+   const [deleteCookie] = useLazyDeleteCookieQuery()
+
    const strDateRangeObj = useSelector(selectDateRange)
+   const dateRange = dateRangeISOStringObjToString(strDateRangeObj)
    const { from, to } = strDateRangeObj
    const isDateRange = !!from && !!to
+
+   const bikeSearchParams = useSelector(selectBikeSearchParams)
    const bikesByUnits = useSelector(selectBikesByUnits)
    const bikesQuantity = bikesByUnits.length
-   const router = useRouter()
-   const dateRange = dateRangeISOStringObjToString(strDateRangeObj)
-   //console.log('dateRange @->', isDateRange)
+
+   const loadedSegmentList = useSelector(selectSegmentList)
+
+   const {
+      data: availableSizes,
+      isLoading: isLoadingSizes,
+      isSuccess: isSuccessSizes,
+   } = useGetAvailableSizesQuery({ dateRange }, { skip: !!loadedData })
+
+   const {
+      availableBikes,
+      isFetchingBikes,
+      isSuccessBikes,
+      originalArgs,
+      lastPromiseInfoBikes,
+   } = useLazyGetAvailableBikesQueryHook()
+
+   const [isDisabled, setIsDisabled] = useState(true)
+
+   const handleDisabled = (newKeys) => {}
+
    useEffect(() => {
       dispatch(segmentListLoaded(segmentList))
+      searchKeys &&
+         dispatch(
+            dateRangeSelected(
+               stringDateRangeToISOStringObj(searchKeys.dateRange)
+            )
+         )
    }, [])
 
-   //isDateRange || router.push('/bookingg/date')
-   //const segmentList = useSelector(selectSegmentList)
-   const {
-      data: appBikesConfig,
-      isLoading: isLoadingConfig,
-      isSuccess,
-      refetch,
-      isFetching,
-   } = useGetAppBikesConfigQuery()
+   useEffect(() => {
+      if (searchKeys && loadedSegmentList) {
+         deleteCookie('searchKeys')
+         const selectedBikeJson = window.localStorage.getItem('selectedBike')
+         console.log('selectedBikeJson ->', selectedBikeJson)
+         const selectedBike = JSON.parse(selectedBikeJson)
+         window.localStorage.removeItem('selectedBike')
+         // deleteCookie('selectedBike')
+         console.log('selectedBike ->', selectedBike)
+         //  dispatch(searchKeysLoaded(searchKeys))
+         //  console.log('selectedBike ->', selectedBike)
+         selectedBike && dispatch(bikeSelected(selectedBike))
+         if (selectedBikeJson) {
+         }
+      }
 
-   const { data: availableSizes, isLoading: isLoadingSizes } =
-      useGetAvailableSizesQuery({ dateRange })
+      // return () => window.localStorage.removeItem('selectedBike')
+   }, [loadedSegmentList])
 
-   const [
-      triggerBikes,
-      {
-         data: availableBikes,
-         isFetching: isFetchingBikes,
-         isSuccess: isSuccessBikes,
-         unsubscribe,
-      },
-      lastPromiseInfoBikes,
-   ] = useLazyGetAvailableBikesQuery()
+   const renderShowBikesButton = ({ size, type, range, className }) =>
+      isFetchingBikes ? (
+         <Button
+            variant="reverse"
+            className={cn('bg-greenCorp text-black', className)}
 
-   const renderShowBikesButton = ({ size, type, range, className }) => (
-      <Button
-         className={cn('text-greenCorp', className)}
-         onClick={() => {
-            // triggerBikes({ dateRange, size, type, range })
-            dispatch(bikeSearchParamsSelected({ size, type, range }))
-            //   setStep(3)
-         }}
-         disabled={!range}
-         //type="submit"
-      >
-         MOSTRAR BICICLETAS
-      </Button>
-   )
+            //  disabled={!range}
+            //type="submit"
+         >
+            <Loader2 className="mr-2 h-4 w-4  animate-spin" /> Cargando...
+         </Button>
+      ) : (
+         <Button
+            variant="reverse"
+            //   className={cn('bg-greenCorp text-black', className)}
+            onClick={() => {
+               dispatch(bikeSearchParamsSelected({ size, type, range }))
 
-   const renderNextButton = ({ renderClassName }) => {
+               //   setStep(3)
+            }}
+            disabled={!range}
+            //type="submit"
+         >
+            <Search className="mr-2 h-4 w-4" />
+            Mostrar bicicletas
+         </Button>
+      )
+
+   const renderNextButton = (renderClassName) => {
       const isDisabled = !bikesQuantity
 
       return isDisabled ? (
-         <Button disabled className={renderClassName}>
+         <Button disabled variant="custom" className={renderClassName}>
             Siguiente
          </Button>
       ) : (
-         <Link href={`/bookingg/address`}>
-            <Button className={renderClassName}>Siguiente</Button>
-         </Link>
+         <Button asChild variant="custom" className={renderClassName}>
+            <Link href={'/bookingg/address'}>Siguiente </Link>
+         </Button>
       )
    }
 
-   const renderPrevButton = ({ renderClassName }) => (
-      <Link href={'bookingg/date'}>
-         {' '}
-         <Button className={renderClassName}>Atrás</Button>
-      </Link>
+   const renderPrevButton = (renderClassName) => (
+      <Button asChild variant="custom" className={renderClassName}>
+         <Link href={'/bookingg/date'}>Atrás </Link>
+      </Button>
    )
 
    const handleSelect = (bike) => (ev) => {
@@ -116,6 +167,8 @@ export default function BikesStepHandlerTest({
    return (
       <div>
          <BikeFiltersForm
+            loadedData={loadedData}
+            loadedSearchKeys={searchKeys}
             isLoadingSizes={isLoadingSizes}
             availableSizes={availableSizes}
             segmentList={segmentList}

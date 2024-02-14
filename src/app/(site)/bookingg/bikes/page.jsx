@@ -4,7 +4,13 @@ import UserStepper from '@/components/stepper/UserStepper'
 import BikeFiltersStepHandler from '@/components/stepper/step_2/BikeFiltersStepHandler'
 import AvailableBikeListHandler from '@/components/stepper/step_3/AvailableBikeListHandler'
 import { verifySessionCookie } from '@/lib/firebase/admin/verifySessionCookie'
-import { getAppBikeConfigSegments } from '@/lib/pg/crud/bikes'
+import {
+   getAppBikeConfigSegments,
+   getAvailableBikes,
+   getAvailableRanges,
+   getAvailableSizesInRange,
+   getAvailableTypes,
+} from '@/lib/pg/crud/bikes'
 import { getUserIdByEmail } from '@/lib/pg/crud/users'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
@@ -19,18 +25,42 @@ import {
    getAppBikeSegments,
    getUserPageAuth,
 } from '@/utils/serverFns/serverFns'
+import NotifyCart from '@/components/a/NotifyCart'
 
 export default async function BikesStepPage({ params }) {
+   const searchKeysCookie = cookies().get('searchKeys')
+   //const selectedBikeCookie = cookies().get('selectedBike')
+
+   const loadedSearchKeys = searchKeysCookie
+      ? JSON.parse(searchKeysCookie.value)
+      : null
+
+   const loadedPreviusStateData = await loadPreviusStateData(loadedSearchKeys)
+   /*
+   const selectedBike = selectedBikeCookie
+      ? JSON.parse(selectedBikeCookie.value)
+      : null
+*/
    const { segmentList } = await getAppBikeSegments()
+
    const userAuth = await getUserPageAuth()
+
    console.log('userAuth ', userAuth)
    console.log('params ', params)
    return (
       <div>
          <Step step={2} page="bikes">
-            <BikesStepHandlerTest segmentList={segmentList} />
+            <BikesStepHandlerTest
+               segmentList={segmentList}
+               loadedSearchKeys={loadedSearchKeys}
+               loadedData={loadedPreviusStateData}
+               // selectedBike={selectedBike}
+            />
          </Step>
-         <AvailableBikeListHandlerTest isLogged={userAuth.isLogged} />
+         <AvailableBikeListHandlerTest
+            loadedAvailableBikes={loadedPreviusStateData?.availableBikes}
+            isLogged={userAuth.isLogged}
+         />
       </div>
    )
 }
@@ -40,6 +70,38 @@ async function getPageData(userSessionCookie) {
    const segmentList = await resAppBikesConfigSegments.json()
 
    return { segmentList }
+}
+
+//Recupera los datos de la búsqueda de bicicletas que se realizó antes del login
+async function loadPreviusStateData(searchKeys) {
+   if (!searchKeys) return null
+
+   const { dateRange, size, type, range } = searchKeys
+
+   const availableSizesRes = await getAvailableSizesInRange({ dateRange })
+   const availableSizes = await availableSizesRes.json()
+
+   const availableTypesRes = await getAvailableTypes({ dateRange, size })
+   const availableTypes = await availableTypesRes.json()
+
+   const availableRangesRes = await getAvailableRanges({
+      dateRange,
+      size,
+      type,
+   })
+   const availableRanges = await availableRangesRes.json()
+
+   const availableBikesRes = await getAvailableBikes({
+      ...searchKeys,
+   })
+   const availableBikes = await availableBikesRes.json()
+
+   return {
+      availableSizes,
+      availableTypes,
+      availableRanges,
+      availableBikes,
+   }
 }
 /*
    <StepLayout>

@@ -21,12 +21,9 @@ export default async function DateStepPage({ params }) {
    //console.log('userSessionCookie ', userSessionCookie)
    return (
       <div>
-         {' '}
          <Step step={1} title={'Hola'} page="date">
-            {' '}
             <DateStepHandler />
          </Step>
-         <NotifyCart />
       </div>
    )
 }
