@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export default function useDialogWindow(initialDialog) {
+export default function no_useDialogWindow(initialDialog) {
    const initialDialogState = initialDialog
       ? initialDialog
       : {

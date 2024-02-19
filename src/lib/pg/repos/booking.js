@@ -100,20 +100,22 @@ const a = {
 
 export const addBooking = async (data) => {
    const text = addBookingText(data)
+   // console.log('text en addBooking', text)
    const client = await pool.connect()
    try {
       await client.query('BEGIN')
       //console.log('@@@@@@@@@@@+++++++ query text en addBooking', text)
       const { rows } = await client.query(text)
       await client.query('COMMIT')
-      return rows
-      const [{ booking_id: bookingId }] = rows
+      const [{ bookingId }] = rows
+      return { bookingId }
+      //  const [{ booking_id: bookingId }] = rows
       //console.log('@@@@@@@@@@@+++++++ response en addBooking', rows)
       res.status(201).json(bookingId)
    } catch (err) {
       await client.query('ROLLBACK')
       //console.log('ERROR API CREATE BOOKING', err.message)
-      return err
+      throw err
       res.status(500)
    } finally {
       //console.log('============ FINALLY ================')

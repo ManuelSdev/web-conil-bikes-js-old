@@ -15,7 +15,13 @@ import { cn } from '@/utils/app/functions'
 import { useState } from 'react'
 import { es } from 'date-fns/locale'
 
-export default function DatePicker({ date, handleSelect, label, className }) {
+export default function DatePicker({
+   date,
+   handleSelect,
+   label,
+   className,
+   isDisabled,
+}) {
    const [open, setopen] = useState(false)
    const onSelect = (selectedDate) => {
       handleSelect(selectedDate)
@@ -25,6 +31,7 @@ export default function DatePicker({ date, handleSelect, label, className }) {
       <Popover onOpenChange={setopen} open={open}>
          <PopoverTrigger asChild>
             <Button
+               disabled={isDisabled}
                variant={'outline'}
                className={cn(
                   //    'w-[280px] ',
@@ -39,6 +46,7 @@ export default function DatePicker({ date, handleSelect, label, className }) {
          </PopoverTrigger>
          <PopoverContent className="w-auto p-0">
             <Calendar
+               // disabled
                locale={es}
                mode="single"
                selected={date}

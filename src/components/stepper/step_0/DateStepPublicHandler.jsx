@@ -9,7 +9,7 @@ import {
    stringDateRangeToDateRangeObj,
 } from '@/utils/datesFns/createDateRangeString'
 import { useRouter } from 'next/navigation'
-import DateStep from './DateStep'
+import DateStep from '../../../app/(site)/bookingg/date/DateStep'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import Step from '../Step'

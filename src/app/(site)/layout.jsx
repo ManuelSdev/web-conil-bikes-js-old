@@ -4,8 +4,6 @@ import React from 'react'
 import SiteShell from '@/components/layouts/site/SiteShell'
 import ReduxProviderWrapper from '@/lib/redux/ReduxProviderWrapper'
 import { Toaster } from '@/components/ui/toaster'
-import NotifyCart from '@/components/a/NotifyCart'
-import { Suspense } from 'react'
 
 export async function generateStaticParams() {
    return [{ lang: 'es-ES' }]
@@ -24,9 +22,9 @@ export default function SiteLayout(props) {
             <ReduxProviderWrapper>
                <SiteShell {...props} />
                <Toaster />
-               <Suspense fallback={null}>
-                  <NotifyCart />{' '}
-               </Suspense>
+               {/* <Suspense fallback={null}>
+                  <NotifyCart />
+   </Suspense>*/}
             </ReduxProviderWrapper>
          </body>
       </html>

@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect } from 'react'
-import SelectedBikeList from './SelectedBikeList'
+import SelectedBikeList from '../../../components/stepper/step_1/SelectedBikeList'
 import MobileBottomAppBar from '@/components/layouts/site/MobileBottomAppBar'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -9,11 +9,11 @@ import {
    selectBikesByUnits,
 } from '@/lib/redux/slices/bookingFormSlice'
 import { useRouter } from 'next/navigation'
-import SelectedBikeListStep from './SelectedBikeListStep'
+import SelectedBikeListStep from '../../../components/stepper/step_1/SelectedBikeListStep'
 import { set } from 'date-fns'
 import { Button } from '@/components/ui/button'
-import Step from '../Step'
-import StepperControlButtons from '../StepperControlButtons'
+import Step from '../../../components/stepper/Step'
+import StepperControlButtons from '../../../components/stepper/StepperControlButtons'
 
 export default function SelectedBikesListHandler({ setStep, ...props }) {
    const dispatch = useDispatch()

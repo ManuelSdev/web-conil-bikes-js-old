@@ -1,10 +1,6 @@
 'use client'
 import React, { useEffect } from 'react'
-import AvailableBikesList from './AvailableBikeList'
-import {
-   useGetAvailableBikesQuery,
-   useLazyGetAvailableBikesQuery,
-} from '@/lib/redux/apiSlices/bikeApi'
+
 import { useDispatch, useSelector } from 'react-redux'
 import {
    bikeSelected,
@@ -12,11 +8,8 @@ import {
    selectDateRange,
 } from '@/lib/redux/slices/bookingFormSlice'
 import { Button } from '@/components/ui/button'
-import AvailableBikeListStep from './AvailableBikeListStep'
 import { dateRangeISOStringObjToString } from '@/utils/datesFns/createDateRangeString'
-import Step from '../Step'
-import StepperControlButtons from '../StepperControlButtons'
-import BikeCard from './BikeCard'
+import BikeCard from '../../../../components/stepper/step_3/BikeCard'
 import { Separator } from '@/components/ui/separator'
 import { AlertDialogButton } from '@/components/common/AlertDialogButton'
 import { useLazyCreateCookieQuery } from '@/lib/redux/apiSlices/cookieApi'
@@ -24,7 +17,7 @@ import { useRouter } from 'next/navigation'
 import useLazyGetAvailableBikesQueryHook from '@/lib/redux/apiSlices/bikesApiHooks/useLazyGetAvailableBikesQueryHook'
 //import useAka from '@/lib/redux/apiSlices/bikesApiHooks/useAka'
 
-export default function AvailableBikeListHandlerTest({
+export default function AvailableBikeListHandler({
    setStep,
    isLogged,
    loadedAvailableBikes,

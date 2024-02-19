@@ -224,14 +224,16 @@ export default function BikeFiltersForm({
                availableRanges={availableRanges}
                {...props}
             />
-            <div className="flex justify-center">
-               {renderShowBikesButton({
-                  dateRange,
-                  size,
-                  type,
-                  range,
-                  //className: 'sm:self-end',
-               })}
+            <div className="mx-auto max-w-xs  ">
+               <div className="flex ">
+                  {renderShowBikesButton({
+                     dateRange,
+                     size,
+                     type,
+                     range,
+                     className: 'grow',
+                  })}
+               </div>
             </div>
          </form>
       </Form>

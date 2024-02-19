@@ -18,11 +18,18 @@ export function AlertDialogButton({
    actionText,
    cancelText,
    handleAction,
+   variant,
+   className,
 }) {
    return (
       <AlertDialog>
          <AlertDialogTrigger asChild>
-            <Button variant="outline">{triggerButtonText}</Button>
+            <Button
+               variant={variant ? variant : 'outline'}
+               className={className}
+            >
+               {triggerButtonText}
+            </Button>
          </AlertDialogTrigger>
          <AlertDialogContent>
             <AlertDialogHeader>

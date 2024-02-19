@@ -1,6 +1,5 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import BookingManagementStep from './BookingManagementStep'
 import { useDispatch, useSelector } from 'react-redux'
 import {
    bookingManagementSelected,
@@ -11,12 +10,11 @@ import { Button } from '@/components/ui/button'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import Step from '../Step'
-import { BookingManagementForm } from './BookingManagementForm'
 import Link from 'next/link'
-import StepControls from '../StepControls'
-import { buttonVariants } from '@/components/ui/button'
-import { cn } from '@/utils/app/functions'
+
+import { ArrowArcRight, ArrowLeft, ArrowRight } from '@phosphor-icons/react'
+import { BookingAddressForm } from './BookingAddressForm'
+import StepControls from '@/components/stepper/StepControls'
 
 const FormSchema = z.object({
    address: z.string().min(2, {
@@ -52,32 +50,34 @@ export default function BookingAddressHandler({ setStep, ...props }) {
       }
    }, [])
 
-   const renderNextButton = (a) => {
-      console.log('renderClassName', a)
-      const { renderClassName } = a
-
+   const renderNextButton = (renderClassName) => {
       const { address } = form.getValues()
       const isDisabled = !address
 
       return isDisabled ? (
-         <Button disabled className={renderClassName}>
-            Siguiente
+         <Button disabled variant="custom" className={renderClassName}>
+            Siguiente <ArrowRight weight="bold" className="ml-2 h-4 w-4" />
          </Button>
       ) : (
-         <Link href={`/bookingg/resume`}>
-            <Button className={renderClassName}>Siguiente</Button>
-         </Link>
+         <Button asChild variant="custom" className={renderClassName}>
+            <Link href={'/bookingg/resume'}>
+               Siguiente <ArrowRight weight="bold" className="ml-2 h-4 w-4" />
+            </Link>
+         </Button>
       )
    }
 
-   const renderPrevButton = ({ renderClassName }) => (
-      <Button className={renderClassName} asChild>
-         <Link href="/bookingg/bikes">Atrás</Link>
+   const renderPrevButton = (renderClassName) => (
+      <Button variant="custom" className={renderClassName} asChild>
+         <Link href="/bookingg/bikes">
+            {' '}
+            <ArrowLeft weight="bold" className="mr-2 h-4 w-4" /> Atrás
+         </Link>
       </Button>
    )
    return (
       <div>
-         <BookingManagementForm form={form} />
+         <BookingAddressForm form={form} />
          <StepControls
             renderNextButton={renderNextButton}
             renderPrevButton={renderPrevButton}

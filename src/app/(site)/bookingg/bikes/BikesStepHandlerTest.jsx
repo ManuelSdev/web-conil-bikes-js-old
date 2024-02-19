@@ -17,6 +17,7 @@ import {
    selectBikeSearchParams,
    selectSegmentList,
    dateRangeSelected,
+   bikeSearchParamsDeleted,
 } from '@/lib/redux/slices/bookingFormSlice'
 import {
    dateRangeISOStringObjToString,
@@ -38,6 +39,7 @@ import useLazyGetAvailableBikesQueryHook from '@/lib/redux/apiSlices/bikesApiHoo
 import { Loader2 } from 'lucide-react'
 import { useLazyDeleteCookieQuery } from '@/lib/redux/apiSlices/cookieApi'
 import { de } from 'date-fns/locale'
+import { ArrowLeft, ArrowRight } from '@phosphor-icons/react'
 
 export default function BikesStepHandlerTest({
    setStep,
@@ -90,6 +92,7 @@ export default function BikesStepHandlerTest({
                stringDateRangeToISOStringObj(searchKeys.dateRange)
             )
          )
+      return () => dispatch(bikeSearchParamsDeleted())
    }, [])
 
    useEffect(() => {
@@ -115,7 +118,7 @@ export default function BikesStepHandlerTest({
       isFetchingBikes ? (
          <Button
             variant="reverse"
-            className={cn('bg-greenCorp text-black', className)}
+            className={cn(className)}
 
             //  disabled={!range}
             //type="submit"
@@ -125,6 +128,7 @@ export default function BikesStepHandlerTest({
       ) : (
          <Button
             variant="reverse"
+            className={cn(className)}
             //   className={cn('bg-greenCorp text-black', className)}
             onClick={() => {
                dispatch(bikeSearchParamsSelected({ size, type, range }))
@@ -144,18 +148,24 @@ export default function BikesStepHandlerTest({
 
       return isDisabled ? (
          <Button disabled variant="custom" className={renderClassName}>
-            Siguiente
+            Siguiente <ArrowRight weight="bold" className="ml-2 h-4 w-4" />
          </Button>
       ) : (
          <Button asChild variant="custom" className={renderClassName}>
-            <Link href={'/bookingg/address'}>Siguiente </Link>
+            <Link href={'/bookingg/address'}>
+               Siguiente <ArrowRight weight="bold" className="ml-2 h-4 w-4" />
+            </Link>
          </Button>
       )
    }
 
    const renderPrevButton = (renderClassName) => (
       <Button asChild variant="custom" className={renderClassName}>
-         <Link href={'/bookingg/date'}>Atrás </Link>
+         <Link href={'/bookingg/date'}>
+            {' '}
+            <ArrowLeft weight="bold" className="mr-2 h-4 w-4" />
+            Atrás{' '}
+         </Link>
       </Button>
    )
 

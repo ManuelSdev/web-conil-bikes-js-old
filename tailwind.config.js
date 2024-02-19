@@ -95,6 +95,16 @@ module.exports = {
                '40%': { transform: 'translateX(0) scaleX(0.4)' },
                '100%': { transform: 'translateX(100%) scaleX(0.5)' },
             },
+            'spin-me': {
+               '0%': {
+                  '-webkit-transform': 'rotateZ(0deg)',
+                  transform: 'rotateZ(0deg)',
+               },
+               '100%': {
+                  '-webkit-transform': 'rotateZ(360deg)',
+                  transform: 'rotateZ(360deg)',
+               },
+            },
          },
          transformOrigin: {
             'left-right': '0% 50%',
@@ -103,6 +113,8 @@ module.exports = {
             'accordion-down': 'accordion-down 0.2s ease-out',
             'accordion-up': 'accordion-up 0.2s ease-out',
             'progress': 'progress 1s infinite linear',
+            'spin-me': 'spin-me 2s ease-in-out infinite',
+            'spin-slow': 'spin 3s linear infinite',
          },
          backgroundImage: {
             'home-main': "url('/images/home/main.jpg')",

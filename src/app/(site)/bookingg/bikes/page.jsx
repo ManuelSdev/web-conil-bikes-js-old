@@ -1,9 +1,3 @@
-import StepsLine from '@/components/stepper/StepsLine'
-import StepsPanel from '@/components/stepper/StepsPanel'
-import UserStepper from '@/components/stepper/UserStepper'
-import BikeFiltersStepHandler from '@/components/stepper/step_2/BikeFiltersStepHandler'
-import AvailableBikeListHandler from '@/components/stepper/step_3/AvailableBikeListHandler'
-import { verifySessionCookie } from '@/lib/firebase/admin/verifySessionCookie'
 import {
    getAppBikeConfigSegments,
    getAvailableBikes,
@@ -11,21 +5,18 @@ import {
    getAvailableSizesInRange,
    getAvailableTypes,
 } from '@/lib/pg/crud/bikes'
-import { getUserIdByEmail } from '@/lib/pg/crud/users'
 import { cookies } from 'next/headers'
-import Link from 'next/link'
 
 import React from 'react'
 import BikesStepHandlerTest from './BikesStepHandlerTest'
-import StepsTail from '@/components/stepper/StepsTail'
-import BookingManagementHandler from '@/components/stepper/step_4/BookingManagementHandler'
+
 import Step from '@/components/stepper/Step'
-import AvailableBikeListHandlerTest from '@/components/stepper/step_3/AvailableBikeListHandlerTest'
 import {
    getAppBikeSegments,
    getUserPageAuth,
 } from '@/utils/serverFns/serverFns'
-import NotifyCart from '@/components/a/NotifyCart'
+import AvailableBikeListHandler from './AvailableBikeListHandler'
+import NotifyCart from '../NotifyCart'
 
 export default async function BikesStepPage({ params }) {
    const searchKeysCookie = cookies().get('searchKeys')
@@ -49,7 +40,12 @@ export default async function BikesStepPage({ params }) {
    console.log('params ', params)
    return (
       <div>
-         <Step step={2} page="bikes">
+         <Step
+            step={2}
+            page="bikes"
+            title={'Bicicletas'}
+            info="Selecciona las bicicletas que deseas añadir a tu reserva"
+         >
             <BikesStepHandlerTest
                segmentList={segmentList}
                loadedSearchKeys={loadedSearchKeys}
@@ -57,10 +53,11 @@ export default async function BikesStepPage({ params }) {
                // selectedBike={selectedBike}
             />
          </Step>
-         <AvailableBikeListHandlerTest
+         <AvailableBikeListHandler
             loadedAvailableBikes={loadedPreviusStateData?.availableBikes}
             isLogged={userAuth.isLogged}
          />
+         <NotifyCart page={'bikes'} />
       </div>
    )
 }

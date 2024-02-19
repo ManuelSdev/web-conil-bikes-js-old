@@ -26,9 +26,21 @@ const bookingFormSlice = createSlice({
       varChanged: (state, action) => {
          state.var = action.payload
       },
+      bikesReseted: (state, action) => {
+         // state.dateRange = { from: '', to: '' }
+
+         state.bikes = []
+      },
       bikeSearchParamsSelected: (state, action) => {
          //console.log('bikeSearchParamsSelected action.payload _> ',action.payload)
          state.bikeSearchParams = action.payload
+      },
+      bikeSearchParamsDeleted: (state, action) => {
+         state.bikeSearchParams = {
+            size: '',
+            type: '',
+            range: '',
+         }
       },
       segmentListLoaded: (state, action) => {
          // //console.log('segmentListLoaded action.payload _> ', action.payload)
@@ -90,12 +102,14 @@ const bookingFormSlice = createSlice({
 
 export const {
    varChanged,
+   bikesReseted,
    segmentListLoaded,
    dateRangeSelected,
    bookingManagementSelected,
    bikeSelected,
    bikeRemoved,
    bikeSearchParamsSelected,
+   bikeSearchParamsDeleted,
    searchKeysLoaded,
 } = bookingFormSlice.actions
 
@@ -110,7 +124,7 @@ export const selectBikes = (state) => state.bookingForm.bikes
 export const selectBikeSearchParams = (state) =>
    state.bookingForm.bikeSearchParams
 
-const selectBookingAddress = (state) => state.bookingForm.address
+export const selectBookingAddress = (state) => state.bookingForm.address
 const selectBookingDelivery = (state) => state.bookingForm.delivery
 const selectBookingPickup = (state) => state.bookingForm.pickup
 

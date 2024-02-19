@@ -6,6 +6,8 @@ import {
    QuestionMarkCircleIcon,
    XMarkIcon,
 } from '@heroicons/react/20/solid'
+import { MapPin } from 'lucide-react'
+
 import {
    CalendarDaysIcon,
    CreditCardIcon,
@@ -13,6 +15,7 @@ import {
 } from '@heroicons/react/20/solid'
 import { add, format } from 'date-fns'
 import Image from 'next/image'
+import { Separator } from '@/components/ui/separator'
 
 export default function BookingResume({
    name,
@@ -32,22 +35,23 @@ export default function BookingResume({
 
    return (
       <div className="bg-white">
-         <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-               Shopping Cart
-            </h1>
+         <div className="mx-auto max-w-2xl px-4 pb-24  sm:px-6 lg:max-w-7xl lg:px-8">
+            <h3 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-2xl">
+               Resumen de la reserva
+            </h3>{' '}
             <form className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
                <section
                   aria-labelledby="cart-heading"
                   className="lg:col-span-7"
                >
                   <h2 id="cart-heading" className="sr-only">
-                     Items in your shopping cart
+                     Bicicletas en tu reserva
                   </h2>
+                  <p>aaaaaaaaaaa</p>
 
                   <ul
                      role="list"
-                     className="divide-y divide-gray-200 border-b border-t border-gray-200"
+                     // className="divide-y divide-gray-200 border-b border-t border-gray-200"
                   >
                      {bikes.map((bike, idx) => (
                         <li key={idx} className="flex py-6 sm:py-10">
@@ -189,7 +193,7 @@ export default function BookingResume({
                         <div className="mt-4 flex w-full flex-none gap-x-4 ">
                            <dt className="flex-none">
                               <span className="sr-only">Due date</span>
-                              <CalendarDaysIcon
+                              <MapPin
                                  className="h-6 w-5 text-gray-400"
                                  aria-hidden="true"
                               />

@@ -83,10 +83,10 @@ export default function TypeSelect({
                         ) : field.value ? (
                            <SelectValue
                               //  aria-label={field.value}
-                              placeholder="Tipo 1"
+                              placeholder="Tipo"
                            />
                         ) : (
-                           'Tipo 2'
+                           'Tipo'
                         )}
                      </SelectTrigger>
                   </FormControl>

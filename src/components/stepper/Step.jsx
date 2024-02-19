@@ -13,6 +13,7 @@ export default function Step({
    step,
    children,
    title,
+   info,
    page,
    nextButton,
    prevButton,
@@ -20,9 +21,11 @@ export default function Step({
 }) {
    //console.log('Step @@@->')
    return (
-      <div className=" pb-10">
+      <div className="bg-red-300 pb-10">
          {/*<div className="pb-10">{ <StepsPanel step={step} />}</div>*/}
-         <h2 className="text-2xl font-bold tracking-tight">Fecha</h2>
+         <h2 className="text-3xl font-bold tracking-tight">
+            Reserva tus bicicletas
+         </h2>
          <p className="text-muted-foreground">
             Indícanos la fecha de inicio y de finalización de tu reserva
          </p>
@@ -36,8 +39,18 @@ export default function Step({
                <StepsPanel step={step} />
             </div>
 
-            <div className={cn('sm:mx-auto sm:w-1/2', childClassName)}>
-               {children}
+            <div className={cn(' sm:mx-auto sm:w-1/2', childClassName)}>
+               {title && (
+                  <div className="mb-8 mt-8 flex  flex-col items-center">
+                     <h3 className="text-xl font-semibold leading-7 text-white">
+                        {title}
+                     </h3>
+                     <p className="mt-1 max-w-2xl leading-6 text-muted-foreground">
+                        {info}
+                     </p>
+                  </div>
+               )}
+               <div className={cn({ 'mt-8': !title })}>{children}</div>
             </div>
          </div>
       </div>

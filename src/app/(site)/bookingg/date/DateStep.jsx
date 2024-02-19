@@ -6,21 +6,31 @@ import React from 'react'
 const FROM = 'from'
 const TO = 'to'
 
-export default function DateStep({ from, to, handleSelect, linkDisabled }) {
+export default function DateStep({
+   from,
+   to,
+   handleSelect,
+   linkDisabled,
+   ...props
+}) {
    return (
-      <div className=" grow justify-center gap-5">
-         <div className="mt-8 flex w-full justify-between gap-5 py-3 md:justify-center">
+      <div className="grow justify-center gap-5">
+         <div className="flex w-full justify-between gap-5 py-3 md:justify-center">
             <DatePicker
-               className="grow md:w-1/3 md:grow-0"
+               //className="grow md:w-1/3 md:grow-0"
+               className={'w-[45%] grow'}
                label="Inicio"
                date={from}
                handleSelect={handleSelect(FROM)}
+               {...props}
             />
             <DatePicker
-               className="grow md:w-1/3  md:grow-0"
+               // className="grow md:w-1/3  md:grow-0"
+               className={'w-[45%] grow'}
                label="Fin"
                date={to}
                handleSelect={handleSelect(TO)}
+               {...props}
             />
          </div>
          {/*!linkDisabled ? (

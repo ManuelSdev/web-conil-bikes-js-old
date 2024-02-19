@@ -4,6 +4,7 @@ import React from 'react'
 import { Bike, Trash2 } from 'lucide-react'
 import { BIKE_TYPES_MAP } from '@/utils/app/appValues'
 import { capitalizeFirst } from '@/utils/app/functions'
+import { Bicycle, Trash } from '@phosphor-icons/react'
 /*
  <Button onClick={() => setStep(2)}>Añadir bicicletas</Button>
  */
@@ -27,7 +28,7 @@ export default function SelectedBikeList({
                         //  src={person.imageUrl}
                         alt=""
                      >
-                        <Bike className="h-9 w-9" />
+                        <Bicycle className="h-9 w-9" />
                      </div>
                      <div className="min-w-0 flex-auto">
                         <p className="text-sm font-semibold leading-6 text-gray-900">
@@ -46,7 +47,7 @@ export default function SelectedBikeList({
                      variant="ghost"
                      size="icon"
                   >
-                     <Trash2 />
+                     <Trash className="h-7 w-7" />
                   </Button>
                </li>
             ))}

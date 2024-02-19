@@ -1,4 +1,6 @@
-import { query } from '@/src/lib/pg/db'
+//import 'server-only'
+
+import { query } from '@/lib/pg/db'
 
 const setTexto = (dateRange, size, range, type) => `
 WITH AvailableBikes AS (

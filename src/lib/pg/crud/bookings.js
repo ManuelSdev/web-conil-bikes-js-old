@@ -13,7 +13,7 @@ import {
 
 export async function getBookingDatesInRange(dateRange) {
    const bookings = await findBookingDatesInRange(dateRange)
-  //console.log('bookings en getBookingDatesInRange -> ', bookings)
+   //console.log('bookings en getBookingDatesInRange -> ', bookings)
    return NextResponse.json(bookings, { status: 201 })
 }
 
@@ -42,10 +42,23 @@ export async function getBookingWithBikesById(bookingId) {
 }
 
 export async function createBooking(data) {
-   const result = await addBooking(data)
-  //console.log('result en createBooking -> ', result)
-}
+   try {
+      const { bookingId } = await addBooking(data)
+      return NextResponse.json(bookingId, { status: 201 })
+   } catch (error) {
+      console.log('error en createBooking -> ', error)
+      //Si hay error, se hace throw desde el trigger, asi que tienes que meterlo en un try catch
+      //El error que pilla el try catch tiene forma {status: STATUS, data: DATA}
+      //DATA es el primer objeto que le pasas a NextResponse.json
+      //STATUS es el segundo objeto que le pasas a NextResponse.json
+      return NextResponse.json({ error }, { status: 500 })
+   }
 
+   console.log('result en createBooking -> ', result)
+
+   //
+}
+/*
 export async function createBooking_({
    bikes,
    userId,
@@ -57,7 +70,9 @@ export async function createBooking_({
    delivery,
    pickup,
    duration,
-}) {
+}) 
+
+{
   //console.log('params en createBooking -> ', {
       bikes,
       userId,
@@ -70,6 +85,8 @@ export async function createBooking_({
       pickup,
       duration,
    })
+
+
    try {
       //  const db = client()
      //console.log('@@ CRUD FN createBooking @@')
@@ -91,3 +108,4 @@ export async function createBooking_({
      //console.log('### ERROR CRUD api/createBooking -> ', error)
    }
 }
+*/
