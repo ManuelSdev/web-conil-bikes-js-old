@@ -9,7 +9,7 @@ export default function HomeShell({ children }) {
          <div className="min-h-full">
             <SiteAppBar />
 
-            <main className="pt-slimTopAppBar">{children}</main>
+            <main>{children}</main>
             <footer>
                <Footer />
             </footer>

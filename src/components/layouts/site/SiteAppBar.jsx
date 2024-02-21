@@ -21,7 +21,7 @@ export default function SiteAppBar() {
       useDialogWindow(null)
 
    return (
-      <header className="HEADER-1 sticky z-40  w-full bg-black">
+      <header className="HEADER-1 sticky top-0 z-40 w-full bg-black">
          <nav className="NAV mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="HEADER-3 flex h-slimTopAppBar items-center justify-between gap-8 md:h-fatTopAppBar">
                {/**LOGO Y BOTONERA +MD */}

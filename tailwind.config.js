@@ -105,6 +105,22 @@ module.exports = {
                   transform: 'rotateZ(360deg)',
                },
             },
+            'page-loaded': {
+               '0%': { opacity: 1 },
+               '100%': { opacity: 0 },
+            },
+            'page-loadeddd': {
+               '0%': { top: '0%' },
+               '100%': { top: '100%' },
+            },
+            'page-loadeddd': {
+               from: { transform: 'translateY(0%)' },
+               to: { transform: 'translateY(100%) ', visibility: 'hidden' },
+            },
+            'page-test': {
+               '0%': { visibility: 'visible' },
+               '100%': { visibility: 'hidden' },
+            },
          },
          transformOrigin: {
             'left-right': '0% 50%',
@@ -115,6 +131,8 @@ module.exports = {
             'progress': 'progress 1s infinite linear',
             'spin-me': 'spin-me 2s ease-in-out infinite',
             'spin-slow': 'spin 3s linear infinite',
+            'page-loaded': 'page-loaded .5s linear',
+            'page-test': 'page-test 0.1s linear 0.6s',
          },
          backgroundImage: {
             'home-main': "url('/images/home/main.jpg')",
