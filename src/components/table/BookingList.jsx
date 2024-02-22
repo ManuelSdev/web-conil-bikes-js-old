@@ -15,6 +15,7 @@ import {
 import { PENDING } from '@/utils/app/appValues'
 import { mappedBookingState } from '@/utils/app/functions'
 import Link from 'next/link'
+import { Button } from '../ui/button'
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/decodeURIComponent
 
 const urlParams = (obj) => new URLSearchParams(obj)

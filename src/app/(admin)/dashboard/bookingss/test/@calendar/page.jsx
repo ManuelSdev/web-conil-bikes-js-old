@@ -28,12 +28,11 @@ export default async function CalendarPage({ params, searchParams }) {
     * redirige a la misma url pero añadiendo la fecha del día actual para que
     * la page bookingList muestre las reservas de hoy
     */
-   /*
    if (!encodedDate && isBookingToday) {
       const params = urlParams({ date: todayString })
-      redirect(`/dashboard/bookings?${params}`)
+      redirect(`/dashboard/bookings/test?${params}`)
    }
-*/
+
    const cardProps = {
       //className: 'max-w-[334px]',
       // className: 'col-span-4',

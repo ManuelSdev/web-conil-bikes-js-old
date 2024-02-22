@@ -3,7 +3,7 @@ const urlParams = (obj) => new URLSearchParams(obj)
 
 export const bookingApi = baseApi.injectEndpoints({
    endpoints: (builder) => ({
-      getBooking: builder.query({
+      getBooking_: builder.query({
          query: ({ id, ...filters }) =>
             console.log(BOOKINGSS(id, filters)) ||
             // BOOKINGS + `?${urlParams({ id })}`
@@ -20,7 +20,20 @@ export const bookingApi = baseApi.injectEndpoints({
          */
          providesTags: ['Booking'],
       }),
+      getBooking: builder.query({
+         query: ({ bookingId }) => `bookings/${bookingId}`,
+         /*
+         transformResponse: (response, meta, arg) => {
+            const res = response
+            const { status } = meta.response
+            console.log('@@@@@@@@@@@@@@ transformRes res _> ', res)
+            console.log('@@@@@@@@@@@@@@ transformRes status _> ', status)
 
+            return res
+         },
+         */
+         //    providesTags: ['Booking'],
+      }),
       /*
       getBookingsOnDateXX: builder.query({
          query: (date) => BOOKINGS_ON_DATE + `?date=${date}`,
@@ -35,7 +48,11 @@ export const bookingApi = baseApi.injectEndpoints({
          query: ({ from, to }) => `/bookings?${urlParams({ from, to })}`,
          // providesTags: ['User'],
       }),
-
+      getBookingBikes: builder.query({
+         query: ({ bookingId }) =>
+            `/bookings/${urlParams({ bookingId })}/bikes`,
+         // providesTags: ['User'],
+      }),
       createBooking: builder.mutation({
          query: (data) => ({
             url: '/bookings',
@@ -70,6 +87,8 @@ export const bookingApi = baseApi.injectEndpoints({
 export const {
    useGetBookingQuery,
    useLazyGetBookingQuery,
+   useGetBookingBikesQuery,
+   useLazyGetBookingBikesQuery,
    useGetBookingDatesInRangeQuery,
    useLazyGetBookingDatesInRangeQuery,
    useGetBookingsOnDateQuery,

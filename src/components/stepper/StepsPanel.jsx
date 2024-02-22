@@ -4,7 +4,7 @@ import { CheckIcon } from '@heroicons/react/24/solid'
 const steps = [
    { name: 'Fecha', href: '#', status: 'complete', id: 1 },
    { name: 'Bicicletas', href: '#', status: 'complete', id: 2 },
-   { name: 'Gestión', href: '#', status: 'current', id: 3 },
+   { name: 'Dirección', href: '#', status: 'current', id: 3 },
    { name: 'Resumen', href: '#', status: 'upcoming', id: 4 },
 ]
 

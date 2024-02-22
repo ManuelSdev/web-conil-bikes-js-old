@@ -10,7 +10,8 @@ import {
    findBookingBikesById,
    findBookingById,
 } from '../repos/booking'
-
+//TODO: meter try catch en todas las funciones
+//TODO: usar caché next.js y separar la lógica de la API de la logica de las server functions
 export async function getBookingDatesInRange(dateRange) {
    const bookings = await findBookingDatesInRange(dateRange)
    //console.log('bookings en getBookingDatesInRange -> ', bookings)

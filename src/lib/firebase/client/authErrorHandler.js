@@ -1,3 +1,5 @@
+const GENERIC_ERROR = 'El usuario o la contraseña no son válidos'
+
 export const signInErrorHandler = (code) => {
    switch (code) {
       case 'auth/invalid-email':
@@ -11,10 +13,10 @@ export const signInErrorHandler = (code) => {
          break
 
       case 'auth/user-not-found':
-         return { title: 'No se encontró al usuario', description: '' }
+         return { title: GENERIC_ERROR, description: '' }
          break
       case 'auth/wrong-password':
-         return { title: 'Contraseña no válida', description: '' }
+         return { title: GENERIC_ERROR, description: '' }
          break
       case 'custom/unverified':
          return {

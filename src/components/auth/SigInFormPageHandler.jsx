@@ -55,10 +55,12 @@ export default function SigInFormPageHandler({ isAdmin }) {
             open: true,
             title,
             description,
-            ...(unverified && {
-               actionText: 'aceptar',
-               handleAction: () => router.push('/auth/verify'),
-            }),
+            ...(unverified
+               ? {
+                    actionText: 'aceptar',
+                    handleAction: () => router.push('/auth/verify'),
+                 }
+               : { closeText: 'Aceptar' }),
          })
       }
    }

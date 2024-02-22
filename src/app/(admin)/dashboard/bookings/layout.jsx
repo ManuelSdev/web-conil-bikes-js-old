@@ -9,12 +9,10 @@ export default function layout({
 }) {
    //console.log('layout props -> ', props)
    return (
-      <ReduxProviderWrapper>
-         <div className="flex">
-            <div className="flex-none">{calendar}</div>
-            <div className="flex-initial ">{bookingList}</div>
-            <div className="flex-initial ">{bookingInfo}</div>
-         </div>
-      </ReduxProviderWrapper>
+      <div className="flex">
+         <div className="flex-none">{calendar}</div>
+         <div className="flex-initial ">{bookingList}</div>
+         <div className="flex-initial ">{bookingInfo}</div>
+      </div>
    )
 }
