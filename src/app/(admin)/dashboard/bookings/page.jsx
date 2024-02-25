@@ -14,34 +14,29 @@ import { getBookingOnDate } from '@/lib/pg/crud/bookings'
 
 import { getBookingWithBikesById } from '@/lib/pg/crud/bookings'
 import BookingTabs_test from '@/components/tabs/BookingTabs_test'
+import BookingsPageTabs from './BookingsPageTabs'
+import BookingListHandler from './BookingListHandler'
 
 const urlParams = (obj) => new URLSearchParams(obj)
 
 export default async function CalendarPage({ params, searchParams }) {
    const { date: encodedDate, bookingId } = searchParams
    const date = encodedDate ? decodeURIComponent(encodedDate) : null
+   const dateRange = createDateRangeString({ outsideDates: true })
 
+   //TODO: Refactorizar para que se haga una sola petición a la base de datos
+   const { bookingDates, isBookingToday } = await getCalendarData(dateRange)
    /**
     * Si entras al layout de reservas, no hay ningún urlParams inicial. Entonces,
     * la bookingList estará vacía aunque el calendario muestre reservas para el día actual
     * Esta función comprueba que el día actual se encuentra en las bookingDates. Si es así,
     * redirige a la misma url pero añadiendo la fecha del día actual para que
-    * la page bookingList muestre las reservas de hoy
+    * la página bookingList muestre las reservas de hoy
     */
-   if (!encodedDate && isBookingToday) {
+   if (false && !encodedDate && isBookingToday) {
       const params = urlParams({ date: todayString })
-      redirect(`/dashboard/bookings/calendar?${params}`)
+      redirect(`/dashboard/bookings?${params}`)
    }
-
-   const dateRange = createDateRangeString({ outsideDates: true })
-
-   const { bookingDates, isBookingToday } = await getCalendarData(dateRange)
-
-   const bookings = await getBookingListData(date)
-
-   const { bookingData, bikes } = bookingId
-      ? await getBookingsWithBikes(bookingId)
-      : { bookingData: null, bikes: null }
 
    const cardProps = {
       //className: 'max-w-[334px]',
@@ -51,10 +46,15 @@ export default async function CalendarPage({ params, searchParams }) {
    }
    return (
       <div className="flex">
-         <div className="flex-none">
+         <div className="w-full lg:hidden">
+            <BookingsPageTabs bookingDates={bookingDates} />
+         </div>
+
+         <div className="hidden flex-none lg:block">
             <Card {...cardProps}>
                <CalendarHandlerUrl bookingDates={bookingDates} />
             </Card>
+            <BookingListHandler />
          </div>
       </div>
    )

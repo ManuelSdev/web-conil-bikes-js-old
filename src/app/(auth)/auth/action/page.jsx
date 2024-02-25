@@ -15,7 +15,7 @@ import React from 'react'
 export default async function FireEmailActionsControlPage({ searchParams }) {
    const { mode, oobCode: actionCode, apiKey, continueUrl, lang } = searchParams
 
-  //console.log('searchParams -> ', searchParams)
+   //console.log('searchParams -> ', searchParams)
 
    const auth = getAuth(app)
    if (mode === 'verifyEmail') {
@@ -40,7 +40,7 @@ export default async function FireEmailActionsControlPage({ searchParams }) {
          )
          //return <VerifyEmailHandler searchParams={searchParams} />
       } catch (error) {
-        //console.log('Error en verificiación de código -> ', error)
+         //console.log('Error en verificiación de código -> ', error)
 
          const onOpenChangeLink = '/auth/verify'
 
@@ -66,7 +66,7 @@ export default async function FireEmailActionsControlPage({ searchParams }) {
       try {
          //Verifico que el código de reseteo de contraseña sea válido y obtengo el email
          const email = await verifyPasswordResetCode(auth, actionCode)
-        //console.log('email FireEmailActionsControlPage-> ', email)
+         //console.log('email FireEmailActionsControlPage-> ', email)
          /**
           * Si es válido, creo un custom token para poder logar directamente al usuario desde
           * el cliente sin necesidad y lo paso al formulario para introducir la nueva contraseña
@@ -83,7 +83,7 @@ export default async function FireEmailActionsControlPage({ searchParams }) {
             />
          )
       } catch (error) {
-        //console.log(
+         console.log(
             'Error en reseteo de contraseña FireEmailActionsControlPage-> ',
             error
          )

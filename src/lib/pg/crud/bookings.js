@@ -13,12 +13,14 @@ import {
 //TODO: meter try catch en todas las funciones
 //TODO: usar caché next.js y separar la lógica de la API de la logica de las server functions
 export async function getBookingDatesInRange(dateRange) {
+   console.log('dateRange en getBookingDatesInRange -> ', dateRange)
    const bookings = await findBookingDatesInRange(dateRange)
    //console.log('bookings en getBookingDatesInRange -> ', bookings)
    return NextResponse.json(bookings, { status: 201 })
 }
 
 export async function getBookingOnDate(dateRange) {
+   console.log('dateRange en getBookingOnDate ####-> ', dateRange)
    const bookingDates = await findBookingOnDate(dateRange)
    return NextResponse.json(bookingDates, { status: 201 })
 }

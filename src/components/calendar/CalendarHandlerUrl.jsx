@@ -18,6 +18,7 @@ import {
 const urlParams = (obj) => new URLSearchParams(obj)
 
 export default function CalendarHandlerUrl({
+   className,
    bookingDates: initialBookingDates,
 }) {
    //console.log('CalendarHandlerUrl *************************')
@@ -89,7 +90,7 @@ export default function CalendarHandlerUrl({
    const handleMonthChange = (displayMonth) => handeDateRange(displayMonth)
    return (
       // @ts-ignore
-      <div>
+      <div className={className}>
          <Calendar
             locale={es}
             mode="single"

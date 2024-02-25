@@ -20,7 +20,7 @@ export default function MyCalendar({ errorMessage, ...props }) {
    const [from, setFrom] = useState(false)
    return (
       <Calendar
-         onChange={(e) =>//console.log('onChange->', e)}
+         onChange={(e) => console.log('onChange->', e)}
          //esto marca día actual
          value={today(getLocalTimeZone())}
          className={'w-fit max-w-full text-cyan-400'}

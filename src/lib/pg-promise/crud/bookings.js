@@ -7,7 +7,7 @@ import db from '@/lib/pg-promise/db'
 export async function getBookingDatesInRange(dateRange) {
    try {
       //   const db = client()
-     //console.log('@@ CRUD FN getBookingDatesInRange @@')
+      //console.log('@@ CRUD FN getBookingDatesInRange @@')
       const bookingDates = await db.bookings.findBookingDatesInRange(dateRange)
       /*
       const bookingDatesObj = await db.one(bookings.findBookingDatesInRange(), {
@@ -33,7 +33,7 @@ export async function getBookingDatesInRange(dateRange) {
       // return Response.status(201).json({ bookingDatesObj })
       return NextResponse.json({ bookingDates }, { status: 201 })
    } catch (error) {
-     //console.log('### ERROR CRUD api/getBookingDatesInRange -> ', error)
+      //console.log('### ERROR CRUD api/getBookingDatesInRange -> ', error)
    }
 }
 
@@ -57,14 +57,14 @@ export async function getBookingOnDate(date) {
       // return Response.status(201).json({ bookingDatesObj })
       return NextResponse.json({ bookings }, { status: 201 })
    } catch (error) {
-     //console.log('### ERROR db.bookings.findBookingOnDate(date) -> ', error)
+      //console.log('### ERROR db.bookings.findBookingOnDate(date) -> ', error)
    }
 }
 
 export async function getBookingById(bookingId) {
    try {
       //    const db = client()
-     //console.log('@@ CRUD FN getBookingById @@')
+      //console.log('@@ CRUD FN getBookingById @@')
 
       const booking = await db.bookings.findBookingById(bookingId)
       booking.dateRange = JSON.parse(booking.dateRange)
@@ -80,13 +80,13 @@ export async function getBookingById(bookingId) {
       // return Response.status(201).json({ bookingDatesObj })
       return NextResponse.json(booking, { status: 201 })
    } catch (error) {
-     //console.log('### ERROR db.bookings.getBookingById(bookingId) -> ', error)
+      //console.log('### ERROR db.bookings.getBookingById(bookingId) -> ', error)
    }
 }
 export async function getBookingBikes(bookingId) {
    try {
       //  const db = client()
-     //console.log('@@ CRUD FN getBookingBikes @@')
+      //console.log('@@ CRUD FN getBookingBikes @@')
 
       const booking = await db.bookings.findBookingBikesById(bookingId)
       booking.dateRange = JSON.parse(booking.dateRange)
@@ -95,14 +95,14 @@ export async function getBookingBikes(bookingId) {
 
       return NextResponse.json(booking, { status: 201 })
    } catch (error) {
-     //console.log('### ERROR db.bookings.getBookingBikes(bookingId) -> ', error)
+      //console.log('### ERROR db.bookings.getBookingBikes(bookingId) -> ', error)
    }
 }
 export async function getBookingWithBikesById(bookingId) {
    try {
       // //console.log('== CREA CLIENTE EN getBookingWithBikesById')
       //  const db = client()
-     //console.log('@@ CRUD FN getBookingWithBikesById @@')
+      //console.log('@@ CRUD FN getBookingWithBikesById @@')
 
       //console.log('== CLIENTE CREADO EN  getBookingWithBikesById --> AWAIT findBookingWithBikesById')
       const { bookingData, bikes } =
@@ -113,7 +113,7 @@ export async function getBookingWithBikesById(bookingId) {
 
       return NextResponse.json({ bookingData, bikes }, { status: 201 })
    } catch (error) {
-     //console.log(
+      console.log(
          '### ERROR db.bookings.getBookingWithBikesById(bookingId) -> ',
          error
       )
@@ -135,7 +135,7 @@ export async function getBookingPageData({ dateRange, date }) {
 
       return NextResponse.json({ bookingDates, bookings }, { status: 201 })
    } catch (error) {
-     //console.log(
+      console.log(
          '### ERROR db.bookings.getBookingWithBikesById(bookingId) -> ',
          error
       )

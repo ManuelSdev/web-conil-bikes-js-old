@@ -81,7 +81,7 @@ export default async function BookingList({ bookings, urlDate }) {
                         >
                            <Link
                               //href={`/dashboard/bookings/manage/${booking.bookingId}`}
-                              href={`/dashboard/bookings?${urlParams({
+                              href={`/dashboard/bookingsss?${urlParams({
                                  date: urlDate,
                                  bookingId: booking.bookingId,
                               })}`}

@@ -22,7 +22,7 @@ export default function AdminDashboardShell({ children }) {
          {/* Static sidebar for desktop */}
          <StaticSidebar sidebarContent={sidebarContent} />
 
-         <div className="lg:pl-72">
+         <div className="bg-green-400 lg:pl-72">
             <AdminAppBar setSidebarOpen={setSidebarOpen} />
             <main className="py-10">
                <div className="px-4 sm:px-6 lg:px-8">

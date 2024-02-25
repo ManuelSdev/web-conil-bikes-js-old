@@ -1,4 +1,4 @@
-import BookingList from '@/components/table/BookingList'
+import BookingList from './BookingList'
 import { getBookingOnDate } from '@/lib/pg/crud/bookings'
 import { createDateRangeString } from '@/utils/datesFns/createDateRangeString'
 import { getBookingDatesInRange } from '@/lib/pg/crud/bookings'
@@ -22,7 +22,7 @@ export default async function BookingListPage({ params, searchParams }) {
 
    if (!encodedDate && isBookingToday) {
       const params = urlParams({ date: todayString })
-      redirect(`/dashboard/bookings?${params}`)
+      redirect(`/dashboard/bookingsss?${params}`)
    }
    const date = decodeURIComponent(encodedDate)
    const resa = await getBookingOnDate(date)

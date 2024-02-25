@@ -54,7 +54,7 @@ export default function VerifyEmailFormPageHandler() {
           * https://firebase.google.com/docs/auth/admin/errors
           */
          const res = await getUserDataTrigger({ email })
-        //console.log('res ->', res)
+         //console.log('res ->', res)
          const { isError } = res
 
          if (isError) {
@@ -96,7 +96,7 @@ export default function VerifyEmailFormPageHandler() {
                   type: 'verify',
                })
 
-              //console.log('sendVerificationEmailTrigger res ->', res)
+               //console.log('sendVerificationEmailTrigger res ->', res)
 
                const { data, isError } = res
 
@@ -134,7 +134,7 @@ export default function VerifyEmailFormPageHandler() {
          ////console.log('userRecord ->', userRecord)
       } catch (error) {
          //handleOpen(error)
-        //console.log(
+         console.log(
             'ERROR:doSendVerificationEmail en VerifyEmailFormPageHandler -> ',
             error
          )

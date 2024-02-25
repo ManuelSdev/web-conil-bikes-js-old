@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server'
 
 export async function POST(req) {
    const body = await req.json()
-  //console.log('req.body en firebaseAdmin/createUser -------->', body)
+   //console.log('req.body en firebaseAdmin/createUser -------->', body)
    const { role = 'user', name, phone, email, password } = body
 
    //https://firebase.google.com/docs/auth/admin/email-action-links?hl=es&authuser=2#initialize_actioncodesettings
@@ -19,7 +19,7 @@ export async function POST(req) {
       password: password,
    }
    app()
-  //console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+   //console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
    try {
       //Crear usuario en firebase
       const userRecord = await getAuth().createUser(newUser)
@@ -36,7 +36,7 @@ export async function POST(req) {
    } catch (error) {
       const { errorInfo } = error
       const { code, message } = errorInfo
-     //console.log(
+      console.log(
          'Error creating new user en api/auth/firebaseAdmin/createUser -> ',
          errorInfo
       )

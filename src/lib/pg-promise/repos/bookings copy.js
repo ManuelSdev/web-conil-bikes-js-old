@@ -21,7 +21,7 @@ import { QueryFile } from 'pg-promise'
 //const bookingQueryFiles = mapFnToQueryFile(bookings)
 export default class BookingsRepository {
    static {
-     //console.log(
+      console.log(
          '###############---------------------------------------------######################'
       )
    }
@@ -49,7 +49,7 @@ export default class BookingsRepository {
       const bookingQueryFiles = Object.fromEntries(
          Object.entries(obj).map(([k, v], i) => [k, v()])
       )
-     //console.log(
+      console.log(
          ' 2 ### ejecuta mapFnToQueryFile en clase BookingsRepository '
          //,      bookingQueryFiles
       )
@@ -58,7 +58,7 @@ export default class BookingsRepository {
    // static #bookings = { ...bookings }
 
    static bookingQueryFiles =
-     //console.log('2 ### ejecuta OBJECT ENTRIES BookingsRepository ') ||
+      //console.log('2 ### ejecuta OBJECT ENTRIES BookingsRepository ') ||
       Object.fromEntries(Object.entries(bookings).map(([k, v], i) => [k, v()]))
 
    constructor(db, pgp) {
@@ -66,7 +66,7 @@ export default class BookingsRepository {
       //  super()
       this.db = db
       this.pgp = pgp
-     //console.log('*** Instancia BookingsRepository creada')
+      //console.log('*** Instancia BookingsRepository creada')
       /*
       this.bookingQueryFiles =
         //console.log('2 ### ejecuta OBJECT ENTRIES BookingsRepository ') ||
@@ -164,7 +164,7 @@ export default class BookingsRepository {
    async findBookingWithBikesById_(bookingId) {
       //console.log('findBookingWithBikesById llamada por ----> ', quien)
       const task = async (t) => {
-        //console.log('*** PRIMERA TASK')
+         //console.log('*** PRIMERA TASK')
          const bookingData = await t.one(
             BookingsRepository.bookingQueryFiles.findBookingById,
             //   this.bookingQueryFiles.findBookingById,
@@ -172,7 +172,7 @@ export default class BookingsRepository {
                id: bookingId,
             }
          )
-        //console.log('*** SEGUNDA TASK')
+         //console.log('*** SEGUNDA TASK')
          const bikes = await t.many(
             BookingsRepository.bookingQueryFiles.findBookingBikesById,
             //this.bookingQueryFiles.findBookingBikesById,
@@ -215,7 +215,7 @@ export default class BookingsRepository {
 
       return await this.db.task('task-booking-page', task)
       const cnd = (c) => {
-        //console.log('@@@@@@@@@@@@@@@@@@@@@@@@@ task context ----> ', c.ctx)
+         //console.log('@@@@@@@@@@@@@@@@@@@@@@@@@ task context ----> ', c.ctx)
          // c.ctx - task/tx context (not available on the top level)
          // default condition: return !c.ctx;
          return true

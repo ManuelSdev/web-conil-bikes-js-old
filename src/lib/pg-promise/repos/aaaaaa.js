@@ -58,7 +58,7 @@ export default class BookingsRepository {
       //TODO: revisar si esto de abajo debe llevar await
       //https://github.com/vitaly-t/pg-promise#named-parameters
       //console.log('BookingsRepository.#bookingQueryFiles -> ',this.#bookingQueryFiles)
-     //console.log(
+      console.log(
          '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##############################'
       )
       return this.db.one(this.#bookingQueryFiles.findBookingById, {
@@ -105,7 +105,7 @@ function mapFnToQueryFile(obj, quien) {
    const bookingQueryFiles = Object.fromEntries(
       Object.entries(obj).map(([k, v], i) => [k, v()])
    )
-  //console.log(
+   console.log(
       quien,
       '    quien -> '
       //,      bookingQueryFiles

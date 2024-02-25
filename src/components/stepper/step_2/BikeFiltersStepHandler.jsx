@@ -17,6 +17,7 @@ import { Button } from '@/components/ui/button'
 import Step from '../Step'
 import SpinnerLine from '@/components/common/SpinnerLine'
 import { useRouter } from 'next/navigation'
+import { Select } from '@/components/ui/select'
 
 export default function BikeFiltersStepHandler({
    setStep,

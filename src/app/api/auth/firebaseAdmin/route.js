@@ -5,7 +5,7 @@ import { as } from 'pg-promise'
 
 export async function POST(req) {
    const body = await req.json()
-  //console.log('req.body en firebaseAdmin/createUser -------->', body)
+   //console.log('req.body en firebaseAdmin/createUser -------->', body)
    const { action } = body
 
    const actions = {
@@ -29,7 +29,7 @@ async function setCustomUserClaims(body) {
       await getAuth().setCustomUserClaims(uid, customClaims)
       return NextResponse.json({ succes: true }, { status: 201 })
    } catch (error) {
-     //console.log('Error setCustomUserClaims api/auth/firebaseAdmin -> ', error)
+      console.log('Error setCustomUserClaims api/auth/firebaseAdmin -> ', error)
    }
 }
 async function createCustomToken(body) {
@@ -40,7 +40,7 @@ async function createCustomToken(body) {
       return NextResponse.json({ customToken }, { status: 201 })
    } catch (error) {
       const { errorInfo } = error
-     //console.log(
+      console.log(
          'Error createCustomToken api/auth/firebaseAdmin -> ',
          errorInfo
       )
@@ -55,7 +55,7 @@ async function getUser(body) {
       return Response.json(userRecord, { status: 201 })
    } catch (error) {
       const { errorInfo } = error
-     //console.log(
+      console.log(
          'ROUTE HANDLER ERROR: /api/auth/firebaseAdmin/getUserData  ->',
          error.errorInfo
       )
@@ -71,7 +71,7 @@ async function getUserByEmail(body) {
       return Response.json(userRecord, { status: 201 })
    } catch (error) {
       const { errorInfo } = error
-     //console.log(
+      console.log(
          'ROUTE HANDLER ERROR: /api/auth/firebaseAdmin/getUserData  ->',
          error.errorInfo
       )
@@ -87,7 +87,7 @@ async function deleteUser(body) {
       return NextResponse.json({ succes: true }, { status: 201 })
    } catch (error) {
       const { errorInfo } = error
-     //console.log(
+      console.log(
          'ROUTE HANDLER ERROR: /api/auth/firebaseAdmin/getUserData  ->',
          error.errorInfo
       )
@@ -113,7 +113,7 @@ async function generateEmailVerificationLink(body) {
    } catch (error) {
       const { errorInfo } = error
       const { code, message } = errorInfo
-     //console.log(
+      console.log(
          'Error creating new user en api/auth/firebaseAdmin/createUser -> ',
          errorInfo
       )
@@ -143,7 +143,7 @@ async function createUser(body) {
    } catch (error) {
       const { errorInfo } = error
       const { code, message } = errorInfo
-     //console.log(
+      console.log(
          'Error creating new user en api/auth/firebaseAdmin/createUser -> ',
          errorInfo
       )
