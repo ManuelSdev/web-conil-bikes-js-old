@@ -75,10 +75,12 @@ export function getDB() {
       }
    })
 }
-const { db, pgp: a } = getDB()
-//const a = getDB()
-export default db
 
+/*
+const { db, pgp: a } = getDB()
+
+export default db
+*/
 /**
  * //////////////////////////////// Symbol ////////////////////////////////////////
  * Symbol es un tipo de dato primitivo introducido en ECMAScript 2015 (ES6) que se

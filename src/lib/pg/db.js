@@ -30,6 +30,7 @@ pool.on('error', (err, client) => {
 })
 
 export const query = async ({ text, rowMode, values }) => {
+   // console.log('@@@ NODE-PG query -->', { text, values })
    const queryConf = rowMode
       ? {
            text,
@@ -40,12 +41,13 @@ export const query = async ({ text, rowMode, values }) => {
    const start = Date.now()
    const res = await pool.query(queryConf)
    const duration = Date.now() - start
-
+   /*
    console.log('@@@ NODE-PG query stats-->', {
       query: text,
       duration,
       rows: res.rowCount,
    })
+*/
    //console.log('@@@ NODE-PG duration -->', { duration, rows: res.rowCount })
    ////console.log('@@@ NODE-PG rowCount -->', text)
    return res

@@ -22,6 +22,7 @@ export async function getBookingDatesInRange(dateRange) {
 export async function getBookingOnDate(dateRange) {
    console.log('dateRange en getBookingOnDate ####-> ', dateRange)
    const bookingDates = await findBookingOnDate(dateRange)
+   console.log('bookingDates en getBookingOnDate -> ', bookingDates)
    return NextResponse.json(bookingDates, { status: 201 })
 }
 
@@ -37,6 +38,7 @@ export async function getBookingBikesById(bookingId) {
 
 export async function getBookingWithBikesById(bookingId) {
    const booking = await findBookingById(bookingId)
+   console.log('booking en getBookingWithBikesById -> ', booking)
    const bookingBikes = await findBookingBikesById(bookingId)
    return NextResponse.json(
       { bookingData: booking, bikes: bookingBikes },

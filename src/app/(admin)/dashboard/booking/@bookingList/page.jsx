@@ -12,7 +12,7 @@ const urlParams = (obj) => new URLSearchParams(obj)
 export default async function BookingListPage({ params, searchParams }) {
    //console.log('searchParams -> ', searchParams)
    const { date: encodedDate } = searchParams
-
+   // return null
    const dateRange = createDateRangeString({ outsideDates: true })
    //console.log('dateRange -> ', dateRange)
    const res = await getBookingDatesInRange(dateRange)
@@ -26,9 +26,9 @@ export default async function BookingListPage({ params, searchParams }) {
    }
    if (!encodedDate && isBookingToday) {
       const params = urlParams({ date: todayString })
-      return null
+      //  return null
       //  console.log('params -> ', params)
-      // redirect(`/dashboard/booking?${params}`)
+      redirect(`/dashboard/booking?${params}`)
    }
    // const { date: encodedDate } = searchParams
    // console.log('##################   encodedDate -> ', encodedDate)

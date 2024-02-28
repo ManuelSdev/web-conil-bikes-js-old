@@ -17,6 +17,7 @@ import {
 } from '@/utils/serverFns/serverFns'
 import AvailableBikeListHandler from './AvailableBikeListHandler'
 import NotifyCart from '../NotifyCart'
+import StepShell from '@/components/stepper/StepShell'
 
 export default async function BikesStepPage({ params }) {
    const searchKeysCookie = cookies().get('searchKeys')
@@ -39,13 +40,11 @@ export default async function BikesStepPage({ params }) {
    console.log('userAuth ', userAuth)
    console.log('params ', params)
    return (
-      <div>
-         <Step
-            step={2}
-            page="bikes"
-            title={'Bicicletas'}
-            info="Selecciona las bicicletas que deseas añadir a tu reserva"
-         >
+      <StepShell
+         title={'Bicicletas'}
+         description="Selecciona las bicicletas que deseas añadir a tu reserva"
+      >
+         <Step step={2} page="bikes">
             <BikesStepHandlerTest
                segmentList={segmentList}
                loadedSearchKeys={loadedSearchKeys}
@@ -58,7 +57,7 @@ export default async function BikesStepPage({ params }) {
             isLogged={userAuth.isLogged}
          />
          <NotifyCart page={'bikes'} />
-      </div>
+      </StepShell>
    )
 }
 

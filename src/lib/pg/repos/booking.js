@@ -1,32 +1,50 @@
 import pool, { query } from '../db'
 import { addBookingText } from '../textSql/bookings/addBooking'
+import {
+   txtFindBookingBikesById,
+   txtFindBookingById,
+   txtFindBookingDatesInRange,
+   txtFindBookingOnDate,
+} from './bookingText'
 
 export const findBookingDatesInRange = async (dateRange) => {
+   //console.log('dateRange en findBookingDatesInRange -> ', dateRange)
    const text = 'SELECT * FROM find_booking_dates_in_range($1)'
    const values = [dateRange]
    const rowMode = 'array'
+
    const {
       rows: [bookingDates],
-   } = await query({ text, values })
-   bookingDates.startDates ??= []
-   bookingDates.endDates ??= []
-   bookingDates.startEndDates ??= []
-   return bookingDates
+   } = await query({ text: txtFindBookingDatesInRange, values })
+   console.log('bookingDates en findBookingDatesInRange -> ', bookingDates)
+   bookingDates.startdates ??= []
+   bookingDates.enddates ??= []
+   bookingDates.startenddates ??= []
+   const {
+      startdates: startDates,
+      enddates: endDates,
+      startenddates: startEndDates,
+   } = bookingDates
+   console.log('bookingDates en findBookingDatesInRange -> ', bookingDates)
+   return { startDates, endDates, startEndDates }
 }
 
 export const findBookingOnDate = async (date) => {
    //console.log('date en findBookingOnDate -> ', date)
-   const text = 'SELECT * FROM find_booking_on_date($1)'
+   //const text = 'SELECT * FROM find_booking_on_date($1)'
+   const text = txtFindBookingOnDate
+
    const values = [date]
    const rowMode = 'array'
    const { rows } = await query({ text, values })
    //array de objetos
-   //console.log('rows en findBookingOnDate -> ', rows)
+
    return rows
 }
 
 export const findBookingById = async (bookingId) => {
-   const text = 'SELECT * FROM find_booking_by_id($1)'
+   //  const text = 'SELECT * FROM find_booking_by_id($1)'
+   const text = txtFindBookingById
    const values = [bookingId]
    const rowMode = 'array'
    const {
@@ -38,7 +56,8 @@ export const findBookingById = async (bookingId) => {
 }
 
 export const findBookingBikesById = async (bookingId) => {
-   const text = 'SELECT * FROM find_booking_bikes_by_id($1)'
+   //  const text = 'SELECT * FROM find_booking_bikes_by_id($1)'
+   const text = txtFindBookingBikesById
    const values = [bookingId]
    const rowMode = 'array'
    const { rows: bikes } = await query({ text, values })
@@ -46,6 +65,34 @@ export const findBookingBikesById = async (bookingId) => {
    //console.log('rows en findBookingBikesById -> ', bikes)
    return bikes
 }
+
+export const addBooking = async (data) => {
+   const text = addBookingText(data)
+   // console.log('text en addBooking', text)
+   const client = await pool.connect()
+   try {
+      await client.query('BEGIN')
+      //console.log('@@@@@@@@@@@+++++++ query text en addBooking', text)
+      const { rows } = await client.query(text)
+      await client.query('COMMIT')
+      const [{ bookingId }] = rows
+      return { bookingId }
+      //  const [{ booking_id: bookingId }] = rows
+      //console.log('@@@@@@@@@@@+++++++ response en addBooking', rows)
+      res.status(201).json(bookingId)
+   } catch (err) {
+      await client.query('ROLLBACK')
+      //console.log('ERROR API CREATE BOOKING', err.message)
+      throw err
+      res.status(500)
+   } finally {
+      //console.log('============ FINALLY ================')
+      client.release()
+   }
+}
+
+/** */
+
 export const addBooking_ = async ({
    bikes,
    userId,
@@ -96,29 +143,4 @@ const a = {
    'delivery': false,
    'pickup': false,
    'duration': 43,
-}
-
-export const addBooking = async (data) => {
-   const text = addBookingText(data)
-   // console.log('text en addBooking', text)
-   const client = await pool.connect()
-   try {
-      await client.query('BEGIN')
-      //console.log('@@@@@@@@@@@+++++++ query text en addBooking', text)
-      const { rows } = await client.query(text)
-      await client.query('COMMIT')
-      const [{ bookingId }] = rows
-      return { bookingId }
-      //  const [{ booking_id: bookingId }] = rows
-      //console.log('@@@@@@@@@@@+++++++ response en addBooking', rows)
-      res.status(201).json(bookingId)
-   } catch (err) {
-      await client.query('ROLLBACK')
-      //console.log('ERROR API CREATE BOOKING', err.message)
-      throw err
-      res.status(500)
-   } finally {
-      //console.log('============ FINALLY ================')
-      client.release()
-   }
 }

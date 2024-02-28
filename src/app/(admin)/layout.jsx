@@ -1,8 +1,8 @@
 import './admin.css'
 import { Inter } from 'next/font/google'
 import React from 'react'
-import AdminDashboardShell from '@/components/layouts/admin/AdminDashboardShell'
 import ReduxProviderWrapper from '@/lib/redux/ReduxProviderWrapper'
+import AdminShell from '@/components/layouts/admin/AdminShell'
 
 export async function generateStaticParams() {
    return [{ lang: 'es-ES' }]
@@ -15,12 +15,12 @@ export const metadata = {
 }
 
 export default function AdminDashboardLayout(props) {
-   ////console.log('Props /bookin/layout -> ', props)
+   console.log('Props /bookin/layout -> ', props.params)
    return (
       <html lang="es-ES" dir="ltr" className="h-full bg-red-500">
          <body className="h-full">
             <ReduxProviderWrapper>
-               <AdminDashboardShell {...props} />
+               <AdminShell {...props} />
             </ReduxProviderWrapper>
          </body>
       </html>

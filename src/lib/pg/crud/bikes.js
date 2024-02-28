@@ -11,9 +11,7 @@ import {
    findAppBikeConfigSegments,
 } from '../repos/bikes'
 
-console.log(
-   '######### CLIENT importado en api/bikes/available/[dateRange]/route.js'
-)
+//console.log( '######### CLIENT importado en api/bikes/available/[dateRange]/route.js')
 export async function getAvailableSizesInRange({ dateRange }) {
    //console.log('dateRange en getAvailableSizesInRange -> ', dateRange)
    try {

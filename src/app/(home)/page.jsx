@@ -1,4 +1,3 @@
-import HomeArticleCard from '@/components/HomeArticleCard'
 import React from 'react'
 import RentImage from '@/public/images/home/rent.webp'
 import ShopImage from '@/public/images/home/shop.jpg'
@@ -7,11 +6,7 @@ import ImageCard from '@/components/ImageCard'
 import IconCorpName from '@/components/svg/IconCorpName'
 import SiteContainer from '@/components/layouts/site/SiteContainer'
 import { headers } from 'next/headers'
-import { getAppBikesConfig } from '@/lib/pg-promise/crud/bikes'
-import TestClientFireAuth from '@/components/a/TestClientFireAuth'
-import { DialogWindow } from '@/components/common/DialogWindow'
-import clsx from 'clsx'
-import Trasa from './Trasa'
+
 import Loading from './loading'
 
 const cards = [
@@ -58,8 +53,8 @@ export default async function HomePage() {
    const headersList = headers()
    const referer = headersList.get('referer')
    //console.log('referer ->', referer)
-   const res = await getAppBikesConfig()
-   const appBikesConfig = await res.json()
+   // const res = await getAppBikesConfig()
+   //const appBikesConfig = await res.json()
    ////console.log('params IN HOME PAGE@-> ', appBikesConfig)
 
    return (

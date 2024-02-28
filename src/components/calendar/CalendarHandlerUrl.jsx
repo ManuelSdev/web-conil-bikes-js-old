@@ -38,7 +38,8 @@ export default function CalendarHandlerUrl({
       const date = selectedDay.toISOString()
       // router.push(`/dashboard/bookings/${date.toISOString()}`)
       const params = urlParams({ date })
-      router.push(`/dashboard/bookings?${params}`)
+      // router.push(`/dashboard/bookings?${params}`)
+      router.push(`/dashboard/bookings/calendar/${date}`)
    }
    const handeDateRange = async (displayMonth) => {
       //console.log('handeDateRange displayMonth -> ', displayMonth)

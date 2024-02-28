@@ -19,14 +19,16 @@ import Link from 'next/link'
 
 const urlParams = (obj) => new URLSearchParams(obj)
 
-export default async function BookingList({ bookings, urlDate }) {
+export default async function BookingList({ bookings, urlDate, date }) {
    /*
    const { date: encodedDate } = params
    const date = decodeURIComponent(encodedDate)
    const res = await getBookingOnDate(date)
    const { bookings } = await res.json()
    */
-   console.log('BookingListPage  bookings-> ', bookings)
+
+   //console.log('BookingListPage  bookings-> ', bookings)
+
    //if (!bookings) return null
    const setType = (booking) => {
       if (booking.state === PENDING) {
@@ -81,10 +83,12 @@ export default async function BookingList({ bookings, urlDate }) {
                         >
                            <Link
                               //href={`/dashboard/bookings/manage/${booking.bookingId}`}
-                              href={`/dashboard/bookingsss?${urlParams({
+
+                              href={`/dashboard/bookings?${urlParams({
                                  date: urlDate,
                                  bookingId: booking.bookingId,
                               })}`}
+                              //   href={`/dashboard/${urlDate}/${booking.bookingId}/bookings`}
                               className="text-indigo-600 hover:text-indigo-900"
                            >
                               Vers

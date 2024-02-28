@@ -1,7 +1,14 @@
 import { query } from '../db'
+import {
+   txtFindAvailableBikes,
+   txtFindAvailableRanges,
+   txtFindAvailableSizesInRange,
+   txtFindAvailableTypes,
+} from './bikeText'
 
 export const findAvailableSizesInRange = async ({ dateRange }) => {
-   const text = 'SELECT * FROM get_sizes($1)'
+   //const text = 'SELECT * FROM get_sizes($1)'
+   const text = txtFindAvailableSizesInRange
    const values = [dateRange]
    const rowMode = 'array'
    const { rows } = await query({ text, values, rowMode })
@@ -9,7 +16,8 @@ export const findAvailableSizesInRange = async ({ dateRange }) => {
 }
 
 export const findAvailableTypes = async ({ dateRange, size }) => {
-   const text = 'SELECT * FROM get_available_types($1, $2)'
+   //const text = 'SELECT * FROM get_available_types($1, $2)'
+   const text = txtFindAvailableTypes
    const values = [dateRange, size]
    const rowMode = 'array'
    const { rows } = await query({ text, values, rowMode })
@@ -17,7 +25,8 @@ export const findAvailableTypes = async ({ dateRange, size }) => {
 }
 
 export const findAvailableRanges = async ({ dateRange, size, type }) => {
-   const text = 'SELECT * FROM get_available_ranges($1, $2, $3)'
+   //  const text = 'SELECT * FROM get_available_ranges($1, $2, $3)'
+   const text = txtFindAvailableRanges
    const values = [dateRange, size, type]
    const rowMode = 'array'
    const { rows } = await query({ text, values, rowMode })
@@ -26,7 +35,8 @@ export const findAvailableRanges = async ({ dateRange, size, type }) => {
 }
 
 export const findAvailableBikes = async ({ dateRange, size, type, range }) => {
-   const text = 'SELECT * FROM get_available_bikes($1, $2, $3, $4)'
+   //const text = 'SELECT * FROM get_available_bikes($1, $2, $3, $4)'
+   const text = txtFindAvailableBikes
    const values = [dateRange, size, type, range]
    //console.log('values en findAvailableBikes -> ', values)
    //const rowMode = 'array'

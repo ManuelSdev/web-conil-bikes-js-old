@@ -5,9 +5,7 @@ import { NextResponse } from 'next/server'
 import db from '@/lib/pg-promise/db'
 
 //import { bookings } from '@/lib/pg-promise/sql'
-console.log(
-   '######### CLIENT importado en api/bikes/available/[dateRange]/route.js'
-)
+//console.log('######### CLIENT importado en api/bikes/available/[dateRange]/route.js')
 export async function getAvailableSizesInRange(dateRange) {
    //console.log('dateRange en getAvailableSizesInRange -> ', dateRange)
    try {

@@ -26,7 +26,9 @@ export default async function BookingList({ bookings, urlDate }) {
    const res = await getBookingOnDate(date)
    const { bookings } = await res.json()
    */
-   console.log('BookingListPage  bookings-> ', bookings)
+
+   //console.log('BookingListPage  bookings-> ', bookings)
+
    //if (!bookings) return null
    const setType = (booking) => {
       if (booking.state === PENDING) {
@@ -64,37 +66,43 @@ export default async function BookingList({ bookings, urlDate }) {
                   </TableRow>
                </TableHeader>
                <TableBody>
-                  {bookings.map((booking) => (
-                     <TableRow key={booking.bookingId}>
-                        <TableCell className={'pl-4 pr-3 sm:pl-6'}>
-                           {booking.bikes}
-                        </TableCell>
-                        <TableCell>
-                           {mappedBookingState(booking.state)}
-                        </TableCell>
-                        <TableCell>{setType(booking)}</TableCell>
+                  {bookings.map(
+                     (booking) =>
+                        console.log('booking -> ', booking) || (
+                           <TableRow key={booking.bookingId}>
+                              <TableCell className={'pl-4 pr-3 sm:pl-6'}>
+                                 {booking.bikes}
+                              </TableCell>
+                              <TableCell>
+                                 {mappedBookingState(booking.state)}
+                              </TableCell>
+                              <TableCell>{setType(booking)}</TableCell>
 
-                        <TableCell
-                           className={
-                              'relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6'
-                           }
-                        >
-                           <Link
-                              //href={`/dashboard/bookings/manage/${booking.bookingId}`}
-                              href={`/dashboard/bookingsss?${urlParams({
+                              <TableCell
+                                 className={
+                                    'relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6'
+                                 }
+                              >
+                                 <Link
+                                    //href={`/dashboard/bookings/manage/${booking.bookingId}`}
+                                    /*
+                              href={`/dashboard/bookings?${urlParams({
                                  date: urlDate,
                                  bookingId: booking.bookingId,
                               })}`}
-                              className="text-indigo-600 hover:text-indigo-900"
-                           >
-                              Vers
-                              <span className="sr-only">
-                                 , {booking.bookingId}
-                              </span>
-                           </Link>
-                        </TableCell>
-                     </TableRow>
-                  ))}
+                              */
+                                    href={`/dashboard/bookings/calendar/${urlDate}/${booking.bookingId}`}
+                                    className="text-indigo-600 hover:text-indigo-900"
+                                 >
+                                    Vers
+                                    <span className="sr-only">
+                                       , {booking.bookingId}
+                                    </span>
+                                 </Link>
+                              </TableCell>
+                           </TableRow>
+                        )
+                  )}
                </TableBody>
             </Table>
          </TableWrapper>

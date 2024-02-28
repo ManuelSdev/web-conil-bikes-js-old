@@ -34,7 +34,7 @@ export default async function CalendarPage({ params, searchParams }) {
 */
    if (!encodedDate && isBookingToday) {
       const params = urlParams({ date: todayString })
-      redirect(`/dashboard/booking?${params}`)
+      redirect(`/dashboard/booking?${params}`, 'push')
    }
    const cardProps = {
       //className: 'max-w-[334px]',

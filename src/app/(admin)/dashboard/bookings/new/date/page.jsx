@@ -5,7 +5,7 @@ import { cookies } from 'next/headers'
 import React from 'react'
 
 import Step from '@/components/stepper/Step'
-import NotifyCart from '../NotifyCart'
+import NotifyCart from '@/app/(site)/bookingg/NotifyCart'
 import StepShell from '@/components/stepper/StepShell'
 
 export default async function DateStepPage({ params }) {

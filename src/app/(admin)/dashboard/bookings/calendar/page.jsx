@@ -1,9 +1,7 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import CalendarHandlerUrl from '@/components/calendar/CalendarHandlerUrl'
 import Card from '@/components/layouts/Card'
 import { createDateRangeString } from '@/utils/datesFns/createDateRangeString'
-import BookingTabs from '@/components/tabs/BookingTabs'
-import BookingList from '@/components/table/BookingList'
 
 import { todayString } from '@/utils/datesFns/today'
 import { redirect } from 'next/navigation'
@@ -13,13 +11,12 @@ import { getBookingDatesInRange } from '@/lib/pg/crud/bookings'
 import { getBookingOnDate } from '@/lib/pg/crud/bookings'
 
 import { getBookingWithBikesById } from '@/lib/pg/crud/bookings'
-import BookingTabs_test from '@/components/tabs/BookingTabs_test'
-import BookingsPageTabs from './BookingsPageTabs'
-import BookingListHandler from './BookingListHandler'
+import BookingPageShell from './BookingPageShell'
 
 const urlParams = (obj) => new URLSearchParams(obj)
 
 export default async function CalendarPage({ params, searchParams }) {
+   // const [encodedDate, bookingId] = params.slug ? params.slug : [null, null]
    const { date: encodedDate, bookingId } = searchParams
    const date = encodedDate ? decodeURIComponent(encodedDate) : null
    const dateRange = createDateRangeString({ outsideDates: true })
@@ -33,11 +30,12 @@ export default async function CalendarPage({ params, searchParams }) {
     * redirige a la misma url pero añadiendo la fecha del día actual para que
     * la página bookingList muestre las reservas de hoy
     */
-   if (false && !encodedDate && isBookingToday) {
+   if (!encodedDate && isBookingToday) {
       const params = urlParams({ date: todayString })
-      redirect(`/dashboard/bookings?${params}`)
+      // redirect(`/dashboard/bookings?${params}`)
    }
 
+   // const bookings = await getBookingListData(date)
    const cardProps = {
       //className: 'max-w-[334px]',
       // className: 'col-span-4',
@@ -45,18 +43,12 @@ export default async function CalendarPage({ params, searchParams }) {
       // cardDescription: 'Hin reverse chronological order.',
    }
    return (
-      <div className="flex">
-         <div className="w-full lg:hidden">
-            <BookingsPageTabs bookingDates={bookingDates} />
-         </div>
-
-         <div className="hidden flex-none lg:block">
-            <Card {...cardProps}>
-               <CalendarHandlerUrl bookingDates={bookingDates} />
-            </Card>
-            <BookingListHandler />
-         </div>
-      </div>
+      <BookingPageShell params={params}>
+         {' '}
+         <Card {...cardProps}>
+            <CalendarHandlerUrl bookingDates={bookingDates} />
+         </Card>
+      </BookingPageShell>
    )
 }
 
@@ -68,8 +60,11 @@ async function getCalendarData(dateRange) {
 }
 
 async function getBookingListData(date) {
-   const res = date ? await getBookingOnDate(date) : null
-   const bookings = date ? await res.json() : { bookings: null }
+   if (!date) {
+      return null
+   }
+   const res = await getBookingOnDate(date)
+   const bookings = await res.json()
    return bookings
 }
 
