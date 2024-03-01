@@ -16,10 +16,11 @@ import {
 } from '@/utils/serverFns/serverFns'
 
 import StepShell from '@/components/stepper/StepShell'
-import NotifyCart from '@/components/stepper/NotifyCart'
 import AvailableBikeListHandler from '@/components/stepper/bikes/AvailableBikeListHandler'
 import BikesStepHandlerTest from '@/components/stepper/bikes/BikesStepHandlerTest'
-export default async function BikesStepPage({ params }) {
+import NotifyCart from '@/components/stepper/NotifyCart'
+
+export default async function DashboardBikesStepPage({ params }) {
    const searchKeysCookie = cookies().get('searchKeys')
    //const selectedBikeCookie = cookies().get('selectedBike')
 
@@ -34,10 +35,11 @@ export default async function BikesStepPage({ params }) {
       : null
 */
    const { segmentList } = await getAppBikeSegments()
-
+   //Esto solo sirve para saber si el usuario está logueado en el site
+   //como estás en el dashboard, no lo necesitas, solo pasa isLogged: true
    const userAuth = await getUserPageAuth()
 
-   console.log('##### userAuth ', userAuth)
+   console.log('userAuth ', userAuth)
    console.log('params ', params)
    return (
       <StepShell
@@ -54,7 +56,7 @@ export default async function BikesStepPage({ params }) {
          </Step>
          <AvailableBikeListHandler
             loadedAvailableBikes={loadedPreviusStateData?.availableBikes}
-            isLogged={userAuth.isLogged}
+            isLogged={true}
          />
          <NotifyCart page={'bikes'} />
       </StepShell>

@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
 import BookingTabs from '@/components/tabs/BookingTabs'
 import { getBookingWithBikesById } from '@/lib/pg/crud/bookings'
-import BookingPageShell from '../../BookingPageShell'
+import BookingSubShell from '@/components/layouts/admin/BookingSubShell'
 
 export default async function BookingInfoHandler({ params }) {
    const { bookingId, date: encodedDate } = params
@@ -14,9 +14,9 @@ export default async function BookingInfoHandler({ params }) {
    //console.log('bikes -> ', bikes)
 
    return (
-      <BookingPageShell params={params}>
+      <BookingSubShell params={params}>
          <BookingTabs bookingData={bookingData} bikes={bikes} />
-      </BookingPageShell>
+      </BookingSubShell>
    )
 }
 

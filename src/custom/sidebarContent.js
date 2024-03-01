@@ -11,9 +11,19 @@ import {
    XMarkIcon,
 } from '@heroicons/react/24/outline'
 const primary = [
-   { name: 'Reservas', href: '#', icon: HomeIcon, current: true },
+   {
+      name: 'Reservas',
+      href: '/dashboard/bookings/calendar',
+      icon: HomeIcon,
+      current: true,
+   },
    { name: 'Bicicletas', href: '#', icon: UsersIcon, current: false },
-   { name: 'Usuarios', href: '#', icon: FolderIcon, current: false },
+   {
+      name: 'Usuarios',
+      href: '/dashboard/users/new',
+      icon: FolderIcon,
+      current: false,
+   },
    { name: 'Calendario', href: '#', icon: CalendarIcon, current: false },
    {
       name: 'Administración',

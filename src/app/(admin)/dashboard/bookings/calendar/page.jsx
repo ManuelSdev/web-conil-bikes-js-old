@@ -11,7 +11,7 @@ import { getBookingDatesInRange } from '@/lib/pg/crud/bookings'
 import { getBookingOnDate } from '@/lib/pg/crud/bookings'
 
 import { getBookingWithBikesById } from '@/lib/pg/crud/bookings'
-import BookingPageShell from './BookingPageShell'
+import BookingSubShell from '@/components/layouts/admin/BookingSubShell'
 
 const urlParams = (obj) => new URLSearchParams(obj)
 
@@ -43,12 +43,12 @@ export default async function CalendarPage({ params, searchParams }) {
       // cardDescription: 'Hin reverse chronological order.',
    }
    return (
-      <BookingPageShell params={params}>
+      <BookingSubShell params={params}>
          {' '}
          <Card {...cardProps}>
             <CalendarHandlerUrl bookingDates={bookingDates} />
          </Card>
-      </BookingPageShell>
+      </BookingSubShell>
    )
 }
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import DateStep from '../../../app/(site)/bookingg/date/DateStep'
+import DateStep from '../date/DateStep'
 import { useDispatch, useSelector } from 'react-redux'
 import {
    dateRangeSelected,

@@ -1,16 +1,17 @@
 import React from 'react'
 import Step from '@/components/stepper/Step'
-import NotifyCart from '@/components/stepper/NotifyCart'
 import StepShell from '@/components/stepper/StepShell'
 import BookingAddressHandler from '@/components/stepper/address/BookingAddressHandler'
-export default async function AddressStepPage({ params }) {
+import NotifyCart from '@/components/stepper/NotifyCart'
+
+export default async function DashboardAddressStepPage({ params }) {
    return (
       <StepShell
          title={'Dirección'}
          description="Indica cual será tu dirección durante la reserva y como quieres gestionar la entrega y devolución las bicicletas"
       >
          <Step step={3} page="address">
-            <BookingAddressHandler />
+            <BookingAddressHandler isAdmin={true} />
          </Step>
          <NotifyCart page="address" />
       </StepShell>

@@ -41,12 +41,12 @@ export async function authMiddleware({
          },
       }
    )
-   const a = await res.json()
-   console.log('aaaaaaaaaaaaa', a)
+   const authState = await res.json()
+   console.log('authState en authMiddleware', authState)
    //TODO: termina cuando el mail no está verificado
-   const { verified, error } = a
+   const { verified, error } = authState
    //TODO: en principio, la verificación de email se tiene en cuenta solo si no es admin
-   if (!isAdmin && !verified) {
+   if (!verified) {
       ////console.log('##### SIN verified')
       return redirectToLogin(NextResponse, resolvedUrl, urlToRedirect)
    }

@@ -1,12 +1,12 @@
-import DateStepHandler from '@/app/(site)/bookingg/date/DateStepHandler'
+import DateStepHandler from '@/components/stepper/date/DateStepHandler'
 
 import { cookies } from 'next/headers'
 
 import React from 'react'
 
 import Step from '@/components/stepper/Step'
-import NotifyCart from '../NotifyCart'
 import StepShell from '@/components/stepper/StepShell'
+import NotifyCart from '@/components/stepper/NotifyCart'
 
 export default async function DateStepPage({ params }) {
    const userSessionCookie = cookies().get('userSession')

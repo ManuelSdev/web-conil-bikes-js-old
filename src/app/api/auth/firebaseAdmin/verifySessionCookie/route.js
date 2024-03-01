@@ -14,20 +14,26 @@ export async function GET(req) {
 
    const searchParams = req.nextUrl.searchParams
    const role = searchParams.get('role')
+   console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@ role ->', role)
    const cookieStore = cookies()
    const sessionCookie =
       role === 'admin'
          ? cookieStore.get('adminSession')
          : cookieStore.get('userSession')
    //console.log('HANDLER:verifySessionCookie sessionCookie ->', sessionCookie)
+   //TODO: este verified solo indica que la cookie se ha verificado, no que el usuario haya
+   //verificado su email. Gestiona el caso de no verificación de email en el middleware
    try {
       const decodeClaims = await verifySessionCookie(sessionCookie.value)
       // //console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
       //console.log('##### decodeClaims ->', decodeClaims)
       //TODO: parche para pruebas , revisa el uso de roles
       const adminEmail = process.env.ADMIN_EMAIL
-      const { appRole, email } = decodeClaims
-      const isAdmin = appRole === 'admin' || appRole === 'manager'
+      const { appRole, email, admin } = decodeClaims
+      //TODO: no tienes este custom claim en el token, por lo que no puedes verificar si es admin
+      //const isAdmin = appRole === 'admin' || appRole === 'manager'
+      const isAdmin = admin
+
       ////console.log('HANDLER: verifySessionCookie ADMIN ->', admin)
       if (role === 'admin') {
          if (isAdmin || adminEmail === email)

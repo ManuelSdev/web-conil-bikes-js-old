@@ -1,7 +1,7 @@
 import React from 'react'
 import { getBookingOnDate } from '@/lib/pg/crud/bookings'
 import BookingList from './BookingList'
-import BookingPageShell from '../BookingPageShell'
+import BookingSubShell from '@/components/layouts/admin/BookingSubShell'
 
 export default async function BookingListPage({ params }) {
    const { date: encodedDate } = params
@@ -11,9 +11,9 @@ export default async function BookingListPage({ params }) {
    console.log('BookingListHandler')
 
    return (
-      <BookingPageShell params={params}>
+      <BookingSubShell params={params}>
          <BookingList bookings={bookings} urlDate={date} />
-      </BookingPageShell>
+      </BookingSubShell>
    )
 }
 

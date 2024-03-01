@@ -16,7 +16,7 @@ export const findBookingDatesInRange = async (dateRange) => {
    const {
       rows: [bookingDates],
    } = await query({ text: txtFindBookingDatesInRange, values })
-   console.log('bookingDates en findBookingDatesInRange -> ', bookingDates)
+   //console.log('bookingDates en findBookingDatesInRange -> ', bookingDates)
    bookingDates.startdates ??= []
    bookingDates.enddates ??= []
    bookingDates.startenddates ??= []
@@ -25,7 +25,7 @@ export const findBookingDatesInRange = async (dateRange) => {
       enddates: endDates,
       startenddates: startEndDates,
    } = bookingDates
-   console.log('bookingDates en findBookingDatesInRange -> ', bookingDates)
+   // console.log('bookingDates en findBookingDatesInRange -> ', bookingDates)
    return { startDates, endDates, startEndDates }
 }
 
