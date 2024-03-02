@@ -11,6 +11,11 @@ const userApi = baseApi.injectEndpoints({
             //console.log('email en getUser -> ', email) ||
             `users?email=${email}`,
       }),
+      getUserByIdentifier: builder.query({
+         query: (identifier) =>
+            //console.log('email en getUser -> ', email) ||
+            `users/${identifier}`,
+      }),
       /*
       getUserBooking: builder.query({
          query: (userIdentifier) => USERS_BOOKINGS(userIdentifier),
@@ -29,6 +34,8 @@ const userApi = baseApi.injectEndpoints({
 
 export const {
    useGetUserQuery,
+   useGetUserByIdentifierQuery,
+   useLazyGetUserByIdentifierQuery,
    useLazyGetUserQuery,
    useCreateAccountMutation,
 } = userApi

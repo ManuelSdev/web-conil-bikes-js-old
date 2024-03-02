@@ -4,6 +4,7 @@ import { cache } from 'react'
 import {
    addUser,
    findUserByEmail,
+   findUserByIdentifier,
    findUserIdByEmail,
    findUserRole,
 } from '../repos/users'
@@ -19,7 +20,22 @@ export async function getUserByEmail({ email }) {
       //console.log('appUser en getUserByEmail-> ', appUser)
       return NextResponse.json(appUser, { status: 201 })
    } catch (error) {
-      //console.log('### ERROR CRUD api/getUserByEmail -> ', error)
+      console.log('### ERROR CRUD api/getUserByEmail -> ', error)
+      return NextResponse.json(error, { status: 500 })
+   }
+}
+export async function getUserByIdentifier(identifier) {
+   console.log('identifier en getUserByIdentifier -> ', identifier)
+   //console.log('dateRange en getAvailableSizesInRange -> ', dateRange)
+   try {
+      //  const db = client()
+      //console.log('@@ CRUD FN getUserByEmail @@')
+      const users = await findUserByIdentifier(identifier)
+      console.log('appUser en getUserByEmail-> ', users)
+      return NextResponse.json(users, { status: 201 })
+   } catch (error) {
+      console.log('### ERROR CRUD api/getUserByEmail -> ', error)
+      return NextResponse.json(error, { status: 500 })
    }
 }
 export async function getUserIdByEmail({ email }) {
@@ -32,6 +48,7 @@ export async function getUserIdByEmail({ email }) {
       return NextResponse.json(appUserId, { status: 201 })
    } catch (error) {
       //console.log('### ERROR CRUD api/getUserIdByEmail -> ', error)
+      return NextResponse.json(error, { status: 500 })
    }
 }
 export async function getUserRole({ email }) {
@@ -44,15 +61,29 @@ export async function getUserRole({ email }) {
       return NextResponse.json(userRole, { status: 201 })
    } catch (error) {
       //console.log('### ERROR CRUD api/getUserRole -> ', error)
+      return NextResponse.json(error, { status: 500 })
    }
 }
 
-export async function createAppUser({ name, email, phone, role }) {
+export async function createAppUser({
+   name,
+   email,
+   phone,
+   role,
+   isCreatedByAdmin,
+}) {
    //console.log('dateRange en getAvailableSizesInRange -> ', dateRange)
+
    try {
       //  const db = client()
       //console.log('@@ CRUD FN createUser @@')
-      const createdAppUserId = await addUser({ name, email, phone, role })
+      const createdAppUserId = await addUser({
+         name,
+         email,
+         phone,
+         role,
+         isCreatedByAdmin,
+      })
       //console.log('createdUserId en createUser-> ', createdAppUserId)
       return createdAppUserId
       return NextResponse.json(createdAppUserId, { status: 201 })
