@@ -3,18 +3,27 @@
 import React from 'react'
 import { SearchForm } from './SearchForm'
 import { useLazyGetUserByIdentifierQuery } from '@/lib/redux/apiSlices/userApi'
+import { useRouter } from 'next/navigation'
 
 export default function SearchFormHandler(props) {
    const [getUserByIdentifier, { data: user }] =
       useLazyGetUserByIdentifierQuery()
+
+   const router = useRouter()
 
    async function onSubmit(data, event) {
       //console.log('data ->', data)
       ////console.log('ev ->', ev)
       event.preventDefault()
       const { search } = data
-      const getUserByIdentifierRes = await getUserByIdentifier(search)
-      console.log('getUserByIdentifierRes -> ', getUserByIdentifierRes)
+      try {
+         const users = await getUserByIdentifier(search)
+         console.log('users -> ', users)
+         router.push(`/dashboard/users/search?searchKey=${search}`)
+      } catch (error) {
+         console.log('ERROR:getUserByIdentifierRes -> ', error)
+      }
+
       /*
       const { isError } = createUserAccountRes
 
