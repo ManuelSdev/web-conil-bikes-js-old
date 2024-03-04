@@ -25,7 +25,7 @@ const FormSchema = z.object({
       message: 'Username must be at least 2 characters.',
    }),
 })
-export function SearchForm({ onSubmit, className }) {
+export function SearchUserForm({ onSubmit, className }) {
    const form = useForm({
       resolver: zodResolver(FormSchema),
       defaultValues: {

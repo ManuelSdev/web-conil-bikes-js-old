@@ -66,9 +66,9 @@ export default function SigUpFormPageHandler({ isAdmin }) {
          email,
          password,
       })
-
+      console.log('createUserAccountRes ->', createUserAccountRes)
       const { isError } = createUserAccountRes
-
+      console.log('createUserAccountRes ->', createUserAccountRes)
       if (!isError) {
          handleSetDialog({
             open: true,

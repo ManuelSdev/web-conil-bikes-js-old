@@ -57,9 +57,8 @@ export async function POST(req) {
 
       return NextResponse.json({ result: 'ok' }, { status: 201 })
    } catch (error) {
-      console.log('### ERROR USERS API route -> ', error)
-
-      return NextResponse.json({ error }, { status: 500 })
+      //console.log('### ERROR USERS API route -> ', error)
+      return NextResponse.json(error, { status: 500 })
    }
 }
 

@@ -1,7 +1,7 @@
 import Card from '@/components/layouts/Card'
 import React from 'react'
 import { User } from '@phosphor-icons/react/dist/ssr'
-import UserSubShell from '@/components/layouts/admin/UserSubShell'
+import UsersSubShell from '@/components/layouts/admin/UsersSubShell'
 import { NewUserForm } from './NewUserForm'
 
 export default function NewUserPage() {
@@ -12,10 +12,10 @@ export default function NewUserPage() {
       // cardDescription: 'Hin reverse chronological order.',
    }
    return (
-      <UserSubShell>
+      <UsersSubShell>
          <Card {...cardProps}>
             <NewUserForm />
          </Card>
-      </UserSubShell>
+      </UsersSubShell>
    )
 }

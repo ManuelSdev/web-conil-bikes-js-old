@@ -4,8 +4,8 @@ import React from 'react'
 import UsersTable from './UsersTable'
 import { useGetUserByIdentifierQuery } from '@/lib/redux/apiSlices/userApi'
 
-export default function UsersTableHandler({ searchKey, ...props }) {
-   console.log('searchKey -> ', searchKey)
+export default function UsersTableHandler({ identifier, ...props }) {
+   console.log('identifier -> ', identifier)
    const {
       data: users,
       isLoading,
@@ -13,18 +13,19 @@ export default function UsersTableHandler({ searchKey, ...props }) {
       refetch,
       isFetching,
       originalArgs,
-   } = useGetUserByIdentifierQuery(searchKey, {
-      skip: !searchKey,
+   } = useGetUserByIdentifierQuery(identifier, {
+      skip: !identifier,
       // refetchOnMountOrArgChange: true
    })
    console.log('data -> ', users)
+
+   return <UsersTable users={users} {...props} />
    return (
       <div>
          <div>is fetching: {isFetching}</div>
          <div>isSuccess: {isSuccess}</div>
       </div>
    )
-   return <UsersTable users={users} {...props} />
 }
 /*
 async function getBookingListData(date) {

@@ -23,10 +23,16 @@ const userApi = baseApi.injectEndpoints({
       }),
       */
       createAccount: builder.mutation({
-         query: ({ name, phone, email, password }) => ({
+         query: ({
+            name,
+            phone,
+            email,
+            password,
+            isCreatedByAdmin = false,
+         }) => ({
             url: '/users/create',
             method: 'POST',
-            body: { name, phone, email, password },
+            body: { name, phone, email, password, isCreatedByAdmin },
          }),
       }),
    }),

@@ -14,7 +14,7 @@ import {
    XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-import SearchFormHandler from './SearchFormHandler'
+import SearchUserFormHandler from './SearchUserFormHandler'
 
 const userNavigation = [
    { name: 'Your profile', href: '#' },
@@ -37,7 +37,7 @@ export default function AdminAppBar({ setSidebarOpen }) {
          <div className="h-6 w-px bg-gray-200 lg:hidden" aria-hidden="true" />
 
          <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
-            <SearchFormHandler className={'relative flex flex-1'} />
+            <SearchUserFormHandler className={'relative flex flex-1'} />
 
             <div className="flex items-center gap-x-4 lg:gap-x-6">
                <button

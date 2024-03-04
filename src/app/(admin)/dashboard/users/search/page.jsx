@@ -1,9 +1,15 @@
 import React from 'react'
 import UsersTableHandler from './UsersTableHandler'
+import UsersSubShell from '@/components/layouts/admin/UsersSubShell'
 
 export default function SearchUsersPage({ searchParams }) {
    console.log('searchParams -> ', searchParams)
-   const { searchKey } = searchParams
+   const { identifier } = searchParams
 
-   return <UsersTableHandler searchKey={searchKey} />
+   return (
+      <UsersSubShell>
+         {' '}
+         <UsersTableHandler identifier={identifier} />
+      </UsersSubShell>
+   )
 }
