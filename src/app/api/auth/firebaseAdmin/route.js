@@ -1,7 +1,6 @@
 import { app } from '@/lib/firebase/admin/firebaseAdmin'
 import { getAuth } from 'firebase-admin/auth'
 import { NextResponse } from 'next/server'
-import { as } from 'pg-promise'
 
 export async function POST(req) {
    const body = await req.json()

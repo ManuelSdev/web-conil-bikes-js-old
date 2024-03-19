@@ -8,7 +8,7 @@ import {
    TablePanel,
    TableRow,
    TableWrapper,
-} from '@/components/table/table'
+} from '@/components/ui-tw/table'
 import clsx from 'clsx'
 export default function DataGrid({ tablePanel, headLabels, tableRows }) {
    return (

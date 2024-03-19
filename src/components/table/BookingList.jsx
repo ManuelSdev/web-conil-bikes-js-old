@@ -11,7 +11,7 @@ import {
    TablePanel,
    TableRow,
    TableWrapper,
-} from '@/components/table/table'
+} from '@/components/ui-tw/table'
 import { PENDING } from '@/utils/app/appValues'
 import { mappedBookingState } from '@/utils/app/functions'
 import Link from 'next/link'

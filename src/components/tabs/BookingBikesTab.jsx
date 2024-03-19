@@ -9,7 +9,7 @@ import {
    TablePanel,
    TableRow,
    TableWrapper,
-} from '@/components/table/table'
+} from '@/components/ui-tw/table'
 export default function BookingBikesTab({ bikes }) {
    return (
       <TableWrapper>
