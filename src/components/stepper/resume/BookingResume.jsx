@@ -47,7 +47,7 @@ export default function BookingResume({
    renderPrevButton,
 }) {
    const { from, to } = dateRange
-
+   console.log('dateRange en Bookingresume ->', dateRange)
    return (
       <div className="bg-white">
          <div className="mx-auto max-w-2xl px-4 pb-24  sm:px-6 lg:max-w-7xl lg:px-8">

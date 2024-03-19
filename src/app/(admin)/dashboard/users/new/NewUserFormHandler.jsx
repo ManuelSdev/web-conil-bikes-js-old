@@ -14,20 +14,25 @@ import { useRouter } from 'next/navigation'
 export default function NewUserFormHandler() {
    const [createUserAccountTrigger, { isLoading, isError, isSuccess }] =
       useCreateAccountMutation()
+
    const { dialog, handleSetDialog } = useDialogWindow()
+
    const router = useRouter()
+
    async function onSubmit(data, event) {
       //console.log('data ->', data)
+      console.log('@@@@@@@@@@@@@@@@@@@')
       ////console.log('ev ->', ev)
       event.preventDefault()
       const { name, phone, email, password } = data
       try {
+         console.log('@@@@@@@@@@@@@@@@@@@')
          const createUserAccountRes = await createUserAccountTrigger({
             name,
             phone,
             email,
             password,
-            isCreatedByAdmin: false,
+            isCreatedByAdmin: true,
          }).unwrap()
          console.log('createUserAccountRes ->', createUserAccountRes)
          handleSetDialog({
@@ -39,6 +44,17 @@ export default function NewUserFormHandler() {
          })
       } catch (error) {
          console.log('ERROR:createAccount en SignUpFormPageHandler -> ', error)
+         //'email_unq' es el nombre la restriccion/constraint de la tabla app_users que señala la unicidad del campo email
+         const text =
+            error.data.constraint === 'email_unq'
+               ? 'Ya existe un usuario con este correo eléctronico'
+               : 'Ha ocurrido un error'
+         handleSetDialog({
+            open: true,
+            title: 'Ha ocurrido un error',
+            description: text,
+            closeText: 'Aceptar',
+         })
          /*
          const {
             error: {

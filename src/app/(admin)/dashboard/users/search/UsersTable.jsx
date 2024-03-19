@@ -58,8 +58,8 @@ export default function UsersTable({ users, urlDate }) {
                </TableRow>
             </TableHeader>
             <TableBody>
-               {users?.map((user) => (
-                  <TableRow>
+               {users?.map((user, idx) => (
+                  <TableRow key={idx}>
                      <TableCell className="font-medium">
                         {user.userId}
                      </TableCell>

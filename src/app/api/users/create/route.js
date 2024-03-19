@@ -14,7 +14,14 @@ import { NextResponse } from 'next/server'
 export async function POST(req) {
    //console.log('req.body -------->', req.method)
    const body = await req.json()
-   const { role = 'user', name, phone, email, password } = body
+   const {
+      role = 'user',
+      name,
+      phone,
+      email,
+      password,
+      isCreatedByAdmin,
+   } = body
 
    //https://firebase.google.com/docs/auth/admin/email-action-links?hl=es&authuser=2#initialize_actioncodesettings
    const continueUrl = {
@@ -22,47 +29,78 @@ export async function POST(req) {
    }
 
    //console.log('email en users api route -> ', email)
+   console.log('isCreatedByAdmin -> ', isCreatedByAdmin)
 
-   try {
-      //Crear usuario en firebase
-      const userRecord = await createFireUser({
+   if (isCreatedByAdmin) {
+      /**
+       * TODO 1: cuando el user lo crea el admin, el addUser que se llama en createAppUser
+       * le asigna user_active false en bdd, pero no toca el auth de firebase.
+       *  CLAVE: manda correo igualmente
+       */
+      return await createAppUser({
          name,
+         email,
          phone,
-         email,
-         password,
+         role,
+         isCreatedByAdmin,
       })
-      const { uid } = userRecord
-      //Crear usuario en la base de datos de la app
-      //TODO si falla, elimiar el usuario de firebase
-      const createdAppUserId = await createAppUser({ name, email, phone, role })
-      //Añado customClaim con el id de usuario de la base de datos de la app
-      await getAuth().setCustomUserClaims(uid, {
-         appUid: createdAppUserId,
-         appRole: role,
-      })
-      //Compruebo que el customClaim se ha añadido
-      const userRecordRes = await getAuth().getUser(uid)
-      //console.log('userRecordRes en createUserAccount -> ', userRecordRes)
-      //pillo el uid del usuario creado en firebase
-      const linkToControlPage = await getAuth().generateEmailVerificationLink(
-         email,
-         continueUrl
-      )
+   } else {
+      //https://firebase.google.com/docs/auth/admin/errors?hl=es-419
+      /**
+       * TODO 2 : si el user ya fue creado por un admin y, más adelante, el usuario se intenta
+       * dar de alta por si mismo...esto no esta controlado
+       * Deberías chequear, antes de del createFireUser, que exista un usuario en la bdd
+       * con user_active false...e inventar algo para resolver esto
+       *
+       * O puedes, en el TODO 1 de arriba, crear al user en fierbase cuando el creador es el admin
+       * y le pones algún custom claim, le mandas un correo, etc
+       */
+      try {
+         const userRecord = await createFireUser({
+            name,
+            phone,
+            email,
+            password,
+         })
+         const { uid } = userRecord
+         //Crear usuario en la base de datos de la app
+         //TODO si falla, elimiar el usuario de firebase
+         //Paso 2º parametro rawQuery=true para no recibir nextResponse
+         const createdAppUserId = await createAppUser(
+            {
+               name,
+               email,
+               phone,
+               role,
+            },
+            true
+         )
+         //Añado customClaim con el id de usuario de la base de datos de la app
+         await getAuth().setCustomUserClaims(uid, {
+            appUid: createdAppUserId,
+            appRole: role,
+         })
+         //Compruebo que el customClaim se ha añadido
+         const userRecordRes = await getAuth().getUser(uid)
+         //console.log('userRecordRes en createUserAccount -> ', userRecordRes)
+         //pillo el uid del usuario creado en firebase
+         const linkToControlPage =
+            await getAuth().generateEmailVerificationLink(email, continueUrl)
 
-      const sendgridResponse = await sendGridSendEmail({
-         userName: name,
-         buttonLink: linkToControlPage,
-         to: email,
-      })
+         const sendgridResponse = await sendGridSendEmail({
+            userName: name,
+            buttonLink: linkToControlPage,
+            to: email,
+         })
 
-      return NextResponse.json({ result: 'ok' }, { status: 201 })
-   } catch (error) {
-      console.log('### ERROR USERS API route -> ', error)
-
-      return NextResponse.json({ error }, { status: 500 })
+         return NextResponse.json({ result: 'ok' }, { status: 201 })
+      } catch (error) {
+         console.log('error en createUserAccount -> ', error)
+         // throw Error(error)
+         return NextResponse.json(error, { status: 500 })
+      }
    }
 }
-
 /*
 async function sendSengridEmail({ userName, buttonLink, to }) {
    mail.setApiKey(process.env.SENDGRID_API_KEY)

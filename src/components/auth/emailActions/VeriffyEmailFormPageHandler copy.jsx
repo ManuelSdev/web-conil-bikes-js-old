@@ -53,79 +53,91 @@ export default function VerifyEmailFormPageHandler() {
           * Tanto data como error las puedes extraer del objeto error del catch(error) en el route handler
           * https://firebase.google.com/docs/auth/admin/errors
           */
-         const res = await getUserDataTrigger({ email }).unwrap()
-
+         const res = await getUserDataTrigger({ email })
          console.log('res ******************->', res)
-         /*
-         const {
-            data: { displayName: name, emailVerified, uid },
-         } = res
+         const { isError } = res
 
-         if (emailVerified) {
-            handleSetDialog({
-               open: true,
-               title: 'Esta cuenta ya fue verificada',
-               description: 'Puedes iniciar sesión con esta cuenta',
-               closeText: 'Aceptar',
-               onOpenChange: (bool) => router.push('/auth/sign-in'),
-            })
-         }
-
-         if (!emailVerified) {
-            //TODO este error no tiene sentido
-            const res = await sendVerificationEmailTrigger({
-               name,
-               email,
-               type: 'verify',
-            })
-
-            const { data, isError } = res
-
-            if (isError) {
-               const { code, message } = data
-               //todo: revisar si hay más errores/porque solouno
-               if (code === 'auth/user-not-found') {
-                  handleSetDialog({
-                     open: true,
-                     title: 'Ha ocurrido un error',
-                     description: `Indeterminado`,
-                     closeText: 'Aceptar',
-                  })
-               }
-            } else {
+         if (isError) {
+            const {
+               error: {
+                  data: { code, message },
+               },
+            } = res
+            if (code === 'auth/user-not-found') {
                handleSetDialog({
                   open: true,
-                  title: 'Se ha enviado un correo electrónico de verificación',
-                  description: `Se ha enviado un correo electrónico de verificación a '${email}'. Revisa tu bandeja de entrada y recuerda que es posible que lo encuentres en la carpeta de spam o correo no deseado`,
+                  title: 'Ha ocurrido un error',
+                  description: `El correo electrónico '${email}' no está registrado`,
                   closeText: 'Aceptar',
-                  onOpenChange: (bool) => router.push('/auth/sign-in'),
                })
             }
          }
 
+         if (!isError) {
+            const {
+               data: { displayName: name, emailVerified, uid },
+            } = res
+
+            if (emailVerified) {
+               handleSetDialog({
+                  open: true,
+                  title: 'Esta cuenta ya fue verificada',
+                  description: 'Puedes iniciar sesión con esta cuenta',
+                  closeText: 'Aceptar',
+                  onOpenChange: (bool) => router.push('/auth/sign-in'),
+               })
+            }
+
+            if (!emailVerified) {
+               //TODO este error no tiene sentido
+               const res = await sendVerificationEmailTrigger({
+                  name,
+                  email,
+                  type: 'verify',
+               })
+
+               //console.log('sendVerificationEmailTrigger res ->', res)
+
+               const { data, isError } = res
+
+               if (isError) {
+                  const { code, message } = data
+                  //todo: revisar si hay más errores/porque solouno
+                  if (code === 'auth/user-not-found') {
+                     handleSetDialog({
+                        open: true,
+                        title: 'Ha ocurrido un error',
+                        description: `Indeterminado`,
+                        closeText: 'Aceptar',
+                     })
+                  }
+               } else {
+                  handleSetDialog({
+                     open: true,
+                     title: 'Se ha enviado un correo electrónico de verificación',
+                     description: `Se ha enviado un correo electrónico de verificación a '${email}'. Revisa tu bandeja de entrada y recuerda que es posible que lo encuentres en la carpeta de spam o correo no deseado`,
+                     closeText: 'Aceptar',
+                     onOpenChange: (bool) => router.push('/auth/sign-in'),
+                  })
+               }
+            }
+         }
+
          // const res = await doSendVerificationEmail(email)
+
          /**
           * Con el customToken puedo obtener el usuario desde el cliente
           */
          //await doSendVerificationEmail(customToken)
          // setIsEmailSent(true)
+         // //console.log('ok ->', ok)
+         ////console.log('userRecord ->', userRecord)
       } catch (error) {
          //handleOpen(error)
          console.log(
             'ERROR:doSendVerificationEmail en VerifyEmailFormPageHandler -> ',
             error
-         ) /*
-         const {
-            data: { code, message },
-         } = error
-         if (code === 'auth/user-not-found') {
-            handleSetDialog({
-               open: true,
-               title: 'Ha ocurrido un error',
-               description: `El correo electrónico '${email}' no está registrado`,
-               closeText: 'Aceptar',
-            })
-         }*/
+         )
       }
    }
 

@@ -59,17 +59,14 @@ export default function SigUpFormPageHandler({ isAdmin }) {
       ////console.log('ev ->', ev)
       event.preventDefault()
       const { name, phone, email, password } = data
+      try {
+         const createUserAccountRes = await createUserAccountTrigger({
+            name,
+            phone,
+            email,
+            password,
+         }).unwrap()
 
-      const createUserAccountRes = await createUserAccountTrigger({
-         name,
-         phone,
-         email,
-         password,
-      })
-      console.log('createUserAccountRes ->', createUserAccountRes)
-      const { isError } = createUserAccountRes
-      console.log('createUserAccountRes ->', createUserAccountRes)
-      if (!isError) {
          handleSetDialog({
             open: true,
             title: 'La cuenta se ha creado correctamente',
@@ -77,15 +74,10 @@ export default function SigUpFormPageHandler({ isAdmin }) {
             closeText: 'Aceptar',
             onOpenChange: (bool) => router.push('/auth/sign-in'),
          })
-      }
-      if (isError) {
+      } catch (error) {
          const {
-            error,
-            error: {
-               data: { code },
-            },
-         } = createUserAccountRes
-         //console.log('ERROR:createAccount en SignUpFormPageHandler -> ', error)
+            data: { code },
+         } = error
          const dialogMessage = signUpErrorHandler(code)
          handleSetDialog({
             open: true,

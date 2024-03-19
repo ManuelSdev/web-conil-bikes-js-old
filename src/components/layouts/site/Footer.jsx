@@ -24,6 +24,7 @@ export default function Footer() {
       </div>
    )
 }
+
 const social = [Instagram, Twitter, Facebook].map((Icon, index) => (
    <Icon
       key={index}
@@ -32,6 +33,7 @@ const social = [Instagram, Twitter, Facebook].map((Icon, index) => (
       //   fill="red"
    />
 ))
+
 const navigation = [
    {
       props: {},

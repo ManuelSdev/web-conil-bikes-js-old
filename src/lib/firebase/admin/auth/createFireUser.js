@@ -24,7 +24,9 @@ export async function createFireUser({
       const userRecord = await getAuth().createUser(newUser)
       return userRecord
    } catch (error) {
-      //console.log('Error creating new user en createFireUser:', error)
-      throw new Error(error)
+      //return error
+      console.log('Error creating new user en createFireUser:', error)
+      throw error
+      throw Error({ ...error })
    }
 }

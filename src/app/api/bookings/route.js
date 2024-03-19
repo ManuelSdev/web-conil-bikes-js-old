@@ -15,16 +15,5 @@ export async function POST(req) {
       pickup,
       duration,
    } = body
-   return await createBooking({
-      bikes,
-      userId,
-      isAdmin,
-      dateRange,
-      address,
-      price,
-      email,
-      delivery,
-      pickup,
-      duration,
-   })
+   return await createBooking(body)
 }

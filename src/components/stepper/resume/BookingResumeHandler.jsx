@@ -15,6 +15,7 @@ import { DialogWindow } from '@/components/common/DialogWindow'
 import SpinnerRing from '@/components/common/SpinnerRing'
 import { DialogLoader } from '@/components/common/DialogLoader'
 import { useRouter } from 'next/navigation'
+import getOrderResumeEmail from '@/lib/sendGrid/templates/orderResume'
 
 export default function BookingResumeHandler({
    setStep,
@@ -43,6 +44,7 @@ export default function BookingResumeHandler({
       userId: bookingResumeData.appUserId,
       price: bookingResumeData.totalPrice,
       dateRange: strDateRange,
+      dateRangeObj: dateRange,
    }
    const [
       createBooking,
@@ -62,7 +64,8 @@ export default function BookingResumeHandler({
 
    const handleSubmit = async (event) => {
       event.preventDefault()
-
+      console.log('queryData ->', queryData)
+      //const emailHtml = getOrderResumeEmail(bookingData)
       try {
          const res = await createBooking(queryData).unwrap()
          console.log('res ->', res)

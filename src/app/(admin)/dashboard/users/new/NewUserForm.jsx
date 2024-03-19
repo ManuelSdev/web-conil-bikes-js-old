@@ -37,6 +37,7 @@ const FormSchema = z
    })
 
 export function NewUserForm({ onSubmit }) {
+   //console.log('NewUserForm onSubmit ->', onSubmit)
    const form = useForm({
       resolver: zodResolver(FormSchema),
       defaultValues: {
@@ -92,7 +93,7 @@ export function NewUserForm({ onSubmit }) {
             />
 
             <Button className="w-full" type="submit">
-               Crear cuenta
+               Crear cuentarr
             </Button>
          </form>
       </Form>

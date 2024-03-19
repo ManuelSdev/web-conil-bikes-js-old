@@ -65,7 +65,42 @@ export async function getUserRole({ email }) {
    }
 }
 
-export async function createAppUser({
+export async function createAppUser(
+   { name, email, phone, role, isCreatedByAdmin },
+   rawQuery
+) {
+   //console.log('dateRange en getAvailableSizesInRange -> ', dateRange)
+   //rawquery retorna directamente la query para que el error se maneje en otra parte
+   if (rawQuery)
+      return await addUser({
+         name,
+         email,
+         phone,
+         role,
+         isCreatedByAdmin,
+      })
+   try {
+      //  const db = client()
+      //console.log('@@ CRUD FN createUser @@')
+      const createdAppUserId = await addUser({
+         name,
+         email,
+         phone,
+         role,
+         isCreatedByAdmin,
+      })
+      //console.log('createdUserId en createUser-> ', createdAppUserId)
+      //return createdAppUserId
+      return rawQuery
+         ? createdAppUserId
+         : NextResponse.json(createdAppUserId, { status: 201 })
+   } catch (error) {
+      console.log('############### ERROR CRUD api/createUser -> ', error)
+      if (rawQuery) throw error
+      return NextResponse.json(error, { status: 500 })
+   }
+}
+export async function _____createAppUser({
    name,
    email,
    phone,
@@ -88,7 +123,7 @@ export async function createAppUser({
       return createdAppUserId
       return NextResponse.json(createdAppUserId, { status: 201 })
    } catch (error) {
-      //console.log('### ERROR CRUD api/createUser -> ', error)
+      console.log('############### ERROR CRUD api/createUser -> ', typeof error)
       throw new Error(error)
    }
 }
