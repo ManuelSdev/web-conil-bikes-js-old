@@ -3,7 +3,7 @@ import { format } from 'date-fns'
 
 const createBikeList = (bikes) => {
    let bikeList = ''
-   bikes.forEach((bike, idx) => {
+   bikes.forEach((bike) => {
       const {
          modelBrand,
          modelName,
@@ -18,87 +18,68 @@ const createBikeList = (bikes) => {
       const name = `${modelBrand} ${modelName}`
       const type = BIKE_TYPES_MAP[modelType]
       const range = BIKE_RANGES_MAP[modelRange]
-      const length = bikes.length
-      const marginTop = idx === 0 ? '0' : '0.5rem'
+
       const bikeText = `
-
-      <table
-      align="center"
-      width="100%"
-      border="0"
-      cellpadding="0"
-      cellspacing="0"
-      role="presentation"
-      style="margin-top: ${marginTop}"
-      >
-         <tbody style="width: 100%">
-            <tr style="width: 100%">
-               <td
-                  data-id="__react-email-column"
-                  style="
-                     width: 20%;
-                     background-color: rgb(
-                        241,
-                        241,
-                        241
-                     );
-                  "
-               >
-                  <a
-                     href="${imageUrl}"
-                     style="
-                        color: #067df7;
-                        text-decoration: none;
-                     "
-                     target="_blank"
-                     ><img
-                        alt="Cat"
-                        src="${imageUrl}"
-                        style="
-                           display: block;
-                           outline: none;
-                           border: none;
-                           text-decoration: none;
-                        "
-                        width="100%"
-                     />
-                  </a>
-               </td>
-               <td
-                  data-id="__react-email-column"
-                  style="
-                     vertical-align: baseline;
-                     padding-left: 1rem;
-                     color: rgb(0, 0, 0);
-                  "
-               >
-                  <div><strong>${name}</strong></div>
-                  <div>
-                     Tipo: <strong>${type}</strong>
-                  </div>
-                  <div>
-                     Gama: <strong>${range}</strong>
-                  </div>
-                  <div>
-                     Talla: <strong>${size}</strong>
-                  </div>
-               </td>
-               <td
-                  data-id="__react-email-column"
-                  style="
-                     vertical-align: baseline;
-                     text-align: right;
-                  "
-               >
-                  <strong>${price}</strong> €/dia
-               </td>
-            </tr>
-         </tbody>
-   
-      
-      </table>
-      
-
+    <tr style="width: 100%">
+    <td
+       data-id="__react-email-column"
+       style="
+          width: 20%;
+          background-color: rgb(
+             241,
+             241,
+             241
+          );
+       "
+    >
+       <a
+          href="${imageUrl}"
+          style="
+             color: #067df7;
+             text-decoration: none;
+          "
+          target="_blank"
+          ><img
+             alt="Cat"
+             src="${imageUrl}"
+             style="
+                display: block;
+                outline: none;
+                border: none;
+                text-decoration: none;
+             "
+             width="100%"
+          />
+       </a>
+    </td>
+    <td
+       data-id="__react-email-column"
+       style="
+          vertical-align: baseline;
+          padding-left: 1rem;
+       "
+    >
+       <div><strong>${name}</strong></div>
+       <div>
+          Tipo: <strong>${type}</strong>
+       </div>
+       <div>
+          Gama: <strong>${range}</strong>
+       </div>
+       <div>
+          Talla: <strong>${size}</strong>
+       </div>
+    </td>
+    <td
+       data-id="__react-email-column"
+       style="
+          vertical-align: baseline;
+          text-align: right;
+       "
+    >
+       <strong>${price}</strong> €/dia
+    </td>
+ </tr>
     `
       bikeList += bikeText
    })
@@ -146,7 +127,6 @@ const getOrderResumeEmail = ({
          opacity: 0;
          max-height: 0;
          max-width: 0;
-
       "
    >
       Confirmación Conil Bikes
@@ -161,7 +141,6 @@ const getOrderResumeEmail = ({
          margin-bottom: auto;
          margin-left: auto;
          margin-right: auto;
-         color: rgb(0, 0, 0);
          font-family:
             ui-sans-serif,
             system-ui,
@@ -324,35 +303,31 @@ const getOrderResumeEmail = ({
                      <tbody>
                         <tr>
                            <td>
-                              <table
-                                 align="center"
-                                 width="100%"
-                                 border="0"
-                                 cellpadding="0"
-                                 cellspacing="0"
-                                 role="presentation"
-                                 color: rgb(0, 0, 0);
-                              >
-                                 <tbody style="width: 100%">
+                             <table
+                                align="center"
+                                width="100%"
+                                border="0"
+                                cellpadding="0"
+                                cellspacing="0"
+                                role="presentation"
+                                >
+                                <tbody style="width: 100%">
                                     <tr style="width: 100%">
-                                       <td
-                                          data-id="__react-email-column"
-                                          style="
-                                             width: 20%;
-                                             vertical-align: baseline;
-                                          "
-                                       >
-                                          <strong>Código:</strong>
-                                       </td>
-                                       <td
-                                          data-id="__react-email-column"
-                                          style="vertical-align: baseline"
-                                       >
-                                          <strong>${bookingId}</strong>
-                                       </td>
+                                        <td
+                                            data-id="__react-email-column"
+                                            style="width: 20%"
+                                        >
+                                            <strong>Código:</strong>
+                                        </td>
+                                        <td
+                                            class=""
+                                            data-id="__react-email-column"
+                                        >
+                                            <strong>${bookingId}</strong>
+                                        </td>
                                     </tr>
-                                 </tbody>
-                              </table>
+                                </tbody>
+                              </table>                           
                               <table
                                  align="center"
                                  width="100%"
@@ -360,22 +335,18 @@ const getOrderResumeEmail = ({
                                  cellpadding="0"
                                  cellspacing="0"
                                  role="presentation"
-                                 color: rgb(0, 0, 0);
                               >
                                  <tbody style="width: 100%">
                                     <tr style="width: 100%">
                                        <td
                                           data-id="__react-email-column"
-                                          style="
-                                             width: 20%;
-                                             vertical-align: baseline;
-                                          "
+                                          style="width: 20%"
                                        >
                                           Nombre:
                                        </td>
                                        <td
+                                          class=""
                                           data-id="__react-email-column"
-                                          style="vertical-align: baseline"
                                        >
                                           <strong>${name}</strong>
                                        </td>
@@ -389,22 +360,18 @@ const getOrderResumeEmail = ({
                                  cellpadding="0"
                                  cellspacing="0"
                                  role="presentation"
-                                 color: rgb(0, 0, 0);
                               >
                                  <tbody style="width: 100%">
                                     <tr style="width: 100%">
                                        <td
                                           data-id="__react-email-column"
-                                          style="
-                                             width: 20%;
-                                             vertical-align: baseline;
-                                          "
+                                          style="width: 20%"
                                        >
                                           Teléfono:
                                        </td>
                                        <td
+                                          class=""
                                           data-id="__react-email-column"
-                                          style="vertical-align: baseline"
                                        >
                                           <strong>${phone}</strong>
                                        </td>
@@ -418,22 +385,18 @@ const getOrderResumeEmail = ({
                                  cellpadding="0"
                                  cellspacing="0"
                                  role="presentation"
-                                 color: rgb(0, 0, 0);
                               >
                                  <tbody style="width: 100%">
                                     <tr style="width: 100%">
                                        <td
                                           data-id="__react-email-column"
-                                          style="
-                                             width: 20%;
-                                             vertical-align: baseline;
-                                          "
+                                          style="width: 20%"
                                        >
                                           Dirección:
                                        </td>
                                        <td
+                                          class=""
                                           data-id="__react-email-column"
-                                          style="vertical-align: baseline"
                                        >
                                           <strong>${address}</strong>
                                        </td>
@@ -447,22 +410,18 @@ const getOrderResumeEmail = ({
                                  cellpadding="0"
                                  cellspacing="0"
                                  role="presentation"
-                                 color: rgb(0, 0, 0);
                               >
                                  <tbody style="width: 100%">
                                     <tr style="width: 100%">
                                        <td
                                           data-id="__react-email-column"
-                                          style="
-                                             width: 20%;
-                                             vertical-align: baseline;
-                                          "
+                                          style="width: 20%"
                                        >
                                           Fecha:
                                        </td>
                                        <td
+                                          class=""
                                           data-id="__react-email-column"
-                                          style="vertical-align: baseline"
                                        >
                                           <strong>${date}</strong>
                                        </td>
@@ -476,22 +435,18 @@ const getOrderResumeEmail = ({
                                  cellpadding="0"
                                  cellspacing="0"
                                  role="presentation"
-                                 color: rgb(0, 0, 0);
                               >
                                  <tbody style="width: 100%">
                                     <tr style="width: 100%">
                                        <td
                                           data-id="__react-email-column"
-                                          style="
-                                             width: 20%;
-                                             vertical-align: baseline;
-                                          "
+                                          style="width: 20%"
                                        >
                                           Entrega:
                                        </td>
                                        <td
+                                          class=""
                                           data-id="__react-email-column"
-                                          style="vertical-align: baseline"
                                        >
                                           <strong>${delivery}</strong>
                                        </td>
@@ -505,57 +460,24 @@ const getOrderResumeEmail = ({
                                  cellpadding="0"
                                  cellspacing="0"
                                  role="presentation"
-                                 color: rgb(0, 0, 0);
                               >
                                  <tbody style="width: 100%">
                                     <tr style="width: 100%">
                                        <td
                                           data-id="__react-email-column"
                                           style="width: 20%"
-                                          vertical-align: baseline;
                                        >
                                           Recogida:
                                        </td>
                                        <td
+                                          class=""
                                           data-id="__react-email-column"
-                                          style="vertical-align: baseline"
                                        >
                                           <strong>${pickup}</strong>
                                        </td>
                                     </tr>
                                  </tbody>
                               </table>
-                         </td>
-                     </tr>
-                  </tbody>
-               </table>
-                  <table
-                     align="center"
-                     width="100%"
-                     border="0"
-                     cellpadding="0"
-                     cellspacing="0"
-                     role="presentation"
-                  >
-                     <tbody>
-                        <tr>
-                           <td>
-                              <hr
-                                 style="
-                                    width: 100%;
-                                    border: none;
-                                    border-top: 1px solid #eaeaea;
-                                    border-width: 1px;
-                                    border-style: solid;
-                                    border-color: rgb(234, 234, 234);
-                                    margin-top: 26px;
-                                    margin-bottom: 26px;
-                                    margin-left: 0px;
-                                    margin-right: 0px;
-                                 "
-                              />
-                                 ${bikeList}
-                                 
                            </td>
                         </tr>
                      </tbody>
@@ -592,7 +514,47 @@ const getOrderResumeEmail = ({
                                  cellpadding="0"
                                  cellspacing="0"
                                  role="presentation"
-                                 color: rgb(0, 0, 0);
+                              >
+                                 <tbody style="width: 100%">
+                              ${bikeList}
+                                 </tbody>
+                              </table>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <table
+                     align="center"
+                     width="100%"
+                     border="0"
+                     cellpadding="0"
+                     cellspacing="0"
+                     role="presentation"
+                  >
+                     <tbody>
+                        <tr>
+                           <td>
+                              <hr
+                                 style="
+                                    width: 100%;
+                                    border: none;
+                                    border-top: 1px solid #eaeaea;
+                                    border-width: 1px;
+                                    border-style: solid;
+                                    border-color: rgb(234, 234, 234);
+                                    margin-top: 26px;
+                                    margin-bottom: 26px;
+                                    margin-left: 0px;
+                                    margin-right: 0px;
+                                 "
+                              />
+                              <table
+                                 align="center"
+                                 width="100%"
+                                 border="0"
+                                 cellpadding="0"
+                                 cellspacing="0"
+                                 role="presentation"
                               >
                                  <tbody style="width: 100%">
                                     <tr style="width: 100%">
@@ -622,7 +584,6 @@ const getOrderResumeEmail = ({
                                  cellpadding="0"
                                  cellspacing="0"
                                  role="presentation"
-                                 color: rgb(0, 0, 0);
                               >
                                  <tbody style="width: 100%">
                                     <tr style="width: 100%">
@@ -652,7 +613,6 @@ const getOrderResumeEmail = ({
                                  cellpadding="0"
                                  cellspacing="0"
                                  role="presentation"
-                                 color: rgb(0, 0, 0);
                               >
                                  <tbody style="width: 100%">
                                     <tr style="width: 100%">
@@ -713,127 +673,90 @@ const getOrderResumeEmail = ({
                         margin-right: 0px;
                      "
                   />
-                        <table
-                           align="center"
-                           width="100%"
-                           class=" "
-                           border="0"
-                           cellpadding="0"
-                           cellspacing="0"
-                           role="presentation"
-                           style="background-color: rgb(0, 0, 0)"
-                        >
-                           <tbody>
-                              <tr>
-                                 <td>
-                                    <table
-                                       align="center"
-                                       width="100%"
-                                       class=""
-                                       border="0"
-                                       cellpadding="0"
-                                       cellspacing="0"
-                                       role="presentation"
+                  <table
+                     align="center"
+                     width="100%"
+                     border="0"
+                     cellpadding="0"
+                     cellspacing="0"
+                     role="presentation"
+                     style="background-color: rgb(239, 68, 68)"
+                  >
+                     <tbody>
+                        <tr>
+                           <td>
+                              <div
+                                 style="
+                                    display: flex;
+                                    justify-content: space-evenly;
+                                    background-color: rgb(0, 0, 0);
+                                    padding-top: 0.25rem;
+                                    padding-bottom: 0.25rem;
+                                 "
+                              >
+                                 <a
+                                    href="https://twitter.com/home"
+                                    class="align-center"
+                                    style="
+                                       color: #067df7;
+                                       text-decoration: none;
+                                       display: flex;
+                                    "
+                                    target="_blank"
+                                    ><img
+                                       src="https://res.cloudinary.com/dbiykfxsf/image/upload/v1710957609/facebook-32_kb49en.png"
                                        style="
-                                          background-color: rgb(0, 0, 0);
-                                          padding-top: 0.25rem;
-                                          padding-bottom: 0.25rem;
-                                          width: 70%;
+                                          display: block;
+                                          outline: none;
+                                          border: none;
+                                          text-decoration: none;
+                                          height: 2rem;
+                                          width: 2rem;
+                                       " /></a
+                                 ><a
+                                    href="https://twitter.com/home"
+                                    class="align-center"
+                                    style="
+                                       color: #067df7;
+                                       text-decoration: none;
+                                       display: flex;
+                                    "
+                                    target="_blank"
+                                    ><img
+                                       src="https://res.cloudinary.com/dbiykfxsf/image/upload/v1710957611/instagram-32_trx3mq.png"
+                                       style="
+                                          display: block;
+                                          outline: none;
+                                          border: none;
+                                          text-decoration: none;
+                                          height: 2rem;
+                                          width: 2rem;
+                                       " /></a
+                                 ><a
+                                    href="https://twitter.com/home"
+                                    class="align-center"
+                                    style="
+                                       color: #067df7;
+                                       text-decoration: none;
+                                       display: flex;
+                                    "
+                                    target="_blank"
+                                    ><img
+                                       src="https://res.cloudinary.com/dbiykfxsf/image/upload/v1710957614/twitter-32png_e0qcvg.png"
+                                       style="
+                                          display: block;
+                                          outline: none;
+                                          border: none;
+                                          text-decoration: none;
+                                          height: 2rem;
+                                          width: 2rem;
                                        "
-                                    >
-                                       <tbody style="width: 100%">
-                                          <tr style="width: 100%">
-                                             <td
-                                                class=""
-                                                data-id="__react-email-column"
-                                             >
-                                                <a
-                                                   href="https://twitter.com/home"
-                                                   class="align-center"
-                                                   style="
-                                                      color: #067df7;
-                                                      text-decoration: none;
-                                                      display: flex;
-                                                   "
-                                                   target="_blank"
-                                                   ><img
-                                                      class=""
-                                                      src="https://res.cloudinary.com/dbiykfxsf/image/upload/v1710957609/facebook-32_kb49en.png"
-                                                      style="
-                                                         display: block;
-                                                         outline: none;
-                                                         border: none;
-                                                         text-decoration: none;
-                                                         height: 2rem;
-                                                         width: 2rem;
-                                                         margin-left: auto;
-                                                         margin-right: auto;
-                                                      "
-                                                /></a>
-                                             </td>
-                                             <td
-                                                class=""
-                                                data-id="__react-email-column"
-                                             >
-                                                <a
-                                                   href="https://twitter.com/home"
-                                                   class="align-center"
-                                                   style="
-                                                      color: #067df7;
-                                                      text-decoration: none;
-                                                      display: flex;
-                                                   "
-                                                   target="_blank"
-                                                   ><img
-                                                      class=""
-                                                      src="https://res.cloudinary.com/dbiykfxsf/image/upload/v1710957611/instagram-32_trx3mq.png"
-                                                      style="
-                                                         display: block;
-                                                         outline: none;
-                                                         border: none;
-                                                         text-decoration: none;
-                                                         height: 2rem;
-                                                         width: 2rem;
-                                                         margin-left: auto;
-                                                         margin-right: auto;
-                                                      "
-                                                /></a>
-                                             </td>
-                                             <td
-                                                class=""
-                                                data-id="__react-email-column"
-                                             >
-                                                <a
-                                                   href="https://twitter.com/home"
-                                                   class="align-center"
-                                                   style="
-                                                      color: #067df7;
-                                                      text-decoration: none;
-                                                      display: flex;
-                                                   "
-                                                   target="_blank"
-                                                   ><img
-                                                      class=""
-                                                      src="https://res.cloudinary.com/dbiykfxsf/image/upload/v1710957614/twitter-32png_e0qcvg.png"
-                                                      style="
-                                                         display: block;
-                                                         outline: none;
-                                                         border: none;
-                                                         text-decoration: none;
-                                                         height: 2rem;
-                                                         width: 2rem;
-                                                         margin-left: auto;
-                                                         margin-right: auto;
-                                                      "
-                                                /></a>
-                                             </td>
-                                          </tr>
-                                       </tbody>
-                                    </table>
-                                 </td>
-                              </tr>
-                           </tbody>
-                        </table>                
+                                 /></a>
+                              </div>
+                           </td>
+                        </tr>
+                     </tbody>                   
+                  </table>
                </td>
             </tr>
          </tbody>
