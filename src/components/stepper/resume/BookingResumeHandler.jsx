@@ -12,10 +12,8 @@ import Link from 'next/link'
 import { ArrowLeft } from '@phosphor-icons/react'
 import useDialogWindow from '@/components/common/useDialogWindow'
 import { DialogWindow } from '@/components/common/DialogWindow'
-import SpinnerRing from '@/components/common/SpinnerRing'
 import { DialogLoader } from '@/components/common/DialogLoader'
 import { useRouter } from 'next/navigation'
-import getOrderResumeEmail from '@/lib/sendGrid/templates/orderResume'
 
 export default function BookingResumeHandler({
    setStep,

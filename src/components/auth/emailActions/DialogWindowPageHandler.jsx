@@ -15,11 +15,17 @@ export default function DialogWindowPageHandler({
    const { dialog, handleSetDialog } = useDialogWindow()
 
    useEffect(() => {
+      /*
       onOpenChangeLink &&
          handleSetDialog({
             onOpenChange: (bool) => router.push(onOpenChangeLink),
          })
       initialDialog && handleSetDialog(initialDialog)
+*/
+      handleSetDialog({
+         ...initialDialog,
+         onOpenChange: (bool) => router.push(onOpenChangeLink),
+      })
    }, [])
 
    return <DialogWindow {...dialog} />

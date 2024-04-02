@@ -1,8 +1,8 @@
 import Card from '@/components/layouts/Card'
 import React from 'react'
 import { User } from '@phosphor-icons/react/dist/ssr'
-import UsersSubShell from '@/components/layouts/admin/UsersSubShell'
 import { NewUserForm } from './NewUserForm'
+import UsersSubShell from '../UsersSubShell'
 
 export default function NewUserPage() {
    const cardProps = {
