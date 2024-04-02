@@ -1,5 +1,6 @@
 import { createFireUser } from '@/lib/firebase/admin/auth/createFireUser'
 import { createAppUser } from '@/lib/pg/crud/users'
+import getWelcomeEmail from '@/lib/react-email/welcome'
 import sendGridSendEmail from '@/lib/sendGrid/sendEmail'
 
 import { getAuth } from 'firebase-admin/auth'
@@ -12,6 +13,7 @@ import { NextResponse } from 'next/server'
  */
 
 export async function POST(req) {
+   console.log('API users/create/route.js ')
    //console.log('req.body -------->', req.method)
    const body = await req.json()
    const {
@@ -61,6 +63,7 @@ export async function POST(req) {
             phone,
             email,
             password,
+            emailVerified: false,
          })
          const { uid } = userRecord
          //Crear usuario en la base de datos de la app
@@ -87,11 +90,13 @@ export async function POST(req) {
          const linkToControlPage =
             await getAuth().generateEmailVerificationLink(email, continueUrl)
 
-         const sendgridResponse = await sendGridSendEmail({
-            userName: name,
-            buttonLink: linkToControlPage,
-            to: email,
+         const html = getWelcomeEmail({
+            username: name,
+            verifyEmailLink: linkToControlPage,
          })
+         const to = email
+         const subject = 'Bienvenido a Conil Bikes'
+         const sendResult = await sendGridSendEmail({ to, subject, html })
 
          return NextResponse.json({ result: 'ok' }, { status: 201 })
       } catch (error) {

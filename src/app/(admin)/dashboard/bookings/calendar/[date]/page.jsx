@@ -1,7 +1,7 @@
 import React from 'react'
 import { getBookingOnDate } from '@/lib/pg/crud/bookings'
 import BookingList from './BookingList'
-import BookingSubShell from '@/components/layouts/admin/BookingSubShell'
+import BookingSubShell from '@/app/(admin)/dashboard/bookings/BookingSubShell'
 
 export default async function BookingListPage({ params }) {
    const { date: encodedDate } = params

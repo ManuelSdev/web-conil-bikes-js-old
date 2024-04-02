@@ -17,33 +17,31 @@ import {
 import { Input } from '@/components/ui/input'
 import React from 'react'
 
-const FormSchema = z
-   .object({
+const FormSchema = (email) =>
+   z.object({
       name: z.string().min(2, {
          message: 'Username must be at least 2 characters.',
       }),
       phone: z.string().min(9, {
          message: 'El teléfono debe tener al menos 9 cifras',
       }),
-      email: z.string().email(),
-   })
-   .superRefine(({ confirmPassword, password }, ctx) => {
-      if (confirmPassword !== password) {
-         ctx.addIssue({
-            code: 'custom',
-            message: 'Las contraseñas no coinciden',
-         })
-      }
+      email: z
+         .string()
+         .email()
+         .refine((val) => val !== email, {
+            message: 'El correo electrónico pertenece a un usuario existente',
+         }),
    })
 
-export function NewUserForm({ onSubmit }) {
+export function NewUserForm({ onSubmit, searchParams }) {
+   //const { phone, email, name } = searchParams
    //console.log('NewUserForm onSubmit ->', onSubmit)
    const form = useForm({
-      resolver: zodResolver(FormSchema),
+      resolver: zodResolver(FormSchema(searchParams?.email || '')),
       defaultValues: {
-         name: '',
-         phone: '',
-         email: '',
+         name: searchParams?.name ? searchParams.name : '',
+         phone: searchParams?.phone ? searchParams.phone : '',
+         email: searchParams?.email ? searchParams.email : '',
       },
    })
    return (

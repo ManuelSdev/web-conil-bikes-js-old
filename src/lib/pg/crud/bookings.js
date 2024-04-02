@@ -10,7 +10,8 @@ import {
    findBookingBikesById,
    findBookingById,
 } from '../repos/booking'
-import sendGridSendConfirmationBookingEmail from '@/lib/sendGrid/sendConfirmationBookingEmail'
+import getOrderResumeEmail from '@/lib/react-email/orderResume'
+import sendGridSendEmail from '@/lib/sendGrid/sendEmail'
 //TODO: meter try catch en todas las funciones
 //TODO: usar caché next.js y separar la lógica de la API de la logica de las server functions
 export async function getBookingDatesInRange(dateRange) {
@@ -50,10 +51,15 @@ export async function getBookingWithBikesById(bookingId) {
 export async function createBooking(data) {
    try {
       const { bookingId } = await addBooking(data)
-      const sendgridResponse = await sendGridSendConfirmationBookingEmail({
+
+      const html = getOrderResumeEmail({
          ...data,
          bookingId,
       })
+      const to = data.email
+      const subject = 'Resumen de tu reserva en Conil Bikes'
+
+      const sendResult = await sendGridSendEmail({ to, subject, html })
       return NextResponse.json(bookingId, { status: 201 })
    } catch (error) {
       console.log('error en createBooking -> ', error)

@@ -2,10 +2,18 @@
 import React from 'react'
 //import { getBookingOnDate } from '@/lib/pg/crud/bookings'
 import UsersTable from './UsersTable'
-import { useGetUserByIdentifierQuery } from '@/lib/redux/apiSlices/userApi'
+import {
+   useGetMatchingUsersQuery,
+   useGetUserByIdentifierQuery,
+} from '@/lib/redux/apiSlices/userApi'
+import { ErrorAlert } from '@/components/ErrorAlert'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
-export default function UsersTableHandler({ identifier, ...props }) {
+export default function UsersTableHandler({ searchParams, ...props }) {
+   const { identifier } = searchParams
    console.log('identifier -> ', identifier)
+
    const {
       data: users,
       isLoading,
@@ -17,9 +25,27 @@ export default function UsersTableHandler({ identifier, ...props }) {
       skip: !identifier,
       // refetchOnMountOrArgChange: true
    })
-   console.log('data -> ', users)
 
-   return <UsersTable users={users} {...props} />
+   const renderAddBookingButton = (className) => (
+      <Button asChild className={className}>
+         <Link href="/admin/dashboard/bookings/new/date">Crear reserva</Link>
+      </Button>
+   )
+
+   const renderShowButton = (className) => (
+      <Button asChild className={className}>
+         <Link href="/admin/dashboard/bookings/new/date">Ver</Link>
+      </Button>
+   )
+   return (
+      <UsersTable
+         users={users}
+         renderAddBookingButton={renderAddBookingButton}
+         renderShowButton={renderShowButton}
+         {...props}
+      />
+   )
+
    return (
       <div>
          <div>is fetching: {isFetching}</div>
@@ -27,6 +53,7 @@ export default function UsersTableHandler({ identifier, ...props }) {
       </div>
    )
 }
+
 /*
 async function getBookingListData(date) {
    if (!date) {

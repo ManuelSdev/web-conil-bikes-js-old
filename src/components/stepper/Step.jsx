@@ -18,15 +18,16 @@ export default function Step({
    nextButton,
    prevButton,
    childClassName,
+   isAdmin,
 }) {
    //console.log('Step @@@->')
    return (
       <div className="flex flex-col  space-y-8  sm:space-y-0">
          <div className="sm:hidden">
-            <StepVertical step={step} />
+            <StepVertical step={step} isAdmin={isAdmin} />
          </div>
          <div className="hidden sm:block">
-            <StepsPanel step={step} />
+            <StepsPanel step={step} isAdmin={isAdmin} />
          </div>
 
          <div className={cn(' sm:mx-auto sm:w-1/2', childClassName)}>

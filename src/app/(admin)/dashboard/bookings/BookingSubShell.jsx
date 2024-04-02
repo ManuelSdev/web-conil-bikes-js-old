@@ -2,10 +2,17 @@ import Breadcrumb from '@/components/layouts/admin/Breadcrumb'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import React from 'react'
-import { SubShellContainer, SubShellHeader } from './adminSubShell'
+import {
+   SubShellContainer,
+   SubShellHeader,
+} from '../../../../components/layouts/admin/adminSubShell'
+import StepHandler from './StepHandler'
+import { BookingBreadcrumb } from './BookingBreadcrumb'
+//import { useSearchParams } from 'next/navigation'
 
 export default function BookingSubShell({ children, params }) {
    console.log('##### CalendarLayout aaaaaaaaaaaaaaaaa', params)
+   // useSearchParams()
    const date = params?.date
    //onst dates = encodedDate && decodeURIComponent(encodedDate)
 
@@ -37,12 +44,12 @@ export default function BookingSubShell({ children, params }) {
       <SubShellContainer>
          <SubShellHeader title={'Gestión de reservas'}>
             <Button asChild>
-               <Link href="/dashboard/bookings/new/date">Nueva reserva</Link>
+               <Link href="/dashboard/bookings/new/user">Nueva reserva</Link>
             </Button>
             <Button>Prueba</Button>
          </SubShellHeader>
-         <Breadcrumb pages={pages} />
-         {children}
+         <BookingBreadcrumb />
+         <StepHandler>{children}</StepHandler>
       </SubShellContainer>
    )
 }

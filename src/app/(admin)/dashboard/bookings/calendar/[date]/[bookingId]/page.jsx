@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
 import BookingTabs from '@/components/tabs/BookingTabs'
 import { getBookingWithBikesById } from '@/lib/pg/crud/bookings'
-import BookingSubShell from '@/components/layouts/admin/BookingSubShell'
+import BookingSubShell from '@/app/(admin)/dashboard/bookings/BookingSubShell'
 
 export default async function BookingInfoHandler({ params }) {
    const { bookingId, date: encodedDate } = params

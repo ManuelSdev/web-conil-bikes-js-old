@@ -40,3 +40,21 @@ export function cn(...inputs) {
 }
 
 export const urlParams = (obj) => new URLSearchParams(obj)
+/**
+ * Crea contraseña aleatoria
+ */
+export function generatePassword() {
+   let letters = 'abcdefghijklmnopqrstuvwxyz'
+   let numbers = '0123456789'
+   let password = ''
+
+   for (let i = 0; i < 4; i++) {
+      password += letters.charAt(Math.floor(Math.random() * letters.length))
+   }
+
+   for (let i = 0; i < 4; i++) {
+      password += numbers.charAt(Math.floor(Math.random() * numbers.length))
+   }
+
+   return password
+}

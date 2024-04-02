@@ -5,15 +5,26 @@ import { NewUserForm } from './NewUserForm'
 import {
    useCreateAccountMutation,
    useCreateUserMutation,
+   useLazyGetMatchingUsersQuery,
 } from '@/lib/redux/apiSlices/userApi'
 import SpinnerRing from '@/components/common/SpinnerRing'
 import useDialogWindow from '@/components/common/useDialogWindow'
 import { DialogWindow } from '@/components/common/DialogWindow'
 import { DialogLoader } from '@/components/common/DialogLoader'
 import { useRouter } from 'next/navigation'
-export default function NewUserFormHandler() {
+import { generatePassword } from '@/utils/app/functions'
+export default function NewUserFormHandler(props) {
    const [createUserAccountTrigger, { isLoading, isError, isSuccess }] =
       useCreateAccountMutation()
+
+   const [
+      getMatchingUsersTrigger,
+      {
+         isLoading: isLoadingMatches,
+         isError: isErrorMatches,
+         isSuccess: isSuccessMatches,
+      },
+   ] = useLazyGetMatchingUsersQuery()
 
    const { dialog, handleSetDialog } = useDialogWindow()
 
@@ -24,14 +35,20 @@ export default function NewUserFormHandler() {
       console.log('@@@@@@@@@@@@@@@@@@@')
       ////console.log('ev ->', ev)
       event.preventDefault()
-      const { name, phone, email, password } = data
+      const { name, phone, email } = data
       try {
          console.log('@@@@@@@@@@@@@@@@@@@')
+         const matchingUsers = await getMatchingUsersTrigger({ phone, email })
+         if (matchingUsers)
+            return router.push(
+               `/dashboard/bookings/new/user/matches?phone=${phone}&email=${email}&name=${name}`
+            )
+         const randomPassword = generatePassword()
          const createUserAccountRes = await createUserAccountTrigger({
             name,
             phone,
             email,
-            password,
+            password: randomPassword,
             isCreatedByAdmin: true,
          }).unwrap()
          console.log('createUserAccountRes ->', createUserAccountRes)
@@ -71,7 +88,20 @@ export default function NewUserFormHandler() {
          })
          */
       }
-      /*
+   }
+   console.log('isError ->', isError)
+   return (
+      <Card>
+         <DialogLoader open={isLoading} />
+         <DialogWindow {...dialog} />
+
+         <NewUserForm onSubmit={onSubmit} {...props} />
+      </Card>
+   )
+}
+
+//         {isLoading?<SpinnerRing/>:isSuccess?'Usuario creado correctamente':isError?'Ha ocurrido un error': <NewUserForm />}
+/*
       const createUserAccountRes = await createUserAccountTrigger({
          name,
          phone,
@@ -109,16 +139,3 @@ export default function NewUserFormHandler() {
          })
       }
       */
-   }
-   console.log('isError ->', isError)
-   return (
-      <Card>
-         <DialogLoader open={isLoading} />
-         <DialogWindow {...dialog} />
-
-         <NewUserForm onSubmit={onSubmit} />
-      </Card>
-   )
-}
-
-//         {isLoading?<SpinnerRing/>:isSuccess?'Usuario creado correctamente':isError?'Ha ocurrido un error': <NewUserForm />}

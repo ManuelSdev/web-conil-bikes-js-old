@@ -1,17 +1,31 @@
 import { CheckIcon } from '@heroicons/react/20/solid'
 
-const steps = [
+const userSteps = [
    { name: 'Fecha', href: '#', status: 'complete', id: 1 },
    { name: 'Bicicletas', href: '#', status: 'complete', id: 2 },
    { name: 'Dirección', href: '#', status: 'current', id: 3 },
    { name: 'Resumen', href: '#', status: 'upcoming', id: 4 },
 ]
 
+const adminSteps = [
+   { name: 'Usuario', href: '#', status: 'complete', id: 1 },
+   { name: 'Fecha', href: '#', status: 'complete', id: 2 },
+   { name: 'Bicicletas', href: '#', status: 'complete', id: 3 },
+   { name: 'Dirección', href: '#', status: 'current', id: 4 },
+   { name: 'Resumen', href: '#', status: 'upcoming', id: 5 },
+]
+
 function classNames(...classes) {
    return classes.filter(Boolean).join(' ')
 }
 
-export default function StepVertical({ step: currentStep, className }) {
+export default function StepVertical({
+   step: currentStep,
+   className,
+   isAdmin,
+}) {
+   const steps = isAdmin ? adminSteps : userSteps
+
    return (
       <nav aria-label="Progress">
          <ol role="list" className="overflow-hidden">

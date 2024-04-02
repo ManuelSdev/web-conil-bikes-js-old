@@ -17,11 +17,17 @@ import { mappedBookingState } from '@/utils/app/functions'
 import Link from 'next/link'
 import { TableWrapper } from '@/components/ui-tw/table'
 import { Button } from '@/components/ui/button'
+import clsx from 'clsx'
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/decodeURIComponent
 
 const urlParams = (obj) => new URLSearchParams(obj)
 
-export default function UsersTable({ users, urlDate }) {
+export default function UsersTable({
+   users,
+   urlDate,
+   renderAddBookingButton,
+   renderShowButton,
+}) {
    /*
    const { date: encodedDate } = params
    const date = decodeURIComponent(encodedDate)
@@ -63,12 +69,24 @@ export default function UsersTable({ users, urlDate }) {
                      <TableCell className="font-medium">
                         {user.userId}
                      </TableCell>
-                     <TableCell>{user.email}</TableCell>
+                     <TableCell
+                        className={clsx({
+                           'text-destructive': user.emailAlert,
+                        })}
+                     >
+                        {user.email}
+                     </TableCell>
                      <TableCell>{user.name}</TableCell>
-                     <TableCell>{user.phone}</TableCell>
-                     <TableCell className="text-right">
-                        <Button>aaaa</Button>
-                        <Button>aaaa</Button>
+                     <TableCell
+                        className={clsx({
+                           'text-destructive': user.phoneAlert,
+                        })}
+                     >
+                        {user.phone}
+                     </TableCell>
+                     <TableCell className="flex justify-end gap-2">
+                        {renderAddBookingButton()}
+                        {renderShowButton()}
                      </TableCell>
                   </TableRow>
                ))}

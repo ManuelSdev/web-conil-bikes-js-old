@@ -8,6 +8,7 @@ export async function createFireUser({
    phone,
    email,
    password,
+   emailVerified,
 }) {
    app()
    //type de createdAppUserId
@@ -19,6 +20,7 @@ export async function createFireUser({
       phoneNumber: '+34' + phone.toString(),
       email: email,
       password: password,
+      emailVerified: emailVerified,
    }
    try {
       const userRecord = await getAuth().createUser(newUser)

@@ -3,6 +3,7 @@ import 'server-only'
 import { cache } from 'react'
 import {
    addUser,
+   findMatchingUsers,
    findUserByEmail,
    findUserByIdentifier,
    findUserIdByEmail,
@@ -10,6 +11,24 @@ import {
 } from '../repos/users'
 import { NextResponse } from 'next/server'
 import { th } from 'date-fns/locale'
+
+export async function getMatchingUsers({ email, phone }) {
+   //console.log('dateRange en getAvailableSizesInRange -> ', dateRange)
+   /**
+    * Si existe usuarios con el mismo email o teléfono,
+    * se devuelve un array con los usuarios que coinciden
+    */
+   try {
+      //  const db = client()
+      //console.log('@@ CRUD FN getUserByEmail @@')
+      const users = await findMatchingUsers({ email, phone })
+      console.log('appUser en getUserByEmail-> ', users)
+      return NextResponse.json(users, { status: 201 })
+   } catch (error) {
+      console.log('### ERROR CRUD api/getMatchingUsers -> ', error)
+      return NextResponse.json(error, { status: 500 })
+   }
+}
 
 export async function getUserByEmail({ email }) {
    //console.log('dateRange en getAvailableSizesInRange -> ', dateRange)
@@ -38,6 +57,7 @@ export async function getUserByIdentifier(identifier) {
       return NextResponse.json(error, { status: 500 })
    }
 }
+
 export async function getUserIdByEmail({ email }) {
    //console.log('dateRange en getAvailableSizesInRange -> ', dateRange)
    try {
@@ -51,6 +71,21 @@ export async function getUserIdByEmail({ email }) {
       return NextResponse.json(error, { status: 500 })
    }
 }
+
+export async function searchUser({ email }) {
+   //console.log('dateRange en getAvailableSizesInRange -> ', dateRange)
+   try {
+      //  const db = client()
+      //console.log('@@ CRUD FN getUserIdByEmail @@')
+      const appUserId = await findUserIdByEmail({ email })
+      //console.log('appUser en getUserIdByEmail-> ', appUserId)
+      return NextResponse.json(appUserId, { status: 201 })
+   } catch (error) {
+      //console.log('### ERROR CRUD api/getUserIdByEmail -> ', error)
+      return NextResponse.json(error, { status: 500 })
+   }
+}
+
 export async function getUserRole({ email }) {
    //console.log('dateRange en getAvailableSizesInRange -> ', dateRange)
    try {

@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import React from 'react'
 import ReduxProviderWrapper from '@/lib/redux/ReduxProviderWrapper'
 import AdminShell from '@/components/layouts/admin/AdminShell'
+import { BookingBreadcrumb } from './dashboard/bookings/BookingBreadcrumb'
 
 export async function generateStaticParams() {
    return [{ lang: 'es-ES' }]

@@ -1,6 +1,26 @@
 import { is } from 'date-fns/locale'
 import { query } from '../db'
-import { txtFindUserByEmail, txtFindUserByIdOrPhone } from './userText'
+import {
+   txtFindMatchingUsers,
+   txtFindUserByEmail,
+   txtFindUserByIdOrPhone,
+} from './userText'
+
+/**
+ *
+ * @param {*} param0
+ * @returns array of users or false
+ */
+export const findMatchingUsers = async ({ email, phone }) => {
+   const text = txtFindMatchingUsers
+   const values = [`%${email}%`, `%${phone}`]
+   const rowMode = 'array'
+   const { rows } = await query({ text, values })
+   if (rows.length === 0) return null
+   // const [user] = rows.flat()
+   //console.log('userId en findUserByEmail -> ', user)
+   return rows
+}
 
 export const findUserByEmail = async ({ email }) => {
    const text = 'SELECT * FROM App_user WHERE user_email=$1'
@@ -34,6 +54,7 @@ export const findUserByIdentifier = async (identifier) => {
    console.log('userId en findUserByEmail -> ', rows)
    return rows
 }
+
 export const findUserIdByEmail = async ({ email }) => {
    console.log('email en findUserIdByEmail -> ', email)
    const text = 'SELECT user_id FROM App_user WHERE user_email=$1'
@@ -45,7 +66,7 @@ export const findUserIdByEmail = async ({ email }) => {
       const [userId] = rows.flat()
       return userId
    } catch (error) {
-      throw new Error(error)
+      throw error
    }
 }
 export const findUserRole = async ({ email }) => {

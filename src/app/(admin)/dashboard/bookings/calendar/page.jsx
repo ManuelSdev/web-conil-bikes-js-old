@@ -11,7 +11,7 @@ import { getBookingDatesInRange } from '@/lib/pg/crud/bookings'
 import { getBookingOnDate } from '@/lib/pg/crud/bookings'
 
 import { getBookingWithBikesById } from '@/lib/pg/crud/bookings'
-import BookingSubShell from '@/components/layouts/admin/BookingSubShell'
+import BookingSubShell from '@/app/(admin)/dashboard/bookings/BookingSubShell'
 
 const urlParams = (obj) => new URLSearchParams(obj)
 

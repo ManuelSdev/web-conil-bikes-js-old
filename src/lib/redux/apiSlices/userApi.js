@@ -11,6 +11,11 @@ const userApi = baseApi.injectEndpoints({
             //console.log('email en getUser -> ', email) ||
             `users?email=${email}`,
       }),
+      getMatchingUsers: builder.query({
+         query: ({ phone, email }) =>
+            //console.log('email en getUser -> ', email) ||
+            `users/matches?email=${email}&phone=${phone}`,
+      }),
       getUserByIdentifier: builder.query({
          query: (identifier) =>
             //console.log('email en getUser -> ', email) ||
@@ -30,7 +35,7 @@ const userApi = baseApi.injectEndpoints({
             password,
             isCreatedByAdmin = false,
          }) => ({
-            url: '/users/create',
+            url: isCreatedByAdmin ? '/users/create/admin' : '/users/create',
             method: 'POST',
             body: { name, phone, email, password, isCreatedByAdmin },
          }),
@@ -42,6 +47,8 @@ export const {
    useGetUserQuery,
    useGetUserByIdentifierQuery,
    useLazyGetUserByIdentifierQuery,
+   useGetMatchingUsersQuery,
+   useLazyGetMatchingUsersQuery,
    useLazyGetUserQuery,
    useCreateAccountMutation,
 } = userApi
