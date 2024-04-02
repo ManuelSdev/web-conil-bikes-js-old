@@ -16,7 +16,7 @@ import {
 } from '@/utils/serverFns/serverFns'
 
 import StepShell from '@/components/stepper/StepShell'
-import NotifyCart from '@/components/stepper/NotifyCart'
+import NotifyCart from '@/components/stepper/notifyCart/NotifyCart'
 import AvailableBikeListHandler from '@/components/stepper/bikes/AvailableBikeListHandler'
 import BikesStepHandlerTest from '@/components/stepper/bikes/BikesStepHandlerTest'
 export default async function BikesStepPage({ params }) {

@@ -2,7 +2,7 @@ import React from 'react'
 import Step from '@/components/stepper/Step'
 import StepShell from '@/components/stepper/StepShell'
 import BookingAddressHandler from '@/components/stepper/address/BookingAddressHandler'
-import NotifyCart from '@/components/stepper/NotifyCart'
+import NotifyCart from '@/components/stepper/notifyCart/NotifyCart'
 
 export default async function DashboardAddressStepPage({ params }) {
    return (

@@ -18,7 +18,7 @@ import {
 import StepShell from '@/components/stepper/StepShell'
 import AvailableBikeListHandler from '@/components/stepper/bikes/AvailableBikeListHandler'
 import BikesStepHandlerTest from '@/components/stepper/bikes/BikesStepHandlerTest'
-import NotifyCart from '@/components/stepper/NotifyCart'
+import NotifyCart from '@/components/stepper/notifyCart/NotifyCart'
 
 export default async function DashboardBikesStepPage({ params }) {
    const searchKeysCookie = cookies().get('searchKeys')
@@ -101,9 +101,3 @@ async function loadPreviusStateData(searchKeys) {
       availableBikes,
    }
 }
-/*
-   <StepLayout>
-            {' '}
-            <BikeFiltersStepHandler segmentList={segmentList} />
-         </StepLayout>
-         */

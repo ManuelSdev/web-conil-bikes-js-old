@@ -6,7 +6,7 @@ import React from 'react'
 
 import Step from '@/components/stepper/Step'
 import StepShell from '@/components/stepper/StepShell'
-import NotifyCart from '@/components/stepper/NotifyCart'
+import NotifyCart from '@/components/stepper/notifyCart/NotifyCart'
 
 export default async function DateStepPage({ params }) {
    const userSessionCookie = cookies().get('userSession')

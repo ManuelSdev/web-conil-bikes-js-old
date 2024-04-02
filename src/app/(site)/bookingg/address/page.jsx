@@ -1,6 +1,6 @@
 import React from 'react'
 import Step from '@/components/stepper/Step'
-import NotifyCart from '@/components/stepper/NotifyCart'
+import NotifyCart from '@/components/stepper/notifyCart/NotifyCart'
 import StepShell from '@/components/stepper/StepShell'
 import BookingAddressHandler from '@/components/stepper/address/BookingAddressHandler'
 export default async function AddressStepPage({ params }) {

@@ -19,9 +19,10 @@ import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import DrawerMenu from '@/components/drawer/DrawerMenu'
 import { Separator } from '@/components/ui/separator'
-import NotifyBadge from '@/components/notifyBadge/NotifyBadge'
-import NotifyBadgeNumber from '@/components/notifyBadge/NotifyBadgeNumber'
-import NotifyBadgeSpanSr from '@/components/notifyBadge/NotifyBadgeSpanSr'
+
+import NotifyBadgeSpanSr from '../notifyBadge/NotifyBadgeSpanSr'
+import NotifyBadgeNumber from '../notifyBadge/NotifyBadgeNumber'
+import NotifyBadge from '../notifyBadge/NotifyBadge'
 
 export default function NotifyCart({ page }) {
    const { dialog, handleSetDialog } = useDialogWindow(null)
