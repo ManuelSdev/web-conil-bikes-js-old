@@ -11,7 +11,7 @@ import {
 import { useRouter } from 'next/navigation'
 import { set } from 'date-fns'
 import { Button } from '@/components/ui/button'
-import SelectedBikeList from '../step_1/SelectedBikeList'
+import SelectedBikeList from '../SelectedBikeList'
 
 export default function SelectedBikesHandler({ setStep, ...props }) {
    const dispatch = useDispatch()

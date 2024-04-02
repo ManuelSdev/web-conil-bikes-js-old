@@ -9,7 +9,7 @@ import {
 } from '@/lib/redux/slices/bookingFormSlice'
 import { Button } from '@/components/ui/button'
 import { dateRangeISOStringObjToString } from '@/utils/datesFns/createDateRangeString'
-import BikeCard from '../step_3/BikeCard'
+import BikeCard from './BikeCard'
 import { Separator } from '@/components/ui/separator'
 import { AlertDialogButton } from '@/components/common/AlertDialogButton'
 import { useLazyCreateCookieQuery } from '@/lib/redux/apiSlices/cookieApi'

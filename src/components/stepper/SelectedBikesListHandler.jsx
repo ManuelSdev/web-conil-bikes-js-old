@@ -9,7 +9,7 @@ import {
 } from '@/lib/redux/slices/bookingFormSlice'
 
 import { Button } from '@/components/ui/button'
-import SelectedBikeList from './step_1/SelectedBikeList'
+import SelectedBikeList from './SelectedBikeList'
 
 export default function SelectedBikesListHandler({ setStep, ...props }) {
    const dispatch = useDispatch()

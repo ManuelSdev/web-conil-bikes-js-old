@@ -25,12 +25,6 @@ import {
 } from '@/utils/datesFns/createDateRangeString'
 import { Button } from '@/components/ui/button'
 
-import { useRouter } from 'next/navigation'
-import BikeFiltersForm from '@/components/stepper/step_2/BikeFiltersForm'
-import AvailableBikeListStep from '@/components/stepper/step_3/AvailableBikeListStep'
-import StepLayout from '@/components/stepper/stepLayout/StepLayout'
-import BikeCard from '@/components/stepper/step_3/BikeCard'
-import { Separator } from '@/components/ui/separator'
 import { cn } from '@/utils/app/functions'
 import StepControls from '@/components/stepper/StepControls'
 import Link from 'next/link'
@@ -38,8 +32,8 @@ import { Search } from 'lucide-react'
 import useLazyGetAvailableBikesQueryHook from '@/lib/redux/apiSlices/bikesApiHooks/useLazyGetAvailableBikesQueryHook'
 import { Loader2 } from 'lucide-react'
 import { useLazyDeleteCookieQuery } from '@/lib/redux/apiSlices/cookieApi'
-import { de } from 'date-fns/locale'
 import { ArrowLeft, ArrowRight } from '@phosphor-icons/react'
+import BikeFiltersForm from './BikeFiltersForm'
 
 export default function BikesStepHandlerTest({
    setStep,
@@ -214,14 +208,3 @@ export default function BikesStepHandlerTest({
       </div>
    )
 }
-
-/*
- <AvailableBikeListStep
-               isLogged={true}
-               availableBikes={availableBikes}
-               renderSelectBikeButton={(bike) => (
-                  <Button onClick={handleSelect(bike)}>Seleccionar</Button>
-               )}
-               renderPrevButton={renderPrevButton}
-            />
-            */

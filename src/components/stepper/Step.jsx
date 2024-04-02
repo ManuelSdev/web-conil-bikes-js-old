@@ -1,12 +1,8 @@
 import React from 'react'
-import StepperControlButtons from './StepperControlButtons'
-import StepsLine from './StepsLine'
+
 import StepsPanel from './StepsPanel'
-import { Separator } from '@/components/ui/separator'
 import StepVertical from './StepVertical'
-import { Button } from '../ui/button'
-import Link from 'next/link'
-import StepControl from './StepControl'
+
 import { cn } from '@/utils/app/functions'
 
 export default function Step({
