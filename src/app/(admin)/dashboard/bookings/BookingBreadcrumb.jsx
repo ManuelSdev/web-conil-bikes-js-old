@@ -12,6 +12,7 @@ import { useParams, usePathname } from 'next/navigation'
 
 export function BookingBreadcrumb() {
    const path = usePathname()
+
    const pathArray = getPathArray(path)
    const map = {
       dashboard: 'Inicio',

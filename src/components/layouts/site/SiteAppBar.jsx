@@ -21,11 +21,11 @@ export default function SiteAppBar() {
       useDialogWindow(null)
 
    return (
-      <header className="HEADER-1 sticky top-0 z-40 w-full bg-black">
+      <header className="HEADER sticky top-0 z-40 w-full bg-black">
          <nav className="NAV mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="HEADER-3 flex h-slimTopAppBar items-center justify-between gap-8 md:h-fatTopAppBar">
+            <div className="WRAPPER  flex h-slimTopAppBar items-center justify-between gap-8 md:h-fatTopAppBar">
                {/**LOGO Y BOTONERA +MD */}
-               <div className="HEADER-4 flex w-full items-center justify-between">
+               <div className="LEFT-BLOCK  flex w-full items-center justify-between bg-red-400">
                   {/* LOGO */}
                   <div className="flex-shrink-0">
                      <div className="flex items-center">
@@ -49,7 +49,7 @@ export default function SiteAppBar() {
                {/* BOTONERA/Profile +md*/}
                <div>
                   <div className="ml-4 flex items-center md:ml-6 ">
-                     <div className="hidden md:block">
+                     <div className="">
                         <Button
                            className="text-greenCorp "
                            onClick={() => handleSetDialogRight({ open: true })}
@@ -59,20 +59,7 @@ export default function SiteAppBar() {
                               //color="#D5FF40"
                               aria-hidden="true"
                            />
-                           Mi cuenta
-                        </Button>
-                     </div>
-                     <div className=" md:hidden">
-                        <Button
-                           className="text-greenCorp"
-                           size="icon"
-                           onClick={() => handleSetDialogRight({ open: true })}
-                        >
-                           <CircleUserRound
-                              className="mr-2 h-6 w-6 "
-                              //color="#D5FF40"
-                              aria-hidden="true"
-                           />
+                           <span className="hidden md:block"> Mi cuenta</span>
                         </Button>
                      </div>
                   </div>

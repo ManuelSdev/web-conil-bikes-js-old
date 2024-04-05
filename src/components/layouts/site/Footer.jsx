@@ -12,7 +12,7 @@ import { MapPin, Mail, Phone, Instagram, Twitter, Facebook } from 'lucide-react'
 import FooterMobile from './FooterMobile'
 export default function Footer() {
    return (
-      <div>
+      <footer>
          <FooterDesktop
             navigation={navigation}
             contact={contact}
@@ -21,7 +21,7 @@ export default function Footer() {
          <div className="block sm:hidden">
             <FooterMobile navigation={navigation} />
          </div>
-      </div>
+      </footer>
    )
 }
 

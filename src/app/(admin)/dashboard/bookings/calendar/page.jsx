@@ -43,12 +43,12 @@ export default async function CalendarPage({ params, searchParams }) {
       // cardDescription: 'Hin reverse chronological order.',
    }
    return (
-      <BookingSubShell params={params}>
-         {' '}
-         <Card {...cardProps}>
-            <CalendarHandlerUrl bookingDates={bookingDates} />
-         </Card>
-      </BookingSubShell>
+      /*<BookingSubShell params={params}>*/
+
+      <Card {...cardProps}>
+         <CalendarHandlerUrl bookingDates={bookingDates} />
+      </Card>
+      /*</BookingSubShell>*/
    )
 }
 

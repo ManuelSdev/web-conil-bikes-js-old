@@ -2,8 +2,10 @@ import './admin.css'
 import { Inter } from 'next/font/google'
 import React from 'react'
 import ReduxProviderWrapper from '@/lib/redux/ReduxProviderWrapper'
-import AdminShell from '@/components/layouts/admin/AdminShell'
 import { BookingBreadcrumb } from './dashboard/bookings/BookingBreadcrumb'
+import AdminBar from './AdminBar'
+import AdminSidebar from './AdminSidebar'
+import AdminMainContainer from './AdminMainContainer'
 
 export async function generateStaticParams() {
    return [{ lang: 'es-ES' }]
@@ -21,7 +23,10 @@ export default function AdminDashboardLayout(props) {
       <html lang="es-ES" dir="ltr" className="h-full bg-red-500">
          <body className="h-full">
             <ReduxProviderWrapper>
-               <AdminShell {...props} />
+               <AdminSidebar />
+
+               <AdminBar />
+               <AdminMainContainer {...props} />
             </ReduxProviderWrapper>
          </body>
       </html>

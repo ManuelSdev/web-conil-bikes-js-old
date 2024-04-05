@@ -53,7 +53,7 @@ export function SearchUserForm({ onSubmit, className }) {
                      {/* <FormLabel>Nombre completo</FormLabel>*/}
                      <FormControl>
                         <Input
-                           placeholder="Search..."
+                           placeholder="Buscar usuarios"
                            {...field}
                            className="pl-10"
                         />

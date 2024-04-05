@@ -10,17 +10,13 @@ import ReduxProviderWrapper from '@/lib/redux/ReduxProviderWrapper'
 import SiteContainer from './SiteContainer'
 import Footer from './Footer'
 
-export default function SiteShell({ children }) {
+export default function SiteShell(props) {
    return (
       <div className="min-h-full">
          <SiteAppBar />
          {/* <div className="h-slimTopAppBar w-full md:h-fatTopAppBar" />*/}
-         <main className="w-full">
-            <SiteContainer> {children}</SiteContainer>{' '}
-         </main>
-         <footer>
-            <Footer />
-         </footer>
+         <SiteContainer {...props} />
+         <Footer />
       </div>
    )
 }
