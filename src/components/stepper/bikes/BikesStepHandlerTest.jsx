@@ -34,19 +34,23 @@ import { Loader2 } from 'lucide-react'
 import { useLazyDeleteCookieQuery } from '@/lib/redux/apiSlices/cookieApi'
 import { ArrowLeft, ArrowRight } from '@phosphor-icons/react'
 import BikeFiltersForm from './BikeFiltersForm'
+import { useRouter } from 'next/navigation'
+import useCheckDatedStepper from '@/hooks/useCheckDatedStepper'
 
 export default function BikesStepHandlerTest({
    setStep,
    segmentList,
    loadedSearchKeys: searchKeys,
    isAdmin,
+   userId,
    loadedData,
    ...props
    //appBikesConfig,
    // availableSizes,
 }) {
+   useCheckDatedStepper({ userId, isAdmin })
    const dispatch = useDispatch()
-
+   const router = useRouter()
    const [deleteCookie] = useLazyDeleteCookieQuery()
 
    const strDateRangeObj = useSelector(selectDateRange)
@@ -138,9 +142,11 @@ export default function BikesStepHandlerTest({
       )
 
    const nextUrl = isAdmin
-      ? 'dashboard/bookings/new/address'
+      ? `/dashboard/bookings/new/address?userId=${userId}`
       : '/bookingg/address'
-   const prevUrl = isAdmin ? 'dashboard/bookings/new/date' : '/bookingg/date'
+   const prevUrl = isAdmin
+      ? `/dashboard/bookings/new/date?userId=${userId}`
+      : '/bookingg/date'
    const renderNextButton = (renderClassName) => {
       const isDisabled = !bikesQuantity
 
@@ -175,7 +181,7 @@ export default function BikesStepHandlerTest({
    return (
       <div>
          <BikeFiltersForm
-            loadedData={loadedData}
+            //loadedData={loadedData}
             loadedSearchKeys={searchKeys}
             isLoadingSizes={isLoadingSizes}
             availableSizes={availableSizes}

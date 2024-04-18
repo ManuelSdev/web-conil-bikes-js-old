@@ -15,6 +15,7 @@ import Link from 'next/link'
 import { ArrowArcRight, ArrowLeft, ArrowRight } from '@phosphor-icons/react'
 import { BookingAddressForm } from './BookingAddressForm'
 import StepControls from '@/components/stepper/StepControls'
+import useCheckDatedStepper from '@/hooks/useCheckDatedStepper'
 
 const FormSchema = z.object({
    address: z.string().min(2, {
@@ -24,7 +25,13 @@ const FormSchema = z.object({
    pickup: z.boolean(),
 })
 
-export default function BookingAddressHandler({ setStep, isAdmin, ...props }) {
+export default function BookingAddressHandler({
+   setStep,
+   isAdmin,
+   userId,
+   ...props
+}) {
+   useCheckDatedStepper({ userId, isAdmin })
    //console.log('BookingManagementUserHandler @@@->')
    const dispatch = useDispatch()
 
@@ -51,9 +58,11 @@ export default function BookingAddressHandler({ setStep, isAdmin, ...props }) {
    }, [])
 
    const nextUrl = isAdmin
-      ? '/dashboard/bookings/new/resume'
+      ? `/dashboard/bookings/new/resume?userId=${userId}`
       : '/bookingg/resume'
-   const prevUrl = isAdmin ? '/dashboard/bookings/new/bikes' : '/bookingg/bikes'
+   const prevUrl = isAdmin
+      ? `/dashboard/bookings/new/bikes?userId=${userId}`
+      : '/bookingg/bikes'
 
    const renderNextButton = (renderClassName) => {
       const { address } = form.getValues()

@@ -30,7 +30,7 @@ export const findUserByEmail = async ({ email }) => {
       rows: [user],
    } = await query({ text, values })
    // const [user] = rows.flat()
-   //console.log('userId en findUserByEmail -> ', user)
+   console.log('userId en findUserByEmail -> ', user)
    return user
 }
 //clAVE INTERPOLACION https://github.com/brianc/node-postgres/issues/503

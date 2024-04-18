@@ -4,7 +4,7 @@ import { cookies } from 'next/headers'
 
 import React from 'react'
 
-import Step from '@/components/stepper/Step'
+import Stepper from '@/components/stepper/Stepper'
 import StepShell from '@/components/stepper/StepShell'
 import NotifyCart from '@/components/stepper/notifyCart/NotifyCart'
 
@@ -16,9 +16,9 @@ export default async function DateStepPage({ params }) {
          title={'Fecha'}
          description=" Indícanos la fecha de inicio y de finalización de tu reserva"
       >
-         <Step step={1}>
+         <Stepper step={1}>
             <DateStepHandler />
-         </Step>
+         </Stepper>
          <NotifyCart page={'date'} />
       </StepShell>
    )

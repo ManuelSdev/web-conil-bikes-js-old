@@ -1,5 +1,4 @@
 'use client'
-import Card from '@/components/layouts/Card'
 import React from 'react'
 import { NewUserForm } from './NewUserForm'
 import {
@@ -13,6 +12,16 @@ import { DialogWindow } from '@/components/common/DialogWindow'
 import { DialogLoader } from '@/components/common/DialogLoader'
 import { useRouter } from 'next/navigation'
 import { generatePassword } from '@/utils/app/functions'
+import {
+   Card,
+   CardContent,
+   CardDescription,
+   CardFooter,
+   CardHeader,
+   CardTitle,
+} from '@/components/ui/card'
+import BasicCard from '@/components/BasicCard'
+
 export default function NewUserFormHandler(props) {
    const [createUserAccountTrigger, { isLoading, isError, isSuccess }] =
       useCreateAccountMutation()
@@ -41,7 +50,7 @@ export default function NewUserFormHandler(props) {
          const matchingUsers = await getMatchingUsersTrigger({ phone, email })
          if (matchingUsers)
             return router.push(
-               `/dashboard/bookings/new/user/matches?phone=${phone}&email=${email}&name=${name}`
+               `/dashboard/users/new/matches?phone=${phone}&email=${email}&name=${name}`
             )
          const randomPassword = generatePassword()
          const createUserAccountRes = await createUserAccountTrigger({
@@ -89,14 +98,14 @@ export default function NewUserFormHandler(props) {
          */
       }
    }
-   console.log('isError ->', isError)
-   return (
-      <Card>
-         <DialogLoader open={isLoading} />
-         <DialogWindow {...dialog} />
 
+   return (
+      <BasicCard
+         tittle="Crear usuario"
+         description="Introduce los datos del nuevo usuario"
+      >
          <NewUserForm onSubmit={onSubmit} {...props} />
-      </Card>
+      </BasicCard>
    )
 }
 

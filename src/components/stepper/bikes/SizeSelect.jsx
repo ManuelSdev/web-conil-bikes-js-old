@@ -47,29 +47,29 @@ export default function SizeSelect({
       <FormField
          control={form.control}
          name="size"
-         render={({ field }) =>
-            console.log('field -> ', field) || (
-               <FormItem className={className}>
-                  <FormLabel>Talla</FormLabel>
-                  <Select
-                     onValueChange={handleChange(field)}
-                     //defaultValue={loadedSize ? loadedSize : field.value}
-                     defaultValue={field.value}
-                     //   defaultValue={field.value}
-                  >
-                     <FormControl>
-                        <SelectTrigger>
-                           {isLoadingSizes ? (
-                              <SpinnerLine />
-                           ) : field.value ? (
-                              <SelectValue placeholder="Talla">
-                                 {field.value?.toUpperCase()}
-                              </SelectValue>
-                           ) : (
-                              'Talla'
-                           )}
-                        </SelectTrigger>
-                        {/* <SelectTrigger>
+         render={({ field }) => (
+            // console.log('field -> ', field) ||
+            <FormItem className={className}>
+               <FormLabel>Talla</FormLabel>
+               <Select
+                  onValueChange={handleChange(field)}
+                  //defaultValue={loadedSize ? loadedSize : field.value}
+                  defaultValue={field.value}
+                  //   defaultValue={field.value}
+               >
+                  <FormControl>
+                     <SelectTrigger>
+                        {isLoadingSizes ? (
+                           <SpinnerLine />
+                        ) : field.value ? (
+                           <SelectValue placeholder="Talla">
+                              {field.value?.toUpperCase()}
+                           </SelectValue>
+                        ) : (
+                           'Talla'
+                        )}
+                     </SelectTrigger>
+                     {/* <SelectTrigger>
                         {isLoadingSizes ? (
                            <SpinnerLine />
                         ) : field.value ? (
@@ -81,34 +81,33 @@ export default function SizeSelect({
                            'Talla'
                         )}
                         </SelectTrigger>*/}
-                     </FormControl>
+                  </FormControl>
 
-                     <SelectContent>
-                        {sizesList.map((elem) => {
-                           const [size, [min, max]] = elem
-                           return (
-                              <SelectItem
-                                 disabled={
-                                    availableSizes
-                                       ? !availableSizes.includes(size)
-                                       : true
-                                 }
-                                 key={size}
-                                 value={size}
-                              >
-                                 {`${size.toUpperCase()} - si mides entre ${min} y ${max} cm `}
-                              </SelectItem>
-                           )
-                        })}
-                     </SelectContent>
-                  </Select>
-                  {/* <FormDescription>
+                  <SelectContent>
+                     {sizesList.map((elem) => {
+                        const [size, [min, max]] = elem
+                        return (
+                           <SelectItem
+                              disabled={
+                                 availableSizes
+                                    ? !availableSizes.includes(size)
+                                    : true
+                              }
+                              key={size}
+                              value={size}
+                           >
+                              {`${size.toUpperCase()} - si mides entre ${min} y ${max} cm `}
+                           </SelectItem>
+                        )
+                     })}
+                  </SelectContent>
+               </Select>
+               {/* <FormDescription>
                   Selecciona una talla en función de tu altura
                   </FormDescription>*/}
-                  <FormMessage />
-               </FormItem>
-            )
-         }
+               <FormMessage />
+            </FormItem>
+         )}
       />
    )
 }

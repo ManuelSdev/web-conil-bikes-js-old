@@ -32,7 +32,7 @@ export default function StepControls({
       }
    }
 
-   console.log('pageControl page', page)
+   //console.log('pageControl page', page)
    const BUTTON_CN = 'mt-4'
 
    return (

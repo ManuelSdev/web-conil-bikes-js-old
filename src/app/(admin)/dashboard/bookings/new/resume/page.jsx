@@ -1,23 +1,29 @@
-import Step from '@/components/stepper/Step'
+import Stepper from '@/components/stepper/Stepper'
 
 import {
+   getAdminData,
+   getAdminId,
+   getAdminUserAuth,
    getAppBikeSegments,
-   getUserPageAuth,
 } from '@/utils/serverFns/serverFns'
 import React from 'react'
 import BookingResumeHandler from '@/components/stepper/resume/BookingResumeHandler'
+import { getUserByIdentifier } from '@/lib/pg/crud/users'
+import { findUserByIdentifier } from '@/lib/pg/repos/users'
 
-export default async function DashboardResumeStepPage({ params }) {
+export default async function DashboardResumeStepPage({
+   params,
+   searchParams,
+}) {
+   const adminId = await getAdminId()
+   // const adminData = await adminDataRes.json()
+   console.log('#### adminData ', adminId)
    const { segmentList } = await getAppBikeSegments()
-   const userAuth = await getUserPageAuth()
+   const { userId } = searchParams
 
-   console.log('#### userAuth ', userAuth)
+   const [user] = await findUserByIdentifier(userId)
+   //const [user] = await userRes.json()
+   //console.log('user en DashboardResumeStepPage -> ', userRes)
 
-   const { name, email, phone, userId: appUserId } = userAuth
-
-   return (
-      <Step step={4} childClassName="sm:w-full">
-         <BookingResumeHandler isAdmin={true} user={userAuth} />
-      </Step>
-   )
+   return <BookingResumeHandler isAdmin={true} user={user} adminId={adminId} />
 }

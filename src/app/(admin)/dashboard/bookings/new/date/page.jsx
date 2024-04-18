@@ -4,23 +4,20 @@ import { cookies } from 'next/headers'
 
 import React from 'react'
 
-import Step from '@/components/stepper/Step'
-import StepShell from '@/components/stepper/StepShell'
+import Stepper from '@/components/stepper/Stepper'
 import NotifyCart from '@/components/stepper/notifyCart/NotifyCart'
 import StepHandler from '../../StepHandler'
+import StepShell from '@/components/stepper/StepShell'
 
-export default async function DashboardDateStepPage({ params }) {
+export default async function DashboardDateStepPage({ params, searchParams }) {
    const userSessionCookie = cookies().get('userSession')
+   const { userId } = searchParams
    //console.log('userSessionCookie ', userSessionCookie)
    return (
-      <div
-         title={'Fecha'}
-         description=" Indícanos la fecha de inicio y de finalización de tu reserva"
-      >
-         <DateStepHandler isAdmin={true} />
-
-         <NotifyCart page={'date'} />
-      </div>
+      <StepHandler>
+         <DateStepHandler isAdmin={true} userId={userId} />
+         <NotifyCart page={'date'} userId={userId} />
+      </StepHandler>
    )
 }
 /*

@@ -13,26 +13,24 @@ export const addBookingText = (data) => {
 
 function insertBookingText(data) {
    const {
+      adminId,
       bikes,
       userId,
       isAdmin,
       dateRange,
       address,
-      price,
+      bookingPrice,
       email,
       delivery,
       pickup,
       duration,
    } = data
 
-   const text = isAdmin
+   const text = adminId
       ? `
-    WITH W_id AS (
-       SELECT user_id FROM App_user WHERE user_email='${email}'
-       ),
-    newBooking AS (
+    WITH newBooking AS (
        INSERT INTO booking (user_id,created_by, booking_price, booking_date_range, booking_duration, booking_delivery, booking_pickup, booking_address)
-          VALUES ((SELECT user_id FROM W_id),${userId}, ${price}, '${dateRange}', ${duration}, ${delivery}, ${pickup}, '${address}')
+          VALUES (${userId},${adminId}, ${bookingPrice}, '${dateRange}', ${duration}, ${delivery}, ${pickup}, '${address}')
        RETURNING
           booking_id
     )
@@ -40,7 +38,7 @@ function insertBookingText(data) {
       : `
     WITH newBooking AS (
        INSERT INTO booking (user_id,created_by, booking_price, booking_date_range, booking_duration, booking_delivery, booking_pickup, booking_address)
-       VALUES (${userId},${userId}, ${price}, '${dateRange}', ${duration}, ${delivery}, ${pickup}, '${address}')
+       VALUES (${userId},${userId}, ${bookingPrice}, '${dateRange}', ${duration}, ${delivery}, ${pickup}, '${address}')
        RETURNING
     booking_id
     )

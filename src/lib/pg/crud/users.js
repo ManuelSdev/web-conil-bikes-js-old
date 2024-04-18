@@ -63,9 +63,9 @@ export async function getUserIdByEmail({ email }) {
    try {
       //  const db = client()
       //console.log('@@ CRUD FN getUserIdByEmail @@')
-      const appUserId = await findUserIdByEmail({ email })
-      //console.log('appUser en getUserIdByEmail-> ', appUserId)
-      return NextResponse.json(appUserId, { status: 201 })
+      const userId = await findUserIdByEmail({ email })
+      //console.log('appUser en getUserIdByEmail-> ', userId)
+      return NextResponse.json(userId, { status: 201 })
    } catch (error) {
       //console.log('### ERROR CRUD api/getUserIdByEmail -> ', error)
       return NextResponse.json(error, { status: 500 })
@@ -77,9 +77,9 @@ export async function searchUser({ email }) {
    try {
       //  const db = client()
       //console.log('@@ CRUD FN getUserIdByEmail @@')
-      const appUserId = await findUserIdByEmail({ email })
-      //console.log('appUser en getUserIdByEmail-> ', appUserId)
-      return NextResponse.json(appUserId, { status: 201 })
+      const userId = await findUserIdByEmail({ email })
+      //console.log('appUser en getUserIdByEmail-> ', userId)
+      return NextResponse.json(userId, { status: 201 })
    } catch (error) {
       //console.log('### ERROR CRUD api/getUserIdByEmail -> ', error)
       return NextResponse.json(error, { status: 500 })

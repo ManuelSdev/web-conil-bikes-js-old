@@ -11,6 +11,7 @@ import Link from 'next/link'
 import IconCorpLogo from '@/components/svg/IconCorpLogo'
 import SearchUserFormHandler from '../../components/layouts/admin/SearchUserFormHandler'
 import { CircleUserRound } from 'lucide-react'
+import { ProgressBar, ProgressBarProvider } from 'react-transition-progress'
 export default function AdminBar() {
    return (
       <BarHeader>

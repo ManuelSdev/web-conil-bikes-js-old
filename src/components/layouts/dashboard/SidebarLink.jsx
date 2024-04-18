@@ -14,6 +14,7 @@ const SidebarLink = ({
 }) => {
    const path = usePathname()
    const isCurrent = path.includes(currentPath)
+   /*
    console.log(
       'isCurrent -> ',
       isCurrent,
@@ -22,6 +23,7 @@ const SidebarLink = ({
       'currentPath -> ',
       currentPath
    )
+   */
    return (
       <li>
          <Link

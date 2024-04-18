@@ -38,10 +38,10 @@ export default function BookingResume({
    address,
    delivery,
    pickup,
-   bikesByUnits: bikes,
+   bikesByUnits,
    dateRange,
    dayPrice,
-   totalPrice,
+   bookingPrice,
    duration,
    renderSubmitButton,
    renderPrevButton,
@@ -59,7 +59,7 @@ export default function BookingResume({
 
             <form className="lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
                <div className="mt-12 bg-red-300 lg:col-span-7">
-                  <Bikes bikes={bikes} />
+                  <Bikes bikes={bikesByUnits} />
                </div>
                <div className="bg-red-300 lg:col-span-5 lg:mt-12">
                   {/* Order summary */}
@@ -75,7 +75,7 @@ export default function BookingResume({
 
                   <Price
                      dayPrice={dayPrice}
-                     totalPrice={totalPrice}
+                     bookingPrice={bookingPrice}
                      duration={duration}
                   />
                   <div className="mt-12 ">
@@ -255,11 +255,11 @@ function Details({ name, email, phone, address, dateRange, delivery, pickup }) {
       </section>
    )
 }
-function Price({ dayPrice, totalPrice, duration }) {
+function Price({ dayPrice, bookingPrice, duration }) {
    const items = [
       { label: 'Precio por día', value: dayPrice + ' €' },
       { label: 'Duración de la reserva', value: duration + ' días' },
-      { label: 'Precio final', value: totalPrice + ' €' },
+      { label: 'Precio final', value: bookingPrice + ' €' },
    ]
    return (
       <section

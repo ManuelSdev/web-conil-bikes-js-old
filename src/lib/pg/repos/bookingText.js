@@ -116,6 +116,40 @@ FROM
   asBooking
   INNER JOIN asOrder USING (booking_id);
   `
+export const txtFindBookingOnDateWithEmail = `
+  WITH asBooking AS (
+    SELECT
+      booking_id,
+      booking_state,
+      booking_delivery,
+      booking_pickup,
+      user_email
+    FROM
+      booking b INNER JOIN app_user u ON b.user_id = u.user_id
+    WHERE
+      $1::timestamp WITH TIME ZONE = LOWER(booking_date_range)
+      OR $1::timestamp WITH TIME ZONE = UPPER(booking_date_range)
+  ),
+  asOrder AS (
+    SELECT
+      booking_id,
+      COUNT(booking_id)::int BIKES
+    FROM
+      booking_order
+    GROUP BY
+      booking_id
+  )
+  SELECT
+    booking_id AS "bookingId",
+    booking_state AS state,
+    booking_delivery AS delivery,
+    booking_pickup AS pickup,
+    bikes,
+    user_email AS email
+  FROM
+    asBooking
+    INNER JOIN asOrder USING (booking_id);
+    `
 
 export const txtFindBookingById = `
   WITH bookingData AS (

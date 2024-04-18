@@ -91,7 +91,7 @@ export function NewUserForm({ onSubmit, searchParams }) {
             />
 
             <Button className="w-full" type="submit">
-               Crear cuentarr
+               Crear usuario
             </Button>
          </form>
       </Form>

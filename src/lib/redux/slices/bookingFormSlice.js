@@ -210,19 +210,22 @@ export const selectBookingData = createSelector(
       const dayPrice = bikesByUnits.reduce((acc, bike) => {
          return acc + bike.price
       }, 0)
-      const totalPrice = dayPrice * duration
+      const bookingPrice = dayPrice * duration
       //Es
       const bikesForQuery = bikesWithQuantity.map(
          ({ modelId, bikeSize, quantity }) => ({ modelId, bikeSize, quantity })
       )
+      const { address, delivery, pickup } = bookingManagement
       return {
          bikes: bikesForQuery,
          bikesByUnits,
          dayPrice,
          dateRange,
          duration,
-         totalPrice,
-         ...bookingManagement,
+         bookingPrice,
+         address,
+         delivery,
+         pickup,
       }
    }
 )

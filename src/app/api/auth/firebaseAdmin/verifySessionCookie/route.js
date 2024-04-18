@@ -14,7 +14,7 @@ export async function GET(req) {
 
    const searchParams = req.nextUrl.searchParams
    const role = searchParams.get('role')
-   console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@ role ->', role)
+   // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@ role ->', role)
    const cookieStore = cookies()
    const sessionCookie =
       role === 'admin'

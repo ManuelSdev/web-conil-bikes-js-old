@@ -16,9 +16,13 @@ const sendGridSendEmail = async ({ to, subject, html }) => {
       // text: 'Verifica tu email para finalizar el registro',
       html,
    }
-
-   const sendgridResponse = await mail.send(msg)
-   return sendgridResponse
+   try {
+      const sendgridResponse = await mail.send(msg)
+      return sendgridResponse
+   } catch (error) {
+      console.log('**** error en sendGridSendEmail **** ')
+      throw error
+   }
 }
 
 export default sendGridSendEmail

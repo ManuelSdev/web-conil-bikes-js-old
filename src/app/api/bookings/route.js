@@ -4,6 +4,7 @@ export async function POST(req) {
    //console.log('req.body -------->', req.method)
    const body = await req.json()
    const {
+      adminId,
       bikes,
       userId,
       isAdmin,

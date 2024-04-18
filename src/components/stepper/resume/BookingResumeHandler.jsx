@@ -19,30 +19,60 @@ export default function BookingResumeHandler({
    setStep,
    user,
    isAdmin = false,
+   adminId,
+
    ...props
 }) {
    const [triggerCookie] = useLazyCreateCookieQuery()
    const router = useRouter()
-   const storedBookingData = useSelector(selectBookingData)
-   const { dialog, handleSetDialog } = useDialogWindow(null)
-   const bookingResumeData = {
-      ...user,
-      ...storedBookingData,
 
-      isAdmin,
-   }
-   const { dateRange } = bookingResumeData
+   const { userId, email, name, phone } = user
+
+   const {
+      bikes,
+      bikesByUnits,
+      dayPrice,
+      dateRange,
+      duration,
+      bookingPrice,
+      address,
+      delivery,
+      pickup,
+   } = useSelector(selectBookingData)
+   console.log('dateRange ->', dateRange)
    const strDateRange = dateRangeISOStringObjToString(dateRange)
 
-   //TODO: estás duplicando appuserId y totalPrice con otro nombre.
-   //Ahora da igual porque el router handler interno pilla los valores que necesita y solo manda esos a la db
-   //Pero si usarás un backend externo, tendrías que arreglar esto para no mandar más info de la necesaria en la petición
+   const { dialog, handleSetDialog } = useDialogWindow(null)
+
    const queryData = {
-      ...bookingResumeData,
-      userId: bookingResumeData.appUserId,
-      price: bookingResumeData.totalPrice,
+      adminId,
+      bikes,
+      userId,
+      isAdmin,
       dateRange: strDateRange,
+      address,
+      bookingPrice,
+      email,
+      delivery,
+      pickup,
+      duration,
+      //necesitas estos para el email
       dateRangeObj: dateRange,
+      bikesByUnits,
+   }
+
+   const resumeData = {
+      name,
+      phone,
+      email,
+      address,
+      delivery,
+      pickup,
+      bikesByUnits,
+      dateRange,
+      dayPrice,
+      bookingPrice,
+      duration,
    }
    const [
       createBooking,
@@ -63,6 +93,7 @@ export default function BookingResumeHandler({
    const handleSubmit = async (event) => {
       event.preventDefault()
       console.log('queryData ->', queryData)
+      const urlAfterBooking = isAdmin ? '/dashboard/bookings/calendar' : '/'
       //const emailHtml = getOrderResumeEmail(bookingData)
       try {
          const res = await createBooking(queryData).unwrap()
@@ -79,7 +110,7 @@ export default function BookingResumeHandler({
             title: 'Tu reserva ha sido registrada',
             description: 'desc',
             closeText: 'Aceptar',
-            onOpenChange: (bool) => router.push('/'),
+            onOpenChange: (bool) => router.push(urlAfterBooking),
          })
       } catch (error) {
          console.log('error ->', error)
@@ -89,18 +120,18 @@ export default function BookingResumeHandler({
             description:
                'No se ha podido registrar tu reserva. Por favor, inténtalo de nuevo pasados unos minutos.',
             closeText: 'Aceptar',
-            onOpenChange: (bool) => router.push('/'),
+            onOpenChange: (bool) => router.push(urlAfterBooking),
          })
       }
    }
 
    const renderPrevButton = (className) => {
       const prevUrl = isAdmin
-         ? '/admin/bookings/new/address'
+         ? `/admin/bookings/new/address?userId=${userId}`
          : '/bookingg/address'
       return (
          <Button asChild variant="custom" className={className}>
-            <Link href={'/bookingg/address'}>
+            <Link href={prevUrl}>
                <ArrowLeft weight="bold" className="mr-2 h-4 w-4" />
                atrás
             </Link>
@@ -132,7 +163,7 @@ export default function BookingResumeHandler({
          <BookingResume
             renderPrevButton={renderPrevButton}
             renderSubmitButton={renderSubmitButton}
-            {...bookingResumeData}
+            {...resumeData}
          />
       </div>
    )

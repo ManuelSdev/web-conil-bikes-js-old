@@ -9,7 +9,7 @@ import { cookies } from 'next/headers'
 
 import React from 'react'
 
-import Step from '@/components/stepper/Step'
+import Stepper from '@/components/stepper/Stepper'
 import {
    getAppBikeSegments,
    getUserPageAuth,
@@ -44,14 +44,14 @@ export default async function BikesStepPage({ params }) {
          title={'Bicicletas'}
          description="Selecciona las bicicletas que deseas añadir a tu reserva"
       >
-         <Step step={2} page="bikes">
+         <Stepper step={2} page="bikes">
             <BikesStepHandlerTest
                segmentList={segmentList}
                loadedSearchKeys={loadedSearchKeys}
                loadedData={loadedPreviusStateData}
                // selectedBike={selectedBike}
             />
-         </Step>
+         </Stepper>
          <AvailableBikeListHandler
             loadedAvailableBikes={loadedPreviusStateData?.availableBikes}
             isLogged={userAuth.isLogged}

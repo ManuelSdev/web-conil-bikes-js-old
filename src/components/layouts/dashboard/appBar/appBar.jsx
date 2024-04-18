@@ -4,7 +4,7 @@ const BarHeader = ({ className, ...props }) => {
    return (
       <header
          className={cn(
-            'HEADER sticky top-0 z-40 w-full bg-black lg:pl-72',
+            'HEADER sticky top-0 z-30 w-full bg-black lg:pl-72',
             className
          )}
          {...props}

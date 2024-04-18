@@ -91,8 +91,8 @@ export function dateRangeObjToISOStringObj(dateRangeObj) {
    }
 }
 
-export function dateRangeISOStrObjToDateRangeObjs({ from, to }) {
-   //console.log('dateRangeISOStrObjToDateRangeObjs -> ', { from, to })
+export function dateRangeISOStrObjToDateRangeObj({ from, to }) {
+   //console.log('dateRangeISOStrObjToDateRangeObj -> ', { from, to })
    return {
       from: from ? new Date(from) : '',
       to: to ? new Date(to) : '',

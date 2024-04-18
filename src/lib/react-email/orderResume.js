@@ -114,12 +114,13 @@ const getOrderResumeEmail = ({
    bikesByUnits: bikes,
    dateRangeObj: dateRange,
    dayPrice,
-   price: totalPrice,
+   bookingPrice,
    duration,
    bookingId,
 }) => {
+   // console.log('bikes en orderResume ->', bikes)
    const bikeList = createBikeList(bikes)
-   console.log('dateRange en orderResume ->', dateRange)
+   //console.log('dateRange en orderResume ->', dateRange)
    const date = `Del ${format(
       new Date(dateRange.from),
       'dd/MM/yyyy'
@@ -670,7 +671,7 @@ const getOrderResumeEmail = ({
                                              text-align: right;
                                           "
                                        >
-                                          <strong>${totalPrice} €</strong>
+                                          <strong>${bookingPrice} €</strong>
                                        </td>
                                     </tr>
                                  </tbody>

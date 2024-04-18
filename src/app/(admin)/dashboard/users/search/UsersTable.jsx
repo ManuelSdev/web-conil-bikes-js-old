@@ -14,7 +14,9 @@ import {
 
 import { PENDING } from '@/utils/app/appValues'
 import { mappedBookingState } from '@/utils/app/functions'
-import Link from 'next/link'
+//import Link from 'next/link'
+import { Link } from 'react-transition-progress/next'
+
 import { TableWrapper } from '@/components/ui-tw/table'
 import { Button } from '@/components/ui/button'
 import clsx from 'clsx'
@@ -48,7 +50,13 @@ export default function UsersTable({
          else return 'En tienda'
       }
    }
-
+   const userParams = (user) =>
+      urlParams({
+         userId: user.userId,
+         email: user.email,
+         name: user.name,
+         phone: user.phone,
+      })
    return (
       <TableWrapper>
          {' '}
@@ -85,8 +93,19 @@ export default function UsersTable({
                         {user.phone}
                      </TableCell>
                      <TableCell className="flex justify-end gap-2">
-                        {renderAddBookingButton()}
-                        {renderShowButton()}
+                        <Button asChild>
+                           <Link
+                              //href={`/admin/dashboard/bookings/new/date?${userParams(user     )}`}
+                              href={`/dashboard/bookings/new/date?userId=${user.userId}`}
+                           >
+                              Crear reserva
+                           </Link>
+                        </Button>
+                        <Button asChild>
+                           <Link href="/admin/dashboard/bookings/new/date">
+                              Ver
+                           </Link>
+                        </Button>
                      </TableCell>
                   </TableRow>
                ))}

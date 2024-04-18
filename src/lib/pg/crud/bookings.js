@@ -51,11 +51,16 @@ export async function getBookingWithBikesById(bookingId) {
 export async function createBooking(data) {
    try {
       const { bookingId } = await addBooking(data)
-
+      console.log(
+         'Reserva creada en createBooking con Id de reserva -> ',
+         bookingId
+      )
+      console.log('data en createBooking -> ', data)
       const html = getOrderResumeEmail({
          ...data,
          bookingId,
       })
+
       const to = data.email
       const subject = 'Resumen de tu reserva en Conil Bikes'
 

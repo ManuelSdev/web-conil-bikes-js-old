@@ -9,6 +9,10 @@ export async function authMiddleware({
    NextResponse,
    resolvedUrl,
 }) {
+   // console.log('authMiddleware')
+   //console.log('request -> ', request)
+   const allCookies = request.cookies.getAll()
+   //console.log('## allCookies -> ', allCookies)
    //TODO: usar verifySessionCookie o esto no vale pa na
    const urlToRedirect = isAdmin
       ? new URL('/auth', request.url)
@@ -42,7 +46,7 @@ export async function authMiddleware({
       }
    )
    const authState = await res.json()
-   console.log('authState en authMiddleware', authState)
+   //  console.log('authState en authMiddleware', authState)
    //TODO: termina cuando el mail no está verificado
    const { verified, error } = authState
    //TODO: en principio, la verificación de email se tiene en cuenta solo si no es admin
@@ -50,7 +54,14 @@ export async function authMiddleware({
       ////console.log('##### SIN verified')
       return redirectToLogin(NextResponse, resolvedUrl, urlToRedirect)
    }
-   //console.log('##### FIN authMiddleware')
+   //request.cookies.set('show-banner', 'false')
+   //https://nextjs.org/docs/app/building-your-application/routing/middleware#producing-a-response
+
+   //return NextResponse.next()
+   return null
+   const response = NextResponse.next()
+   response.cookies.delete('vercel', 'fast')
+   return response
 }
 
 function redirectToLogin(NextResponse, resolvedUrlCookieValue, urlToRedirect) {

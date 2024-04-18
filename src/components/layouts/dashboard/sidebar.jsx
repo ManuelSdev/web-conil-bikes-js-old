@@ -19,7 +19,7 @@ const Mod = () => (
 const SidebarWrapper = ({ children, className }) => (
    <div
       className={cn(
-         'hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col',
+         'hidden lg:fixed lg:inset-y-0 lg:z-40 lg:flex lg:w-72 lg:flex-col',
          className
       )}
    >
@@ -42,8 +42,9 @@ const Sidebar = ({ children, className }) => (
 const SidebarLogoWrapper = ({ children, className }) => (
    <div
       className={cn(
-         'flex h-fatTopAppBar shrink-0 items-center bg-white',
+         'flex h-fatTopAppBar shrink-0 items-center',
          className
+         // bg-white',
       )}
    >
       {children}

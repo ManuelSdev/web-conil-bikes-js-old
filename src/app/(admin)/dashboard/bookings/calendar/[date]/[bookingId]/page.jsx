@@ -13,11 +13,7 @@ export default async function BookingInfoHandler({ params }) {
    console.log('params -> ', params)
    //console.log('bikes -> ', bikes)
 
-   return (
-      <BookingSubShell params={params}>
-         <BookingTabs bookingData={bookingData} bikes={bikes} />
-      </BookingSubShell>
-   )
+   return <BookingTabs bookingData={bookingData} bikes={bikes} />
 }
 
 async function getBookingsWithBikes(bookingId) {

@@ -37,14 +37,7 @@ export default function UsersTableHandler({ searchParams, ...props }) {
          <Link href="/admin/dashboard/bookings/new/date">Ver</Link>
       </Button>
    )
-   return (
-      <UsersTable
-         users={users}
-         renderAddBookingButton={renderAddBookingButton}
-         renderShowButton={renderShowButton}
-         {...props}
-      />
-   )
+   return <UsersTable users={users} {...props} />
 
    return (
       <div>

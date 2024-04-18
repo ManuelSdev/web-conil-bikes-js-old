@@ -5,6 +5,7 @@ import {
    txtFindBookingById,
    txtFindBookingDatesInRange,
    txtFindBookingOnDate,
+   txtFindBookingOnDateWithEmail,
 } from './bookingText'
 
 export const findBookingDatesInRange = async (dateRange) => {
@@ -41,7 +42,18 @@ export const findBookingOnDate = async (date) => {
 
    return rows
 }
+export const findBookingOnDateWithEmail = async (date) => {
+   //console.log('date en findBookingOnDate -> ', date)
+   //const text = 'SELECT * FROM find_booking_on_date($1)'
+   const text = txtFindBookingOnDateWithEmail
 
+   const values = [date]
+   const rowMode = 'array'
+   const { rows } = await query({ text, values })
+   //array de objetos
+
+   return rows
+}
 export const findBookingById = async (bookingId) => {
    //  const text = 'SELECT * FROM find_booking_by_id($1)'
    const text = txtFindBookingById
@@ -68,7 +80,7 @@ export const findBookingBikesById = async (bookingId) => {
 
 export const addBooking = async (data) => {
    const text = addBookingText(data)
-   // console.log('text en addBooking', text)
+   console.log('text en addBooking', text)
    const client = await pool.connect()
    try {
       await client.query('BEGIN')

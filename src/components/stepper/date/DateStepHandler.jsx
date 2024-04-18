@@ -9,36 +9,59 @@ import {
    selectDateRange,
 } from '@/lib/redux/slices/bookingFormSlice'
 import {
-   dateRangeISOStrObjToDateRangeObjs,
+   dateRangeISOStrObjToDateRangeObj,
    dateRangeISOStringObjToString,
    dateRangeObjToISOStringObj,
 } from '@/utils/datesFns/createDateRangeString'
 import { Button } from '@/components/ui/button'
-import Link from 'next/link'
+//import { Link } from 'react-transition-progress/next'
 
 import StepControls from '../StepControls'
 import { ArrowRight } from '@phosphor-icons/react'
 import { cn } from '@/utils/app/functions'
 import { AlertDialogButton } from '@/components/common/AlertDialogButton'
+import {
+   useCreateCookieQuery,
+   useLazyCreateCookieQuery,
+} from '@/lib/redux/apiSlices/cookieApi'
+import Link from 'next/link'
 
 export default function DateStepHandler({
    setStep,
    cookieDateRange,
    className,
    isAdmin,
+   userId,
    ...props
 }) {
    //console.log('DateStepUserHandler @@@->')
    const dispatch = useDispatch()
    const storedDateRange = useSelector(selectDateRange)
    const storedBikes = useSelector(selectBikes)
-   const dateRangeObj = dateRangeISOStrObjToDateRangeObjs(storedDateRange)
+   const dateRangeObj = dateRangeISOStrObjToDateRangeObj(storedDateRange)
    const { from, to } = dateRangeObj
-
+   const [triggerCookie] = useLazyCreateCookieQuery()
+   /*
+   triggerCookie({
+      name: 'stepperDated',
+      value: true,
+   })
+   */
+   const {
+      data: availableSizes,
+      isLoading: isLoadingSizes,
+      isSuccess: isSuccessSizes,
+   } = useCreateCookieQuery(
+      {
+         name: 'stepperDated',
+         value: true,
+      },
+      { skip: false }
+   )
    const areBikes = !!storedBikes.length > 0
    // const isDisabled = !bikeIsSelected && !!from && !!to
 
-   console.log('isDisabled ->', areBikes)
+   //console.log('isDisabled ->', areBikes)
    const handleSelect = (picker) => (selectedDate) => {
       //   setDateRange({ ...dateRange, [picker]: selectedDate })
       const newDateRangeObj = { ...dateRangeObj, [picker]: selectedDate }
@@ -50,14 +73,28 @@ export default function DateStepHandler({
    const renderNextButton = (className) => {
       const isDisabled = !from || !to
       const nextUrl = isAdmin
-         ? '/dashboard/bookings/new/bikes'
+         ? `/dashboard/bookings/new/bikes?userId=${userId}&dated=true`
          : '/bookingg/bikes'
       return isDisabled ? (
          <Button disabled variant="custom" className={className}>
             Siguiente <ArrowRight weight="bold" className="ml-2 h-4 w-4" />
          </Button>
       ) : (
-         <Button asChild variant="custom" className={className}>
+         <Button
+            asChild
+            variant="custom"
+            className={className}
+
+            /*
+            onClick={() => {
+               const res = triggerCookie({
+                  name: 'stepperDated',
+                  value: true,
+               }).unwrap()
+               console.log('res ->', res)
+            }}
+            */
+         >
             <Link href={nextUrl}>
                Siguiente <ArrowRight weight="bold" className="ml-2 h-4 w-4" />
             </Link>

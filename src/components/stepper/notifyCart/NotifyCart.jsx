@@ -24,7 +24,7 @@ import NotifyBadgeSpanSr from '../notifyBadge/NotifyBadgeSpanSr'
 import NotifyBadgeNumber from '../notifyBadge/NotifyBadgeNumber'
 import NotifyBadge from '../notifyBadge/NotifyBadge'
 
-export default function NotifyCart({ page }) {
+export default function NotifyCart({ page, userId }) {
    const { dialog, handleSetDialog } = useDialogWindow(null)
    const dateRange = useSelector(selectDateRange)
    const { from, to } = dateRange
@@ -49,12 +49,12 @@ export default function NotifyCart({ page }) {
       : '/bookingg/resume'
 
    const dashboardNextPage = isComplete
-      ? '/dashboard/bookings/new/resume'
+      ? `/dashboard/bookings/new/resume?userId=${userId}`
       : page === 'date'
-      ? '/dashboard/bookings/new/bikes'
+      ? `/dashboard/bookings/new/bikes?userId=${userId}`
       : page === 'bikes'
-      ? '/dashboard/bookings/new/address'
-      : '/dashboard/bookings/new/resume'
+      ? `/dashboard/bookings/new/address?userId=${userId}`
+      : `/dashboard/bookings/new/resume?userId=${userId}`
 
    useEffect(() => {
       if (isInitialRender) {

@@ -1,6 +1,7 @@
-import Step from '@/components/stepper/Step'
+import Stepper from '@/components/stepper/Stepper'
 
 import {
+   getAdminUserAuth,
    getAppBikeSegments,
    getUserPageAuth,
 } from '@/utils/serverFns/serverFns'
@@ -11,10 +12,10 @@ export default async function UserBookingStepperPage({ params }) {
    const { segmentList } = await getAppBikeSegments()
    const userAuth = await getUserPageAuth()
    console.log('#### userAuth ', userAuth)
-   const { name, email, phone, userId: appUserId } = userAuth
+   const { name, email, phone, userId } = userAuth
    return (
-      <Step step={4} childClassName="sm:w-full">
+      <Stepper step={4} childClassName="sm:w-full">
          <BookingResumeHandler user={userAuth} />
-      </Step>
+      </Stepper>
    )
 }

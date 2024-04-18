@@ -11,7 +11,9 @@ import { getBookingDatesInRange } from '@/lib/pg/crud/bookings'
 import { getBookingOnDate } from '@/lib/pg/crud/bookings'
 
 import { getBookingWithBikesById } from '@/lib/pg/crud/bookings'
-import BookingSubShell from '@/app/(admin)/dashboard/bookings/BookingSubShell'
+
+import BookingPageShell from '../BookingPageShell'
+import BasicCard from '@/components/BasicCard'
 
 const urlParams = (obj) => new URLSearchParams(obj)
 
@@ -35,20 +37,10 @@ export default async function CalendarPage({ params, searchParams }) {
       // redirect(`/dashboard/bookings?${params}`)
    }
 
-   // const bookings = await getBookingListData(date)
-   const cardProps = {
-      //className: 'max-w-[334px]',
-      // className: 'col-span-4',
-      cardTitle: 'Calendario de reservas',
-      // cardDescription: 'Hin reverse chronological order.',
-   }
    return (
-      /*<BookingSubShell params={params}>*/
-
-      <Card {...cardProps}>
+      <BasicCard tittle="Calendario de reservas">
          <CalendarHandlerUrl bookingDates={bookingDates} />
-      </Card>
-      /*</BookingSubShell>*/
+      </BasicCard>
    )
 }
 

@@ -1,20 +1,6 @@
 import { cn } from '@/utils/app/functions'
 import { CheckIcon } from '@heroicons/react/24/solid'
-
-const userSteps = [
-   { name: 'Fecha', href: '#', status: 'complete', id: 1 },
-   { name: 'Bicicletas', href: '#', status: 'complete', id: 2 },
-   { name: 'Dirección', href: '#', status: 'current', id: 3 },
-   { name: 'Resumen', href: '#', status: 'upcoming', id: 4 },
-]
-
-const adminSteps = [
-   { name: 'Usuario', href: '#', status: 'complete', id: 1 },
-   { name: 'Fecha', href: '#', status: 'complete', id: 2 },
-   { name: 'Bicicletas', href: '#', status: 'complete', id: 3 },
-   { name: 'Dirección', href: '#', status: 'current', id: 4 },
-   { name: 'Resumen', href: '#', status: 'upcoming', id: 5 },
-]
+import { adminSteps, userSteps } from './steps'
 
 export default function StepsPanel({ step: currentStep, className, isAdmin }) {
    //console.log('StepsPanel step ->', step)
