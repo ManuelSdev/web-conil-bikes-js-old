@@ -7,6 +7,7 @@ import AdminBar from './AdminBar'
 import AdminSidebar from './AdminSidebar'
 import AdminMainContainer from './AdminMainContainer'
 import { ProgressBar, ProgressBarProvider } from 'react-transition-progress'
+import { GlobalDialogLoader } from '@/components/common/GlobalDialogLoader'
 
 export async function generateStaticParams() {
    return [{ lang: 'es-ES' }]
@@ -24,6 +25,7 @@ export default function AdminDashboardLayout(props) {
       <html lang="es-ES" dir="ltr" className="h-full bg-red-500">
          <body className="h-full">
             <ReduxProviderWrapper>
+               <GlobalDialogLoader />
                <ProgressBarProvider>
                   <ProgressBar className="aaf fixed top-0 z-50 h-2 w-full bg-white shadow-lg shadow-sky-500/20" />
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { getBookingOnDate } from '@/lib/pg/crud/bookings'
-import BookingList from './BookingList'
+
 import BookingSubShell from '@/app/(admin)/dashboard/bookings/BookingSubShell'
 import { BookingsTable } from './bookingsTable/BookingsTable'
 import {
@@ -266,7 +266,7 @@ export default async function BookingListPage({ params }) {
 
    return <BookingsTableHandler bookings={bookings} date={date} />
 }
-//<BookingList bookings={bookings} urlDate={date} />
+
 async function getBookingListData(date) {
    if (!date) {
       return null

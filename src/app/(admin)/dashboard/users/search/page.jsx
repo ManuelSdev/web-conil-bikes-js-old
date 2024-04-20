@@ -6,10 +6,5 @@ export default function SearchUsersPage({ searchParams }) {
    console.log('searchParams -> ', searchParams)
    //const { identifier } = searchParams
 
-   return (
-      <UsersSubShell>
-         {' '}
-         <UsersTableHandler searchParams={searchParams} />
-      </UsersSubShell>
-   )
+   return <UsersTableHandler searchParams={searchParams} />
 }

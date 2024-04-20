@@ -8,6 +8,8 @@ const initialState = {
       segmentList: [],
    },
    isLoadingPage: false,
+   isLoadingData: false,
+
    // server: false,
 }
 
@@ -30,11 +32,18 @@ export const appConfigSlice = createSlice({
       appIsloadingPage: (state, action) => {
          state.isLoadingPage = action.payload
       },
+      appIsloadingData: (state, action) => {
+         state.isLoadingData = action.payload
+      },
    },
 })
 
-export const { appConfigLoaded, appBikesConfigLoaded, appIsloadingPage } =
-   appConfigSlice.actions
+export const {
+   appConfigLoaded,
+   appBikesConfigLoaded,
+   appIsloadingPage,
+   appIsloadingData,
+} = appConfigSlice.actions
 
 export default appConfigSlice.reducer
 
@@ -51,6 +60,12 @@ export const selectAppIsLoadingPage = createSelector(
    (appConfig) =>
       //console.log('---------', databaseInfo.segmentList) ||
       appConfig.isLoadingPage
+)
+export const selectAppIsLoadingData = createSelector(
+   [selectAppConfig],
+   (appConfig) =>
+      //console.log('---------', databaseInfo.segmentList) ||
+      appConfig.isLoadingData
 )
 /*
 export const selectDatabaseInfoSegmentList = createSelector(

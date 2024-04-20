@@ -242,3 +242,13 @@ WITH asOrder AS (
            NATURAL JOIN asBikes
            NATURAL JOIN asModel;
 `
+/** PATCH **/
+
+export const txtUpdateBookingState = `
+UPDATE
+   booking
+SET
+   booking_state = $2
+WHERE
+   booking_id = $1;
+`

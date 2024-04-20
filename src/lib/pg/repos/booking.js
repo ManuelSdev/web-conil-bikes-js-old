@@ -6,6 +6,7 @@ import {
    txtFindBookingDatesInRange,
    txtFindBookingOnDate,
    txtFindBookingOnDateWithEmail,
+   txtUpdateBookingState,
 } from './bookingText'
 
 export const findBookingDatesInRange = async (dateRange) => {
@@ -102,7 +103,18 @@ export const addBooking = async (data) => {
       client.release()
    }
 }
+/** PATCH **/
 
+export const updateBookingState = async ({ bookingId, newState }) => {
+   //  const text = 'SELECT * FROM find_booking_bikes_by_id($1)'
+   const text = txtUpdateBookingState
+   const values = [bookingId, newState]
+   const rowMode = 'array'
+   const res = await query({ text, values })
+   //array de objetos
+   //console.log('rows en findBookingBikesById -> ', bikes)
+   return res
+}
 /** */
 
 export const addBooking_ = async ({

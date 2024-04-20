@@ -14,12 +14,15 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import SpinnerRing from './SpinnerRing'
 import BikeWheel from '../svg/BikeWheel'
+import { useSelector } from 'react-redux'
+import { selectAppIsLoadingData } from '@/lib/redux/slices/appConfigSlice'
 
-export function DialogLoader({ open, onOpenChange, spinner = false }) {
+export function GlobalDialogLoader({ open, onOpenChange, spinner = true }) {
+   const isLoading = useSelector(selectAppIsLoadingData)
    return (
       <Dialog
          //   defaultOpen={true}
-         open={open}
+         open={isLoading}
          onOpenChange={onOpenChange}
       >
          <DialogContent

@@ -18,10 +18,12 @@ export default function BasicCard({
 }) {
    return (
       <Card className={cn('max-w-fit', className)}>
-         <CardHeader>
-            <CardTitle>{tittle}</CardTitle>
-            <CardDescription>{description} </CardDescription>
-         </CardHeader>
+         {tittle && (
+            <CardHeader>
+               <CardTitle>{tittle}</CardTitle>
+               <CardDescription>{description} </CardDescription>
+            </CardHeader>
+         )}
          <CardContent>{children}</CardContent>
          <CardFooter>{footer}</CardFooter>
       </Card>

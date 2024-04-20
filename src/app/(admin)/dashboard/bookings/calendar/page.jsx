@@ -72,21 +72,3 @@ function isFindedToday(bookingDates) {
       .find((date) => date === todayString)
    return !!today
 }
-
-/*
-       <div className="flex-initial ">
-            {' '}
-            {bookings && (
-               <BookingList bookings={bookings} urlDate={encodedDate} />
-            )}
-         </div>
-         <div className="flex-initial ">
-            {bookingId && !bookingData && <p>Cargando...</p>}
-            {bookingData && (
-               <BookingTabs bookingData={bookingData} bikes={bikes} />
-            )}
-            </div>
-         <div className="flex-initial ">
-            <BookingTabs_test bookingData={bookingData} bikes={bikes} />
-         </div>
-         */

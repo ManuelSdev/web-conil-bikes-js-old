@@ -68,8 +68,8 @@ export const bookingApi = baseApi.injectEndpoints({
          // invalidatesTags: ['Orders'],
       }),
       updateBooking: builder.mutation({
-         query: (data) => ({
-            url: BOOKINGS,
+         query: ({ bookingId, data }) => ({
+            url: `bookings/${bookingId}`,
             method: 'PATCH',
             /*
                 headers: {

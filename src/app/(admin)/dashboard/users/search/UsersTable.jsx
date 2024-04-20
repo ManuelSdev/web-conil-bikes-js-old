@@ -61,8 +61,7 @@ export default function UsersTable({
       <TableWrapper>
          {' '}
          <Table>
-            <TableCaption>A list of your recent invoices.</TableCaption>
-            <TableHeader>
+            <TableHeader className="bg-gray-100">
                <TableRow>
                   <TableHead className="w-[100px]">ID</TableHead>
                   <TableHead>Email</TableHead>

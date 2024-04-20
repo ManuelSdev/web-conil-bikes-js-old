@@ -9,6 +9,7 @@ import {
 import { ErrorAlert } from '@/components/ErrorAlert'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import BasicCard from '@/components/BasicCard'
 
 export default function UsersTableHandler({ searchParams, ...props }) {
    const { identifier } = searchParams
@@ -37,7 +38,11 @@ export default function UsersTableHandler({ searchParams, ...props }) {
          <Link href="/admin/dashboard/bookings/new/date">Ver</Link>
       </Button>
    )
-   return <UsersTable users={users} {...props} />
+   return (
+      <BasicCard tittle={`Resultados de búsqueda para: "${identifier}"`}>
+         <UsersTable users={users} {...props} />
+      </BasicCard>
+   )
 
    return (
       <div>

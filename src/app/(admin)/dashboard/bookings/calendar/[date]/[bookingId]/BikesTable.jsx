@@ -1,20 +1,20 @@
-// @ts-nocheck
-import React from 'react'
+import { TableWrapper } from '@/components/ui-tw/table'
 import {
    Table,
    TableBody,
+   TableCaption,
    TableCell,
+   TableFooter,
    TableHead,
    TableHeader,
-   TablePanel,
    TableRow,
-   TableWrapper,
-} from '@/components/ui-tw/table'
-export default function BookingBikesTab({ bikes }) {
+} from '@/components/ui/table'
+
+export function BikesTable({ bikes }) {
    return (
       <TableWrapper>
          <Table>
-            <TableHeader>
+            <TableHeader className="bg-gray-100">
                <TableRow>
                   <TableHead className={'pl-4 pr-3 sm:pl-6'}>Modelo</TableHead>
 
