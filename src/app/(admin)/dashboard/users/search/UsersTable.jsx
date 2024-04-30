@@ -20,6 +20,7 @@ import { Link } from 'react-transition-progress/next'
 import { TableWrapper } from '@/components/ui-tw/table'
 import { Button } from '@/components/ui/button'
 import clsx from 'clsx'
+//progress bar
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/decodeURIComponent
 
 const urlParams = (obj) => new URLSearchParams(obj)
@@ -101,7 +102,9 @@ export default function UsersTable({
                            </Link>
                         </Button>
                         <Button asChild>
-                           <Link href="/admin/dashboard/bookings/new/date">
+                           <Link
+                              href={`/dashboard/users/${user.userId}/details`}
+                           >
                               Ver
                            </Link>
                         </Button>

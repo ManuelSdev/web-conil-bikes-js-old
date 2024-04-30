@@ -30,8 +30,30 @@ export const findUserByEmail = async ({ email }) => {
       rows: [user],
    } = await query({ text, values })
    // const [user] = rows.flat()
-   console.log('userId en findUserByEmail -> ', user)
+   console.log('user en findUserByEmail -> ', user)
    return user
+}
+
+export const findUserById = async (userId) => {
+   const text = 'SELECT * FROM App_user WHERE user_id=$1'
+   const values = [userId]
+   const rowMode = 'array'
+   const {
+      rows: [user],
+   } = await query({ text, values })
+   // const [user] = rows.flat()
+   console.log('user en findUserById -> ', user)
+   const resUser = {
+      name: user.user_name,
+      email: user.user_email,
+      phone: user.user_phone,
+      role: user.user_role,
+      active: user.user_active,
+      created: user.user_created,
+      userId: user.user_id,
+   }
+   console.log('resUser en findUserById -> ', resUser)
+   return resUser
 }
 //clAVE INTERPOLACION https://github.com/brianc/node-postgres/issues/503
 
@@ -60,15 +82,13 @@ export const findUserIdByEmail = async ({ email }) => {
    const text = 'SELECT user_id FROM App_user WHERE user_email=$1'
    const values = [email]
    const rowMode = 'array'
-   try {
-      const { rows } = await query({ text, values, rowMode })
-      console.log('rows en findUserIdByEmail -> ', rows)
-      const [userId] = rows.flat()
-      return userId
-   } catch (error) {
-      throw error
-   }
+
+   const { rows } = await query({ text, values, rowMode })
+   console.log('rows en findUserIdByEmail -> ', rows)
+   const [userId] = rows.flat()
+   return userId
 }
+
 export const findUserRole = async ({ email }) => {
    const text = 'SELECT user_role FROM App_user WHERE user_email=$1'
    const values = [email]

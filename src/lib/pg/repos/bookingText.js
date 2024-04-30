@@ -116,6 +116,39 @@ FROM
   asBooking
   INNER JOIN asOrder USING (booking_id);
   `
+export const txtFindBookingByUserId = `
+  WITH asBooking AS (
+    SELECT
+      booking_id,
+      booking_state,
+      booking_delivery,
+      booking_pickup,
+      booking_price
+    FROM
+      BOOKING
+    WHERE
+      user_id = $1
+  ),
+  asOrder AS (
+    SELECT
+      booking_id,
+      COUNT(booking_id)::int BIKES
+    FROM
+      booking_order
+    GROUP BY
+      booking_id
+  )
+  SELECT
+    booking_id AS "bookingId",
+    booking_state AS state,
+    booking_delivery AS delivery,
+    booking_pickup AS pickup,
+    booking_price AS price,
+    bikes
+  FROM
+    asBooking
+    INNER JOIN asOrder USING (booking_id);
+    `
 export const txtFindBookingOnDateWithEmail = `
   WITH asBooking AS (
     SELECT

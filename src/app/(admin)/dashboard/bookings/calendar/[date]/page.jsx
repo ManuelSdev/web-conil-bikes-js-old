@@ -9,6 +9,9 @@ import {
 } from '@/lib/pg/repos/booking'
 import { columns } from './bookingsTable/columns'
 import BookingsTableHandler from './bookingsTable/BookingsTableHandler'
+import BasicCard from '@/components/BasicCard'
+import { mappedBookingState } from '@/utils/app/functions'
+
 const testBookings = [
    {
       bookingId: 30,
@@ -256,6 +259,7 @@ const testBookings = [
       bikes: 1,
    },
 ]
+
 export default async function BookingListPage({ params }) {
    const { date: encodedDate } = params
    const date = decodeURIComponent(encodedDate)
@@ -263,8 +267,24 @@ export default async function BookingListPage({ params }) {
    //const bookings = await findBookingOnDate(date)
    const bookings = await findBookingOnDateWithEmail(date)
    console.log('bookings en BookingListPage -> ', bookings)
+   const defaultVisibleColumns = {
+      bikes: true,
+      email: true,
+      state: true,
+      pickup: true,
+      delivery: true,
+      action: true,
+   }
 
-   return <BookingsTableHandler bookings={bookings} date={date} />
+   return (
+      <BasicCard className={'max-w-none'} tittle="Planificadas el 25/08/9836">
+         <BookingsTableHandler
+            bookings={bookings}
+            columns={columns}
+            defaultVisibleColumns={defaultVisibleColumns}
+         />
+      </BasicCard>
+   )
 }
 
 async function getBookingListData(date) {

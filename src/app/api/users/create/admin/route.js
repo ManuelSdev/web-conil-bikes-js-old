@@ -25,6 +25,7 @@ export async function POST(req) {
    }
 
    console.log('email en users api route -> ', email)
+   //crea random password
    const password = generatePassword()
    try {
       const userRecord = await createFireUser({
@@ -46,19 +47,22 @@ export async function POST(req) {
       //Compruebo que el customClaim se ha añadido
       const userRecordRes = await getAuth().getUser(uid)
       //console.log('userRecordRes en createUserAccount -> ', userRecordRes)
-      //pillo el uid del usuario creado en firebase
+      //No necesito el uid del usuario creado en firebase porque no
+      //necesito mandar un correo de verificación
+      /*
       const linkToControlPage = await getAuth().generateEmailVerificationLink(
          email,
          continueUrl
       )
+      */
       const html = getWelcomeAdminEmail({ username: name, email, password })
       const to = email
       const subject = 'Bienvenido a Conil Bikes'
       const sendResult = await sendGridSendEmail({ to, subject, html })
-
+      console.log('usuario creado en firebase -> ', userRecordRes)
       return NextResponse.json({ result: 'ok' }, { status: 201 })
    } catch (error) {
-      //console.log('### ERROR USERS API route -> ', error)
+      console.log('### ERROR USERS API route -> ', error)
       return NextResponse.json(error, { status: 500 })
    }
 }

@@ -3,6 +3,7 @@ import { addBookingText } from '../textSql/bookings/addBooking'
 import {
    txtFindBookingBikesById,
    txtFindBookingById,
+   txtFindBookingByUserId,
    txtFindBookingDatesInRange,
    txtFindBookingOnDate,
    txtFindBookingOnDateWithEmail,
@@ -67,7 +68,18 @@ export const findBookingById = async (bookingId) => {
    //console.log('booking en findBookingById -> ', booking)
    return booking
 }
+export const findBookingByUserId = async (userId) => {
+   //console.log('date en findBookingOnDate -> ', date)
+   //const text = 'SELECT * FROM find_booking_on_date($1)'
+   const text = txtFindBookingByUserId
 
+   const values = [userId]
+   const rowMode = 'array'
+   const { rows } = await query({ text, values })
+   //array de objetos
+
+   return rows
+}
 export const findBookingBikesById = async (bookingId) => {
    //  const text = 'SELECT * FROM find_booking_bikes_by_id($1)'
    const text = txtFindBookingBikesById

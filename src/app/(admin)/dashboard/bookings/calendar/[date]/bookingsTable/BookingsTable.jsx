@@ -5,6 +5,7 @@ import {
    getPaginationRowModel,
    getSortedRowModel,
    useReactTable,
+   getFilteredRowModel,
 } from '@tanstack/react-table'
 
 import {
@@ -15,7 +16,15 @@ import {
    TableHeader,
    TableRow,
 } from '@/components/ui/table'
+import {
+   DropdownMenu,
+   DropdownMenuCheckboxItem,
+   DropdownMenuContent,
+   DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+
 import {
    ChevronLeft,
    ChevronRight,
@@ -24,9 +33,23 @@ import {
 } from 'lucide-react'
 import SelectPageSize from './SelectPageSize'
 import { useState } from 'react'
+import { mappedBookingState } from '@/utils/app/functions'
 
-export function BookingsTable({ columns, data }) {
+export function BookingsTable({
+   columns,
+   defaultVisibleColumns,
+   filter = true,
+
+   data,
+}) {
    const [sorting, setSorting] = useState([])
+   const [columnFilters, setColumnFilters] = useState([])
+
+   //Si metes un objeto vacío, se mostrarán todas las columnas por defecto
+   const [columnVisibility, setColumnVisibility] = useState(
+      defaultVisibleColumns ? defaultVisibleColumns : {}
+   )
+
    const table = useReactTable({
       data,
       columns,
@@ -35,8 +58,16 @@ export function BookingsTable({ columns, data }) {
       //sorting
       onSortingChange: setSorting,
       getSortedRowModel: getSortedRowModel(),
+      //filtering
+      onColumnFiltersChange: setColumnFilters,
+      getFilteredRowModel: getFilteredRowModel(),
+      //column visibility
+      onColumnVisibilityChange: setColumnVisibility,
+
       state: {
          sorting,
+         columnFilters,
+         columnVisibility,
       },
    })
    const tableState = table.getState()
@@ -50,10 +81,67 @@ export function BookingsTable({ columns, data }) {
    const pageOptions = table.getPageOptions()
    //Número total de páginas
    const pageCount = table.getPageCount()
-   console.log('table -> ', table)
-   console.log('table state -> ', table.getState())
+   //console.log('table -> ', table)
+   //console.log('table state -> ', table.getState())
+
+   const columnIdMap = {
+      bikes: 'Bicicletas',
+      email: 'Usuario',
+      state: 'Estado',
+      pickup: 'Entrega',
+      delivery: 'Devolución',
+      // price: 'Importe',
+      // type: 'Tipo',
+      action: 'Acciones',
+   }
    return (
       <div>
+         <div className="flex items-center py-4">
+            {/* FILTROS */}
+            {filter && (
+               <div className="flex items-center py-4">
+                  <Input
+                     placeholder="Filtrar email de usuario..."
+                     value={table.getColumn('email')?.getFilterValue() ?? ''}
+                     onChange={(event) =>
+                        table
+                           .getColumn('email')
+                           ?.setFilterValue(event.target.value)
+                     }
+                     className="max-w-sm"
+                  />
+               </div>
+            )}
+            {/* VISIBILIDAD DE COLUMNAS */}
+            <DropdownMenu>
+               <DropdownMenuTrigger asChild>
+                  <Button variant="outline" className="ml-auto">
+                     Columnas
+                  </Button>
+               </DropdownMenuTrigger>
+               <DropdownMenuContent align="end">
+                  {table
+                     .getAllColumns()
+                     .filter((column) => column.getCanHide())
+                     .map((column) => {
+                        //Ocultar la posibilidad de mostrar/ocultar la columna de acciones
+                        if (column.id !== 'action')
+                           return (
+                              <DropdownMenuCheckboxItem
+                                 key={column.id}
+                                 className="capitalize"
+                                 checked={column.getIsVisible()}
+                                 onCheckedChange={(value) =>
+                                    column.toggleVisibility(!!value)
+                                 }
+                              >
+                                 {columnIdMap[column.id]}
+                              </DropdownMenuCheckboxItem>
+                           )
+                     })}
+               </DropdownMenuContent>
+            </DropdownMenu>
+         </div>
          <div className="rounded-md border">
             <Table>
                <TableHeader>
@@ -97,7 +185,7 @@ export function BookingsTable({ columns, data }) {
                            colSpan={columns.length}
                            className="h-24 text-center"
                         >
-                           No results.
+                           Sin resultados
                         </TableCell>
                      </TableRow>
                   )}

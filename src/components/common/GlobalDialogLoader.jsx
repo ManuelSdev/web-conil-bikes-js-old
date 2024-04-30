@@ -19,6 +19,7 @@ import { selectAppIsLoadingData } from '@/lib/redux/slices/appConfigSlice'
 
 export function GlobalDialogLoader({ open, onOpenChange, spinner = true }) {
    const isLoading = useSelector(selectAppIsLoadingData)
+   console.log('isLoading ->', isLoading)
    return (
       <Dialog
          //   defaultOpen={true}

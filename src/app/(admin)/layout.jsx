@@ -7,6 +7,7 @@ import AdminBar from './AdminBar'
 import AdminSidebar from './AdminSidebar'
 import AdminMainContainer from './AdminMainContainer'
 import { ProgressBar, ProgressBarProvider } from 'react-transition-progress'
+
 import { GlobalDialogLoader } from '@/components/common/GlobalDialogLoader'
 
 export async function generateStaticParams() {

@@ -1,4 +1,5 @@
 import { createSelector, createSlice, current } from '@reduxjs/toolkit'
+import { bookingApi } from '../apiSlices/bookingApi'
 
 const initialState = {
    bikesConfig: {
@@ -15,7 +16,7 @@ const initialState = {
 
 export const appConfigSlice = createSlice({
    name: 'appConfig',
-   initialState: {},
+   initialState,
    reducers: {
       appConfigLoaded: (state, action) =>
          /*  
@@ -35,6 +36,38 @@ export const appConfigSlice = createSlice({
       appIsloadingData: (state, action) => {
          state.isLoadingData = action.payload
       },
+   },
+   extraReducers: (builder) => {
+      builder
+         .addMatcher(
+            bookingApi.endpoints.updateBooking.matchPending,
+            //CLAVE: payload es la query/data que mandas en la mutación!!
+            //Cuando
+            (state, action) => {
+               console.log('matchPending action **************', action)
+               console.log('matchPending state **************', state)
+               state.isLoadingData = true
+               //originalArgs= {from,to}
+               //   const { originalArgs } = action.meta.arg
+               // console.log('matchPending originalArgs', originalArgs)
+               //state.dateRange = originalArgs
+            }
+         )
+         .addMatcher(
+            bookingApi.endpoints.updateBooking.matchFulfilled ||
+               bookingApi.endpoints.updateBooking.matchRejected,
+            //CLAVE: payload es la query/data que mandas en la mutación!!
+            //Cuando
+            (state, action) => {
+               console.log('matchFulfilled action **************', action)
+               console.log('matchFulfilled state **************', state)
+               state.isLoadingData = false
+               //originalArgs= {from,to}
+               //   const { originalArgs } = action.meta.arg
+               // console.log('matchFulfilled originalArgs', originalArgs)
+               //state.dateRange = originalArgs
+            }
+         )
    },
 })
 

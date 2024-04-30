@@ -26,7 +26,7 @@ export default function BookingPageTabs({ bookingData, bikes }) {
 
       phone,
    } = bookingData
-   console.log('----------------> ', bookingData)
+   //console.log('----------------> ', bookingData)
    const [from, to] = dateRange
    const dataList = [
       ['Nombre', name],

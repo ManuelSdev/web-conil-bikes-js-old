@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { cn } from '@/utils/app/functions'
 import React from 'react'
-import BookingActionCard from './BookingActionCard'
+
 import { PENDING, ACTIVE, FINISHED, CANCELLED } from '@/utils/app/appValues'
 import { useUpdateBookingMutation } from '@/lib/redux/apiSlices/bookingApi'
 import { DialogLoader } from '@/components/common/DialogLoader'
@@ -13,6 +13,7 @@ import useDialogWindow from '@/components/common/useDialogWindow'
 import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 import { appIsloadingData } from '@/lib/redux/slices/appConfigSlice'
+import ActionCardsGrid from '../../../bookings/[bookingId]/details/ActionCardsGrid'
 
 const descriptions = {
    'start': 'Cambia el estado de la reserva a "activa"',
@@ -29,11 +30,9 @@ const infos = {
    'price': 'Permite un ajuste en el precio final de manera manual. ',
 }
 
-export default function BookingActions({ className, booking }) {
+export default function UserActions({ className, user }) {
    const router = useRouter()
-   console.log('booking -> ', booking)
-   const { state: bookingState, bookingId } = booking
-   console.log('tipo de bookingId ->', typeof bookingId)
+
    const [updateBookingTrigger, { isLoading }] = useUpdateBookingMutation()
    const { dialog, handleSetDialog } = useDialogWindow(null)
 
@@ -41,6 +40,8 @@ export default function BookingActions({ className, booking }) {
    dispatch(appIsloadingData(isLoading))
 
    const handleSubmit = (newState) => async (event) => {
+      console.log('newState ->', newState)
+      /*
       const msg =
          newState === ACTIVE
             ? 'La reserva ha sido activada correctamente'
@@ -57,13 +58,7 @@ export default function BookingActions({ className, booking }) {
             data: { newState },
          }).unwrap()
          console.log('res ->', res)
-         /*  const desc = (
-            <span>
-               Te hemos enviado un correo electrónico a{' '}
-               <span className="font-semibold">{email}</span> con los detalles
-               de tu reserva
-            </span>
-         )*/
+        
          handleSetDialog({
             open: true,
             title: msg,
@@ -84,48 +79,45 @@ export default function BookingActions({ className, booking }) {
             //onOpenChange: (bool) => router.push(urlAfterBooking),
          })
       }
+      */
    }
    return (
       <div className={cn('mt-8 space-y-4', className)}>
          {/*<DialogLoader open={isLoading} spinner={true} />*/}
          <DialogWindow {...dialog} />
-
-         {bookingState === PENDING && (
-            <BookingActionCard
-               tittle="Activar reserva"
+         <ActionCardsGrid>
+            <BasicCard
+               tittle="Nueva reserva"
                description={descriptions.start}
                info={infos.start}
             >
-               <Button onClick={handleSubmit(ACTIVE)}>Activar reserva</Button>
-            </BookingActionCard>
-         )}
-         {bookingState === ACTIVE && (
-            <BookingActionCard
-               tittle="Finalizar reserva"
+               <Button onClick={handleSubmit(ACTIVE)}>Nueva </Button>
+            </BasicCard>
+
+            <BasicCard
+               tittle="Editar usuario"
                description={descriptions.end}
                info={infos.end}
             >
-               <Button>Finalizar reserva</Button>
-            </BookingActionCard>
-         )}
-         {bookingState === PENDING && (
-            <BookingActionCard
-               tittle="Cancelar reserva"
+               <Button onClick={handleSubmit(FINISHED)}>Editar</Button>
+            </BasicCard>
+
+            <BasicCard
+               tittle="Suspender cuenta"
                description={descriptions.cancel}
                info={infos.cancel}
             >
-               <Button>Cancelar reserva</Button>
-            </BookingActionCard>
-         )}
-         {bookingState === FINISHED && (
-            <BookingActionCard
-               tittle="Ajustar precio"
+               <Button>Suspender</Button>
+            </BasicCard>
+
+            <BasicCard
+               tittle="Eliminar cuenta"
                description={descriptions.price}
                info={infos.price}
             >
-               <Button>Editar precio</Button>
-            </BookingActionCard>
-         )}
+               <Button>Eliminar</Button>
+            </BasicCard>
+         </ActionCardsGrid>
       </div>
    )
 }

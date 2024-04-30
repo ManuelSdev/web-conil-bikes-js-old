@@ -7,9 +7,7 @@ import {
    useLazyGetMatchingUsersQuery,
 } from '@/lib/redux/apiSlices/userApi'
 import SpinnerRing from '@/components/common/SpinnerRing'
-import useDialogWindow from '@/components/common/useDialogWindow'
-import { DialogWindow } from '@/components/common/DialogWindow'
-import { DialogLoader } from '@/components/common/DialogLoader'
+
 import { useRouter } from 'next/navigation'
 import { generatePassword } from '@/utils/app/functions'
 import {
@@ -21,10 +19,17 @@ import {
    CardTitle,
 } from '@/components/ui/card'
 import BasicCard from '@/components/BasicCard'
+import { useDispatch } from 'react-redux'
+import { appIsloadingData } from '@/lib/redux/slices/appConfigSlice'
 
 export default function NewUserFormHandler(props) {
-   const [createUserAccountTrigger, { isLoading, isError, isSuccess }] =
-      useCreateAccountMutation()
+   const dispatch = useDispatch()
+   const router = useRouter()
+
+   const [
+      createUserAccountTrigger,
+      { isLoading: isLoadingCreateUser, isError, isSuccess },
+   ] = useCreateAccountMutation()
 
    const [
       getMatchingUsersTrigger,
@@ -34,21 +39,24 @@ export default function NewUserFormHandler(props) {
          isSuccess: isSuccessMatches,
       },
    ] = useLazyGetMatchingUsersQuery()
-
-   const { dialog, handleSetDialog } = useDialogWindow()
-
-   const router = useRouter()
+   const isLoading = isLoadingCreateUser || isLoadingMatches
+   dispatch(appIsloadingData(isLoading))
 
    async function onSubmit(data, event) {
       //console.log('data ->', data)
-      console.log('@@@@@@@@@@@@@@@@@@@')
+      //   console.log('@@@@@@@@@@@@@@@@@@@')
       ////console.log('ev ->', ev)
       event.preventDefault()
       const { name, phone, email } = data
       try {
          console.log('@@@@@@@@@@@@@@@@@@@')
-         const matchingUsers = await getMatchingUsersTrigger({ phone, email })
-         if (matchingUsers)
+         const { data } = await getMatchingUsersTrigger({
+            phone,
+            email,
+         })
+         console.log('matchingUsers data ->', data)
+
+         if (data)
             return router.push(
                `/dashboard/users/new/matches?phone=${phone}&email=${email}&name=${name}`
             )

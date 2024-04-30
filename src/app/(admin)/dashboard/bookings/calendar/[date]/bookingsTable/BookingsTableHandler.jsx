@@ -3,24 +3,22 @@ import { BookingsTable } from './BookingsTable'
 import { ACTIVE, PENDING } from '@/utils/app/appValues'
 import { mappedBookingState } from '@/utils/app/functions'
 import { columns } from './columns'
-import BasicCard from '@/components/BasicCard'
 import emails from '@/lib/sendGrid/sgVerifyEmail'
 
-export default function BookingsTableHandler({ bookings, date }) {
+export default function BookingsTableHandler({ bookings, ...props }) {
+   console.log('bookings ->', bookings)
+   /**
+    * Uso este componente para crear la constante data.
+    * Si hago el map directamente en el componente BookingsTable, me da un error
+    * y entra en bucle infinito.
+    */
    const data = bookings.map((booking) => ({
-      bookingId: booking.bookingId,
-      bikes: booking.bikes,
+      ...booking,
       state: mappedBookingState(booking.state),
-      type: setType(booking),
-      date: date,
-      user: booking.email,
+      pickup: booking.pickup ? 'A domicilio' : 'En tienda',
+      delivery: booking.delivery ? 'A domicilio' : 'En tienda',
    }))
-
-   return (
-      <BasicCard className={'max-w-none'} tittle="Planificadas el 25/08/9836">
-         <BookingsTable data={data} columns={columns} />
-      </BasicCard>
-   )
+   return <BookingsTable data={data} {...props} />
 }
 
 function setType(booking) {
