@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import React from 'react'
 import ReduxProviderWrapper from '@/lib/redux/ReduxProviderWrapper'
 import HomeShell from '@/components/layouts/site/HomeShell'
+import { GlobalDialogLoader } from '@/components/common/GlobalDialogLoader'
 
 export async function generateStaticParams() {
    return [{ lang: 'es-ES' }]
@@ -16,9 +17,10 @@ export const metadata = {
 
 export default function SiteLayout(props) {
    return (
-      <html lang="es-ES" dir="ltr" className="h-full bg-red-500">
+      <html lang="es-ES" dir="ltr" className="h-full ">
          <body className="h-full">
             <ReduxProviderWrapper>
+               <GlobalDialogLoader />
                <HomeShell {...props} />
             </ReduxProviderWrapper>
          </body>

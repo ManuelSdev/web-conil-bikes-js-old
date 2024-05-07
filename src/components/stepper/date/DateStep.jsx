@@ -36,7 +36,7 @@ export default function DateStep({
          {/*!linkDisabled ? (
             <Link
                disabled
-               href="/bookingg/bikes"
+               href="/booking/bikes"
                className="mt-8 block w-full rounded-md border border-transparent bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-100 sm:w-auto"
             >
                Continuarse

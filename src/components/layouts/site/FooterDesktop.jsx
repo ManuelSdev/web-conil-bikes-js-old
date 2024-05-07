@@ -33,7 +33,7 @@ export default function FooterDesktop({ navigation, contact, social }) {
                </div>
 
                <div className="grid-cols-subgrid col-span-3 grid ">
-                  <div className="mt-5 grid grid-cols-3 md:mt-0">
+                  <div className="mt-5 grid grid-cols-3 text-white md:mt-0">
                      {navigation.map((item, index) => (
                         <div
                            key={index}

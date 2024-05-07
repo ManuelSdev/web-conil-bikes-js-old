@@ -25,7 +25,7 @@ export default function SiteAppBar() {
          <nav className="NAV mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="WRAPPER  flex h-slimTopAppBar items-center justify-between gap-8 md:h-fatTopAppBar">
                {/**LOGO Y BOTONERA +MD */}
-               <div className="LEFT-BLOCK  flex w-full items-center justify-between bg-red-400">
+               <div className="LEFT-BLOCK  flex w-full items-center justify-between ">
                   {/* LOGO */}
                   <div className="flex-shrink-0">
                      <div className="flex items-center">

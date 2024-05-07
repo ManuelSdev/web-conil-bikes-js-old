@@ -36,7 +36,11 @@
 
       /* PROPIOS */
       --green-corp: 73, 100%, 63%;
-
+      --dark-100: 0, 0%, 50%;
+      --dark-200: 0, 0%, 35%;
+      --dark-300: 0, 0%, 25%;
+      --dark-400: 0, 0%, 15%;
+      --dark-500: 0, 0%, 5%;
       --topAppBar-height: 6rem;
       --bottomAppBar-height: 4rem;
    }

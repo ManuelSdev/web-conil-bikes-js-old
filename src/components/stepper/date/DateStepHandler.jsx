@@ -74,7 +74,7 @@ export default function DateStepHandler({
       const isDisabled = !from || !to
       const nextUrl = isAdmin
          ? `/dashboard/bookings/new/bikes?userId=${userId}&dated=true`
-         : '/bookingg/bikes'
+         : '/booking/bikes'
       return isDisabled ? (
          <Button disabled variant="custom" className={className}>
             Siguiente <ArrowRight weight="bold" className="ml-2 h-4 w-4" />

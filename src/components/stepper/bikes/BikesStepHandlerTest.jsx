@@ -143,10 +143,10 @@ export default function BikesStepHandlerTest({
 
    const nextUrl = isAdmin
       ? `/dashboard/bookings/new/address?userId=${userId}`
-      : '/bookingg/address'
+      : '/booking/address'
    const prevUrl = isAdmin
       ? `/dashboard/bookings/new/date?userId=${userId}`
-      : '/bookingg/date'
+      : '/booking/date'
    const renderNextButton = (renderClassName) => {
       const isDisabled = !bikesQuantity
 

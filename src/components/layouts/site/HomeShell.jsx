@@ -10,9 +10,8 @@ export default function HomeShell({ children }) {
             <SiteAppBar />
 
             <main>{children}</main>
-            <footer>
-               <Footer />
-            </footer>
+
+            <Footer />
          </div>
       </div>
    )

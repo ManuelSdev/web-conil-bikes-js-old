@@ -2,7 +2,7 @@ import React from 'react'
 
 import Image from 'next/image'
 import Link from 'next/link'
-export default function ImageCard({ src, label, title, text }) {
+export default function ImageCard({ src, label, title, text, renderButton }) {
    return (
       <div className="w-full rounded-lg bg-white shadow dark:border-gray-700 dark:bg-gray-800">
          <div className="relative h-[200px] w-full overflow-hidden min-[450px]:h-[300px]  lg:h-[200px]">
@@ -26,12 +26,7 @@ export default function ImageCard({ src, label, title, text }) {
             <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                {text}
             </p>
-            <Link
-               href="/bookingg/date"
-               //  href="/user/booking"
-            >
-               Ver más
-            </Link>
+            {renderButton()}
          </div>
       </div>
    )

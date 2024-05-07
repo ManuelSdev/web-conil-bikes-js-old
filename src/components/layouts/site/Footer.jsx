@@ -12,7 +12,7 @@ import { MapPin, Mail, Phone, Instagram, Twitter, Facebook } from 'lucide-react'
 import FooterMobile from './FooterMobile'
 export default function Footer() {
    return (
-      <footer>
+      <footer className="bg-black">
          <FooterDesktop
             navigation={navigation}
             contact={contact}

@@ -56,6 +56,21 @@ module.exports = {
                DEFAULT: 'hsl(var(--green-corp), <alpha-value>)',
                foreground: '#FF7F27',
             },
+            'dark-100': {
+               DEFAULT: 'hsl(var(--dark-100))',
+            },
+            'dark-200': {
+               DEFAULT: 'hsl(var(--dark-200))',
+            },
+            'dark-300': {
+               DEFAULT: 'hsl(var(--dark-300))',
+            },
+            'dark-400': {
+               DEFAULT: 'hsl(var(--dark-400))',
+            },
+            'dark-500': {
+               DEFAULT: 'hsl(var(--dark-500))',
+            },
          },
          borderRadius: {
             lg: 'var(--radius)',

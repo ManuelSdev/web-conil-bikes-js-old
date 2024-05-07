@@ -59,10 +59,10 @@ export default function BookingAddressHandler({
 
    const nextUrl = isAdmin
       ? `/dashboard/bookings/new/resume?userId=${userId}`
-      : '/bookingg/resume'
+      : '/booking/resume'
    const prevUrl = isAdmin
       ? `/dashboard/bookings/new/bikes?userId=${userId}`
-      : '/bookingg/bikes'
+      : '/booking/bikes'
 
    const renderNextButton = (renderClassName) => {
       const { address } = form.getValues()

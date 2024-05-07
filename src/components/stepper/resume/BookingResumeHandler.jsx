@@ -128,7 +128,7 @@ export default function BookingResumeHandler({
    const renderPrevButton = (className) => {
       const prevUrl = isAdmin
          ? `/admin/bookings/new/address?userId=${userId}`
-         : '/bookingg/address'
+         : '/booking/address'
       return (
          <Button asChild variant="custom" className={className}>
             <Link href={prevUrl}>

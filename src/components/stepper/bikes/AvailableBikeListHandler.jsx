@@ -64,7 +64,7 @@ export default function AvailableBikeListHandler({
       // triggerCookie({ name: 'selectedBike', value: selectedBikeCookieValue })
       window.localStorage.setItem('selectedBike', selectedBikeCookieValue)
       triggerCookie({ name: 'searchKeys', value: searchKeyscookieValue })
-      triggerCookie({ name: 'resolvedUrl', value: '/bookingg/bikes' })
+      triggerCookie({ name: 'resolvedUrl', value: '/booking/bikes' })
       router.push(
          //`/user/booking?step=1b&date=${dateRange}&size=${size}&type=${type}&range=${range}`
          '/auth/sign-in'

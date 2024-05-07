@@ -41,12 +41,12 @@ export default function NotifyCart({ page, userId }) {
    const text = isComplete ? 'Ir a la cesta' : 'Continuar'
 
    const nextPage = isComplete
-      ? '/bookingg/resume'
+      ? '/booking/resume'
       : page === 'date'
-      ? '/bookingg/bikes'
+      ? '/booking/bikes'
       : page === 'bikes'
-      ? '/bookingg/address'
-      : '/bookingg/resume'
+      ? '/booking/address'
+      : '/booking/resume'
 
    const dashboardNextPage = isComplete
       ? `/dashboard/bookings/new/resume?userId=${userId}`
