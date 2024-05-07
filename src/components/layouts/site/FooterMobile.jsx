@@ -23,7 +23,11 @@ export default function FooterMobile({ navigation }) {
          </div>
          <Accordion type="single" collapsible>
             {navigation.map((item, index) => (
-               <AccordionItem key={index} value={`item-${index}`}>
+               <AccordionItem
+                  className="text-white"
+                  key={index}
+                  value={`item-${index}`}
+               >
                   <AccordionTrigger>{item.title}</AccordionTrigger>
                   <AccordionContent>
                      {item.subtitles.map((subtitle, index) =>
