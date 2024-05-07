@@ -1,4 +1,6 @@
 import { getApp, getApps, initializeApp } from 'firebase/app'
+import { getAuth } from 'firebase/auth'
+import { getStorage } from 'firebase/storage'
 //import { getAuth } from 'firebase/auth'
 //import { getAnalytics } from 'firebase/analytics'
 //import Firebase from 'firebase'
@@ -20,7 +22,12 @@ const firebaseConfig = {
 // Initialize Firebase
 
 //console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@', getApps())
-export const app = !getApps().length ? initializeApp(firebaseConfig) : getApp()
+//export const app = !getApps().length ? initializeApp(firebaseConfig) : getApp()
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp()
+
+const auth = getAuth(app)
+const storage = getStorage(app)
+export { auth, storage }
 //console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@', getApp())
 //console.log(getApp())
 //console.log(getApps())

@@ -15,11 +15,13 @@ const provider = new GoogleAuthProvider()
 //useDeviceLanguage()
 
 import React from 'react'
-import { app } from './firebaseClient'
+import { app, auth } from './firebaseClient'
 import useOnAuthStateChange from './useOnAuthStateChange'
 
 const UseGoogleAuth = () => {
-   const auth = getAuth(app)
+   //importo el auth de firebaseClient en lugar de crearlo aquí
+   //const auth = getAuth(app)
+
    const { authUser, loading } = useOnAuthStateChange()
    const optAddOAuthScope = (strScope) => {
       //opciónal 2

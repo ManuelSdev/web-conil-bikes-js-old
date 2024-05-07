@@ -63,6 +63,7 @@ export async function getAdminId() {
    const adminSessionCookie = cookies().get('adminSession')
    try {
       const decodeClaims = await verifySessionCookie(adminSessionCookie.value)
+      console.log('decodeClaims -> ', decodeClaims)
       const { name, email, phone_number: phone } = decodeClaims
       const adminId = findUserIdByEmail({ email })
 

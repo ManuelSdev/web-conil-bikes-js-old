@@ -1,13 +1,15 @@
 import { onAuthStateChanged, getAuth } from 'firebase/auth'
 import { useEffect, useState } from 'react'
-import { app } from './firebaseClient'
+import { app, auth } from './firebaseClient'
 
 const formatAuthUser = (user) => ({
    ...user,
 })
 
 const useOnAuthStateChange = () => {
-   const auth = getAuth(app)
+   //importo el auth de firebaseClient en lugar de crearlo aquí
+   //const auth = getAuth(app)
+
    const [authUser, setAuthUser] = useState(null)
    const [loading, setLoading] = useState(true)
 

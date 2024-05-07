@@ -7,16 +7,14 @@ import { useEffect } from 'react'
 
 const InputImageFile = React.forwardRef(
    ({ onChange, value, ...props }, ref) => {
-      //https://stackoverflow.com/questions/38049966/get-image-preview-before-uploading-in-react
-      console.log('ref -> ', ref)
+      //console.log('ref -> ', ref)
       // if (!ref) return null
-      console.log('value -> ', value)
+      // console.log('value -> ', value)
       const inputRef = useRef(null)
-      const [selectedFile, setSelectedFile] = useState()
       const [src, setSrc] = useState()
 
       const handleInputChange = (e) => {
-         console.log('e -> ', e)
+         //   console.log('e -> ', e)
          const file = e.target.files[0]
          if (file) {
             const reader = new FileReader()
@@ -27,37 +25,14 @@ const InputImageFile = React.forwardRef(
             onChange(file)
          }
       }
-      /*
-      useEffect(() => {
-         if (!selectedFile) {
-            setPreview(undefined)
-            return
-         }
 
-         const objectUrl = URL.createObjectURL(selectedFile)
-         setPreview(objectUrl)
-
-         // free memory when ever this component is unmounted
-         return () => URL.revokeObjectURL(objectUrl)
-      }, [selectedFile])
-
-      const onSelectFile = (e) => {
-         if (!e.target.files || e.target.files.length === 0) {
-            setSelectedFile(undefined)
-            return
-         }
-
-         // I've kept this example simple by using the first image instead of multiple
-         setSelectedFile(e.target.files[0])
-      }
-      */
       const onImageClick = () => {
          //ref.onClick()
-         console.log('refeeeeeeeee -> ', ref.current)
+         //   console.log('refeeeeeeeee -> ', ref.current)
          inputRef.current.click()
       }
       return (
-         <div>
+         <div className="w-12">
             <Input
                accept="image/*"
                className="hidden"
@@ -88,3 +63,31 @@ const InputImageFile = React.forwardRef(
 InputImageFile.displayName = 'InputImageFile'
 
 export default InputImageFile
+
+/*
+      CLAVE
+      //https://stackoverflow.com/questions/38049966/get-image-preview-before-uploading-in-react
+
+      useEffect(() => {
+         if (!selectedFile) {
+            setPreview(undefined)
+            return
+         }
+
+         const objectUrl = URL.createObjectURL(selectedFile)
+         setPreview(objectUrl)
+
+         // free memory when ever this component is unmounted
+         return () => URL.revokeObjectURL(objectUrl)
+      }, [selectedFile])
+
+      const onSelectFile = (e) => {
+         if (!e.target.files || e.target.files.length === 0) {
+            setSelectedFile(undefined)
+            return
+         }
+
+         // I've kept this example simple by using the first image instead of multiple
+         setSelectedFile(e.target.files[0])
+      }
+      */

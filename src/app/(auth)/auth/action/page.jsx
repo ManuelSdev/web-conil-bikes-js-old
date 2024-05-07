@@ -2,7 +2,7 @@ import DialogWindowPageHandler from '@/components/auth/emailActions/DialogWindow
 import NewPassFormPageHandler from '@/components/auth/emailActions/NewPassFormPageHandler'
 import RecoverEmailPageHandler from '@/components/auth/emailActions/RecoverEmailPageHandler'
 import createCustomTokenWithEmail from '@/lib/firebase/admin/auth/createCustomTokenWithEmail'
-import { app } from '@/lib/firebase/client/firebaseClient'
+import { app, auth } from '@/lib/firebase/client/firebaseClient'
 
 import {
    applyActionCode,
@@ -17,7 +17,9 @@ export default async function FireEmailActionsControlPage({ searchParams }) {
 
    //console.log('searchParams -> ', searchParams)
 
-   const auth = getAuth(app)
+   //importo el auth de firebaseClient en lugar de crearlo aquí
+   //const auth = getAuth(app)
+
    if (mode === 'verifyEmail') {
       try {
          await applyActionCode(auth, actionCode)

@@ -20,6 +20,7 @@ export const app = () =>
               //ADMIN EMULATOR ENV VAR
            }),
            projectId: process.env.FBA_PROJECT_ID,
+           storageBucket: process.env.FBA_STORAGE_BUCKET,
            //  databaseURL: 'https://<DATABASE_NAME>.firebaseio.com'
         })
       : getApp()

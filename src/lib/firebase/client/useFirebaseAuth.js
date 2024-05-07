@@ -11,7 +11,7 @@ import {
    signInWithCustomToken,
    confirmPasswordReset,
 } from 'firebase/auth'
-import { app } from './firebaseClient'
+import { app, auth } from './firebaseClient'
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -22,15 +22,18 @@ import {
 } from '@/lib/redux/apiSlices/cookieApi'
 
 import useOnAuthStateChange from './useOnAuthStateChange'
-import { th } from 'date-fns/locale'
+//import { th } from 'date-fns/locale'
 import { useLazyGetUserQuery } from '@/lib/redux/apiSlices/userApi'
 
 const provider = new GoogleAuthProvider()
 
 export default function useFirebaseAuth() {
-   //const { authUser, loading: loadingAuthState } = useOnAuthStateChange()
+   //const { authUser, loading: loadingAuthState } = useOnAuthStateChange(auth)
    //console.log('provider -> ', provider)
-   const auth = getAuth(app)
+
+   //importo el auth de firebaseClient en lugar de crearlo aquí
+   //const auth = getAuth(app)
+
    const [isLoading, setLoading] = useState(false)
 
    const router = useRouter()
@@ -92,6 +95,17 @@ export default function useFirebaseAuth() {
          return res
       } catch (error) {
          console.log('error en doSignInWithCustomToken -> ', error)
+      }
+   }
+
+   const customTokenclientLoginWithoutCookie = async (customToken) => {
+      try {
+         const userCredential = await signInWithCustomToken(auth, customToken)
+         const { user } = userCredential
+         const { accessToken } = user
+         return accessToken
+      } catch (error) {
+         console.log('error en customTokenclientLoginWithoutCookie -> ', error)
       }
    }
 
@@ -322,7 +336,11 @@ export default function useFirebaseAuth() {
          */
       }
    }
+
+   const doSignOut = () => signOut(auth)
    return {
+      //  authUser,
+      //loadingAuthState,
       isLoading,
       doAdminSignInWithEmailAndPassword,
       doSignInWithEmailAndPassword,
@@ -330,5 +348,8 @@ export default function useFirebaseAuth() {
       doGetRedirectResult,
       doCreateSessionCookie,
       doConfirmPasswordReset,
+      doSignInWithCustomToken,
+      customTokenclientLoginWithoutCookie,
+      doSignOut,
    }
 }
