@@ -1,4 +1,5 @@
 import Stepper from '@/components/stepper/Stepper'
+import BookingResumeHandler from '@/components/stepper/resume/BookingResumeHandler'
 
 import {
    getAdminUserAuth,
@@ -6,7 +7,6 @@ import {
    getUserPageAuth,
 } from '@/utils/serverFns/serverFns'
 import React from 'react'
-import BookingResumeHandler from '@/components/stepper/booking/BookingResumeHandler'
 
 export default async function UserBookingStepperPage({ params }) {
    const { segmentList } = await getAppBikeSegments()
