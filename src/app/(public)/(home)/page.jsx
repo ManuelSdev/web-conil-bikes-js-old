@@ -11,7 +11,6 @@ import Loading from './loading'
 import { CustomLink } from '@/components/common/CustomLink'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import Bicicleta from '@/components/stepper/bikes/Boke'
 
 const cards = [
    {
@@ -85,7 +84,6 @@ export default async function HomePage() {
          </div>
          <div className="bg-dark-400">
             <SiteContainer>
-               <Bicicleta />
                {/*     <Trasa />*/}
 
                <div className="HomePage  px-8 lg:px-8">
