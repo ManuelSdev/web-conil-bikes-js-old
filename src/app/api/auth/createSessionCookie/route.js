@@ -75,6 +75,9 @@ async function getRedirectUrl({ isAdmin, req }) {
    else if (cookies().has('resolvedUrl')) {
       const resolvedUrl = cookies().get('resolvedUrl')
       cookies().delete('resolvedUrl')
+      console.log(
+         '**************** BORRADA COOKIE DE REDIRECCIÓN en api/aut/createSessionCookie/route.js getRedirectUrl'
+      )
       //console.log('resolvedUrl -> ', resolvedUrl)
       //borra la cookie
       // res.setHeader('Set-Cookie', `resolvedUrl=0; Max-Age=0`)

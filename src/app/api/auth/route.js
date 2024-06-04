@@ -62,11 +62,16 @@ const actions = {
          // Set cookie policy for session cookie
          const options = { maxAge: expiresIn, httpOnly: true, secure: true }
          // res.cookie('session', sessionCookie, options)
+
+         //CLAVE: Esta res añade la cookie de sesión y borra la cookie de redirección
          res.setHeader('Set-Cookie', [
             // `session=${sessionCookie}; Max-Age=${expiresIn}; Path=/; SameSite=Strict; HttpOnly; Secure`,
             cookieConfig,
             `resolvedUrl=deleted; Max-Age=0; Path=/; SameSite=Strict; HttpOnly; Secure`,
          ])
+         console.log(
+            '**************** BORRADA COOKIE DE REDIRECCIÓN en api/auth/route'
+         )
          // res.setHeader('Set-Cookie', `resolvedUrl=/; Max-Age=0`)
          res.status(200).end(JSON.stringify({ success: true, resolvedUrl }))
       } catch (err) {

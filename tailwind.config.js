@@ -71,6 +71,15 @@ module.exports = {
             'dark-500': {
                DEFAULT: 'hsl(var(--dark-500))',
             },
+            'dark-a': {
+               DEFAULT: 'hsl(var(--dark-a))',
+            },
+            'dark-b': {
+               DEFAULT: 'hsl(var(--dark-b))',
+            },
+            'dark-c': {
+               DEFAULT: 'hsl(var(--dark-c))',
+            },
          },
          borderRadius: {
             lg: 'var(--radius)',

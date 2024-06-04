@@ -11,6 +11,7 @@ import Loading from './loading'
 import { CustomLink } from '@/components/common/CustomLink'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import Bicicleta from '@/components/stepper/bikes/Boke'
 
 const cards = [
    {
@@ -22,9 +23,9 @@ const cards = [
       ),
       //  title: 'Alquiler de bicicletas',
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed condimentum vitae ipsum eget tempus. Phasellus interdum id massa non bibendum. Curabitur auctor cursus dignissim.',
-      renderButton: () => (
-         <Button asChild>
-            <Link href="/booking/date">RESERVAR ONLINE</Link>
+      renderButton: (props) => (
+         <Button {...props} asChild>
+            <CustomLink href="/booking/date">RESERVAR ONLINE</CustomLink>
          </Button>
       ),
    },
@@ -39,7 +40,7 @@ const cards = [
       ),
       // title: 'Venta de bicicletas y accesorios',
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed condimentum vitae ipsum eget tempus. Phasellus interdum id massa non bibendum. Curabitur auctor cursus dignissim.',
-      renderButton: () => <Button>VER CATALOGO</Button>,
+      renderButton: (props) => <Button {...props}>VER CATALOGO</Button>,
    },
    {
       src: RepairImage,
@@ -53,7 +54,7 @@ const cards = [
       ),
       //   title: 'Reparación y mantenimiento',
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed condimentum vitae ipsum eget tempus. Phasellus interdum id massa non bibendum. Curabitur auctor cursus dignissim.',
-      renderButton: () => <Button>CONTACTAR</Button>,
+      renderButton: (props) => <Button {...props}>CONTACTAR</Button>,
    },
 ]
 
@@ -84,10 +85,11 @@ export default async function HomePage() {
          </div>
          <div className="bg-dark-400">
             <SiteContainer>
+               <Bicicleta />
                {/*     <Trasa />*/}
 
                <div className="HomePage  px-8 lg:px-8">
-                  <div className=" grid  auto-rows-fr grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                  <div className=" grid  auto-rows-fr grid-cols-1 gap-8  lg:mx-0 lg:max-w-none lg:grid-cols-3">
                      {cards.map((card, idx) => (
                         <ImageCard key={idx} {...card} />
                      ))}

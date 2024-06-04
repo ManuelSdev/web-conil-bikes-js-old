@@ -15,6 +15,7 @@ import { AlertDialogButton } from '@/components/common/AlertDialogButton'
 import { useLazyCreateCookieQuery } from '@/lib/redux/apiSlices/cookieApi'
 import { useRouter } from 'next/navigation'
 import useLazyGetAvailableBikesQueryHook from '@/lib/redux/apiSlices/bikesApiHooks/useLazyGetAvailableBikesQueryHook'
+import BikeCardSkeleton from './BikeCardSkeleton'
 //import useAka from '@/lib/redux/apiSlices/bikesApiHooks/useAka'
 
 export default function AvailableBikeListHandler({
@@ -23,7 +24,7 @@ export default function AvailableBikeListHandler({
    loadedAvailableBikes,
    ...props
 }) {
-   console.log('AvailableBikeListUserHandler @@@->')
+   //console.log('AvailableBikeListUserHandler @@@->')
    const storedDateRange = useSelector(selectDateRange)
    const dateRange = dateRangeISOStringObjToString(storedDateRange)
    const bikeSearchParams = useSelector(selectBikeSearchParams)
@@ -51,6 +52,7 @@ export default function AvailableBikeListHandler({
 
    const handleDialogAction = (bike) => {
       console.log('bike -------------------->', bike)
+      console.log('bikeSearchParams -------------------->', bikeSearchParams)
       const searchKeys = { dateRange, ...bikeSearchParams }
 
       const searchKeyscookieValue = JSON.stringify(searchKeys)
@@ -62,6 +64,7 @@ export default function AvailableBikeListHandler({
       )
       console.log('searchKeyscookieValue ->', selectedBikeCookieValue)
       // triggerCookie({ name: 'selectedBike', value: selectedBikeCookieValue })
+      //Guarda la bicicleta seleccionada en el local storage para que la
       window.localStorage.setItem('selectedBike', selectedBikeCookieValue)
       triggerCookie({ name: 'searchKeys', value: searchKeyscookieValue })
       triggerCookie({ name: 'resolvedUrl', value: '/booking/bikes' })
@@ -87,20 +90,18 @@ export default function AvailableBikeListHandler({
       )
    const showBikes = (bikes) => (
       <div className="bg-[RGB(243,240,243)]">
-         {bikes.map(
-            (bike, idx) =>
-               console.log('bikes -> ', bikes) || (
-                  <div key={idx}>
-                     <BikeCard
-                        bike={bike}
-                        renderSelectBikeButton={(bike) =>
-                           renderSelectBikeButton(bike)
-                        }
-                     />
-                     <Separator className="holi my-4" />
-                  </div>
-               )
-         )}
+         {bikes.map((bike, idx) => (
+            // console.log('bikes -> ', bikes) ||
+            <div key={idx}>
+               <BikeCard
+                  bike={bike}
+                  renderSelectBikeButton={(bike) =>
+                     renderSelectBikeButton(bike)
+                  }
+               />
+               <Separator className="holi my-4" />
+            </div>
+         ))}
       </div>
    )
    /*
@@ -109,6 +110,13 @@ export default function AvailableBikeListHandler({
       size && type && range && triggerBikes({ dateRange, ...bikeSearchParams })
    }, [bikeSearchParams])
 */
+   //return <BikeCardSkeleton />
+   //if (isFetchingBikes) return <BikeCardSkeleton />
+
+   if (loadedAvailableBikes) return showBikes(loadedAvailableBikes)
+
+   if (availableBikes) return showBikes(availableBikes)
+   /*
    return isFetchingBikes ? (
       <div>LOADING availableBikes EN @@@ USER AvailableBikeListStep @@@</div>
    ) : loadedAvailableBikes ? (
@@ -118,4 +126,5 @@ export default function AvailableBikeListHandler({
    ) : (
       <div>NADA AUN</div>
    )
+   */
 }

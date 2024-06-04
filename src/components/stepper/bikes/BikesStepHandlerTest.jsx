@@ -44,13 +44,19 @@ export default function BikesStepHandlerTest({
    isAdmin,
    userId,
    loadedData,
+   isLogged,
    ...props
    //appBikesConfig,
    // availableSizes,
 }) {
    useCheckDatedStepper({ userId, isAdmin })
+   console.log(
+      'BikesStepHandlerTest ##############################->',
+      searchKeys
+   )
    const dispatch = useDispatch()
    const router = useRouter()
+   //router.refresh()
    const [deleteCookie] = useLazyDeleteCookieQuery()
 
    const strDateRangeObj = useSelector(selectDateRange)
@@ -64,6 +70,9 @@ export default function BikesStepHandlerTest({
 
    const loadedSegmentList = useSelector(selectSegmentList)
 
+   /**
+    * Si tengo los datos del formulario previos, no hago la petición
+    */
    const {
       data: availableSizes,
       isLoading: isLoadingSizes,
@@ -81,22 +90,76 @@ export default function BikesStepHandlerTest({
    const [isDisabled, setIsDisabled] = useState(true)
 
    const handleDisabled = (newKeys) => {}
-
    useEffect(() => {
-      dispatch(segmentListLoaded(segmentList))
-      searchKeys &&
-         dispatch(
-            dateRangeSelected(
-               stringDateRangeToISOStringObj(searchKeys.dateRange)
-            )
-         )
-      return () => dispatch(bikeSearchParamsDeleted())
+      const selectedBikeJson = window.localStorage.getItem('selectedBike')
+
+      if (!selectedBikeJson && searchKeys) {
+         router.refresh()
+      }
    }, [])
-
    useEffect(() => {
-      if (searchKeys && loadedSegmentList) {
+      /**
+       * Si vengo redireccionado de la página de login, el estado habrá
+       * sido borrado, así que cargo los segmentos de bicicletas en caso de que
+       * no estén cargados
+       */
+      const isLoadedSegmentList = loadedSegmentList.length > 0
+      isLoadedSegmentList || dispatch(segmentListLoaded(segmentList))
+      //Si hay una búsqueda previa, la cargo en el estado SOLO el dateRange
+      /**
+       *
+       */
+
+      if (searchKeys) {
+         const { dateRange, size, type, range } = searchKeys
+         dispatch(dateRangeSelected(stringDateRangeToISOStringObj(dateRange)))
+         dispatch(bikeSearchParamsSelected({ size, type, range }))
+
+         console.log('dispatch dateRange')
          deleteCookie('searchKeys')
+
          const selectedBikeJson = window.localStorage.getItem('selectedBike')
+         //necesito que se hayan cargado los segmentos para poder seleccionar la bicicleta
+         //(funcion addBikeToCart)
+         if (selectedBikeJson && isLoadedSegmentList && isLogged) {
+            console.log('selectedBikeJson ->', selectedBikeJson)
+            console.log('loadedSegmentList ->', loadedSegmentList)
+            const selectedBike = JSON.parse(selectedBikeJson)
+            window.localStorage.removeItem('selectedBike')
+            // deleteCookie('selectedBike')
+            console.log('selectedBike ->', selectedBike)
+            //  dispatch(searchKeysLoaded(searchKeys))
+            //  console.log('selectedBike ->', selectedBike)
+            selectedBike && dispatch(bikeSelected(selectedBike))
+         }
+      }
+
+      //Al desmontar el componente, elimino los ultimos datos de búsqueda de bicicletas
+      return () => dispatch(bikeSearchParamsDeleted())
+   }, [loadedSegmentList])
+
+   /*
+   useEffect(() => {
+      if (!bikeSearchParams && searchKeys) {
+         const { size, type, range } = searchKeys
+         dispatch(bikeSearchParamsSelected({ size, type, range }))
+      }
+   }, [])
+*/
+   /**
+    * Si vengo redireccionado de un login correcto, habráy una búsqueda previa (searchKeys):
+    *  la cargo en el estado y borro la cookie de búsqueda searchKeys
+    * También habrá una bicicleta seleccionada, la cargo en el estado
+    *  y borro la  selectedBike del local storage
+    */
+   /*
+useEffect(() => {
+  
+   if (searchKeys && loadedSegmentList && isLogged) {
+      deleteCookie('searchKeys')
+      const selectedBikeJson = window.localStorage.getItem('selectedBike')
+
+      if (selectedBikeJson) {
          console.log('selectedBikeJson ->', selectedBikeJson)
          const selectedBike = JSON.parse(selectedBikeJson)
          window.localStorage.removeItem('selectedBike')
@@ -105,13 +168,12 @@ export default function BikesStepHandlerTest({
          //  dispatch(searchKeysLoaded(searchKeys))
          //  console.log('selectedBike ->', selectedBike)
          selectedBike && dispatch(bikeSelected(selectedBike))
-         if (selectedBikeJson) {
-         }
       }
+   }
 
-      // return () => window.localStorage.removeItem('selectedBike')
-   }, [loadedSegmentList])
-
+   // return () => window.localStorage.removeItem('selectedBike')
+}, [loadedSegmentList])
+*/
    const renderShowBikesButton = ({ size, type, range, className }) =>
       isFetchingBikes ? (
          <Button
@@ -147,6 +209,7 @@ export default function BikesStepHandlerTest({
    const prevUrl = isAdmin
       ? `/dashboard/bookings/new/date?userId=${userId}`
       : '/booking/date'
+
    const renderNextButton = (renderClassName) => {
       const isDisabled = !bikesQuantity
 

@@ -22,7 +22,7 @@ export const bikeApi = baseApi.injectEndpoints({
 
       getAvailableSizes: builder.query({
          query: ({ dateRange }) =>
-            ////console.log('dateRange QUERY --> ', dateRange) ||
+            //  console.log('dateRange QUERY --> ', dateRange) ||
             `bikes/available/${dateRange}`,
       }),
 

@@ -24,7 +24,7 @@ import NotifyBadgeSpanSr from '../notifyBadge/NotifyBadgeSpanSr'
 import NotifyBadgeNumber from '../notifyBadge/NotifyBadgeNumber'
 import NotifyBadge from '../notifyBadge/NotifyBadge'
 
-export default function NotifyCart({ page, userId }) {
+export default function NotifyCart({ page, userId, isLogged }) {
    const { dialog, handleSetDialog } = useDialogWindow(null)
    const dateRange = useSelector(selectDateRange)
    const { from, to } = dateRange

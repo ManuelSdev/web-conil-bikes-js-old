@@ -25,6 +25,7 @@ import {
    useLazyCreateCookieQuery,
 } from '@/lib/redux/apiSlices/cookieApi'
 import Link from 'next/link'
+import { CustomLink } from '@/components/common/CustomLink'
 
 export default function DateStepHandler({
    setStep,
@@ -95,9 +96,9 @@ export default function DateStepHandler({
             }}
             */
          >
-            <Link href={nextUrl}>
+            <CustomLink href={nextUrl}>
                Siguiente <ArrowRight weight="bold" className="ml-2 h-4 w-4" />
-            </Link>
+            </CustomLink>
          </Button>
       )
    }

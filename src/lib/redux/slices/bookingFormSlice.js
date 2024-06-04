@@ -97,6 +97,9 @@ const bookingFormSlice = createSlice({
             })
          }
       },
+      allBikesRemoved: (state, action) => {
+         state.bikes = []
+      },
    },
 })
 

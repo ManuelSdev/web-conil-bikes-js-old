@@ -16,17 +16,5 @@ export const metadata = {
 }
 
 export default function SiteLayout(props) {
-   return (
-      <html lang="es-ES" dir="ltr" className="h-full bg-green-500">
-         <body>
-            <ReduxProviderWrapper>
-               <SiteShell {...props} />
-               <Toaster />
-               {/* <Suspense fallback={null}>
-                  <NotifyCart />
-   </Suspense>*/}
-            </ReduxProviderWrapper>
-         </body>
-      </html>
-   )
+   return <SiteShell {...props} />
 }

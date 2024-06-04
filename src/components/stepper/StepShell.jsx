@@ -3,7 +3,7 @@ import { Separator } from '../ui/separator'
 
 export default function StepShell({ children, title, description }) {
    return (
-      <div className="bg-red-300 pb-10">
+      <div className="rounded-lg bg-gray-100 p-10">
          {/*<div className="pb-10">{ <StepsPanel step={step} />}</div>*/}
          <h2 className="text-3xl font-bold tracking-tight">{title}</h2>
          <p className="text-muted-foreground">{description}</p>

@@ -41,6 +41,9 @@
       --dark-300: 0, 0%, 25%;
       --dark-400: 0, 0%, 15%;
       --dark-500: 0, 0%, 5%;
+      --dark-a: 0, 0%, 7%; /*121212 */
+      --dark-b: 0, 0%, 12%; /*1e1e1e*/
+      --dark-c: 0, 0%, 21%; /*363636*/
       --topAppBar-height: 6rem;
       --bottomAppBar-height: 4rem;
    }

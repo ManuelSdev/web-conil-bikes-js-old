@@ -1,3 +1,4 @@
+//export const dynamic = 'force-dynamic'
 import {
    getAppBikeConfigSegments,
    getAvailableBikes,
@@ -19,23 +20,48 @@ import StepShell from '@/components/stepper/StepShell'
 import NotifyCart from '@/components/stepper/notifyCart/NotifyCart'
 import AvailableBikeListHandler from '@/components/stepper/bikes/AvailableBikeListHandler'
 import BikesStepHandlerTest from '@/components/stepper/bikes/BikesStepHandlerTest'
+
+/**
+ * CLAVE
+ * https://github.com/vercel/next.js/discussions/54075
+ */
 export default async function BikesStepPage({ params }) {
    const searchKeysCookie = cookies().get('searchKeys')
+   const resolvedUrlCookie = cookies().get('resolvedUrl')
+   console.log('searchKeysCookie ', searchKeysCookie)
    //const selectedBikeCookie = cookies().get('selectedBike')
 
+   //Cargo las searchKeys de la cookie
    const loadedSearchKeys = searchKeysCookie
       ? JSON.parse(searchKeysCookie.value)
       : null
-
-   const loadedPreviusStateData = await loadPreviusStateData(loadedSearchKeys)
+   console.log('loadedSearchKeys ', loadedSearchKeys)
+   const userAuth = await getUserPageAuth()
+   const { isLogged } = userAuth
+   const loadedPreviusStateData = await loadPreviusStateData(
+      loadedSearchKeys,
+      isLogged
+   )
    /*
    const selectedBike = selectedBikeCookie
       ? JSON.parse(selectedBikeCookie.value)
       : null
 */
+   /**
+    * Hay 3 formas de entrar a la página de bicicletas desde la página de login:
+    * 1. Haciendo click en el botón de "Volver" del navegador en la página de login
+    *    - En este caso, se conserva la cookie resolvedUrl y existe resolvedUrlCookie
+    * 2. Haciendo login correctamente
+    *
+    *    -Se borra la cookie resolvedUrl
+    *    -Se añade la cookie userSession y la cookie stepperDated:true
+    *     # En este caso, bikesStepHandlerTest se encarga de:
+    *    - cargar en el estado los datos de la búsqueda de bicicletas que se realizó antes del login
+    *    -Necesitas cargar las bicis disponibles en función de los datos de búsqueda
+    *
+    * 3. Llegando desde la página date o desde la página address
+    */
    const { segmentList } = await getAppBikeSegments()
-
-   const userAuth = await getUserPageAuth()
 
    console.log('##### userAuth ', userAuth)
    console.log('params ', params)
@@ -49,14 +75,15 @@ export default async function BikesStepPage({ params }) {
                segmentList={segmentList}
                loadedSearchKeys={loadedSearchKeys}
                loadedData={loadedPreviusStateData}
+               isLogged={isLogged}
                // selectedBike={selectedBike}
             />
          </Stepper>
          <AvailableBikeListHandler
             loadedAvailableBikes={loadedPreviusStateData?.availableBikes}
-            isLogged={userAuth.isLogged}
+            isLogged={isLogged}
          />
-         <NotifyCart page={'bikes'} />
+         <NotifyCart page={'bikes'} isLogged={isLogged} />
       </StepShell>
    )
 }
@@ -68,8 +95,18 @@ async function getPageData(userSessionCookie) {
    return { segmentList }
 }
 
-//Recupera los datos de la búsqueda de bicicletas que se realizó antes del login
-async function loadPreviusStateData(searchKeys) {
+/**
+ * Recupera los datos de la búsqueda de bicicletas que se realizó antes del login
+ * Esto permite que, tras el login y la redirección, el formulario de búsqueda de bicicletas
+ * se rellene con los datos que se habían introducido antes de hacer login
+ * También se encarga de las bicicletas disponibles en
+ * función de los datos de búsqueda
+ */
+async function loadPreviusStateData(searchKeys, isLogged) {
+   //'use server'
+   //https://github.com/vercel/next.js/discussions/54075
+   console.log('searchKeys ', searchKeys)
+   console.log('isLogged ', isLogged)
    if (!searchKeys) return null
 
    const { dateRange, size, type, range } = searchKeys
@@ -99,6 +136,9 @@ async function loadPreviusStateData(searchKeys) {
       availableBikes,
    }
 }
+
+//export const dynamic = 'force-dynamic'
+//export const revalidate = 0
 /*
    <StepLayout>
             {' '}

@@ -15,7 +15,10 @@ export default function SiteShell(props) {
       <div className="min-h-full">
          <SiteAppBar />
          {/* <div className="h-slimTopAppBar w-full md:h-fatTopAppBar" />*/}
-         <SiteContainer {...props} />
+         <div className="bg-dark-400">
+            <SiteContainer {...props} />
+         </div>
+
          <Footer />
       </div>
    )
