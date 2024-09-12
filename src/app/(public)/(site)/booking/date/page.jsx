@@ -19,7 +19,7 @@ export default async function DateStepPage({ params }) {
          <Stepper step={1}>
             <DateStepHandler />
          </Stepper>
-         <NotifyCart page={'date'} />
+         {/*  <NotifyCart page={'date'} />*/}
       </StepShell>
    )
 }

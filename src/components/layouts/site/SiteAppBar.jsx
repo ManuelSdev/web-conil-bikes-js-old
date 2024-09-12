@@ -3,11 +3,12 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import SiteAppBarLinks from './SiteAppBarLinks'
 import IconCorpLogo from '@/components/svg/IconCorpLogo'
 import Link from 'next/link'
-import { CircleUserRound, Menu } from 'lucide-react'
+import { CircleUserRound, Menu, ShoppingCart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import DrawerMenu from '@/components/drawer/DrawerMenu'
 import useDialogWindow from '@/components/common/useDialogWindow'
 import { SheetDemo } from './Sheet'
+import HeaderCart from '@/components/stepper/notifyCart/HeaderCart'
 
 function classNames(...classes) {
    return classes.filter(Boolean).join(' ')
@@ -49,7 +50,7 @@ export default function SiteAppBar() {
                {/* BOTONERA/Profile +md*/}
                <div>
                   <div className="ml-4 flex items-center md:ml-6 ">
-                     <div className="">
+                     {/* <div className="">
                         <Button
                            className="text-greenCorp "
                            onClick={() => handleSetDialogRight({ open: true })}
@@ -59,9 +60,13 @@ export default function SiteAppBar() {
                               //color="#D5FF40"
                               aria-hidden="true"
                            />
-                           <span className="hidden md:block"> Mi cuenta</span>
+                           <span className="hidden md:block">
+                              {' '}
+                              Mi cuentsssa
+                           </span>
                         </Button>
-                     </div>
+                     </div>*/}
+                     <HeaderCart />
                   </div>
                </div>
             </div>

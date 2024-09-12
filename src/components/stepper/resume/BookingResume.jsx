@@ -49,7 +49,7 @@ export default function BookingResume({
    const { from, to } = dateRange
    console.log('dateRange en Bookingresume ->', dateRange)
    return (
-      <div className="bg-white">
+      <div className="bg-gray-100">
          <div className="mx-auto max-w-2xl px-4 pb-24  sm:px-6 lg:max-w-7xl lg:px-8">
             <h3 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-2xl">
                Resumen
@@ -58,10 +58,10 @@ export default function BookingResume({
             <div></div>
 
             <form className="lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
-               <div className="mt-12 bg-red-300 lg:col-span-7">
+               <div className="mt-12 lg:col-span-7">
                   <Bikes bikes={bikesByUnits} />
                </div>
-               <div className="bg-red-300 lg:col-span-5 lg:mt-12">
+               <div className="bg-red lg:col-span-5 lg:mt-12">
                   {/* Order summary */}
                   <Details
                      name={name}
@@ -259,12 +259,12 @@ function Price({ dayPrice, bookingPrice, duration }) {
    const items = [
       { label: 'Precio por día', value: dayPrice + ' €' },
       { label: 'Duración de la reserva', value: duration + ' días' },
-      { label: 'Precio final', value: bookingPrice + ' €' },
+      { label: 'Precio total', value: bookingPrice + ' €' },
    ]
    return (
       <section
          aria-labelledby="summary-heading"
-         className="mt-12 rounded-lg bg-gray-200 p-6  lg:col-span-5  lg:p-8 lg:px-4"
+         className="mt-12 rounded-lg bg-gray-200 p-6  lg:col-span-5  lg:p-8 "
       >
          <h2 id="summary-heading" className="text-lg font-medium text-gray-900">
             Importe
@@ -276,7 +276,7 @@ function Price({ dayPrice, bookingPrice, duration }) {
                   <dt
                      className={cn({
                         'text-sm text-gray-600': true,
-                        'text-base font-medium': item.label === 'Precio final',
+                        'text-base font-medium': item.label === 'Precio total',
                      })}
                   >
                      {item.label}

@@ -156,11 +156,6 @@ export default function BookingResumeHandler({
    console.log('isLoading ->', isSuccess)
    return (
       <div>
-         <div>Hollaa</div>
-         <div>aa {data}</div>
-         <div>ee {isError}</div>
-         <div>cc {isSuccess}</div>
-         <div>cc {isLoading}</div>
          <DialogLoader open={isLoading} />
          <DialogWindow {...dialog} />
 

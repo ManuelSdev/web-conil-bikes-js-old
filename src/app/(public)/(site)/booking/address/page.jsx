@@ -12,7 +12,7 @@ export default async function AddressStepPage({ params }) {
          <Stepper step={3} page="address">
             <BookingAddressHandler />
          </Stepper>
-         <NotifyCart page="address" />
+         {/*  <NotifyCart page="address" />*/}
       </StepShell>
    )
 }

@@ -128,6 +128,7 @@ export const selectBikeSearchParams = (state) =>
    state.bookingForm.bikeSearchParams
 
 export const selectBookingAddress = (state) => state.bookingForm.address
+
 const selectBookingDelivery = (state) => state.bookingForm.delivery
 const selectBookingPickup = (state) => state.bookingForm.pickup
 

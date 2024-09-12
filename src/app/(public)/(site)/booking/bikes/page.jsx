@@ -83,7 +83,7 @@ export default async function BikesStepPage({ params }) {
             loadedAvailableBikes={loadedPreviusStateData?.availableBikes}
             isLogged={isLogged}
          />
-         <NotifyCart page={'bikes'} isLogged={isLogged} />
+         {/*<NotifyCart page={'bikes'} />*/}
       </StepShell>
    )
 }
