@@ -59,6 +59,10 @@ export default function BookingResumeHandler({
       //necesitas estos para el email
       dateRangeObj: dateRange,
       bikesByUnits,
+      dayPrice,
+      phone,
+      address,
+      name,
    }
 
    const resumeData = {
