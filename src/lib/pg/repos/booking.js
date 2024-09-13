@@ -93,7 +93,7 @@ export const findBookingBikesById = async (bookingId) => {
 
 export const addBooking = async (data) => {
    const text = addBookingText(data)
-   console.log('text en addBooking', text)
+   //console.log('text en addBooking', text)
    const client = await pool.connect()
    try {
       await client.query('BEGIN')

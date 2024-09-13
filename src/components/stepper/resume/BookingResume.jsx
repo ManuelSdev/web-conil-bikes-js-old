@@ -206,10 +206,15 @@ function Details({ name, email, phone, address, dateRange, delivery, pickup }) {
       { label: 'Dirección', value: address, icon: MapPin },
       {
          label: 'Fecha de reserva',
-         value: `Del ${format(
-            new Date(dateRange.from),
-            'dd/MM/yyyy'
-         )} al ${format(new Date(dateRange.to), 'dd/MM/yyyy')}`,
+         value:
+            //Al crear la reserva, el extraReducer de bookingFormSlice resetea el estado
+            //y peta todo al mostrar una date que es null, por eso se hace este ternario
+            dateRange.from && dateRange.to
+               ? `Del ${format(
+                    new Date(dateRange.from),
+                    'dd/MM/yyyy'
+                 )} al ${format(new Date(dateRange.to), 'dd/MM/yyyy')}`
+               : '',
          icon: CalendarDays,
       },
       {

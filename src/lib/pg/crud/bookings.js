@@ -55,7 +55,7 @@ export async function createBooking(data) {
          'Reserva creada en createBooking con Id de reserva -> ',
          bookingId
       )
-      console.log('data en createBooking -> ', data)
+      // console.log('data en createBooking -> ', data)
       const html = getOrderResumeEmail({
          ...data,
          bookingId,

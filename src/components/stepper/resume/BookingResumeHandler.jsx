@@ -1,8 +1,12 @@
 'use client'
 import React from 'react'
 import { Button } from '@/components/ui/button'
-import { useSelector } from 'react-redux'
-import { selectBookingData } from '@/lib/redux/slices/bookingFormSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+   formReseted,
+   reset,
+   selectBookingData,
+} from '@/lib/redux/slices/bookingFormSlice'
 import { useLazyCreateCookieQuery } from '@/lib/redux/apiSlices/cookieApi'
 import { useCreateBookingMutation } from '@/lib/redux/apiSlices/bookingApi'
 import { dateRangeISOStringObjToString } from '@/utils/datesFns/createDateRangeString'
@@ -25,6 +29,7 @@ export default function BookingResumeHandler({
 }) {
    const [triggerCookie] = useLazyCreateCookieQuery()
    const router = useRouter()
+   const dispatch = useDispatch()
 
    const { userId, email, name, phone } = user
 
@@ -90,8 +95,8 @@ export default function BookingResumeHandler({
          error,
          reset,
       },
-   ] = useCreateBookingMutation({ fixedCacheKey: 'createBooking-key' })
-
+   ] = useCreateBookingMutation()
+   //useCreateBookingMutation({ fixedCacheKey: 'createBooking-key' })
    // console.log('userId ->', userId)
 
    const handleSubmit = async (event) => {
@@ -112,7 +117,7 @@ export default function BookingResumeHandler({
          handleSetDialog({
             open: true,
             title: 'Tu reserva ha sido registrada',
-            description: 'desc',
+            description: 'Recibiras un correo con los detalles de tu reserva',
             closeText: 'Aceptar',
             onOpenChange: (bool) => router.push(urlAfterBooking),
          })

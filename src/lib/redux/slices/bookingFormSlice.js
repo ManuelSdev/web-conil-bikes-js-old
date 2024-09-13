@@ -2,6 +2,7 @@ import { createSelector, createSlice, current } from '@reduxjs/toolkit'
 import { selectAppBikesConfig } from './appConfigSlice'
 import { differenceInDays } from 'date-fns'
 import { stringDateRangeToISOStringObj } from '@/utils/datesFns/createDateRangeString'
+import { bookingApi } from '../apiSlices/bookingApi'
 
 const initialState = {
    //dateRange: '',
@@ -23,6 +24,9 @@ const bookingFormSlice = createSlice({
    name: 'bookingForm',
    initialState,
    reducers: {
+      formReseted: (state) => {
+         return initialState
+      },
       varChanged: (state, action) => {
          state.var = action.payload
       },
@@ -100,10 +104,38 @@ const bookingFormSlice = createSlice({
       allBikesRemoved: (state, action) => {
          state.bikes = []
       },
+      reset: (state, action) => {
+         state.address = 'initialState'
+      },
+   },
+
+   extraReducers: (builder) => {
+      builder.addMatcher(
+         bookingApi.endpoints.createBooking.matchFulfilled,
+         //CLAVE: payload es la query/data que mandas en la mutación!!
+         //Cuando
+         (state, action) => {
+            console.log(
+               'createBooking matchFulfilled action **************',
+               action
+            )
+            console.log(
+               'createBooking matchFulfilled  state **************',
+               state
+            )
+            //cambiar el estado entero es así, no con state = initialState. Si cambias un
+            //solo campo, si es con state.address = 'initialState'
+            return initialState
+
+            //state.dateRange = originalArgs
+         }
+      )
    },
 })
 
 export const {
+   reset,
+   formReseted,
    varChanged,
    bikesReseted,
    segmentListLoaded,
