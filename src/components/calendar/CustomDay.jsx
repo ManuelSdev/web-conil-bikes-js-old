@@ -90,7 +90,7 @@ export default function CustomDay({ date, displayMonth, ...props }) {
    return (
       <Button
          // class="bg-red-500"
-         name="joder"
+         name="customDay"
          {...customProps}
          ref={buttonRef}
          //    onClick={handleClick}

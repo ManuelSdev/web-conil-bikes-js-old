@@ -1,5 +1,7 @@
 import DatePicker from '@/components/datepicker/DatePicker'
 import MobileBottomAppBar from '@/components/layouts/site/MobileBottomAppBar'
+import { format } from 'date-fns'
+import { is } from 'date-fns/locale'
 import Link from 'next/link'
 import React from 'react'
 
@@ -11,8 +13,30 @@ export default function DateStep({
    to,
    handleSelect,
    linkDisabled,
+   storedDateRange,
    ...props
 }) {
+   const today = new Date()
+   const nextDay = new Date(today)
+   nextDay.setDate(today.getDate() + 1)
+
+   const nextYear = new Date(
+      today.getFullYear() + 1,
+      today.getMonth(),
+      today.getDate()
+   )
+   const { from: isoFrom, to: isoTo } = storedDateRange
+
+   const selectedFrom = new Date(isoFrom)
+   const selectedTo = new Date(isoTo)
+   const selectedFromNextDay = new Date(
+      selectedFrom.setDate(selectedFrom.getDate() + 1)
+   )
+   const selectedFromPrevDay = new Date(
+      selectedTo.setDate(selectedTo.getDate() - 1)
+   )
+   console.log('nextDay -> ', from)
+   //TODO: crea customDay para señañar el dia seleccionado en to y from
    return (
       <div className="grow justify-center gap-5">
          <div className="flex w-full justify-between gap-5 py-3 md:justify-center">
@@ -22,14 +46,23 @@ export default function DateStep({
                label="Inicio"
                date={from}
                handleSelect={handleSelect(FROM)}
+               disabled={[
+                  { before: nextDay },
+                  { after: to ? selectedFromPrevDay : nextYear },
+               ]}
                {...props}
             />
             <DatePicker
                // className="grow md:w-1/3  md:grow-0"
+               disabled={[
+                  { before: from ? selectedFromNextDay : today },
+                  { after: nextYear },
+               ]}
                className={'w-[45%] grow'}
                label="Fin"
                date={to}
                handleSelect={handleSelect(TO)}
+               //selected={selected}
                {...props}
             />
          </div>

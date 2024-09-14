@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { es, tr } from 'date-fns/locale'
 
-import Calendar from './Calendar'
+import CustomCalendar from './CustomCalendar'
 
 import { createDateRangeString } from '@/utils/datesFns/createDateRangeString'
 import CustomCaptionLabel from './CustomCaptionLabel'
@@ -92,7 +92,7 @@ export default function CalendarHandlerUrl({
    return (
       // @ts-ignore
       <div className={className}>
-         <Calendar
+         <CustomCalendar
             locale={es}
             mode="single"
             // selected={date}

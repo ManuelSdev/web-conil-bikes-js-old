@@ -21,12 +21,21 @@ export default function DatePicker({
    label,
    className,
    isDisabled,
+   disabled,
+   selected: el,
 }) {
    const [open, setopen] = useState(false)
    const onSelect = (selectedDate) => {
       handleSelect(selectedDate)
       setopen(false)
    }
+   const today = new Date()
+   const nextYear = new Date(
+      today.getFullYear() + 1,
+      today.getMonth(),
+      today.getDate()
+   )
+
    return (
       <Popover onOpenChange={setopen} open={open}>
          <PopoverTrigger asChild>
@@ -46,14 +55,39 @@ export default function DatePicker({
          </PopoverTrigger>
          <PopoverContent className="w-auto p-0">
             <Calendar
-               // disabled
+               disabled={disabled}
                locale={es}
                mode="single"
                selected={date}
+               //el={el}
+               /*
+               components={{
+                  Day: CustomDay,
+                  // CaptionLabel: CustomCaptionLabel
+                  // Row: CustomRow,
+               }}
+                  */
                onSelect={onSelect}
                initialFocus
             />
          </PopoverContent>
       </Popover>
+   )
+}
+
+function CustomDay({ date, displayMonth, ...props }) {
+   return (
+      <Button
+         className={cn(
+            'h-9 w-9 p-0 font-normal',
+            'focus-within:relative focus-within:z-20',
+            isSelected && 'bg-primary text-primary-foreground',
+            isDisabled && 'text-muted-foreground opacity-50'
+         )}
+         disabled={isDisabled}
+         onClick={() => el(date)}
+      >
+         {format(date, 'd')}
+      </Button>
    )
 }

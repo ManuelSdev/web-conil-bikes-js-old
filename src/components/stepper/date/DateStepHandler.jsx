@@ -38,6 +38,7 @@ export default function DateStepHandler({
    //console.log('DateStepUserHandler @@@->')
    const dispatch = useDispatch()
    const storedDateRange = useSelector(selectDateRange)
+   const { isoFrom, isoTo } = storedDateRange
    const storedBikes = useSelector(selectBikes)
    const dateRangeObj = dateRangeISOStrObjToDateRangeObj(storedDateRange)
    const { from, to } = dateRangeObj
@@ -113,6 +114,7 @@ export default function DateStepHandler({
             to={to}
             linkDisabled={!from || !to}
             handleSelect={handleSelect}
+            storedDateRange={storedDateRange}
          />
          <div className="mt-4 flex">
             <AlertDialogButton

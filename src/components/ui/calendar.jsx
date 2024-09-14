@@ -42,6 +42,9 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }) {
             day_range_middle:
                'aria-selected:bg-accent aria-selected:text-accent-foreground',
             day_hidden: 'invisible',
+            day_el:
+               'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground',
+
             ...classNames,
          }}
          components={{

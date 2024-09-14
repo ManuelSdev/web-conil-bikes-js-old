@@ -6,7 +6,7 @@ import 'react-day-picker/dist/style.css'
 import { es } from 'date-fns/locale'
 import clsx from 'clsx'
 
-export default function Calendar({ ...props }) {
+export default function CustomCalendar({ ...props }) {
    const classNames = {
       root: 'flex max-w-xl flex-col items-stretch',
       //root: 'max-w-fit',
@@ -31,6 +31,7 @@ export default function Calendar({ ...props }) {
       <DayPicker
          className="max-w-fit"
          classNames={classNames}
+         //disabled={{ before: new Date() }}
          /*
          modifiersClassNames={{
             selected: 'my-selected',

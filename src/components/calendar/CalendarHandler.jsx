@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { es, tr } from 'date-fns/locale'
-import Calendar from './Calendar'
+import CustomCalendar from './CustomCalendar'
 import { createDateRangeString } from '@/utils/datesFns/createDateRangeString'
 import CustomCaptionLabel from './CustomCaptionLabel'
 import CustomRow from './CustomRow'
@@ -16,7 +16,7 @@ export default function CalendarHandler({ bookingDates: initialBookingDates }) {
    //console.log('initialBookingDates en CalendarHandler -> ',      initialBookingDates   )
    const router = useRouter()
    const [bookingDates, setBookingDates] = React.useState(initialBookingDates)
-
+   console.log('bookingDates en CalendarHandler -> ', bookingDates)
    const [dateRange, setDateRange] = useState('')
 
    const handleSelect = (date) => {
@@ -56,7 +56,7 @@ export default function CalendarHandler({ bookingDates: initialBookingDates }) {
    const handleMonthChange = (displayMonth) => handeDateRange(displayMonth)
    return (
       // @ts-ignore
-      <Calendar
+      <CustomCalendar
          locale={es}
          mode="single"
          // selected={date}

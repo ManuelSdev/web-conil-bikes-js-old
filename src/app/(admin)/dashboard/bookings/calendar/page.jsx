@@ -36,7 +36,7 @@ export default async function CalendarPage({ params, searchParams }) {
       const params = urlParams({ date: todayString })
       // redirect(`/dashboard/bookings?${params}`)
    }
-
+   console.log('bookingDates -> ', bookingDates)
    return (
       <BasicCard tittle="Calendario de reservas">
          <CalendarHandlerUrl bookingDates={bookingDates} />
