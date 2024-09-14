@@ -144,13 +144,17 @@ export default function HeaderCart({ userId, isLogged }) {
       >
          <NotifyBadge
             disabled={!bikesQuantity}
-            className={'border-2 border-greenCorp bg-inherit text-greenCorp'}
+            className={
+               'h-12 w-12 border-none border-greenCorp bg-inherit text-greenCorp'
+            }
             onClick={() => handleSetDialog({ open: true })}
          >
             <ShoppingCart />
             <NotifyBadgeSpanSr />
             <NotifyBadgeNumber
-               className={'border-greenCorp bg-black text-greenCorp'}
+               className={
+                  'right-0  top-0 border-greenCorp bg-black text-greenCorp'
+               }
             >
                {bikesQuantity}
             </NotifyBadgeNumber>

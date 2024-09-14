@@ -20,9 +20,10 @@ import { toast } from '@/components/ui/use-toast'
 import { InputFile } from '@/components/common/InputFile'
 import useFirebaseStorage from '@/lib/firebase/client/useFirebaseStorage'
 import Image from 'next/image'
-import { createRef } from 'react'
+import { createRef, use } from 'react'
 import InputImageFile from '../bike/InputImageFile'
 import BasicCard from '@/components/BasicCard'
+import da from 'date-fns/esm/locale/da/index.js'
 
 const FormSchema = z.object({
    modelName: z.string().min(2, {
@@ -53,16 +54,21 @@ export function NewBikeForm() {
          image_3: '',
       },
    })
+
    const { ref_0, ...rest } = form.register('image_0')
    const { ref_1, ...rest_1 } = form.register('image_1')
    // console.log('REF -> ', ref)
    function onSubmist(data) {
       //   trigger(data.username)
    }
-
-   async function onSubmit(data, ev) {
+   async function onSubmit(ev, data) {
       //   trigger(data.username)
+      console.log('data -> ', data)
+      console.log('ev -> ', ev)
       ev.preventDefault()
+
+      console.log('data -> ', data)
+      // ev.preventDefault()
       const { image_0, image_1 } = data
       const images = [image_0, image_1].filter((image) => !!image)
       //console.log('images -> ', images)
@@ -71,14 +77,14 @@ export function NewBikeForm() {
       const downloadURLs = await uploadFiles(images)
       console.log('downloadURLs -> ', downloadURLs)
    }
-   //  console.log('form -> ', form.getValues())
+   console.log('form -> ', form.getValues())
    //https://claritydev.net/blog/react-hook-form-multipart-form-data-file-uploads
 
    return (
       <Form {...form}>
          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            //  onSubmit={onSubmit}
+            //onSubmit={(a, b) => form.handleSubmit(onSubmit(a, b))}
+            onSubmit={(a, b) => onSubmit(a, b)}
             className="w-2/3 space-y-6"
          >
             <BasicCard tittle={'Fotos'}>
@@ -161,7 +167,7 @@ export function NewBikeForm() {
                />
             </BasicCard>
 
-            <Button type="submit">Submit</Button>
+            <Button type="submit">Submitttt</Button>
          </form>
       </Form>
    )
