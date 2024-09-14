@@ -1,9 +1,10 @@
 import { Input } from '@/components/ui/input'
 import Image from 'next/image'
 import React, { useRef } from 'react'
-import placeholder from 'public/images/placeholder.png'
+import placeholder from '/public/images/placeholder.png'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import { pl } from 'date-fns/locale'
 
 const InputImageFile = React.forwardRef(
    ({ onChange, value, ...props }, ref) => {
