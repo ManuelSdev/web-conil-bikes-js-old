@@ -9,15 +9,17 @@ export async function authMiddleware({
    NextResponse,
    resolvedUrl,
 }) {
+   console.log('isAdmin en authMiddleware -> ', isAdmin)
    // console.log('authMiddleware')
    //console.log('request -> ', request)
    const allCookies = request.cookies.getAll()
    //console.log('## allCookies -> ', allCookies)
    //TODO: usar verifySessionCookie o esto no vale pa na
+   console.log('request.url en authMiddleware -> ', request.url)
    const urlToRedirect = isAdmin
       ? new URL('/auth', request.url)
       : new URL('/auth/sign-in', request.url)
-
+   console.log('urlToRedirect -> ', urlToRedirect)
    const sessionCookie = isAdmin
       ? request.cookies.has('adminSession')
          ? request.cookies.get('adminSession')
@@ -49,9 +51,11 @@ export async function authMiddleware({
    //  console.log('authState en authMiddleware', authState)
    //TODO: termina cuando el mail no está verificado
    const { verified, error } = authState
+   console.log('error en authMiddleware ->', error)
    //TODO: en principio, la verificación de email se tiene en cuenta solo si no es admin
    if (!verified) {
-      ////console.log('##### SIN verified')
+      console.log('##### SIN verified')
+      //   console.log('urlToRedirect -> ', urlToRedirect)
       return redirectToLogin(NextResponse, resolvedUrl, urlToRedirect)
    }
    //request.cookies.set('show-banner', 'false')

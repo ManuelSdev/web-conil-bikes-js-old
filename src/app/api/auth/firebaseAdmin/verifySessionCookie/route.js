@@ -51,11 +51,8 @@ export async function GET(req) {
       }
       return Response.json({ verified: true })
    } catch (error) {
-      console.log(
-         'ROUTE HANDLER ERROR: /api/auth/firebaseAdmin/verifySessionCookie  ->',
-         error
-      )
-
+      console.log('HANDLER: verifySessionCookie error ->', error)
+      console.log('role ->', role)
       if (role !== 'admin') {
          cookies().set('name', 'lee')
          //console.log('####################')
