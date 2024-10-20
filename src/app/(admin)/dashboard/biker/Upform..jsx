@@ -15,7 +15,9 @@ function App() {
 
    return (
       <form onSubmit={handleSubmit(onSubmit)}>
+         {/*
          <Controller
+
             render={({ field }) => (
                <Select {...field}>
                   <MenuItem value={10}>Ten</MenuItem>
@@ -26,7 +28,7 @@ function App() {
             name="select"
             defaultValue={10}
          />
-
+*/}
          <Input {...register('input')} />
 
          <input type="submit" />
