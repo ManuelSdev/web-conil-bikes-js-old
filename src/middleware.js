@@ -53,6 +53,7 @@ export async function middleware(request) {
       const nextUrlHeader = headersList.get('next-url')
       //console.log('refererHeader -> ', refererHeader)
       //console.log('nextUrlHeader -> ', nextUrlHeader)
+      /*
       const response = await authMiddleware({
          isAdmin: true,
          request,
@@ -63,17 +64,18 @@ export async function middleware(request) {
       // console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~', request.nextUrl)
       if (response) return response
       // return NextResponse.next()
-      /*
-      if (pathName.includes('/new/bikes' || '/new/address' || '/new/resume')) {
-         const response = datedStepperMiddleware({
-            request,
-            NextResponse,
-            urlToRedirect: '/dashboard/bookings/new/date' + searchPath,
-         })
-         if (response) return response
-      }
+      
+     // if (pathName.includes('/new/bikes' || '/new/address' || '/new/resume')) {
+     //    const response = datedStepperMiddleware({
+     //       request,
+     //       NextResponse,
+      //      urlToRedirect: '/dashboard/bookings/new/date' + searchPath,
+      //   })
+      //   if (response) return response
+     // }
       */
    }
+
    if (
       false &&
       pathName.startsWith('/dashboard') &&
