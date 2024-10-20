@@ -18,7 +18,7 @@ export default async function page() {
       </div>
    )
 }
-//https://www.reddit.com/r/nextjs/comments/19ep3rb/help_shadcn_with_react_hook_form_and_zod/
+
 async function getCustomToken() {
    app()
    try {

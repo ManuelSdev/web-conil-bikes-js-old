@@ -93,25 +93,27 @@ export function NewBikeForm() {
                <FormField
                   control={form.control}
                   name="image_0"
-                  render={({ field: { value, onChange, ...field } }) => (
+                  render={({ field: { value, onChange, ...field } }) =>
                      //     console.log('field -> ', field) ||
-                     <FormItem>
-                        <FormLabel>Image 0</FormLabel>
-                        <FormControl>
-                           <InputImageFile
-                              ref={ref}
-                              onChange={onChange}
-                              value={value}
-                              {...field}
-                           />
-                        </FormControl>
+                     console.log('value -> ', value) || (
+                        <FormItem>
+                           <FormLabel>Image 0</FormLabel>
+                           <FormControl>
+                              <InputImageFile
+                                 ref={ref}
+                                 onChange={onChange}
+                                 value={value}
+                                 {...field}
+                              />
+                           </FormControl>
 
-                        <FormDescription>
-                           This is your public display name.
-                        </FormDescription>
-                        <FormMessage />
-                     </FormItem>
-                  )}
+                           <FormDescription>
+                              This is your public display name.
+                           </FormDescription>
+                           <FormMessage />
+                        </FormItem>
+                     )
+                  }
                />
                <FormField
                   control={form.control}
