@@ -49,6 +49,7 @@ export async function middleware(request) {
     *
     */
    if (pathName.startsWith('/dashboard')) {
+      console.log('URL -------------> ', process.env.URL)
       const refererHeader = headersList.get('referer')
       const nextUrlHeader = headersList.get('next-url')
       //console.log('refererHeader -> ', refererHeader)
