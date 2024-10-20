@@ -15,6 +15,7 @@ export default async function authPassMiddleware({
       ? request.cookies.get('userSession')
       : null
    if (sessionCookie) {
+      console.log('URL -------------> ', process.env.URL)
       const res = await fetch(
          process.env.URL +
             '/api/auth/firebaseAdmin/verifySessionCookie?role=user',
