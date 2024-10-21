@@ -62,7 +62,7 @@ export async function middleware(request) {
 
          resolvedUrl,
       })
-      console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~', request.nextUrl)
+      console.log('request next url en middleware', request.nextUrl)
       if (response) return response
       return NextResponse.next()
 
@@ -75,7 +75,7 @@ export async function middleware(request) {
          if (response) return response
       }
    }
-
+   //console.log('-------------------- pasa primer middleware')
    if (
       false &&
       pathName.startsWith('/dashboard') &&

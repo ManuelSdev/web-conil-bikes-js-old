@@ -22,10 +22,13 @@ async function createSessionCookie(req) {
    // const isAdmin = await verifyCustomClaimsAdmin(accessToken)
    //console.log('uno -> ')
    const res = await setCookies({ isAdmin, accessToken })
-   //console.log('dos -> ')
+   console.log('################ res en createSessionCookie -> ', res)
    if (res.result.success) {
       const resolvedUrl = await getRedirectUrl({ isAdmin, req })
-
+      console.log(
+         '################ resolvedUrl en createSessionCookie -> ',
+         resolvedUrl
+      )
       res.result.resolvedUrl = resolvedUrl
       return res
    } else return res
@@ -69,6 +72,17 @@ async function setCookies({ isAdmin, accessToken }) {
 }
 
 async function getRedirectUrl({ isAdmin, req }) {
+   if (cookies().has('resolvedUrl')) {
+      const resolvedUrl = cookies().get('resolvedUrl')
+      cookies().delete('resolvedUrl')
+      console.log(
+         '**************** BORRADA COOKIE DE REDIRECCIÓN en api/aut/createSessionCookie/route.js getRedirectUrl'
+      )
+      //console.log('resolvedUrl -> ', resolvedUrl)
+      //borra la cookie
+      // res.setHeader('Set-Cookie', `resolvedUrl=0; Max-Age=0`)
+      return resolvedUrl.value
+   } else return '/'
    //console.log('***************** isAdmin -> ', isAdmin)
    ////console.log('***************** req -> ', req.cookies.has('resolvedUrl'))
    if (isAdmin) return '/dashboard/bookings'

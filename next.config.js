@@ -26,6 +26,7 @@ const nextConfig = {
       httpOnly: true,
    },
    */
+   /*
    async rewrites() {
       //https://nextjs.org/docs/api-reference/next.config.js/rewrites
       return [
@@ -35,6 +36,7 @@ const nextConfig = {
          },
       ]
    },
+   */
 }
 
 module.exports = nextConfig

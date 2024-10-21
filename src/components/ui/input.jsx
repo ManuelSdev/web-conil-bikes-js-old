@@ -3,7 +3,7 @@ import * as React from 'react'
 import { cn } from '@/utils/app/functions'
 
 const Input = React.forwardRef(({ className, type, ...props }, ref) => {
-   console.log('props -> ', props)
+   //console.log('props -> ', props)
    return (
       <input
          type={type}

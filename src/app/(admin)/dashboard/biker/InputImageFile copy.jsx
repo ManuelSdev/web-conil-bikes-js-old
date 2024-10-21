@@ -8,7 +8,6 @@ import { pl } from 'date-fns/locale'
 
 const InputImageFile = React.forwardRef(
    ({ onChange, value, ...props }, ref) => {
-      console.log('props -> ', props)
       //console.log('ref -> ', ref)
       // if (!ref) return null
       // console.log('value -> ', value)

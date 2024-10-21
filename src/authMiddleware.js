@@ -29,7 +29,7 @@ export async function authMiddleware({
       : null
 
    if (!sessionCookie) {
-      //console.log('##### SIN sessionCookie')
+      console.log('##### SIN sessionCookie')
       return redirectToLogin(NextResponse, resolvedUrl, urlToRedirect)
    }
    //console.log('@@ auth reques.url authMiddleware -> ', request.url)
@@ -48,6 +48,7 @@ export async function authMiddleware({
       }
    )
    const authState = await res.json()
+   console.log('authState en authMiddleware -> ', authState)
    //  console.log('authState en authMiddleware', authState)
    //TODO: termina cuando el mail no está verificado
    const { verified, error } = authState
@@ -62,6 +63,7 @@ export async function authMiddleware({
    //https://nextjs.org/docs/app/building-your-application/routing/middleware#producing-a-response
 
    //return NextResponse.next()
+   console.log('******************* retorna null')
    return null
    const response = NextResponse.next()
    response.cookies.delete('vercel', 'fast')
@@ -81,6 +83,7 @@ function redirectToLogin(NextResponse, resolvedUrlCookieValue, urlToRedirect) {
     * a la que llamamos resolvedUrl, que seteamos en el header
     *
     */
+   console.log('########## redirectToLogin -> ', resolvedUrlCookieValue)
    const expiresIn = 60 * 60 * 24 * 5 * 1000
    const cookieOptions = { maxAge: expiresIn, httpOnly: true, secure: true }
    // Setting cookies on the response using the `ResponseCookies` API
