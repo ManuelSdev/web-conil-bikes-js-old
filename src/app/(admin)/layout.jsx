@@ -8,7 +8,11 @@ import AdminSidebar from './AdminSidebar'
 import AdminMainContainer from './AdminMainContainer'
 import { ProgressBar, ProgressBarProvider } from 'react-transition-progress'
 
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter'
+import { ThemeProvider } from '@mui/material/styles'
 import { GlobalDialogLoader } from '@/components/common/GlobalDialogLoader'
+import theme from '@/theme'
+import DashBoardLayout from '@/components/mui/layouts/DashBoardLayout'
 
 export async function generateStaticParams() {
    return [{ lang: 'es-ES' }]
@@ -23,19 +27,19 @@ export const metadata = {
 export default function AdminDashboardLayout(props) {
    // console.log('Props /bookin/layout -> ', props.params)
    return (
-      <html lang="es-ES" dir="ltr" className="h-full bg-red-500">
-         <body className="h-full">
-            <ReduxProviderWrapper>
-               <GlobalDialogLoader />
-               <ProgressBarProvider>
-                  <ProgressBar className="aaf fixed top-0 z-50 h-2 w-full bg-white shadow-lg shadow-sky-500/20" />
-
-                  <AdminSidebar />
-
-                  <AdminBar />
-                  <AdminMainContainer>{props.children}</AdminMainContainer>
-               </ProgressBarProvider>
-            </ReduxProviderWrapper>
+      <html lang="es-ES" dir="ltr">
+         <body>
+            <AppRouterCacheProvider>
+               <ThemeProvider theme={theme}>
+                  <ReduxProviderWrapper>
+                     <GlobalDialogLoader />
+                     <ProgressBarProvider>
+                        <ProgressBar className="aaf fixed top-0 z-50 h-2 w-full bg-white shadow-lg shadow-sky-500/20" />
+                        <DashBoardLayout>{props.children}</DashBoardLayout>
+                     </ProgressBarProvider>
+                  </ReduxProviderWrapper>
+               </ThemeProvider>
+            </AppRouterCacheProvider>
          </body>
       </html>
    )
