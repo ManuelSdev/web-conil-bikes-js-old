@@ -90,7 +90,7 @@ export default function SiteAppBar() {
 const navigation = [
    {
       name: 'Alquiler',
-      href: '/booking',
+      href: '/booking/date',
       icon: CircleUserRound,
       pathname: ['/user/booking', '/booking'],
    },

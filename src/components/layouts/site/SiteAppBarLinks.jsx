@@ -8,7 +8,7 @@ const navigation = [
    { name: 'Inicio', href: '/', pathname: '/' },
    {
       name: 'Alquiler',
-      href: '/booking',
+      href: '/booking/date',
       pathname: ['/user/booking', '/booking'],
    },
    { name: 'Tienda', href: '/store', pathname: ['/store'] },
