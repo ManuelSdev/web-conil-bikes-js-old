@@ -1,3 +1,5 @@
+@config "./tailwind.config.js";
+
 @import '../globals.css';
 @tailwind base;
 @tailwind components;
