@@ -93,8 +93,7 @@ export default function RangeSelect({
                      </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                     {rangesList.map((range) => {
-                        const [engRange, spaRange] = range
+                     {rangesList.map(([engRange, spaRange]) => {
                         return (
                            <SelectItem
                               disabled={

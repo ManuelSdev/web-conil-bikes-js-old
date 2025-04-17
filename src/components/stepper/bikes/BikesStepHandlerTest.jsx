@@ -175,6 +175,7 @@ useEffect(() => {
 }, [loadedSegmentList])
 */
    const renderShowBikesButton = ({ size, type, range, className }) =>
+      console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', size, type, range) ||
       isFetchingBikes ? (
          <Button
             variant="reverse"
